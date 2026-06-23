@@ -1,0 +1,64 @@
+name: Deploy Jupyter Book to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - tb/migration
+  workflow_dispatch:
+
+# Allow the workflow to push to the gh-pages branch
+permissions:
+  contents: write
+
+# Avoid overlapping deploys
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ghp-import
+
+      - name: Build the Jupyter Book
+        run: |
+          rm -rf _build
+          jupyter-book build . --all
+
+      - name: Stage filtered site (strip repo/venv junk)
+        run: |
+          STAGE_DIR="$(mktemp -d)"
+          rsync -a \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude '.figvenv' \
+            --exclude '.venv' \
+            --exclude 'causal_venv' \
+            --exclude '.cursor' \
+            --exclude '.vscode' \
+            --exclude '.gitignore' \
+            --exclude 'requirements.txt' \
+            --exclude '__pycache__' \
+            --exclude '.DS_Store' \
+            --exclude '.ipynb_checkpoints' \
+            _build/html/ "$STAGE_DIR"/
+          echo "STAGE_DIR=$STAGE_DIR" >> "$GITHUB_ENV"
+
+      - name: Deploy to gh-pages branch
+        run: |
+          ghp-import -n -p -f -m "Deploy Jupyter Book to GitHub Pages (${GITHUB_SHA::7})" "$STAGE_DIR"
