@@ -1,0 +1,19 @@
+jupyter-book
+git+https://github.com/TeachBooks/Sphinx-Thebe
+matplotlib
+numpy
+pandas
+plotly
+seaborn
+econml
+causalml
+ipython
+ipykernel
+ipywidgets
+networkx
+scipy
+sympy
+teachbooks == 0.2.2
+sphinx-inline-tabs
+sphinx-proof
+teachbooks-sphinx-grasple

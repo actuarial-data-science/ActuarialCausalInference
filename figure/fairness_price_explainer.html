@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fairness pricing interactive explainer</title>
+<style>
+  :root{
+    --txt:#2c2c2a; --txt2:#5f5e5a; --txt3:#8a897f;
+    --card:#e8eae6; --bd:rgba(0,0,0,0.14); --bd2:rgba(0,0,0,0.28);
+    --accent:#7d9f17; --track:rgba(0,0,0,0.12);
+    --pass:#1D9E75; --fail:#D85A30;
+    --female:#D85A30; --male:#378ADD;
+    --selbg:rgba(125,159,23,0.14);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --txt:#e6e6e3; --txt2:#aeaca4; --txt3:#86857d;
+      --card:rgba(255,255,255,0.06); --bd:rgba(255,255,255,0.16); --bd2:rgba(255,255,255,0.30);
+      --accent:#aacb3f; --track:rgba(255,255,255,0.16);
+      --pass:#3FBF92; --fail:#E8744B;
+      --female:#E8744B; --male:#5fa3e6;
+      --selbg:rgba(170,203,63,0.16);
+    }
+  }
+  html[data-mode="light"]{
+    --txt:#2c2c2a; --txt2:#5f5e5a; --txt3:#8a897f;
+    --card:#e8eae6; --bd:rgba(0,0,0,0.14); --bd2:rgba(0,0,0,0.28);
+    --accent:#7d9f17; --track:rgba(0,0,0,0.12);
+    --pass:#1D9E75; --fail:#D85A30;
+    --female:#D85A30; --male:#378ADD;
+    --selbg:rgba(125,159,23,0.14);
+  }
+  html[data-mode="dark"]{
+    --txt:#e6e6e3; --txt2:#aeaca4; --txt3:#86857d;
+    --card:rgba(255,255,255,0.06); --bd:rgba(255,255,255,0.16); --bd2:rgba(255,255,255,0.30);
+    --accent:#aacb3f; --track:rgba(255,255,255,0.16);
+    --pass:#3FBF92; --fail:#E8744B;
+    --female:#E8744B; --male:#5fa3e6;
+    --selbg:rgba(170,203,63,0.16);
+  }
+  html,body{background:transparent; margin:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--txt); font-size:15px; line-height:1.6; padding:8px 2px 16px;
+  }
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+  .pick{font-size:13px;color:var(--txt2);margin:0 0 7px;}
+  .pick b{color:var(--txt);font-weight:600;}
+  .seg{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .seg button{flex:1 1 150px;text-align:left;}
+  .grp{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;margin-bottom:1.1rem;}
+  button{font:inherit;font-size:13.5px;color:var(--txt);background:transparent;border:0.5px solid var(--bd2);border-radius:8px;padding:8px 12px;cursor:pointer;line-height:1.3;}
+  button:hover{background:var(--card);}
+  button:active{transform:scale(0.99);}
+  button.active{border-color:var(--accent);background:var(--selbg);color:var(--txt);box-shadow:inset 0 0 0 1px var(--accent);}
+  button .bt{display:block;font-weight:600;}
+  button .bs{display:block;font-size:11.5px;color:var(--txt3);}
+  .lblrow{display:flex;justify-content:space-between;font-size:13px;color:var(--txt2);margin-bottom:5px;}
+  .lblrow b{color:var(--txt);font-weight:500;}
+  .hint{font-size:12px;color:var(--txt3);margin-top:3px;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:var(--track);outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:none;}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:none;}
+  .toolbar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:18px;margin:2px 0 1.4rem;}
+  .toolbar .slider{flex:1 1 240px;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 1.2rem;}
+  .card{background:var(--card);border-radius:8px;padding:0.8rem 1rem;}
+  .card .k{font-size:12.5px;color:var(--txt2);}
+  .card .v{font-size:23px;font-weight:500;}
+  .card .v small{font-size:13px;color:var(--txt3);font-weight:400;}
+  .verdict{font-size:18px;font-weight:600;}
+  .legend{display:flex;flex-wrap:wrap;align-items:center;gap:16px;font-size:12px;color:var(--txt2);margin-bottom:6px;}
+  .legend span{display:flex;align-items:center;gap:5px;}
+  .sw{width:11px;height:11px;border-radius:3px;display:inline-block;}
+  .panlbl{font-size:13px;color:var(--txt2);margin:0 0 4px;display:flex;justify-content:space-between;gap:12px;}
+  .panlbl em{font-style:normal;color:var(--txt3);}
+  .pan{margin-bottom:1.4rem;}
+  .note{font-size:12.5px;color:var(--txt3);margin:-0.6rem 0 1.3rem;}
+</style>
+</head>
+<body>
+<h2 class="sr-only">Interactive explainer comparing three insurance prices (best-estimate, unawareness, discrimination-free) and how each satisfies or fails different statistical fairness measures on one simulated portfolio.</h2>
+
+<div class="grp">
+  <div>
+    <div class="pick"><b>Price approach</b> — how the protected attribute <i>S</i> (sex) enters the premium</div>
+    <div class="seg" id="segApproach" role="group" aria-label="Price approach">
+      <button type="button" data-v="best"><span class="bt">Best-estimate</span><span class="bs">uses S directly</span></button>
+      <button type="button" data-v="unaware"><span class="bt">Unawareness</span><span class="bs">drops S, conditional P(S|X)</span></button>
+      <button type="button" data-v="discfree"><span class="bt">Discrimination-free</span><span class="bs">marginal P*(S)</span></button>
+    </div>
+  </div>
+  <div>
+    <div class="pick"><b>Fairness measure</b> — the criterion the price is judged against</div>
+    <div class="seg" id="segMeasure" role="group" aria-label="Fairness measure">
+      <button type="button" data-v="unaware"><span class="bt">Group Unaware</span><span class="bs">S is not an input</span></button>
+      <button type="button" data-v="parity"><span class="bt">Demographic Parity</span><span class="bs">equal selection rate</span></button>
+      <button type="button" data-v="opp"><span class="bt">Equal Opportunity</span><span class="bs">equal true-positive rate</span></button>
+      <button type="button" data-v="acc"><span class="bt">Equal Accuracy</span><span class="bs">equal accuracy</span></button>
+    </div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <div class="slider">
+    <div class="lblrow"><span>Proxy strength</span><b id="kOut">1.4</b></div>
+    <input id="kpar" type="range" min="0.0" max="2.6" step="0.1" value="1.4" />
+    <div class="hint">how strongly the lifestyle proxy depends on sex — higher = more leakage</div>
+  </div>
+  <div><button id="reseed" type="button">&#8635;&nbsp; New portfolio</button></div>
+</div>
+
+<div class="cards">
+  <div class="card"><div class="k">Premium gap (M&minus;F)</div><div class="v" id="cGap">&mdash;</div></div>
+  <div class="card"><div class="k">Proxy leakage</div><div class="v" id="cLeak">&mdash;</div></div>
+  <div class="card"><div class="k" id="cMeasK">Measure gap</div><div class="v" id="cMeas">&mdash;</div></div>
+  <div class="card"><div class="k">Verdict</div><div class="v verdict" id="cVerdict">&mdash;</div></div>
+</div>
+
+<div class="legend">
+  <span><span class="sw" style="background:var(--female);"></span>Female</span>
+  <span><span class="sw" style="background:var(--male);"></span>Male</span>
+</div>
+
+<div class="panlbl"><span>1 &middot; Average premium by sex under the chosen approach</span><em id="p1Info"></em></div>
+<div class="pan" id="pPrice"></div>
+
+<div class="panlbl"><span id="p2Title">2 &middot; The selected fairness measure</span><em id="p2Info"></em></div>
+<div class="pan" id="pMeasure"></div>
+<div class="note" id="p2Note"></div>
+
+<div class="panlbl"><span>3 &middot; All measures at a glance &mdash; for this price approach</span><em>green = satisfied, orange = violated</em></div>
+<div class="pan" id="pMatrix"></div>
+<div class="note" id="p3Note"></div>
+
+<script>
+(function(){
+  var p=new URLSearchParams(location.search).get('theme');
+  function apply(t){document.documentElement.setAttribute('data-mode',t);try{window.dispatchEvent(new Event('themechanged'));}catch(e){}}
+  function systemTheme(){return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  // Read the embedding book's resolved theme directly (same-origin). This makes
+  // the initial render correct even if the parent's postMessage handshake is
+  // missed (e.g. a cached embed script), so we never get stuck showing light.
+  function parentTheme(){
+    try{
+      var root=window.parent.document.documentElement;
+      var t=root.getAttribute('data-theme');
+      if(t==='light'||t==='dark')return t;
+      var m=root.getAttribute('data-mode');
+      if(m==='light'||m==='dark')return m;
+    }catch(e){}
+    return null;
+  }
+  if(p==='dark'||p==='light')apply(p);
+  else apply(parentTheme()||systemTheme());
+  if(!p){matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){if(!parentTheme())apply(e.matches?'dark':'light');});}
+  window.addEventListener('message',function(ev){
+    var d=ev.data;
+    if(d&&d.type==='set-theme'){
+      if(d.value==='dark'||d.value==='light')apply(d.value);
+      else if(d.value==='auto')apply(parentTheme()||systemTheme());
+    }
+  });
+  if(window.parent&&window.parent!==window){window.parent.postMessage({type:'fair-price-ready'},'*');}
+})();
+
+(function(){
+  function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  function gauss(r){var u=Math.max(r(),1e-12),v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+  function sig(z){return 1/(1+Math.exp(-z));}
+  function gamma2(r,mean){ // shape=2 Gamma via sum of two exponentials, scaled to given mean
+    var e1=-Math.log(Math.max(r(),1e-12)),e2=-Math.log(Math.max(r(),1e-12));
+    return (e1+e2)*(mean/2);
+  }
+  function quantile(arr,q){var a=arr.slice().sort(function(x,y){return x-y;});var pos=(a.length-1)*q,b=Math.floor(pos),rest=pos-b;return a[b+1]!==undefined?a[b]+rest*(a[b+1]-a[b]):a[b];}
+
+  var N=320, BASE=800;
+  var state={approach:'best',measure:'parity',k:1.4,seed:7,key:null,data:null};
+
+  function build(seed){
+    var r=mulberry32(seed*2654435761>>>0);
+    var S=[],age=[],uLife=[],uClaim1=[],uClaim2=[];
+    for(var i=0;i<N;i++){
+      S.push(r()<0.5?1:0);
+      age.push(Math.min(80,Math.max(18,45+gauss(r)*12)));
+      uLife.push(r());
+      uClaim1.push(r()); uClaim2.push(r());
+    }
+    return {S:S,age:age,uLife:uLife,uClaim1:uClaim1,uClaim2:uClaim2};
+  }
+  function getSample(seed){if(state.key===seed)return state.data;state.data=build(seed);state.key=seed;return state.data;}
+
+  function compute(){
+    var s=getSample(state.seed), k=state.k;
+    var S=s.S,age=s.age;
+    // proxy probabilities given sex
+    var pL1=sig(-0.6+k*1), pL0=sig(-0.6+k*0);
+    // P(S=1 | lifestyle) via Bayes with balanced marginal 0.5
+    var pS1_L1=pL1/(pL1+pL0), pS1_L0=(1-pL1)/((1-pL1)+(1-pL0));
+    var life=[],mu1=[],mu0=[],muTrue=[],claims=[],psx=[],best=[],unaware=[],discfree=[];
+    for(var i=0;i<N;i++){
+      var L=s.uLife[i]<sig(-0.6+k*S[i])?1:0; life.push(L);
+      var agePart=0.020*(age[i]-45)+0.55*L;
+      var m1=BASE*Math.exp(agePart+0.25*1), m0=BASE*Math.exp(agePart+0.25*0);
+      mu1.push(m1); mu0.push(m0);
+      var mt=BASE*Math.exp(agePart+0.25*S[i]); muTrue.push(mt);
+      var e1=-Math.log(Math.max(s.uClaim1[i],1e-12)),e2=-Math.log(Math.max(s.uClaim2[i],1e-12));
+      claims.push((e1+e2)*(mt/2));
+      var px=L===1?pS1_L1:pS1_L0; psx.push(px);
+      best.push(S[i]===1?m1:m0);
+      unaware.push(px*m1+(1-px)*m0);
+      discfree.push(0.5*m1+0.5*m0);
+    }
+    return {S:S,age:age,life:life,mu1:mu1,mu0:mu0,claims:claims,psx:psx,best:best,unaware:unaware,discfree:discfree};
+  }
+
+  function groupMetrics(score,claims,S){
+    // decision: flag top 20% by score; ground truth high_cost = top 20% of claims
+    var thrS=quantile(score,0.80), thrC=quantile(claims,0.80);
+    var m={0:{n:0,hc:0,fl:0,tp:0,correct:0},1:{n:0,hc:0,fl:0,tp:0,correct:0}};
+    for(var i=0;i<score.length;i++){
+      var g=S[i], fl=score[i]>thrS?1:0, hc=claims[i]>thrC?1:0;
+      m[g].n++; m[g].hc+=hc; m[g].fl+=fl; if(fl&&hc)m[g].tp++; if(fl===hc)m[g].correct++;
+    }
+    function pack(g){var o=m[g];return {base:o.hc/o.n, sel:o.fl/o.n, tpr:o.hc?o.tp/o.hc:0, acc:o.correct/o.n};}
+    return {F:pack(0),M:pack(1)};
+  }
+
+  var MEASURES=[
+    {id:'unaware',name:'Group Unaware',tol:null},
+    {id:'parity', name:'Demographic Parity',field:'sel', tol:0.05, lbl:'selection rate'},
+    {id:'opp',    name:'Equal Opportunity', field:'tpr', tol:0.08, lbl:'true-positive rate'},
+    {id:'acc',    name:'Equal Accuracy',    field:'acc', tol:0.04, lbl:'accuracy'}
+  ];
+
+  function measureResult(mdef,gm,approach){
+    if(mdef.id==='unaware'){
+      // S used as a live input only by the best-estimate price
+      var pass=approach!=='best';
+      return {pass:pass, gap:null, F:null, M:null,
+        detail: approach==='best'
+          ? 'The best-estimate price reads S directly, so it is not group-unaware.'
+          : 'This price is a function of X only, so S is not a live input — group-unaware is met. (Note: unawareness can still leak S through the proxy.)'};
+    }
+    var f=gm.F[mdef.field], m=gm.M[mdef.field], gap=Math.abs(m-f);
+    return {pass:gap<=mdef.tol, gap:gap, F:f, M:m,
+      detail:'Female '+mdef.lbl+' = '+(f*100).toFixed(0)+'%, male = '+(m*100).toFixed(0)+'% (gap '+(gap*100).toFixed(0)+' pts; tolerance '+(mdef.tol*100).toFixed(0)+' pts).'};
+  }
+
+  function fmt(v,d){if(v===null||v===undefined||isNaN(v))return "\u2014";return v.toFixed(d===undefined?2:d);}
+  function postHeight(){try{parent.postMessage({type:'fair-price-height',height:Math.ceil(document.body.getBoundingClientRect().height)},'*');}catch(e){}}
+
+  function render(){
+    // Resolve theme colours to concrete values so the SVG marks paint
+    // correctly in every browser (var() in SVG presentation attributes is not
+    // universally supported / re-resolved on theme toggle).
+    var _cs=getComputedStyle(document.documentElement);
+    function CV(n){return (_cs.getPropertyValue(n)||'').trim()||'#000';}
+    var Cfemale=CV('--female'),Cmale=CV('--male'),Cpass=CV('--pass'),Cfail=CV('--fail'),
+        Ctxt=CV('--txt'),Ctxt2=CV('--txt2'),Ctxt3=CV('--txt3'),Cbd2=CV('--bd2'),Cselbg=CV('--selbg');
+    document.getElementById('kOut').textContent=state.k.toFixed(1);
+    var d=compute();
+    var scoreMap={best:d.best,unaware:d.unaware,discfree:d.discfree};
+    var score=scoreMap[state.approach];
+    var gm=groupMetrics(score,d.claims,d.S);
+
+    // ---- summary cards ----
+    var fMean=0,mMean=0,fN=0,mN=0,leak=0;
+    for(var i=0;i<N;i++){if(d.S[i]===1){mMean+=score[i];mN++;}else{fMean+=score[i];fN++;} leak+=d.unaware[i]-d.discfree[i];}
+    fMean/=fN; mMean/=mN; leak/=N;
+    document.getElementById('cGap').innerHTML=(mMean-fMean>=0?'+':'')+fmt(mMean-fMean,0)+' <small>CHF</small>';
+    document.getElementById('cLeak').innerHTML=fmt(leak,0)+' <small>CHF</small>';
+
+    var mdef=null;for(i=0;i<MEASURES.length;i++)if(MEASURES[i].id===state.measure)mdef=MEASURES[i];
+    var res=measureResult(mdef,gm,state.approach);
+    document.getElementById('cMeasK').textContent=mdef.name+(res.gap===null?'':' gap');
+    if(res.gap===null){document.getElementById('cMeas').innerHTML=res.pass?'met':'not met';}
+    else{document.getElementById('cMeas').innerHTML=(res.gap*100).toFixed(0)+' <small>pts</small>';}
+    var vEl=document.getElementById('cVerdict');
+    vEl.textContent=res.pass?'Fair \u2713':'Unfair \u2717';
+    vEl.style.color=res.pass?Cpass:Cfail;
+
+    var apprName={best:'Best-estimate',unaware:'Unawareness',discfree:'Discrimination-free'}[state.approach];
+    document.getElementById('p1Info').textContent=apprName+' price';
+
+    // ---- Panel 1: mean premium by sex ----
+    var W=640, Xa=54, Xb=610;
+    var maxP=Math.max(fMean,mMean)*1.18;
+    var H1=150, baseY=120, topY=18;
+    function PY(v){return baseY-(baseY-topY)*(v/maxP);}
+    var cx1=Xa+(Xb-Xa)*0.32, cx2=Xa+(Xb-Xa)*0.68, bw=92;
+    var s1='';
+    s1+='<line x1="'+Xa+'" y1="'+baseY+'" x2="'+Xb+'" y2="'+baseY+'" stroke="'+Cbd2+'" stroke-width="1"/>';
+    function bar(cx,val,col,lab){
+      var y=PY(val);var o='';
+      o+='<rect x="'+(cx-bw/2).toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw+'" height="'+(baseY-y).toFixed(1)+'" rx="3" fill="'+col+'" opacity="0.82"/>';
+      o+='<text x="'+cx.toFixed(1)+'" y="'+(y-7).toFixed(1)+'" font-size="13" font-weight="600" text-anchor="middle" fill="'+Ctxt+'">'+Math.round(val)+'</text>';
+      o+='<text x="'+cx.toFixed(1)+'" y="'+(baseY+18).toFixed(1)+'" font-size="12" text-anchor="middle" fill="'+Ctxt2+'">'+lab+'</text>';
+      return o;
+    }
+    s1+=bar(cx1,fMean,Cfemale,'Female');
+    s1+=bar(cx2,mMean,Cmale,'Male');
+    s1+='<text x="'+((cx1+cx2)/2).toFixed(1)+'" y="'+(topY-2)+'" font-size="11.5" text-anchor="middle" fill="'+Ctxt3+'">gap '+(mMean-fMean>=0?'+':'')+Math.round(mMean-fMean)+' CHF</text>';
+    document.getElementById('pPrice').innerHTML='<svg viewBox="0 0 '+W+' '+H1+'" width="100%" role="img" aria-label="Average premium by sex">'+s1+'</svg>';
+
+    // ---- Panel 2: selected measure ----
+    document.getElementById('p2Title').textContent='2 \u00b7 '+mdef.name;
+    document.getElementById('p2Note').textContent=res.detail;
+    var p2='';
+    if(mdef.id==='unaware'){
+      document.getElementById('p2Info').textContent=res.pass?'satisfied':'violated';
+      var H2u=86;
+      var col=res.pass?Cpass:Cfail;
+      p2+='<text x="'+Xa+'" y="34" font-size="14" fill="'+Ctxt+'">Does the price use S (sex) as a live input?</text>';
+      p2+='<text x="'+Xa+'" y="64" font-size="20" font-weight="600" fill="'+col+'">'+(state.approach==='best'?'Yes \u2014 not group-unaware':'No \u2014 group-unaware')+'</text>';
+      document.getElementById('pMeasure').innerHTML='<svg viewBox="0 0 '+W+' '+H2u+'" width="100%" role="img" aria-label="Group unaware status">'+p2+'</svg>';
+    }else{
+      document.getElementById('p2Info').textContent=(res.pass?'satisfied':'violated')+' (gap '+(res.gap*100).toFixed(0)+' pts)';
+      var H2=150, b2=120, t2=20, maxV=Math.max(0.4,res.F,res.M)*1.2;
+      function MY(v){return b2-(b2-t2)*(v/maxV);}
+      p2+='<line x1="'+Xa+'" y1="'+b2+'" x2="'+Xb+'" y2="'+b2+'" stroke="'+Cbd2+'" stroke-width="1"/>';
+      function mbar(cx,val,col,lab){
+        var y=MY(val),o='';
+        o+='<rect x="'+(cx-bw/2).toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw+'" height="'+(b2-y).toFixed(1)+'" rx="3" fill="'+col+'" opacity="0.82"/>';
+        o+='<text x="'+cx.toFixed(1)+'" y="'+(y-7).toFixed(1)+'" font-size="13" font-weight="600" text-anchor="middle" fill="'+Ctxt+'">'+(val*100).toFixed(0)+'%</text>';
+        o+='<text x="'+cx.toFixed(1)+'" y="'+(b2+18).toFixed(1)+'" font-size="12" text-anchor="middle" fill="'+Ctxt2+'">'+lab+'</text>';
+        return o;
+      }
+      p2+=mbar(cx1,res.F,Cfemale,'Female');
+      p2+=mbar(cx2,res.M,Cmale,'Male');
+      p2+='<text x="'+((cx1+cx2)/2).toFixed(1)+'" y="'+(t2-4)+'" font-size="11.5" text-anchor="middle" fill="'+Ctxt3+'">'+mdef.lbl+' &middot; want equal</text>';
+      document.getElementById('pMeasure').innerHTML='<svg viewBox="0 0 '+W+' '+H2+'" width="100%" role="img" aria-label="Selected fairness measure by sex">'+p2+'</svg>';
+    }
+
+    // ---- Panel 3: all measures at a glance ----
+    var H3=20+MEASURES.length*30+10, mx=Xa+170;
+    var p3='';
+    for(i=0;i<MEASURES.length;i++){
+      var md=MEASURES[i], rr=measureResult(md,gm,state.approach), y=34+i*30;
+      var c=rr.pass?Cpass:Cfail;
+      var sel=md.id===state.measure;
+      if(sel)p3+='<rect x="'+(Xa-10)+'" y="'+(y-19)+'" width="'+(Xb-Xa+20)+'" height="27" rx="6" fill="'+Cselbg+'"/>';
+      p3+='<text x="'+Xa+'" y="'+y+'" font-size="13" font-weight="'+(sel?'600':'400')+'" fill="'+Ctxt+'">'+md.name+'</text>';
+      p3+='<circle cx="'+mx+'" cy="'+(y-4)+'" r="6" fill="'+c+'"/>';
+      p3+='<text x="'+(mx+14)+'" y="'+y+'" font-size="12.5" fill="'+c+'">'+(rr.pass?'satisfied':'violated')+'</text>';
+      if(rr.gap!==null)p3+='<text x="'+Xb+'" y="'+y+'" font-size="12" text-anchor="end" fill="'+Ctxt3+'">gap '+(rr.gap*100).toFixed(0)+' pts</text>';
+    }
+    document.getElementById('pMatrix').innerHTML='<svg viewBox="0 0 '+W+' '+H3+'" width="100%" role="img" aria-label="Pass or fail for each fairness measure under the current price approach">'+p3+'</svg>';
+
+    var nPass=0;for(i=0;i<MEASURES.length;i++){if(measureResult(MEASURES[i],gm,state.approach).pass)nPass++;}
+    document.getElementById('p3Note').textContent=apprName+' satisfies '+nPass+' of '+MEASURES.length+' measures — switching the approach or the proxy strength changes which ones pass. No single price meets them all at once: that is the impossibility result in action.';
+
+    postHeight();
+  }
+
+  function wireSeg(id,key){
+    var box=document.getElementById(id);
+    box.addEventListener('click',function(e){
+      var b=e.target.closest('button'); if(!b)return;
+      state[key]=b.getAttribute('data-v');
+      [].forEach.call(box.querySelectorAll('button'),function(x){x.classList.toggle('active',x===b);});
+      render();
+    });
+    // set initial active
+    [].forEach.call(box.querySelectorAll('button'),function(x){x.classList.toggle('active',x.getAttribute('data-v')===state[key]);});
+  }
+  wireSeg('segApproach','approach');
+  wireSeg('segMeasure','measure');
+  document.getElementById('kpar').addEventListener('input',function(){state.k=parseFloat(this.value);render();});
+  document.getElementById('reseed').addEventListener('click',function(){state.seed=Math.floor(Math.random()*99999)+1;state.key=null;render();});
+  window.addEventListener('resize',postHeight);
+  window.addEventListener('load',postHeight);
+  // Re-render with freshly resolved theme colours whenever the theme toggles.
+  window.addEventListener('themechanged',render);
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+# Jupyter Book and Documentation
+jupyter-book
+teachbooks == 0.2.2
+sphinx-inline-tabs
+teachbooks-sphinx-grasple
+
+# Core Data Science Libraries
+numpy
+pandas
+scipy
+matplotlib
+seaborn
+
+# Visualization
+plotly
+
+# Causal Inference
+econml
+causalml
+dowhy
+
+# Machine Learning
+scikit-learn
+shap
+lightgbm
+
+# Statistical Modeling
+statsmodels
+
+# Graph/Network Analysis
+networkx
+
+# Jupyter/IPython
+ipython
+ipykernel
+ipywidgets
+
+# Symbolic Math
+sympy

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="340" viewBox="0 0 560 340" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ax { stroke: #333; }
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .arrow { fill: #333; }
+    @media (prefers-color-scheme: dark) {
+      .ax { stroke: #c9d1d9; }
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="ar2" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L8,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- Axes -->
+  <line class="ax" x1="70" y1="280" x2="520" y2="280" stroke-width="1.5"/>
+  <line class="ax" x1="70" y1="40" x2="70" y2="280" stroke-width="1.5"/>
+  <text class="ink-t" x="295" y="320" text-anchor="middle" font-size="14">running variable X (e.g. risk score)</text>
+  <text class="ink-t" x="28" y="160" text-anchor="middle" font-size="14" transform="rotate(-90 28 160)">outcome E[Y]</text>
+
+  <!-- Cutoff line -->
+  <line class="ink-l" x1="295" y1="40" x2="295" y2="280" stroke-width="1.2" stroke-dasharray="5,4" opacity="0.7"/>
+  <text class="muted" x="295" y="34" text-anchor="middle" font-size="12">cutoff c</text>
+  <text x="180" y="300" text-anchor="middle" font-size="12" fill="#2bb673">untreated (X &lt; c)</text>
+  <text x="410" y="300" text-anchor="middle" font-size="12" fill="#e06363">treated (X &#8805; c)</text>
+
+  <!-- Left regression (control) -->
+  <path d="M100,235 Q200,210 290,195" fill="none" stroke="#1f9d55" stroke-width="2.5"/>
+  <!-- Right regression (treated), jumps up at cutoff -->
+  <path d="M300,150 Q400,128 490,105" fill="none" stroke="#cc3b3b" stroke-width="2.5"/>
+
+  <!-- Scatter points left -->
+  <circle cx="120" cy="240" r="3" fill="#1f9d55" opacity="0.6"/>
+  <circle cx="155" cy="222" r="3" fill="#1f9d55" opacity="0.6"/>
+  <circle cx="190" cy="218" r="3" fill="#1f9d55" opacity="0.6"/>
+  <circle cx="230" cy="205" r="3" fill="#1f9d55" opacity="0.6"/>
+  <circle cx="265" cy="202" r="3" fill="#1f9d55" opacity="0.6"/>
+  <!-- Scatter points right -->
+  <circle cx="320" cy="148" r="3" fill="#cc3b3b" opacity="0.6"/>
+  <circle cx="355" cy="140" r="3" fill="#cc3b3b" opacity="0.6"/>
+  <circle cx="395" cy="128" r="3" fill="#cc3b3b" opacity="0.6"/>
+  <circle cx="435" cy="118" r="3" fill="#cc3b3b" opacity="0.6"/>
+  <circle cx="470" cy="108" r="3" fill="#cc3b3b" opacity="0.6"/>
+
+  <!-- Discontinuity gap at cutoff -->
+  <circle cx="293" cy="194" r="4" fill="none" stroke="#1f9d55" stroke-width="1.5"/>
+  <circle cx="297" cy="150" r="4" fill="#cc3b3b"/>
+  <line class="ink-l" x1="320" y1="150" x2="320" y2="193" stroke-width="1.5" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+  <text class="ink-t" x="332" y="176" font-size="14" font-style="italic">&#964;</text>
+  <text class="muted" x="332" y="190" font-size="10">LATE at c</text>
+</svg>
