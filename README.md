@@ -46,7 +46,7 @@ The actuary's end-to-end workflow connects the identification theory from {doc}`
 
 ### Actuarial Applications
 
-The application notebooks ground the tutorial theory in concrete actuarial workflows. The matrix below maps each notebook onto two axes: the **insurance value chain** (rows) and the **actuary's causal inference workflow** (columns). Click any cell to open the corresponding notebook section.
+The actuarial application notebooks ground the tutorial theory in concrete workflows. The matrix below maps each notebook onto two axes: the **insurance value chain** (rows) and the **actuary's causal inference workflow** (columns). Click any cell to open the corresponding notebook section.
 
 ```{raw} html
 <iframe id="apps-matrix" src="figure/applications_matrix.html?v=20260623"

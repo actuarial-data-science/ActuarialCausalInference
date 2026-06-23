@@ -6,20 +6,55 @@
  * never reach inside them and their own `@media (prefers-color-scheme)`
  * only follows the OS — not the book's light/dark toggle.
  *
- * This script swaps each such <img> for the inline <svg>, strips the
- * SVG's internal prefers-color-scheme block, and tags it `.themed-svg`
- * so the rules in `figure-theme.css` (keyed on the book toggle) take
- * over. Single source of truth; the toggle now drives every figure.
+ * This script swaps each such <img> for the inline <svg>, re-scopes the
+ * SVG's internal prefers-color-scheme rules to the book's light/dark
+ * toggle, and tags it `.themed-svg`. Combined with `figure-theme.css`
+ * (also keyed on the toggle) the switch now drives every figure — both
+ * the shared semantic classes and each figure's bespoke colour classes.
  * ===================================================================== */
 (function () {
   "use strict";
 
-  // Remove `@media (prefers-color-scheme: ...) { ... }` blocks so that only
-  // the page-level (toggle-driven) CSS controls the figure's appearance.
-  function stripColorSchemeMedia(svgText) {
+  // Re-scope each `@media (prefers-color-scheme: dark) { ... }` block so its
+  // rules follow the book's light/dark *toggle* (data-theme / data-mode on
+  // <html>) rather than only the OS. An inlined figure renders in the page's
+  // own context, so its original OS-only media query can never react to the
+  // book toggle — without this rewrite a figure with bespoke colour classes
+  // (e.g. flowchart chips) stays stuck on its light palette when the book is
+  // switched to dark, and vice-versa.
+  //
+  // For every rule inside the block we emit two scoped copies: one keyed on the
+  // explicit toggle, and an `auto` fallback that follows the OS only when no
+  // explicit choice is set. Selectors are scoped under `.themed-svg` so they
+  // (a) never leak onto the rest of the page and (b) sit just below the
+  // specificity of figure-theme.css, which therefore still wins for the shared
+  // semantic classes it owns (.node, .ink-t, …) while these rules cover the
+  // figure-specific classes the stylesheet does not know about.
+  function scopeColorSchemeMedia(svgText) {
     return svgText.replace(
-      /@media[^{]*prefers-color-scheme[^{]*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/gi,
-      ""
+      /@media[^{]*prefers-color-scheme[^{]*\{((?:[^{}]*\{[^{}]*\})*[^{}]*)\}/gi,
+      function (_, inner) {
+        var toggle = "";
+        var auto = "";
+        inner.replace(/([^{}]+)\{([^{}]*)\}/g, function (__, sels, decls) {
+          var dark = [];
+          var os = [];
+          sels.split(",").forEach(function (raw) {
+            var s = raw.trim();
+            if (!s) return;
+            dark.push('html[data-theme="dark"] .themed-svg ' + s);
+            dark.push('html[data-mode="dark"] .themed-svg ' + s);
+            os.push(
+              'html:not([data-theme="light"]):not([data-mode="light"]) ' +
+              ".themed-svg " + s
+            );
+          });
+          toggle += dark.join(",") + "{" + decls + "}";
+          auto += os.join(",") + "{" + decls + "}";
+          return __;
+        });
+        return toggle + "@media (prefers-color-scheme: dark){" + auto + "}";
+      }
     );
   }
 
@@ -40,7 +75,7 @@
         if (!/prefers-color-scheme/i.test(text)) return;
 
         var doc = new DOMParser().parseFromString(
-          stripColorSchemeMedia(text),
+          scopeColorSchemeMedia(text),
           "image/svg+xml"
         );
         var svg = doc.querySelector("svg");
