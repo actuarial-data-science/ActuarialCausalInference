@@ -466,3 +466,34 @@ html[data-mode="dark"]  div.proof.remark > .admonition-title::after {
   color: #C3D1AC !important;
 }
 
+/* ===================================================================== *
+ * "Back to top" button
+ * ---------------------------------------------------------------------
+ * pydata-sphinx-theme paints the floating #pst-back-to-top pill with its
+ * secondary accent (orange `--pst-color-secondary`, purple-on-hover
+ * `--pst-color-secondary-highlight`). Both clash with the SAV/ASA logo, so
+ * re-colour the pill to the brand pair: SAV lime green at rest, SAV grey on
+ * hover, with a legible arrow in each theme.
+ * ===================================================================== */
+#pst-back-to-top {
+  background-color: #98C21F !important;   /* SAV lime green */
+  color: #ffffff !important;              /* white arrow */
+}
+#pst-back-to-top:hover,
+#pst-back-to-top:focus {
+  background-color: #5F625F !important;   /* SAV charcoal grey */
+  color: #ffffff !important;
+}
+html[data-theme="dark"] #pst-back-to-top,
+html[data-mode="dark"]  #pst-back-to-top {
+  background-color: #C5DE7A !important;   /* light SAV green */
+  color: #1b1f24 !important;              /* dark arrow for contrast */
+}
+html[data-theme="dark"] #pst-back-to-top:hover,
+html[data-theme="dark"] #pst-back-to-top:focus,
+html[data-mode="dark"]  #pst-back-to-top:hover,
+html[data-mode="dark"]  #pst-back-to-top:focus {
+  background-color: #C2C5C2 !important;   /* light SAV grey */
+  color: #1b1f24 !important;
+}
+
