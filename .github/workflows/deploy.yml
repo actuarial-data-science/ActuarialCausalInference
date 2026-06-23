@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - tb/migration
   workflow_dispatch:
 
 # Allow the workflow to push to the gh-pages branch
