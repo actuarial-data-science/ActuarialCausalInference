@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="430" viewBox="0 0 820 430" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .panel { fill: #fbfbfd; stroke: #b9bfd0; }
+    .leaf  { fill: #eef2ff; stroke: #b9bfd0; }
+    .root  { fill: #eef2ff; stroke: #3b4cca; }
+    .edge  { stroke: #9aa0ac; }
+    .pill  { fill: #fff6e6; stroke: #f59e0b; }
+    .combo { fill: #eef2ff; stroke: #3b4cca; }
+    @media (prefers-color-scheme: dark) {
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .panel { fill: #161b22; stroke: #3a4150; }
+      .leaf  { fill: #20294d; stroke: #3a4150; }
+      .root  { fill: #20294d; stroke: #8893e6; }
+      .edge  { stroke: #6b7280; }
+      .pill  { fill: #3a2f12; stroke: #f59e0b; }
+      .combo { fill: #20294d; stroke: #8893e6; }
+    }
+  </style>
+  <defs>
+    <marker id="bcfar" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path fill="#888" d="M0,0 L8,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- Titles -->
+  <text class="ink-t" x="410" y="26" text-anchor="middle" font-size="15" font-weight="bold">Bayesian Causal Forest: separate priors for prognosis and treatment effect</text>
+  <text class="muted" x="410" y="46" text-anchor="middle" font-size="12">two independent BART ensembles avoid regularisation-induced confounding</text>
+
+  <!-- ===================== Panel 1: prognostic mu(X) ===================== -->
+  <rect class="panel" x="40" y="68" width="340" height="210" rx="10"/>
+  <text class="ink-t" x="210" y="94" text-anchor="middle" font-size="14" font-weight="bold">Prognostic function  &#956;(X)</text>
+  <text class="muted" x="210" y="111" text-anchor="middle" font-size="11">baseline outcome &#8212; sum of m trees</text>
+
+  <!-- mini trees (centres 120, 205, 290) -->
+  <text class="muted" x="120" y="150" text-anchor="middle" font-size="12" font-style="italic">h&#8321;(X)</text>
+  <text class="muted" x="205" y="150" text-anchor="middle" font-size="12" font-style="italic">h&#8322;(X)</text>
+  <text class="muted" x="290" y="150" text-anchor="middle" font-size="12" font-style="italic">h&#8323;(X)</text>
+  <g>
+    <!-- tree 1 -->
+    <line class="edge" x1="120" y1="170" x2="102" y2="192" stroke-width="1.4"/>
+    <line class="edge" x1="120" y1="170" x2="138" y2="192" stroke-width="1.4"/>
+    <circle class="root" cx="120" cy="163" r="7"/>
+    <rect class="leaf" x="94" y="192" width="16" height="13" rx="2"/>
+    <rect class="leaf" x="130" y="192" width="16" height="13" rx="2"/>
+    <!-- tree 2 -->
+    <line class="edge" x1="205" y1="170" x2="187" y2="192" stroke-width="1.4"/>
+    <line class="edge" x1="205" y1="170" x2="223" y2="192" stroke-width="1.4"/>
+    <circle class="root" cx="205" cy="163" r="7"/>
+    <rect class="leaf" x="179" y="192" width="16" height="13" rx="2"/>
+    <rect class="leaf" x="215" y="192" width="16" height="13" rx="2"/>
+    <!-- tree 3 -->
+    <line class="edge" x1="290" y1="170" x2="272" y2="192" stroke-width="1.4"/>
+    <line class="edge" x1="290" y1="170" x2="308" y2="192" stroke-width="1.4"/>
+    <circle class="root" cx="290" cy="163" r="7"/>
+    <rect class="leaf" x="264" y="192" width="16" height="13" rx="2"/>
+    <rect class="leaf" x="300" y="192" width="16" height="13" rx="2"/>
+  </g>
+  <text class="muted" x="162" y="186" text-anchor="middle" font-size="14">+</text>
+  <text class="muted" x="247" y="186" text-anchor="middle" font-size="14">+</text>
+  <text class="muted" x="338" y="190" text-anchor="middle" font-size="13">+ &#8943;</text>
+  <text class="muted" x="210" y="232" text-anchor="middle" font-size="11" font-style="italic">BART prior: shallow trees, shrinkage</text>
+  <text class="ink-t" x="210" y="258" text-anchor="middle" font-size="11">includes propensity &#960;&#770;(X) as a covariate</text>
+
+  <!-- propensity pill feeding into panel 1 -->
+  <rect class="pill" x="60" y="300" width="120" height="26" rx="13"/>
+  <text class="ink-t" x="120" y="317" text-anchor="middle" font-size="12">&#960;&#770;(X) estimate</text>
+  <line class="edge" x1="120" y1="300" x2="120" y2="280" stroke-width="1.4" marker-end="url(#bcfar)"/>
+
+  <!-- ===================== Panel 2: treatment effect tau(X) ===================== -->
+  <rect class="panel" x="440" y="68" width="340" height="210" rx="10"/>
+  <text class="ink-t" x="610" y="94" text-anchor="middle" font-size="14" font-weight="bold">Treatment effect  &#964;(X)</text>
+  <text class="muted" x="610" y="111" text-anchor="middle" font-size="11">heterogeneous CATE &#8212; separate sum of trees</text>
+
+  <text class="muted" x="520" y="150" text-anchor="middle" font-size="12" font-style="italic">g&#8321;(X)</text>
+  <text class="muted" x="605" y="150" text-anchor="middle" font-size="12" font-style="italic">g&#8322;(X)</text>
+  <text class="muted" x="690" y="150" text-anchor="middle" font-size="12" font-style="italic">g&#8323;(X)</text>
+  <g>
+    <!-- tree 1 -->
+    <line class="edge" x1="520" y1="170" x2="502" y2="192" stroke-width="1.4"/>
+    <line class="edge" x1="520" y1="170" x2="538" y2="192" stroke-width="1.4"/>
+    <circle class="root" cx="520" cy="163" r="7"/>
+    <rect class="leaf" x="494" y="192" width="16" height="13" rx="2"/>
+    <rect class="leaf" x="530" y="192" width="16" height="13" rx="2"/>
+    <!-- tree 2 -->
+    <line class="edge" x1="605" y1="170" x2="587" y2="192" stroke-width="1.4"/>
+    <line class="edge" x1="605" y1="170" x2="623" y2="192" stroke-width="1.4"/>
+    <circle class="root" cx="605" cy="163" r="7"/>
+    <rect class="leaf" x="579" y="192" width="16" height="13" rx="2"/>
+    <rect class="leaf" x="615" y="192" width="16" height="13" rx="2"/>
+    <!-- tree 3 -->
+    <line class="edge" x1="690" y1="170" x2="672" y2="192" stroke-width="1.4"/>
+    <line class="edge" x1="690" y1="170" x2="708" y2="192" stroke-width="1.4"/>
+    <circle class="root" cx="690" cy="163" r="7"/>
+    <rect class="leaf" x="664" y="192" width="16" height="13" rx="2"/>
+    <rect class="leaf" x="700" y="192" width="16" height="13" rx="2"/>
+  </g>
+  <text class="muted" x="562" y="186" text-anchor="middle" font-size="14">+</text>
+  <text class="muted" x="647" y="186" text-anchor="middle" font-size="14">+</text>
+  <text class="muted" x="738" y="190" text-anchor="middle" font-size="13">+ &#8943;</text>
+  <text class="muted" x="610" y="232" text-anchor="middle" font-size="11" font-style="italic">own prior &amp; scale: less shrinkage of &#964;</text>
+  <text class="ink-t" x="610" y="258" text-anchor="middle" font-size="11">multiplied by treatment T only</text>
+
+  <!-- ===================== Combine ===================== -->
+  <line class="edge" x1="210" y1="326" x2="330" y2="356" stroke-width="1.6" marker-end="url(#bcfar)"/>
+  <line class="edge" x1="610" y1="278" x2="490" y2="356" stroke-width="1.6" marker-end="url(#bcfar)"/>
+
+  <rect class="combo" x="250" y="356" width="320" height="56" rx="10"/>
+  <text class="ink-t" x="410" y="382" text-anchor="middle" font-size="15" font-weight="bold">Y = &#956;(X) + &#964;(X)&#183;T + &#949;</text>
+  <text class="muted" x="410" y="402" text-anchor="middle" font-size="11">CATE &#964;&#770;(x): posterior mean with 95% credible interval</text>
+</svg>

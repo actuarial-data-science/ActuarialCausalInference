@@ -1,0 +1,62 @@
+---
+description: Conventions for writing causal inference tutorial content (MyST markdown, citations, notation)
+globs: tutorial/**/*.md
+alwaysApply: false
+---
+
+# Tutorial Content Conventions
+
+## Format
+- Files use **MyST Markdown** for Jupyter Book.
+- Use `sphinx-proof` directives (`{prf:assumption}`, `{prf:definition}`, `{prf:theorem}`, etc.) for formal statements.
+- Cross-reference with `{prf:ref}`.
+
+## Citations & Sources
+When constructing content, cite the sources available in `papers/` and `papers/references.md`.
+
+### PDFs in `papers/`
+- Rubin, D. B. (1974). *Estimating causal effects of treatments in randomized and nonrandomized studies.* (`papers/1974 Rubin.pdf`)
+- Wooldridge, J. M. (2012). *Introductory Econometrics.* (`papers/2012 Wooldridge - Introductory Econometrics.pdf`)
+- Angrist, J. D. & Pischke, J.-S. (2015). *Mastering 'Metrics.* (`papers/Joshua D. Angrist...pdf`)
+- Schmidt (2018). *Heterogeneous treatment effects.* (`papers/2018 Schmidt - Heterogeneous.pdf`)
+
+### Key Publications (from `papers/references.md`)
+- Athey & Imbens (2016). Recursive partitioning for heterogeneous causal effects.
+- Athey, Tibshirani & Wager (2019). Generalized random forests.
+- Athey & Wager (2019). Estimating treatment effects with causal forests.
+- Austin (2011). Propensity score methods for reducing confounding.
+- Breiman (2001). Random forests.
+- Breiman et al. (1984). Classification and regression trees.
+- Rosenbaum & Rubin (1983). The central role of the propensity score.
+- Shalizi (2025). Advanced Data Analysis from an Elementary Point of View.
+- Kusner, Loftus, Russell & Silva (2017). Counterfactual fairness.
+- Lindholm, Richman, Tsanakas & Wüthrich (2022). A discussion of discrimination and fairness in insurance pricing.
+- Wager & Athey (2018). Estimation and inference of heterogeneous treatment effects using random forests.
+
+### Theory Links
+- [Causal ML Book](https://www.causalmlbook.com/)
+- [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html)
+- [Bookdown: Causal Inference Tutorial](https://bookdown.org/mike/data_analysis/sec-causal-inference.html)
+- [Causal Assumptions Guide](https://www.uniqcret.com/post/causal-inference-assumptions-guide)
+- [QuantCo: MetaLearners for CATE](https://tech.quantco.com/blog/metalearners)
+- [Simpson's Paradox Tutorial](https://www.biostatistics.ca/when-data-lies-simpsons-paradox-a-step-by-step-simulation-code-notebook/)
+- [Python Causality Handbook](https://matheusfacure.github.io/python-causality-handbook/)
+
+Prefer inline parenthetical citations, e.g. (Rubin, 1974) or (Athey & Imbens, 2016). When a link is available, make the citation a hyperlink.
+
+## Notation
+- Treatment: $T$ (binary: $T \in \{0,1\}$)
+- Outcome: $Y$
+- Potential outcomes: $Y(1), Y(0)$
+- Covariates: $X$
+- Fork / confounder: $F$ (common cause of $T$ and $Y$)
+- Collider: $C$ (common effect of two or more variables)
+- Mediator: $M$ (variable on the causal path from $T$ to $Y$)
+- Sensitive attribute: $S$ (protected characteristic, e.g. gender, ethnicity)
+- Unmeasured confounder: $U$
+- Observed data: $D = \{(X_i, T_i, Y_i)\}_{i=1}^{n}$
+- Propensity score: $\pi(x) = \mathbb{P}(T=1 \mid X=x)$
+- Do NOT use $A$ or $A_t$ for treatment (use $T$)
+- Do NOT use $Z$ for named confounder/fork nodes in examples (use $F$); $Z$ is acceptable for generic adjustment sets in formal definitions (Pearl notation)
+- Do NOT use $D$ for the protected attribute (use $S$); $D$ is reserved for the observed dataset
+- Do NOT use $\hat{e}(x)$ for propensity score (use $\hat{\pi}(x)$)

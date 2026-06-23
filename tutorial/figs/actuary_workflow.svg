@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="150" viewBox="0 0 900 150" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .arrow { fill: #333; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="arWf" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L9,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- Data input (source) -->
+  <path d="M8,56 L8,94 A42,8 0 0 0 92,94 L92,56 A42,8 0 0 0 8,56 Z" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <ellipse cx="50" cy="56" rx="42" ry="8" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <text x="50" y="78" text-anchor="middle" font-size="10.5" fill="#3a4149" font-weight="bold">Observational</text>
+  <text x="50" y="92" text-anchor="middle" font-size="10.5" fill="#3a4149">data</text>
+  <text class="muted" x="50" y="122" text-anchor="middle" font-size="11" font-style="italic">data flows in</text>
+
+  <!-- Identification: Draw DAG -->
+  <rect x="107" y="45" width="118" height="60" rx="10" fill="#eaf2fb" stroke="#4a90d9" stroke-width="2"/>
+  <text x="166" y="70" text-anchor="middle" font-size="12" fill="#1f5fa0" font-weight="bold">Draw</text>
+  <text x="166" y="88" text-anchor="middle" font-size="12" fill="#1f5fa0">the DAG</text>
+
+  <!-- Identification: Check assumptions -->
+  <rect x="240" y="45" width="118" height="60" rx="10" fill="#eaf2fb" stroke="#4a90d9" stroke-width="2"/>
+  <text x="299" y="70" text-anchor="middle" font-size="12" fill="#1f5fa0" font-weight="bold">Check</text>
+  <text x="299" y="88" text-anchor="middle" font-size="12" fill="#1f5fa0">assumptions</text>
+
+  <!-- Validation: Diagnose biases -->
+  <rect x="373" y="45" width="118" height="60" rx="10" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="432" y="70" text-anchor="middle" font-size="12" fill="#136c3a" font-weight="bold">Diagnose</text>
+  <text x="432" y="88" text-anchor="middle" font-size="12" fill="#136c3a">biases</text>
+
+  <!-- Validation: Select de-biasing -->
+  <rect x="506" y="45" width="118" height="60" rx="10" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="565" y="70" text-anchor="middle" font-size="12" fill="#136c3a" font-weight="bold">Select</text>
+  <text x="565" y="88" text-anchor="middle" font-size="12" fill="#136c3a">de-biasing</text>
+
+  <!-- Inference: Estimate -->
+  <rect x="639" y="45" width="118" height="60" rx="10" fill="#fff7e6" stroke="#d9920a" stroke-width="2"/>
+  <text x="698" y="70" text-anchor="middle" font-size="12" fill="#8a5b00" font-weight="bold">Estimate</text>
+  <text x="698" y="88" text-anchor="middle" font-size="12" fill="#8a5b00">causal effect &#964;&#770;</text>
+
+  <!-- Validation: Sensitivity -->
+  <rect x="772" y="45" width="118" height="60" rx="10" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="831" y="70" text-anchor="middle" font-size="12" fill="#136c3a" font-weight="bold">Sensitivity</text>
+  <text x="831" y="88" text-anchor="middle" font-size="12" fill="#136c3a">analysis</text>
+
+  <!-- Arrows -->
+  <line class="ink-l" x1="94" y1="75" x2="105" y2="75" stroke-width="2" marker-end="url(#arWf)"/>
+  <line class="ink-l" x1="227" y1="75" x2="238" y2="75" stroke-width="2" marker-end="url(#arWf)"/>
+  <line class="ink-l" x1="360" y1="75" x2="371" y2="75" stroke-width="2" marker-end="url(#arWf)"/>
+  <line class="ink-l" x1="493" y1="75" x2="504" y2="75" stroke-width="2" marker-end="url(#arWf)"/>
+  <line class="ink-l" x1="626" y1="75" x2="637" y2="75" stroke-width="2" marker-end="url(#arWf)"/>
+  <line class="ink-l" x1="759" y1="75" x2="770" y2="75" stroke-width="2" marker-end="url(#arWf)"/>
+</svg>

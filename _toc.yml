@@ -1,0 +1,42 @@
+# Table of Contents for Jupyter Book
+# https://github.com/TomasBeuzen/python-programming-for-data-science/blob/main/_toc.yml
+# https://www.tomasbeuzen.com/python-programming-for-data-science/README.html
+
+format: jb-book
+root: README.md
+
+parts:
+  - caption: Tutorial
+    maxdepth: 1 # maximum depth of the table of contents
+    numbered: false
+    chapters:
+      - file: tutorial/concepts.md
+      - file: tutorial/identification.md
+        sections: 
+          - file: tutorial/assumptions.md
+          - file: tutorial/graphical_models.md
+          - file: tutorial/methods.md
+      - file: tutorial/inference.md
+        sections: 
+          - file: tutorial/propensity.md
+          - file: tutorial/regression_methods.md
+          - file: tutorial/tree_based_methods.md
+          - file: tutorial/bayesian.md
+      - file: tutorial/sensitivity.md
+        sections:
+          - file: tutorial/diagnostics.md
+          - file: tutorial/debias.md
+          - file: tutorial/fairness.md
+
+  - caption: Actuarial Applications
+    chapters:
+#      - file: application/case_study.ipynb
+      - file: application/observational_data.ipynb
+      - file: application/pricing.ipynb
+      - file: application/claims_triage.ipynb
+#      - file: application/traffic_study.ipynb
+      - file: application/health_interventions.ipynb
+
+  - caption: References
+    chapters:
+      - file: papers/references.md

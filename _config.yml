@@ -1,0 +1,58 @@
+# Jupyter Book configuration file
+# This enables live code execution using Sphinx-Thebe extension
+
+title: Actuarial Causal Inference Tutorial
+author: Theresa Blümlein, Patrick Cheridito, and Daniel Meier
+date: 2026-01-01
+logo: figure/logo.png
+
+repository:
+  url                       : https://github.com/tbluemlein/causalinference  # Online location of our book
+  branch                    : gh-pages  # Which branch of the repository should be used when creating links (optional)
+
+parse:
+  myst_enable_extensions:
+    - amsmath        # Enables advanced LaTeX environments
+    - dollarmath     # Enables $ and $$ math blocks
+    - colon_fence    # Allows ::: callouts for Actuarial Notes
+    - substitution   # Allows {{ var }} injections
+    - tasklist       # Good for your "TODO" lists
+
+# Fix for Jupyter Book compatibility issue
+use_multitoc_numbering: false
+
+# Notebook execution configuration
+execute:
+  execute_notebooks: auto  # Options: 'auto', 'force', 'cache', 'off'
+  timeout: 120  # Timeout in seconds for each cell execution
+  allow_errors: false  # Set to true to allow errors without stopping build
+  raise_on_error: false  # Set to true to stop build on errors
+  cache: "_build/.jupyter_cache"  # Cache directory for executed notebooks
+
+# Launch buttons configuration
+launch_buttons:
+  thebe: true
+  binderhub_url: "https://mybinder.org" 
+  colab_url: "https://colab.research.google.com"
+
+exclude_patterns:
+  - causal_venv/*
+
+sphinx:
+  extra_extensions:
+    - sphinx_proof
+    - sphinxcontrib.mermaid
+  config:
+    numfig: true
+    copyright: "2026"
+    html_static_path:
+    - _static
+    html_css_files:
+    - figure-theme.css
+    html_js_files:
+    - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
+    - figure-theme.js
+    thebe_config:
+      use_thebe_lite: true
+      exclude_patterns: ["**/_*.yml", "**/*.md", "**/*.ipynb"]
+
