@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="280" viewBox="0 0 560 280" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .arrow { fill: #333; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="arFpci" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L9,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- unit -->
+  <circle cx="80" cy="140" r="30" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <text x="80" y="146" text-anchor="middle" font-size="16" fill="#3a4149">unit i</text>
+
+  <!-- branch lines -->
+  <line class="ink-l" x1="110" y1="125" x2="220" y2="78" stroke-width="2" marker-end="url(#arFpci)"/>
+  <line class="ink-l" x1="110" y1="155" x2="220" y2="202" stroke-width="2" marker-end="url(#arFpci)"/>
+  <text class="muted" x="150" y="95" text-anchor="middle" font-size="12">if T = 1</text>
+  <text class="muted" x="150" y="195" text-anchor="middle" font-size="12">if T = 0</text>
+
+  <!-- factual world (observed) -->
+  <rect x="232" y="48" width="220" height="62" rx="10" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="342" y="74" text-anchor="middle" font-size="15" fill="#136c3a">Y(1) &#8212; factual</text>
+  <text x="342" y="95" text-anchor="middle" font-size="12" fill="#136c3a">observed in the data</text>
+
+  <!-- counterfactual world (unobserved) -->
+  <rect x="232" y="170" width="220" height="62" rx="10" fill="#f2f2f2" stroke="#777" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="342" y="196" text-anchor="middle" font-size="15" fill="#555">Y(0) &#8212; counterfactual</text>
+  <text x="342" y="217" text-anchor="middle" font-size="12" fill="#555">never observed for this unit</text>
+
+  <!-- big question mark -->
+  <text x="492" y="212" text-anchor="middle" font-size="34" fill="#cc3b3b" font-weight="bold">?</text>
+
+  <!-- caption note -->
+  <text class="muted" x="280" y="266" text-anchor="middle" font-size="12" font-style="italic">Only one potential outcome is ever observed, so &#964;&#7522; = Y(1) &#8211; Y(0) is unidentifiable for any single unit.</text>
+</svg>

@@ -1,0 +1,813 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Regression Methods &#8212; Actuarial Causal Inference Tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../_static/dark_mode_widget.css?v=7446dea4" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe-button-patch.css?v=e3482d12" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/figure-theme.css?v=61ffb31e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script src="../_static/sphinx-thebe-i18n.js?v=ea266e56"></script>
+    <script defer="defer" src="../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../_static/sphinx-thebe-lite.js?v=93e2d225"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial/regression_methods';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/figure-theme.js?v=29b104fa"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tree-Based Methods" href="tree_based_methods.html" />
+    <link rel="prev" title="Propensity Score Methods" href="propensity.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Actuarial Causal Inference Tutorial - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Actuarial Causal Inference Tutorial - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Actuarial Causal Inference Tutorial
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts of Causal Inference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="identification.html">Identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="assumptions.html">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graphical_models.html">Graphical Causal Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html">Identification Strategies</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="inference.html">Causal Inference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="propensity.html">Propensity Score Methods</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Regression Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tree_based_methods.html">Tree-Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bayesian.html">Bayesian Causal Inference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="sensitivity.html">Validation and Sensitivity Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="diagnostics.html">Diagnostics and Sensitivity Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debias.html">Biases and De-Biasing Toolkit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fairness.html">Why Causal Inference Resolves the Fairness Problem</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Actuarial Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../application/observational_data.html">Observational Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/pricing.html">Fairness in Insurance Pricing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/claims_triage.html">Explainable Motor Claims Triage with CATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/health_interventions.html">Synthetic Health Dataset for Causal Inference Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../papers/references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorial/regression_methods.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Regression Methods</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outcome-regression-and-g-computation">Outcome Regression and G-Computation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#doubly-robust-estimation-aipw-and-tmle">Doubly Robust Estimation: AIPW and TMLE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#double-machine-learning">Double Machine Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meta-learners-for-heterogeneous-effects">Meta-Learners for Heterogeneous Effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instrumental-variable-approach">Instrumental Variable Approach</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-stage-least-squares-regression">Two Stage Least Squares Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quasi-experimental-designs">Quasi-Experimental Designs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#difference-in-differences">Difference-in-Differences</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-discontinuity">Regression Discontinuity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synthetic-control">Synthetic Control</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="regression-methods">
+<h1>Regression Methods<a class="headerlink" href="#regression-methods" title="Link to this heading">#</a></h1>
+<p>Regression-based estimators identify causal effects by explicitly modelling the relationship between covariates <span class="math notranslate nohighlight">\(X\)</span>, treatment <span class="math notranslate nohighlight">\(T\)</span>, and outcome <span class="math notranslate nohighlight">\(Y\)</span>. They span a spectrum: from a single <em>outcome model</em> (g-computation), to estimators that combine an outcome model with a <em>propensity model</em> for robustness (AIPW, TMLE), to <em>orthogonal</em> machine-learning estimators that remain valid under flexible nuisance models (Double Machine Learning and its meta-learner extensions for heterogeneous effects). A second family — <em>quasi-experimental designs</em> such as instrumental variables, difference-in-differences, and regression discontinuity — exploits structural sources of exogenous variation rather than adjustment alone. The figure below shows the common causal structure that the adjustment-based estimators target.</p>
+<figure class="align-default" id="fig-dr-dag">
+<a class="reference internal image-reference" href="../_images/dag_doubly_robust.svg"><img alt="../_images/dag_doubly_robust.svg" src="../_images/dag_doubly_robust.svg" style="width: 70%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">Causal structure underlying adjustment-based regression estimators. The covariates <span class="math notranslate nohighlight">\(X\)</span> confound the treatment–outcome relationship through the <em>propensity model</em> <span class="math notranslate nohighlight">\(\pi(X) = P(T = 1 \mid X)\)</span> and the <em>outcome model</em> <span class="math notranslate nohighlight">\(\mu(X) = \mathbb{E}[Y \mid T, X]\)</span>. Doubly robust estimators combine both to estimate the causal effect <span class="math notranslate nohighlight">\(\tau\)</span>.</span><a class="headerlink" href="#fig-dr-dag" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="outcome-regression-and-g-computation">
+<h2>Outcome Regression and G-Computation<a class="headerlink" href="#outcome-regression-and-g-computation" title="Link to this heading">#</a></h2>
+<p>The simplest regression adjustment fits a single outcome model <span class="math notranslate nohighlight">\(\hat{\mu}(t, x) = \mathbb{E}[Y \mid T = t, X = x]\)</span> and contrasts its predictions under treatment and control, averaged over the covariate distribution. This is the <em>parametric g-formula</em> of <a class="reference external" href="https://doi.org/10.1016/0270-0255(86)90088-6">Robins (1986)</a> (see <a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Hernán &amp; Robins (2020)</a> for a modern treatment), and it serves as the conceptual baseline on which the doubly robust and orthogonal estimators below build.</p>
+<div class="proof algorithm dropdown admonition" id="alg-gcomp">
+<p class="admonition-title"><span class="caption-number">Algorithm 6 </span> (G-Computation (Outcome Regression))</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D = \{X, T, Y\}\)</span>, ML learner <span class="math notranslate nohighlight">\(\mathcal{L}_Y\)</span> (for outcome)</p>
+<p><strong>Outputs</strong> Estimated ATE <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p>
+<ol class="arabic simple">
+<li><p>Fit outcome model <span class="math notranslate nohighlight">\(\hat{\mu}(t, x) = \mathcal{L}_Y(Y \sim T, X)\)</span> on <span class="math notranslate nohighlight">\(D\)</span></p></li>
+<li><p>For every observation <span class="math notranslate nohighlight">\(i\)</span>:</p>
+<ol class="arabic simple">
+<li><p>Predict counterfactual outcomes <span class="math notranslate nohighlight">\(\hat{\mu}(1, x^{(i)})\)</span> and <span class="math notranslate nohighlight">\(\hat{\mu}(0, x^{(i)})\)</span></p></li>
+</ol>
+</li>
+<li><p>Average the contrast: <span class="math notranslate nohighlight">\(\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}(1, x^{(i)}) - \hat{\mu}(0, x^{(i)})\right]\)</span></p></li>
+<li><p>Return estimated treatment effect <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p></li>
+</ol>
+</section>
+</div><p>G-computation is consistent only if the outcome model is correctly specified. Because a misspecified <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> propagates directly into the estimate, it motivates the <em>doubly robust</em> estimators that add a second line of defence through the propensity score.</p>
+</section>
+<section id="doubly-robust-estimation-aipw-and-tmle">
+<h2>Doubly Robust Estimation: AIPW and TMLE<a class="headerlink" href="#doubly-robust-estimation-aipw-and-tmle" title="Link to this heading">#</a></h2>
+<p>Doubly robust estimators combine the outcome model <span class="math notranslate nohighlight">\(\hat{\mu}(t, x)\)</span> with the propensity model <span class="math notranslate nohighlight">\(\hat{\pi}(x)\)</span> so that the estimate is consistent if <em>either</em> model is correctly specified — a property that single-model approaches lack. The <em>Augmented Inverse Propensity Weighting</em> (AIPW) estimator of <a class="reference external" href="https://doi.org/10.1080/01621459.1994.10476818">Robins, Rotnitzky &amp; Zhao (1994)</a> augments the g-computation estimate with an inverse-propensity-weighted residual correction; <a class="reference external" href="https://doi.org/10.1111/j.1541-0420.2005.00377.x">Bang &amp; Robins (2005)</a> developed the framework for causal inference, and <a class="reference external" href="https://doi.org/10.2202/1557-4679.1043">van der Laan &amp; Rubin (2006)</a> introduced <em>Targeted Maximum Likelihood Estimation</em> (TMLE) as a substitution-based alternative with the same robustness guarantee. DML (next section) is essentially AIPW equipped with Neyman-orthogonality and cross-fitting.</p>
+<div class="proof algorithm dropdown admonition" id="alg-aipw">
+<p class="admonition-title"><span class="caption-number">Algorithm 7 </span> (Augmented Inverse Propensity Weighting (AIPW))</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D = \{X, T, Y\}\)</span>, ML learners <span class="math notranslate nohighlight">\(\mathcal{L}_Y\)</span> (outcome), <span class="math notranslate nohighlight">\(\mathcal{L}_T\)</span> (treatment)</p>
+<p><strong>Outputs</strong> Doubly robust ATE estimate <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p>
+<ol class="arabic">
+<li><p>Fit nuisance models (with cross-fitting): outcome <span class="math notranslate nohighlight">\(\hat{\mu}(t, x) = \mathcal{L}_Y(Y \sim T, X)\)</span> and propensity <span class="math notranslate nohighlight">\(\hat{\pi}(x) = \mathcal{L}_T(T \sim X)\)</span></p></li>
+<li><p>For every observation <span class="math notranslate nohighlight">\(i\)</span>, form the doubly robust score <em>(g-computation plus IPW residual correction)</em></p>
+<div class="math notranslate nohighlight">
+\[\hat{\psi}^{(i)} = \hat{\mu}(1, x^{(i)}) - \hat{\mu}(0, x^{(i)}) + \frac{T^{(i)}\,(Y^{(i)} - \hat{\mu}(1, x^{(i)}))}{\hat{\pi}(x^{(i)})} - \frac{(1 - T^{(i)})\,(Y^{(i)} - \hat{\mu}(0, x^{(i)}))}{1 - \hat{\pi}(x^{(i)})}\]</div>
+</li>
+<li><p>Average the scores: <span class="math notranslate nohighlight">\(\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\hat{\psi}^{(i)}\)</span></p></li>
+<li><p>Return estimated treatment effect <span class="math notranslate nohighlight">\(\hat{\tau}\)</span> <em>(consistent if either <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> or <span class="math notranslate nohighlight">\(\hat{\pi}\)</span> is correct)</em></p></li>
+</ol>
+</section>
+</div><div class="proof algorithm dropdown admonition" id="alg-tmle">
+<p class="admonition-title"><span class="caption-number">Algorithm 8 </span> (Targeted Maximum Likelihood Estimation (TMLE))</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D = \{X, T, Y\}\)</span>, ML learners <span class="math notranslate nohighlight">\(\mathcal{L}_Y\)</span> (outcome), <span class="math notranslate nohighlight">\(\mathcal{L}_T\)</span> (treatment)</p>
+<p><strong>Outputs</strong> Doubly robust ATE estimate <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p>
+<ol class="arabic simple">
+<li><p>Fit initial outcome model <span class="math notranslate nohighlight">\(\hat{\mu}^0(t, x) = \mathcal{L}_Y(Y \sim T, X)\)</span> and propensity <span class="math notranslate nohighlight">\(\hat{\pi}(x) = \mathcal{L}_T(T \sim X)\)</span></p></li>
+<li><p>Compute the <em>clever covariate</em> <span class="math notranslate nohighlight">\(H^{(i)} = \frac{T^{(i)}}{\hat{\pi}(x^{(i)})} - \frac{1 - T^{(i)}}{1 - \hat{\pi}(x^{(i)})}\)</span></p></li>
+<li><p><strong>Targeting step:</strong> fit a one-parameter fluctuation <span class="math notranslate nohighlight">\(\hat{\epsilon}\)</span> by regressing <span class="math notranslate nohighlight">\(Y\)</span> on <span class="math notranslate nohighlight">\(H\)</span> with offset <span class="math notranslate nohighlight">\(\hat{\mu}^0\)</span>, giving the updated model <span class="math notranslate nohighlight">\(\hat{\mu}^\star(t, x)\)</span></p></li>
+<li><p>Plug the targeted model into g-computation: <span class="math notranslate nohighlight">\(\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}^\star(1, x^{(i)}) - \hat{\mu}^\star(0, x^{(i)})\right]\)</span></p></li>
+<li><p>Return estimated treatment effect <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p></li>
+</ol>
+</section>
+</div></section>
+<section id="double-machine-learning">
+<h2>Double Machine Learning<a class="headerlink" href="#double-machine-learning" title="Link to this heading">#</a></h2>
+<p>The DML estimator of <a class="reference external" href="https://doi.org/10.1111/ectj.12097">Chernozhukov et al. (2018)</a> makes the doubly robust idea robust to flexible, slowly-converging machine-learning nuisance models. For a binary or continuous treatment it builds on the <em>partially linear model</em> <span class="math notranslate nohighlight">\(Y = \tau T + g(X) + \varepsilon\)</span>, whose residualize-then-regress solution is Robinson’s estimator <a class="reference external" href="https://doi.org/10.2307/1912705">(Robinson, 1988)</a>. By <em>partialling out</em> the covariate effect from both <span class="math notranslate nohighlight">\(Y\)</span> and <span class="math notranslate nohighlight">\(T\)</span> before estimating <span class="math notranslate nohighlight">\(\tau\)</span>, the resulting moment condition is Neyman-orthogonal, so first-stage estimation error has only a second-order effect on <span class="math notranslate nohighlight">\(\hat{\tau}\)</span>.</p>
+<div class="proof algorithm dropdown admonition" id="alg-dml">
+<p class="admonition-title"><span class="caption-number">Algorithm 9 </span> (Double Machine Learning)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D = \{X, T, Y\}\)</span>, ML learners <span class="math notranslate nohighlight">\(\mathcal{L}_Y\)</span> (for outcome), <span class="math notranslate nohighlight">\(\mathcal{L}_T\)</span> (for treatment)</p>
+<p><strong>Outputs</strong> Estimated causal effect <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p>
+<ol class="arabic simple">
+<li><p>Split data <span class="math notranslate nohighlight">\(D\)</span> into two disjoint sets: <span class="math notranslate nohighlight">\(D_{train}\)</span> and <span class="math notranslate nohighlight">\(D_{eval}\)</span> <em>(Cross-fitting/Honesty)</em></p></li>
+<li><p><strong>Outcome Residualization</strong></p>
+<ol class="arabic simple">
+<li><p>Train model <span class="math notranslate nohighlight">\(\hat{\mu}(X) = \mathcal{L}_Y(Y \sim X)\)</span> on <span class="math notranslate nohighlight">\(D_{train}\)</span> <em>(Predict <span class="math notranslate nohighlight">\(Y\)</span> using covariates only)</em></p></li>
+<li><p>Compute residuals <span class="math notranslate nohighlight">\(\tilde{Y} = Y - \hat{\mu}(X)\)</span> on <span class="math notranslate nohighlight">\(D_{eval}\)</span></p></li>
+</ol>
+</li>
+<li><p><strong>Treatment Residualization</strong></p>
+<ol class="arabic simple">
+<li><p>Train model <span class="math notranslate nohighlight">\(\hat{\pi}(X) = \mathcal{L}_T(T \sim X)\)</span> on <span class="math notranslate nohighlight">\(D_{train}\)</span> <em>(Estimate propensity score)</em></p></li>
+<li><p>Compute residuals <span class="math notranslate nohighlight">\(\tilde{T} = T - \hat{\pi}(X)\)</span> on <span class="math notranslate nohighlight">\(D_{eval}\)</span></p></li>
+</ol>
+</li>
+<li><p><strong>Causal Estimation</strong></p>
+<ol class="arabic simple">
+<li><p>Regress outcome residuals on treatment residuals: <span class="math notranslate nohighlight">\(\tilde{Y} = \tau \tilde{T} + \epsilon\)</span></p></li>
+<li><p><em>Note:</em> This identifies the effect using only the “exogenous” variation in <span class="math notranslate nohighlight">\(T\)</span></p></li>
+</ol>
+</li>
+<li><p>Return estimated treatment effect <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p></li>
+</ol>
+</section>
+</div></section>
+<section id="meta-learners-for-heterogeneous-effects">
+<h2>Meta-Learners for Heterogeneous Effects<a class="headerlink" href="#meta-learners-for-heterogeneous-effects" title="Link to this heading">#</a></h2>
+<p>The estimators above target the average treatment effect. <em>Meta-learners</em> extend regression adjustment to the conditional average treatment effect (CATE) <span class="math notranslate nohighlight">\(\tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X = x]\)</span> by decomposing the problem into standard regression sub-tasks solved by any base learner. <a class="reference external" href="https://doi.org/10.1073/pnas.1804597116">Künzel et al. (2019)</a> introduced the S-, T-, and X-learners; the <em>R-learner</em> of <a class="reference external" href="https://doi.org/10.1093/biomet/asaa076">Nie &amp; Wager (2021)</a> is the direct CATE generalization of the DML residualization above, and the <em>DR-learner</em> of <a class="reference external" href="https://doi.org/10.1214/23-EJS2157">Kennedy (2023)</a> regresses the doubly robust AIPW score on covariates. <a class="reference external" href="https://doi.org/10.1093/ectj/utaa027">Semenova &amp; Chernozhukov (2021)</a> extend DML to estimate CATEs and other causal functions. These estimators bridge directly to the <a class="reference internal" href="tree_based_methods.html#alg-causaltree">Algorithm 16</a> and <a class="reference internal" href="tree_based_methods.html#alg-causalforest">Algorithm 17</a> methods that follow.</p>
+<div class="proof algorithm dropdown admonition" id="alg-metalearners">
+<p class="admonition-title"><span class="caption-number">Algorithm 10 </span> (Meta-Learners (S-, T-, X-Learner))</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D = \{X, T, Y\}\)</span>, base learner <span class="math notranslate nohighlight">\(\mathcal{L}\)</span></p>
+<p><strong>Outputs</strong> Estimated CATE <span class="math notranslate nohighlight">\(\hat{\tau}(x)\)</span></p>
+<ol class="arabic simple">
+<li><p><strong>S-learner</strong> <em>(single model)</em>: fit <span class="math notranslate nohighlight">\(\hat{\mu}(t, x) = \mathcal{L}(Y \sim T, X)\)</span>; return <span class="math notranslate nohighlight">\(\hat{\tau}(x) = \hat{\mu}(1, x) - \hat{\mu}(0, x)\)</span></p></li>
+<li><p><strong>T-learner</strong> <em>(two models)</em>: fit <span class="math notranslate nohighlight">\(\hat{\mu}_1(x)\)</span> on treated and <span class="math notranslate nohighlight">\(\hat{\mu}_0(x)\)</span> on control; return <span class="math notranslate nohighlight">\(\hat{\tau}(x) = \hat{\mu}_1(x) - \hat{\mu}_0(x)\)</span></p></li>
+<li><p><strong>X-learner</strong> <em>(cross fitting on imputed effects)</em>:</p>
+<ol class="arabic simple">
+<li><p>Impute effects <span class="math notranslate nohighlight">\(\tilde{D}^{(i)}_1 = Y^{(i)} - \hat{\mu}_0(x^{(i)})\)</span> for treated, <span class="math notranslate nohighlight">\(\tilde{D}^{(i)}_0 = \hat{\mu}_1(x^{(i)}) - Y^{(i)}\)</span> for control</p></li>
+<li><p>Regress <span class="math notranslate nohighlight">\(\hat{\tau}_1(x) = \mathcal{L}(\tilde{D}_1 \sim X)\)</span> and <span class="math notranslate nohighlight">\(\hat{\tau}_0(x) = \mathcal{L}(\tilde{D}_0 \sim X)\)</span></p></li>
+<li><p>Combine with propensity weight: <span class="math notranslate nohighlight">\(\hat{\tau}(x) = \hat{\pi}(x)\,\hat{\tau}_0(x) + (1 - \hat{\pi}(x))\,\hat{\tau}_1(x)\)</span></p></li>
+</ol>
+</li>
+<li><p>Return CATE <span class="math notranslate nohighlight">\(\hat{\tau}(x)\)</span></p></li>
+</ol>
+</section>
+</div><div class="proof algorithm dropdown admonition" id="alg-rlearner">
+<p class="admonition-title"><span class="caption-number">Algorithm 11 </span> (R-Learner (and DR-Learner))</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D = \{X, T, Y\}\)</span>, ML learners for nuisances and a CATE learner <span class="math notranslate nohighlight">\(\mathcal{L}_\tau\)</span></p>
+<p><strong>Outputs</strong> Estimated CATE <span class="math notranslate nohighlight">\(\hat{\tau}(x)\)</span></p>
+<ol class="arabic simple">
+<li><p>With cross-fitting, estimate nuisances <span class="math notranslate nohighlight">\(\hat{\pi}(x) = \mathbb{E}[T \mid X]\)</span> and <span class="math notranslate nohighlight">\(\hat{\mu}(x) = \mathbb{E}[Y \mid X]\)</span></p></li>
+<li><p>Form residuals <span class="math notranslate nohighlight">\(\tilde{Y} = Y - \hat{\mu}(X)\)</span> and <span class="math notranslate nohighlight">\(\tilde{T} = T - \hat{\pi}(X)\)</span> <em>(as in <a class="reference internal" href="#alg-dml">Algorithm 9</a>)</em></p></li>
+<li><p><strong>R-learner:</strong> minimize the weighted loss <span class="math notranslate nohighlight">\(\hat{\tau} = \arg\min_{\tau} \sum_i \left(\tilde{Y}^{(i)} - \tau(x^{(i)})\,\tilde{T}^{(i)}\right)^2\)</span></p></li>
+<li><p><strong>DR-learner (alternative):</strong> regress the AIPW score <span class="math notranslate nohighlight">\(\hat{\psi}^{(i)}\)</span> from <a class="reference internal" href="#alg-aipw">Algorithm 7</a> on covariates, <span class="math notranslate nohighlight">\(\hat{\tau}(x) = \mathcal{L}_\tau(\hat{\psi} \sim X)\)</span></p></li>
+<li><p>Return CATE <span class="math notranslate nohighlight">\(\hat{\tau}(x)\)</span></p></li>
+</ol>
+</section>
+</div></section>
+<section id="instrumental-variable-approach">
+<h2>Instrumental Variable Approach<a class="headerlink" href="#instrumental-variable-approach" title="Link to this heading">#</a></h2>
+<p>When unobserved confounding exists, an instrument <span class="math notranslate nohighlight">\(I\)</span> can identify the causal effect if (<a class="reference external" href="https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf">Shalizi, 2025, Ch. 23</a>):</p>
+<ol class="arabic simple">
+<li><p><em>Relevance</em>: <span class="math notranslate nohighlight">\(I\)</span> affects <span class="math notranslate nohighlight">\(T\)</span></p></li>
+<li><p><em>Exogenous noise</em>: <span class="math notranslate nohighlight">\(I \perp U\)</span> — the instrumental variable is independent of the unobserved confounder</p></li>
+<li><p><em>Exclusion restriction</em>: <span class="math notranslate nohighlight">\(I\)</span> affects <span class="math notranslate nohighlight">\(Y\)</span> only through <span class="math notranslate nohighlight">\(T\)</span></p></li>
+</ol>
+<p>The modern econometric interpretation of instrumental variables traces to <a class="reference external" href="https://doi.org/10.2307/2951620">Imbens &amp; Angrist (1994)</a>, who show that 2SLS identifies a <em>local average treatment effect</em> for compliers, and to the potential-outcomes framework of <a class="reference external" href="https://doi.org/10.1080/01621459.1996.10476902">Angrist, Imbens &amp; Rubin (1996)</a>; <a class="reference external" href="https://doi.org/10.2307/2937954">Angrist &amp; Krueger (1991)</a> is the canonical applied example, using quarter of birth as an instrument for schooling.</p>
+<p>The instrumental variable <span class="math notranslate nohighlight">\(I\)</span> is a source of exogenous variation in <span class="math notranslate nohighlight">\(T\)</span> that is uncorrelated with the common ancestors of <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>. By seeing how both <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> respond to these perturbations, and using the fact that <span class="math notranslate nohighlight">\(I\)</span> only influences <span class="math notranslate nohighlight">\(Y\)</span> through <span class="math notranslate nohighlight">\(T\)</span>, we can deduce the causal effect of <span class="math notranslate nohighlight">\(T\)</span> on <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<figure class="align-default" id="fig-iv">
+<a class="reference internal image-reference" href="../_images/iv_structure.svg"><img alt="../_images/iv_structure.svg" src="../_images/iv_structure.svg" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Instrumental variable <span class="math notranslate nohighlight">\(I\)</span>. The instrument induces exogenous variation in the treatment <span class="math notranslate nohighlight">\(T\)</span> while being independent of the unobserved confounder <span class="math notranslate nohighlight">\(U\)</span> and affecting the outcome <span class="math notranslate nohighlight">\(Y\)</span> only through <span class="math notranslate nohighlight">\(T\)</span>.</span><a class="headerlink" href="#fig-iv" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="two-stage-least-squares-regression">
+<h2>Two Stage Least Squares Regression<a class="headerlink" href="#two-stage-least-squares-regression" title="Link to this heading">#</a></h2>
+<div class="proof algorithm dropdown admonition" id="alg-2sls">
+<p class="admonition-title"><span class="caption-number">Algorithm 12 </span> (Two Stage Least Squares)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Observed instrument <span class="math notranslate nohighlight">\(I\)</span>, treatment variable <span class="math notranslate nohighlight">\(T\)</span>, outcome <span class="math notranslate nohighlight">\(Y\)</span></p>
+<p><strong>Outputs</strong> Estimated causal effect <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> of <span class="math notranslate nohighlight">\(T\)</span> on <span class="math notranslate nohighlight">\(Y\)</span></p>
+<ol class="arabic simple">
+<li><p><strong>Stage 1: Regress <span class="math notranslate nohighlight">\(T\)</span> on instrument <span class="math notranslate nohighlight">\(I\)</span></strong> <em>(Isolate exogenous variation)</em></p>
+<ol class="arabic simple">
+<li><p>Estimate <span class="math notranslate nohighlight">\(\hat{\alpha}\)</span> from <span class="math notranslate nohighlight">\(T = \alpha I + \epsilon_1\)</span></p></li>
+<li><p>Compute predicted values <span class="math notranslate nohighlight">\(\hat{T} = \hat{\alpha} I\)</span> <em>(<span class="math notranslate nohighlight">\(\hat{T}\)</span> is now independent of <span class="math notranslate nohighlight">\(U\)</span>)</em></p></li>
+</ol>
+</li>
+<li><p><strong>Stage 2: Regress <span class="math notranslate nohighlight">\(Y\)</span> on predicted <span class="math notranslate nohighlight">\(\hat{T}\)</span></strong> <em>(Identify causal mechanism)</em></p>
+<ol class="arabic simple">
+<li><p>Estimate <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> from <span class="math notranslate nohighlight">\(Y = \beta \hat{T} + \epsilon_2\)</span></p></li>
+</ol>
+</li>
+<li><p>Return estimated causal effect <span class="math notranslate nohighlight">\(\hat{\beta}\)</span></p></li>
+</ol>
+</section>
+</div></section>
+<section id="quasi-experimental-designs">
+<h2>Quasi-Experimental Designs<a class="headerlink" href="#quasi-experimental-designs" title="Link to this heading">#</a></h2>
+<p>When adjustment for measured covariates is insufficient, <em>quasi-experimental designs</em> recover causal effects by exploiting structural features of how treatment is assigned — over time, around a threshold, or relative to a comparison unit. These designs are especially relevant for longitudinal data. They form the empirical core of modern applied econometrics; the introductory textbooks of <a class="reference external" href="https://doi.org/10.1515/9781400829828">Angrist &amp; Pischke (2009)</a>, <a class="reference external" href="https://press.princeton.edu/books/paperback/9780691152844/mastering-metrics">Angrist &amp; Pischke (2015)</a> and <a class="reference external" href="https://doi.org/10.12987/9780300255881">Cunningham (2021)</a>, together with the more statistical treatment of <a class="reference external" href="https://doi.org/10.1017/CBO9781139025751">Imbens &amp; Rubin (2015)</a>, give book-length introductions to the methods below.</p>
+<section id="difference-in-differences">
+<h3>Difference-in-Differences<a class="headerlink" href="#difference-in-differences" title="Link to this heading">#</a></h3>
+<p>Difference-in-differences (DiD) compares the change in outcomes over time between a treated and a control group. Under the <em>parallel trends</em> assumption — that, absent treatment, both groups would have evolved in parallel — the post-period gap beyond the projected control trend identifies the average treatment effect on the treated (ATT). The design dates back to <a class="reference external" href="https://doi.org/10.2307/1924810">Ashenfelter &amp; Card (1985)</a>, and <a class="reference external" href="https://doi.org/10.1257/aer.84.4.772">Card &amp; Krueger (1994)</a> is its best-known application — the New Jersey minimum-wage study. <a class="reference external" href="https://doi.org/10.1016/j.jeconom.2020.06.003">Sant’Anna &amp; Zhao (2020)</a> give a doubly robust DiD estimator, while <a class="reference external" href="https://doi.org/10.1016/j.jeconom.2020.12.001">Callaway &amp; Sant’Anna (2021)</a> and <a class="reference external" href="https://doi.org/10.1016/j.jeconom.2021.03.014">Goodman-Bacon (2021)</a> extend the design to multiple periods and staggered treatment timing.</p>
+<figure class="align-default" id="fig-did">
+<a class="reference internal image-reference" href="../_images/did_parallel_trends.svg"><img alt="../_images/did_parallel_trends.svg" src="../_images/did_parallel_trends.svg" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Difference-in-differences. Under parallel trends, the treated group’s counterfactual (dashed) would have followed the control trend; the vertical gap <span class="math notranslate nohighlight">\(\tau\)</span> in the post-period is the ATT.</span><a class="headerlink" href="#fig-did" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="proof algorithm dropdown admonition" id="alg-did">
+<p class="admonition-title"><span class="caption-number">Algorithm 13 </span> (Difference-in-Differences (2x2))</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Outcomes <span class="math notranslate nohighlight">\(Y\)</span> for treated/control groups, pre/post periods; optional covariates <span class="math notranslate nohighlight">\(X\)</span></p>
+<p><strong>Outputs</strong> Estimated ATT <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p>
+<ol class="arabic simple">
+<li><p>Compute the treated change: <span class="math notranslate nohighlight">\(\Delta_{\text{treated}} = \bar{Y}^{\text{post}}_{\text{treated}} - \bar{Y}^{\text{pre}}_{\text{treated}}\)</span></p></li>
+<li><p>Compute the control change: <span class="math notranslate nohighlight">\(\Delta_{\text{control}} = \bar{Y}^{\text{post}}_{\text{control}} - \bar{Y}^{\text{pre}}_{\text{control}}\)</span></p></li>
+<li><p>Difference the differences: <span class="math notranslate nohighlight">\(\hat{\tau} = \Delta_{\text{treated}} - \Delta_{\text{control}}\)</span> <em>(removes time-invariant confounding)</em></p></li>
+<li><p><em>(Optional)</em> For covariate-conditional parallel trends, use a doubly robust estimator combining outcome-change regression and a propensity model</p></li>
+<li><p>Return estimated ATT <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p></li>
+</ol>
+</section>
+</div></section>
+<section id="regression-discontinuity">
+<h3>Regression Discontinuity<a class="headerlink" href="#regression-discontinuity" title="Link to this heading">#</a></h3>
+<p>Regression discontinuity (RD) applies when treatment is assigned by a threshold rule on a continuous <em>running variable</em> <span class="math notranslate nohighlight">\(X\)</span> (e.g. a risk score). The design was first proposed by <a class="reference external" href="https://doi.org/10.1037/h0044319">Thistlethwaite &amp; Campbell (1960)</a>; its modern econometric foundations are due to <a class="reference external" href="https://doi.org/10.1111/1468-0262.00183">Hahn, Todd &amp; van der Klaauw (2001)</a>. Units just below and just above the cutoff <span class="math notranslate nohighlight">\(c\)</span> are comparable, so the jump in the outcome at <span class="math notranslate nohighlight">\(c\)</span> identifies the local average treatment effect (LATE). <a class="reference external" href="https://doi.org/10.1016/j.jeconom.2007.05.001">Imbens &amp; Lemieux (2008)</a> provide a practical guide to estimation and bandwidth selection.</p>
+<figure class="align-default" id="fig-rdd">
+<a class="reference internal image-reference" href="../_images/rdd_discontinuity.svg"><img alt="../_images/rdd_discontinuity.svg" src="../_images/rdd_discontinuity.svg" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Regression discontinuity. Treatment switches on at the cutoff <span class="math notranslate nohighlight">\(c\)</span>; the vertical jump <span class="math notranslate nohighlight">\(\tau\)</span> in the fitted outcome at <span class="math notranslate nohighlight">\(c\)</span> identifies the local average treatment effect.</span><a class="headerlink" href="#fig-rdd" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="proof algorithm dropdown admonition" id="alg-rdd">
+<p class="admonition-title"><span class="caption-number">Algorithm 14 </span> (Regression Discontinuity)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Running variable <span class="math notranslate nohighlight">\(X\)</span>, outcome <span class="math notranslate nohighlight">\(Y\)</span>, cutoff <span class="math notranslate nohighlight">\(c\)</span>, bandwidth <span class="math notranslate nohighlight">\(h\)</span></p>
+<p><strong>Outputs</strong> Estimated LATE <span class="math notranslate nohighlight">\(\hat{\tau}\)</span> at the cutoff</p>
+<ol class="arabic simple">
+<li><p>Restrict to observations within the bandwidth, <span class="math notranslate nohighlight">\(|X - c| \le h\)</span></p></li>
+<li><p>Fit a local regression just below the cutoff: <span class="math notranslate nohighlight">\(\hat{\mu}_-(c) = \lim_{x \uparrow c} \mathbb{E}[Y \mid X = x]\)</span></p></li>
+<li><p>Fit a local regression just above the cutoff: <span class="math notranslate nohighlight">\(\hat{\mu}_+(c) = \lim_{x \downarrow c} \mathbb{E}[Y \mid X = x]\)</span></p></li>
+<li><p>Estimate the discontinuity: <span class="math notranslate nohighlight">\(\hat{\tau} = \hat{\mu}_+(c) - \hat{\mu}_-(c)\)</span></p></li>
+<li><p>Return estimated LATE <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p></li>
+</ol>
+</section>
+</div></section>
+<section id="synthetic-control">
+<h3>Synthetic Control<a class="headerlink" href="#synthetic-control" title="Link to this heading">#</a></h3>
+<p>When only a single (or a few) treated unit is observed over time, the synthetic control method — introduced by <a class="reference external" href="https://doi.org/10.1257/000282803321455188">Abadie &amp; Gardeazabal (2003)</a> and formalized by <a class="reference external" href="https://doi.org/10.1198/jasa.2009.ap08746">Abadie, Diamond &amp; Hainmueller (2010)</a> — constructs a counterfactual as a weighted combination of untreated <em>donor</em> units chosen to match the treated unit’s pre-intervention trajectory. The post-intervention gap between the treated unit and its synthetic counterpart estimates the effect.</p>
+<figure class="align-default" id="fig-synth">
+<a class="reference internal image-reference" href="../_images/synthetic_control.svg"><img alt="../_images/synthetic_control.svg" src="../_images/synthetic_control.svg" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Synthetic control. Donor-pool units are weighted so the synthetic control (dashed) tracks the treated unit before intervention; the post-intervention gap <span class="math notranslate nohighlight">\(\tau\)</span> is the estimated effect.</span><a class="headerlink" href="#fig-synth" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="proof algorithm dropdown admonition" id="alg-synth">
+<p class="admonition-title"><span class="caption-number">Algorithm 15 </span> (Synthetic Control)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Treated unit, donor pool of <span class="math notranslate nohighlight">\(J\)</span> untreated units, pre-intervention outcomes and predictors</p>
+<p><strong>Outputs</strong> Estimated effect path <span class="math notranslate nohighlight">\(\hat{\tau}_t\)</span> for post-intervention periods</p>
+<ol class="arabic simple">
+<li><p>Choose non-negative weights <span class="math notranslate nohighlight">\(w_1, \ldots, w_J\)</span> (summing to one) minimizing the pre-intervention distance between the treated unit and the weighted donor pool</p></li>
+<li><p>Construct the synthetic control outcome <span class="math notranslate nohighlight">\(\hat{Y}^{\text{synth}}_t = \sum_{j=1}^{J} w_j\, Y^{(j)}_t\)</span> for each period <span class="math notranslate nohighlight">\(t\)</span></p></li>
+<li><p>For each post-intervention period, estimate the effect <span class="math notranslate nohighlight">\(\hat{\tau}_t = Y^{\text{treated}}_t - \hat{Y}^{\text{synth}}_t\)</span></p></li>
+<li><p>Return the estimated effect path <span class="math notranslate nohighlight">\(\hat{\tau}_t\)</span></p></li>
+</ol>
+</section>
+</div></section>
+</section>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="propensity.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Propensity Score Methods</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tree_based_methods.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tree-Based Methods</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outcome-regression-and-g-computation">Outcome Regression and G-Computation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#doubly-robust-estimation-aipw-and-tmle">Doubly Robust Estimation: AIPW and TMLE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#double-machine-learning">Double Machine Learning</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meta-learners-for-heterogeneous-effects">Meta-Learners for Heterogeneous Effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instrumental-variable-approach">Instrumental Variable Approach</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-stage-least-squares-regression">Two Stage Least Squares Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quasi-experimental-designs">Quasi-Experimental Designs</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#difference-in-differences">Difference-in-Differences</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-discontinuity">Regression Discontinuity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synthetic-control">Synthetic Control</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theresa Blümlein, Patrick Cheridito, and Daniel Meier
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

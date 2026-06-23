@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="320" viewBox="0 0 600 320" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .arrow { fill: #333; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="arDsep" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L9,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- F (Confounder) -->
+  <circle cx="90" cy="80" r="32" fill="#fdecec" stroke="#cc3b3b" stroke-width="2"/>
+  <text x="90" y="86" text-anchor="middle" font-size="20" fill="#8a1f1f">F</text>
+  <text class="muted" x="90" y="36" text-anchor="middle" font-size="12">confounder</text>
+
+  <!-- M (Mediator) -->
+  <circle cx="360" cy="80" r="32" fill="#fff7e6" stroke="#d9920a" stroke-width="2"/>
+  <text x="360" y="86" text-anchor="middle" font-size="20" fill="#8a5b00">M</text>
+  <text class="muted" x="360" y="36" text-anchor="middle" font-size="12">mediator</text>
+
+  <!-- T (Treatment) -->
+  <circle cx="220" cy="190" r="32" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="220" y="196" text-anchor="middle" font-size="20" fill="#136c3a">T</text>
+  <text class="muted" x="160" y="196" text-anchor="middle" font-size="12">treatment</text>
+
+  <!-- Y (Outcome) -->
+  <circle cx="500" cy="190" r="32" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <text x="500" y="196" text-anchor="middle" font-size="20" fill="#3a4149">Y</text>
+  <text class="muted" x="500" y="146" text-anchor="middle" font-size="12">outcome</text>
+
+  <!-- C (Collider) -->
+  <circle cx="360" cy="270" r="32" fill="#f3eafa" stroke="#9b59b6" stroke-width="2"/>
+  <text x="360" y="276" text-anchor="middle" font-size="20" fill="#6f3d93">C</text>
+  <text class="muted" x="425" y="276" text-anchor="middle" font-size="12">collider</text>
+
+  <line class="ink-l" x1="112" y1="103" x2="200" y2="166" stroke-width="2" marker-end="url(#arDsep)"/>
+  <line class="ink-l" x1="120" y1="90" x2="470" y2="178" stroke-width="2" marker-end="url(#arDsep)"/>
+  <line class="ink-l" x1="250" y1="170" x2="336" y2="100" stroke-width="2" marker-end="url(#arDsep)"/>
+  <line class="ink-l" x1="384" y1="100" x2="472" y2="170" stroke-width="2" marker-end="url(#arDsep)"/>
+  <line class="ink-l" x1="248" y1="206" x2="330" y2="252" stroke-width="2" marker-end="url(#arDsep)"/>
+  <line class="ink-l" x1="472" y1="206" x2="390" y2="252" stroke-width="2" marker-end="url(#arDsep)"/>
+</svg>

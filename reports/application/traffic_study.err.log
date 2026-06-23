@@ -1,0 +1,64 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py", line 1323, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Install libraries for Causal Inference and Visualization
+import pandas as pd
+import numpy as np
+import statsmodels.formula.api as smf
+import shap
+from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
+from econml.dml import CausalForestDML
+from econml.cate_interpreter import SingleTreeCateInterpreter, SingleTreePolicyInterpreter
+import networkx as nx
+
+# Suppress specific warnings globally
+import os
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+
+# Import helper functions from utils
+from utils import draw_causal_dag, extract_tree_rules, extract_tree_rules_native, get_pdp_speed
+
+# Visualization
+import matplotlib.pyplot as plt
+import seaborn as sns
+from ridgeplot import ridgeplot
+import plotly.graph_objects as go
+import plotly
+sns.set_theme(style="whitegrid")
+plotly.offline.init_notebook_mode(connected=True)
+------------------
+
+
+[31m---------------------------------------------------------------------------[39m
+[31mModuleNotFoundError[39m                       Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[1][39m[32m, line 23[39m
+[32m     19[39m 
+[32m     20[39m [38;5;66;03m# Visualization[39;00m
+[32m     21[39m [38;5;28;01mimport[39;00m matplotlib.pyplot [38;5;28;01mas[39;00m plt
+[32m     22[39m [38;5;28;01mimport[39;00m seaborn [38;5;28;01mas[39;00m sns
+[32m---> [39m[32m23[39m [38;5;28;01mfrom[39;00m ridgeplot [38;5;28;01mimport[39;00m ridgeplot
+[32m     24[39m [38;5;28;01mimport[39;00m plotly.graph_objects [38;5;28;01mas[39;00m go
+[32m     25[39m [38;5;28;01mimport[39;00m plotly
+[32m     26[39m sns.set_theme(style=[33m"whitegrid"[39m)
+
+[31mModuleNotFoundError[39m: No module named 'ridgeplot'
+

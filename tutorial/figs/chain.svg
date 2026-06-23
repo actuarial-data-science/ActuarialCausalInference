@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="210" viewBox="0 0 520 210" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .arrow { fill: #333; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="arChain" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L9,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- X (Cause) -->
+  <circle cx="90" cy="110" r="32" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="90" y="116" text-anchor="middle" font-size="20" fill="#136c3a">X</text>
+  <text class="muted" x="90" y="166" text-anchor="middle" font-size="12">cause</text>
+
+  <!-- M (Mediator) -->
+  <circle cx="260" cy="110" r="32" fill="#fff7e6" stroke="#d9920a" stroke-width="2"/>
+  <text x="260" y="116" text-anchor="middle" font-size="20" fill="#8a5b00">M</text>
+  <text class="muted" x="260" y="166" text-anchor="middle" font-size="12">mediator</text>
+
+  <!-- Y (Effect) -->
+  <circle cx="430" cy="110" r="32" fill="#fdecec" stroke="#cc3b3b" stroke-width="2"/>
+  <text x="430" y="116" text-anchor="middle" font-size="20" fill="#8a1f1f">Y</text>
+  <text class="muted" x="430" y="166" text-anchor="middle" font-size="12">effect</text>
+
+  <line class="ink-l" x1="122" y1="110" x2="224" y2="110" stroke-width="2" marker-end="url(#arChain)"/>
+  <line class="ink-l" x1="292" y1="110" x2="394" y2="110" stroke-width="2" marker-end="url(#arChain)"/>
+</svg>

@@ -1,0 +1,817 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Diagnostics and Sensitivity Analysis &#8212; Actuarial Causal Inference Tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../_static/dark_mode_widget.css?v=7446dea4" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe-button-patch.css?v=e3482d12" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/figure-theme.css?v=61ffb31e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script src="../_static/sphinx-thebe-i18n.js?v=ea266e56"></script>
+    <script defer="defer" src="../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../_static/sphinx-thebe-lite.js?v=93e2d225"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial/diagnostics';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/figure-theme.js?v=29b104fa"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Biases and De-Biasing Toolkit" href="debias.html" />
+    <link rel="prev" title="Validation and Sensitivity Analysis" href="sensitivity.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Actuarial Causal Inference Tutorial - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Actuarial Causal Inference Tutorial - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Actuarial Causal Inference Tutorial
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts of Causal Inference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="identification.html">Identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="assumptions.html">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graphical_models.html">Graphical Causal Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html">Identification Strategies</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="inference.html">Causal Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="propensity.html">Propensity Score Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regression_methods.html">Regression Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tree_based_methods.html">Tree-Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bayesian.html">Bayesian Causal Inference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="sensitivity.html">Validation and Sensitivity Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Diagnostics and Sensitivity Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debias.html">Biases and De-Biasing Toolkit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fairness.html">Why Causal Inference Resolves the Fairness Problem</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Actuarial Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../application/observational_data.html">Observational Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/pricing.html">Fairness in Insurance Pricing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/claims_triage.html">Explainable Motor Claims Triage with CATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/health_interventions.html">Synthetic Health Dataset for Causal Inference Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../papers/references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorial/diagnostics.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Diagnostics and Sensitivity Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-sensitivity-analysis">Why Sensitivity Analysis?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-r-2-how-much-confounding-would-it-take">Partial R^2: how much confounding would it take?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#balance-diagnostics">Balance Diagnostics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#placebo-and-falsification-tests">Placebo and Falsification Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rosenbaum-bounds">Rosenbaum Bounds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-values">E-Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-r-2-and-omitted-variable-bias">Partial <span class="math notranslate nohighlight">\(R^2\)</span> and Omitted Variable Bias</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bounds-on-treatment-effects">Bounds on Treatment Effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#actuarial-sensitivity-analysis-workflow">Actuarial Sensitivity Analysis Workflow</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="diagnostics-and-sensitivity-analysis">
+<h1>Diagnostics and Sensitivity Analysis<a class="headerlink" href="#diagnostics-and-sensitivity-analysis" title="Link to this heading">#</a></h1>
+<p>The identification of causal effects from observational data rests on untestable assumptions — most critically, <a class="reference internal" href="assumptions.html#exchangeability">Assumption 4</a> (no unmeasured confounding). <strong>Sensitivity analysis</strong> asks: <em>how robust are our conclusions to violations of these assumptions?</em> This section surveys the main approaches, following <a class="reference external" href="https://doi.org/10.1007/978-1-4757-3692-2">Rosenbaum (2002)</a>, <a class="reference external" href="https://doi.org/10.1111/rssb.12348">Cinelli &amp; Hazlett (2020)</a>, and <a class="reference external" href="https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf">Shalizi (2025)</a>.</p>
+<section id="why-sensitivity-analysis">
+<h2>Why Sensitivity Analysis?<a class="headerlink" href="#why-sensitivity-analysis" title="Link to this heading">#</a></h2>
+<p>Even with careful adjustment for observed confounders, the possibility of <strong>unmeasured confounding</strong> can never be ruled out in observational data. Sensitivity analysis complements point estimation by answering:</p>
+<ol class="arabic simple">
+<li><p><strong>How strong</strong> would an unmeasured confounder <span class="math notranslate nohighlight">\(U\)</span> need to be to explain away the observed effect?</p></li>
+<li><p><strong>How much</strong> would the estimated treatment effect change under plausible confounding scenarios?</p></li>
+<li><p><strong>What are the bounds</strong> on the true effect under worst-case confounding?</p></li>
+</ol>
+<p>Without sensitivity analysis, causal conclusions from observational data remain fundamentally incomplete.</p>
+<section id="partial-r-2-how-much-confounding-would-it-take">
+<h3>Partial R^2: how much confounding would it take?<a class="headerlink" href="#partial-r-2-how-much-confounding-would-it-take" title="Link to this heading">#</a></h3>
+<p>The figure below makes questions 1 and 2 tangible. Imagine our adjusted estimate is a positive effect of <span class="math notranslate nohighlight">\(+3\)</span>. Now hypothesise a confounder <span class="math notranslate nohighlight">\(U\)</span> that we <em>failed</em> to measure and ask: how strongly would it have to be linked to the treatment <strong>and</strong> to the outcome before our conclusion collapses? Drag the two sliders — each one is a <strong>partial <span class="math notranslate nohighlight">\(R^2\)</span></strong>, the share of variation in <span class="math notranslate nohighlight">\(T\)</span> (or <span class="math notranslate nohighlight">\(Y\)</span>) that <span class="math notranslate nohighlight">\(U\)</span> would explain <em>on top of</em> everything we already adjusted for (<a class="reference internal" href="#partial-r2">Definition 16</a>).</p>
+<ul class="simple">
+<li><p>Move along the <strong>diagonal</strong> (equal strength on both fronts) to read off the <strong>robustness value</strong>: the partial <span class="math notranslate nohighlight">\(R^2\)</span> a confounder would need with both <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> to drag the effect to zero.</p></li>
+<li><p>Press <strong>“as strong as covariate <span class="math notranslate nohighlight">\(X\)</span>”</strong> to benchmark against a confounder no stronger than one we already observe — if that point sits well inside the green region, even a substantial omitted variable would not overturn the finding.</p></li>
+<li><p>Watch panel 2: the bias <strong>drags the estimate toward zero</strong>, and the verdict flips to <em>explained away</em> only once the confounder crosses the red frontier.</p></li>
+</ul>
+<iframe id="sensitivity" src="../figure/sensitivity_explainer.html?v=20260612d"
+        style="width:100%; border:none; height:900px;"
+        title="Sensitivity to unmeasured confounding interactive explainer"></iframe>
+<script>
+(function () {
+  var iframe = document.getElementById('sensitivity');
+  function currentTheme() {
+    var root = document.documentElement;
+    var theme = root.getAttribute('data-theme');
+    if (theme === 'light' || theme === 'dark') return theme;
+    var mode = root.getAttribute('data-mode') || 'auto';
+    if (mode === 'light' || mode === 'dark') return mode;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function sendTheme() {
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'set-theme', value: currentTheme() }, '*');
+    }
+  }
+  window.addEventListener('message', function (e) {
+    if (!e.data) return;
+    if (e.data.type === 'sens-height') {
+      iframe.style.height = (e.data.height + 20) + 'px';
+    } else if (e.data.type === 'sens-ready') {
+      sendTheme();
+    }
+  });
+  new MutationObserver(sendTheme).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-mode', 'data-theme']
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sendTheme);
+  iframe.addEventListener('load', sendTheme);
+  sendTheme();
+})();
+</script><p>The rest of this section formalises the tools behind this picture: <strong>E-values</strong> put question 1 on a risk-ratio scale, <strong>partial <span class="math notranslate nohighlight">\(R^2\)</span> contours</strong> generalise the map above, <strong>Rosenbaum bounds</strong> answer question 1 for matched designs, and <strong>Manski bounds</strong> answer question 3 directly.</p>
+</section>
+</section>
+<section id="balance-diagnostics">
+<h2>Balance Diagnostics<a class="headerlink" href="#balance-diagnostics" title="Link to this heading">#</a></h2>
+<p>Before performing sensitivity analysis for unmeasured confounding, it is essential to verify that <strong>measured confounders are adequately balanced</strong> after adjustment. Balance diagnostics assess whether the adjustment method (matching, weighting, regression) has successfully eliminated observed confounding (<a class="reference external" href="https://doi.org/10.1080/00273171.2011.568786">Austin, 2011</a>).</p>
+<div class="proof definition dropdown admonition" id="smd">
+<p class="admonition-title"><span class="caption-number">Definition 12 </span> (Standardised Mean Difference (SMD))</p>
+<section class="definition-content" id="proof-content">
+<p>The <strong>standardised mean difference</strong> for a covariate <span class="math notranslate nohighlight">\(X_j\)</span> between treated and control groups is:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{SMD}_j = \frac{\bar{X}_{j,1} - \bar{X}_{j,0}}{\sqrt{(s_{j,1}^2 + s_{j,0}^2) / 2}}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\bar{X}_{j,t}\)</span> and <span class="math notranslate nohighlight">\(s_{j,t}^2\)</span> are the (weighted) mean and variance of <span class="math notranslate nohighlight">\(X_j\)</span> in treatment group <span class="math notranslate nohighlight">\(t\)</span>.</p>
+</section>
+</div><p>A common threshold is <span class="math notranslate nohighlight">\(|\text{SMD}| &lt; 0.1\)</span> for adequate balance. For propensity-score-based methods, compare SMDs before and after weighting/matching across all covariates. Poor balance signals residual confounding that undermines the analysis.</p>
+<p>Additional diagnostics include:</p>
+<ul class="simple">
+<li><p><strong>Propensity score overlap plots:</strong> Histograms or density plots of <span class="math notranslate nohighlight">\(\hat{\pi}(x)\)</span> by treatment group.</p></li>
+<li><p><strong>Variance ratios:</strong> The ratio of covariate variances between groups (target: close to 1).</p></li>
+<li><p><strong>Love plots:</strong> Visual display of SMDs for all covariates, before and after adjustment.</p></li>
+</ul>
+<p>The Love plot below is interactive. Drag the <strong>adjustment-strength</strong> slider to weight the sample toward balance: the causal diagram shows the backdoor path <span class="math notranslate nohighlight">\(X \rightarrow T\)</span> closing, and each covariate’s SMD migrates from its raw value (open circle) toward zero (filled circle), turning green once it falls within the <span class="math notranslate nohighlight">\(|\text{SMD}| &lt; 0.1\)</span> band.</p>
+<iframe id="loveplot" src="../figure/loveplot_explainer.html?v=20260612a"
+        style="width:100%; border:none; height:760px;"
+        title="Interactive covariate-balance Love plot"></iframe>
+<script>
+(function () {
+  var iframe = document.getElementById('loveplot');
+  function currentTheme() {
+    var root = document.documentElement;
+    var theme = root.getAttribute('data-theme');
+    if (theme === 'light' || theme === 'dark') return theme;
+    var mode = root.getAttribute('data-mode') || 'auto';
+    if (mode === 'light' || mode === 'dark') return mode;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function sendTheme() {
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'set-theme', value: currentTheme() }, '*');
+    }
+  }
+  window.addEventListener('message', function (e) {
+    if (!e.data) return;
+    if (e.data.type === 'love-height') {
+      iframe.style.height = (e.data.height + 20) + 'px';
+    } else if (e.data.type === 'love-ready') {
+      sendTheme();
+    }
+  });
+  new MutationObserver(sendTheme).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-mode', 'data-theme']
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sendTheme);
+  iframe.addEventListener('load', sendTheme);
+  sendTheme();
+})();
+</script></section>
+<section id="placebo-and-falsification-tests">
+<h2>Placebo and Falsification Tests<a class="headerlink" href="#placebo-and-falsification-tests" title="Link to this heading">#</a></h2>
+<div class="proof definition dropdown admonition" id="placebo-test">
+<p class="admonition-title"><span class="caption-number">Definition 13 </span> (Placebo Test)</p>
+<section class="definition-content" id="proof-content">
+<p>A <strong>placebo test</strong> (falsification test) applies the causal estimator to a setting where the true effect is known to be zero. If the estimator reports a non-zero effect, this signals bias (likely from unmeasured confounding or model misspecification).</p>
+</section>
+</div><p>Common designs:</p>
+<ul class="simple">
+<li><p><strong>Negative control outcome:</strong> Estimate the effect of <span class="math notranslate nohighlight">\(T\)</span> on an outcome <span class="math notranslate nohighlight">\(\tilde{Y}\)</span> that <span class="math notranslate nohighlight">\(T\)</span> cannot plausibly affect. A non-zero estimate implies residual confounding (<a class="reference external" href="https://doi.org/10.1097/EDE.0b013e3181d8d195">Lipsitch, Tchetgen &amp; Cohen, 2010</a>).</p></li>
+<li><p><strong>Negative control treatment:</strong> Estimate the effect of a “treatment” <span class="math notranslate nohighlight">\(\tilde{T}\)</span> that cannot plausibly affect <span class="math notranslate nohighlight">\(Y\)</span>. A non-zero estimate again signals confounding.</p></li>
+<li><p><strong>Pre-treatment outcome test:</strong> If pre-treatment outcome data exists, test whether the “treatment” predicts the outcome <em>before</em> it was administered. A significant effect indicates confounding.</p></li>
+</ul>
+<p>In insurance applications, a placebo test might assess whether a health intervention <span class="math notranslate nohighlight">\(T\)</span> “affects” a car insurance claim outcome — an effect here would indicate systematic differences between groups unrelated to the intervention.</p>
+</section>
+<section id="rosenbaum-bounds">
+<h2>Rosenbaum Bounds<a class="headerlink" href="#rosenbaum-bounds" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://doi.org/10.1007/978-1-4757-3692-2">Rosenbaum (2002)</a> developed a framework for bounding the effect of unmeasured confounding in matched observational studies.</p>
+<div class="proof definition dropdown admonition" id="rosenbaum-gamma">
+<p class="admonition-title"><span class="caption-number">Definition 14 </span> (Rosenbaum’s Sensitivity Parameter <span class="math notranslate nohighlight">\(\Gamma\)</span>)</p>
+<section class="definition-content" id="proof-content">
+<p>In a matched pair <span class="math notranslate nohighlight">\((i, j)\)</span> with similar observed covariates, the sensitivity parameter <span class="math notranslate nohighlight">\(\Gamma \geq 1\)</span> bounds the ratio of treatment assignment odds:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{\Gamma} \leq \frac{P(T_i = 1 \mid X_i) / P(T_i = 0 \mid X_i)}{P(T_j = 1 \mid X_j) / P(T_j = 0 \mid X_j)} \leq \Gamma
+\]</div>
+<p>When <span class="math notranslate nohighlight">\(\Gamma = 1\)</span>, treatment assignment is random within matched pairs (no unmeasured confounding). As <span class="math notranslate nohighlight">\(\Gamma\)</span> increases, more confounding is allowed.</p>
+</section>
+</div><p>For each value of <span class="math notranslate nohighlight">\(\Gamma\)</span>, Rosenbaum’s method computes <strong>worst-case p-values</strong> and confidence intervals. The analysis reports the <strong>critical <span class="math notranslate nohighlight">\(\Gamma\)</span></strong> at which the effect would no longer be statistically significant — a larger critical <span class="math notranslate nohighlight">\(\Gamma\)</span> indicates a more robust finding.</p>
+<p>Drag the <span class="math notranslate nohighlight">\(\alpha\)</span> slider below to set the significance threshold: the red dot tracks where the worst-case <span class="math notranslate nohighlight">\(p\)</span>-value curve crosses it, and the green band marks the range of hidden bias the conclusion can still absorb.</p>
+<iframe id="rosenbaum" src="../figure/rosenbaum_explainer.html?v=20260612b"
+        style="width:100%; border:none; height:560px;"
+        title="Rosenbaum bounds interactive explainer"></iframe>
+<script>
+(function () {
+  var iframe = document.getElementById('rosenbaum');
+  function currentTheme() {
+    var root = document.documentElement;
+    var theme = root.getAttribute('data-theme');
+    if (theme === 'light' || theme === 'dark') return theme;
+    var mode = root.getAttribute('data-mode') || 'auto';
+    if (mode === 'light' || mode === 'dark') return mode;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function sendTheme() {
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'set-theme', value: currentTheme() }, '*');
+    }
+  }
+  window.addEventListener('message', function (e) {
+    if (!e.data) return;
+    if (e.data.type === 'rosen-height') {
+      iframe.style.height = (e.data.height + 20) + 'px';
+    } else if (e.data.type === 'rosen-ready') {
+      sendTheme();
+    }
+  });
+  new MutationObserver(sendTheme).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-mode', 'data-theme']
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sendTheme);
+  iframe.addEventListener('load', sendTheme);
+  sendTheme();
+})();
+</script><p><strong>Reading the figure.</strong> At <span class="math notranslate nohighlight">\(\Gamma = 1\)</span> (no hidden bias) the result is firmly significant, exactly the conventional analysis. Moving right asks “what if assignment were not random within pairs?” — each step admits a stronger lurking variable, so the worst-case <span class="math notranslate nohighlight">\(p\)</span>-value climbs. A finding whose curve crosses <span class="math notranslate nohighlight">\(\alpha\)</span> only at a large <span class="math notranslate nohighlight">\(\Gamma\)</span> is reassuring; one that crosses just past <span class="math notranslate nohighlight">\(\Gamma = 1\)</span> is fragile, hingeing on the assumption of no unmeasured confounding. Reporting the critical <span class="math notranslate nohighlight">\(\Gamma\)</span> turns “we hope there is no hidden bias” into a quantified statement of <em>how much</em> hidden bias the conclusion could tolerate.</p>
+</section>
+<section id="e-values">
+<h2>E-Values<a class="headerlink" href="#e-values" title="Link to this heading">#</a></h2>
+<p>The <strong>E-value</strong> (<a class="reference external" href="https://doi.org/10.7326/M16-2607">VanderWeele &amp; Ding, 2017</a>) provides a simple, model-free summary of sensitivity to unmeasured confounding.</p>
+<div class="proof definition dropdown admonition" id="e-value">
+<p class="admonition-title"><span class="caption-number">Definition 15 </span> (E-Value)</p>
+<section class="definition-content" id="proof-content">
+<p>The <strong>E-value</strong> for an observed risk ratio <span class="math notranslate nohighlight">\(\text{RR}_{\text{obs}}\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+E = \text{RR}_{\text{obs}} + \sqrt{\text{RR}_{\text{obs}} \times (\text{RR}_{\text{obs}} - 1)}
+\]</div>
+<p>The E-value represents the <strong>minimum strength of association</strong> (on the risk ratio scale) that an unmeasured confounder <span class="math notranslate nohighlight">\(U\)</span> would need to have with <em>both</em> the treatment <span class="math notranslate nohighlight">\(T\)</span> and the outcome <span class="math notranslate nohighlight">\(Y\)</span>, conditional on measured covariates, to fully explain away the observed effect.</p>
+</section>
+</div><p>A large E-value means the observed association is robust: only a very strong unmeasured confounder could explain it away. A small E-value indicates vulnerability to even moderate unmeasured confounding.</p>
+<p>For treatment effects on continuous outcomes, analogous E-values can be computed by first converting the effect to an approximate risk ratio scale.</p>
+<figure class="align-default" id="fig-evalue-curve">
+<a class="reference internal image-reference" href="../_images/evalue_curve.svg"><img alt="../_images/evalue_curve.svg" src="../_images/evalue_curve.svg" style="width: 90%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">The E-value as a frontier. Each point on the red curve is a <em>combination</em> of confounder strengths — its association with the treatment <span class="math notranslate nohighlight">\(T\)</span> (horizontal) and with the outcome <span class="math notranslate nohighlight">\(Y\)</span> (vertical), both on the risk-ratio scale — that would be <strong>just</strong> sufficient to explain the observed effect away. Anything in the shaded region (stronger on both fronts) would nullify it; anything below the curve would not. The E-value is the single number where the curve meets the <em>equal-strength</em> diagonal: here <span class="math notranslate nohighlight">\(E \approx 3.4\)</span>, so a confounder would need a risk ratio of at least <span class="math notranslate nohighlight">\(3.4\)</span> with <strong>both</strong> <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> to account for the result.</span><a class="headerlink" href="#fig-evalue-curve" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p><strong>Reading the figure.</strong> The blue dot at the origin is the world we assume — no confounding. As we travel up the diagonal, we postulate ever-stronger confounders that are equally linked to treatment and outcome. The effect is only “explained away” once we reach the red curve. A large E-value pushes that crossing far from the origin, so the conclusion is robust; a small E-value would place the curve close to the origin, meaning even a weak omitted variable could be responsible. Crucially, an unmeasured confounder need not be balanced across both arrows — points <em>off</em> the diagonal (very strong on one front, weak on the other) can also reach the frontier, which is why the full curve, not just the single E-value, tells the complete story.</p>
+</section>
+<section id="partial-r-2-and-omitted-variable-bias">
+<h2>Partial <span class="math notranslate nohighlight">\(R^2\)</span> and Omitted Variable Bias<a class="headerlink" href="#partial-r-2-and-omitted-variable-bias" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://doi.org/10.1111/rssb.12348">Cinelli &amp; Hazlett (2020)</a> provide a regression-based sensitivity analysis framework using the <strong>partial <span class="math notranslate nohighlight">\(R^2\)</span></strong> — the proportion of residual variance explained by an omitted confounder.</p>
+<div class="proof definition dropdown admonition" id="partial-r2">
+<p class="admonition-title"><span class="caption-number">Definition 16 </span> (Partial <span class="math notranslate nohighlight">\(R^2\)</span> Sensitivity)</p>
+<section class="definition-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(R^2_{Y \sim U \mid T, X}\)</span> denote the partial <span class="math notranslate nohighlight">\(R^2\)</span> of the omitted confounder <span class="math notranslate nohighlight">\(U\)</span> with the outcome <span class="math notranslate nohighlight">\(Y\)</span> (after adjusting for <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(X\)</span>), and <span class="math notranslate nohighlight">\(R^2_{T \sim U \mid X}\)</span> the partial <span class="math notranslate nohighlight">\(R^2\)</span> with the treatment <span class="math notranslate nohighlight">\(T\)</span>. The bias in the treatment effect estimate due to omitting <span class="math notranslate nohighlight">\(U\)</span> is bounded by:</p>
+<div class="math notranslate nohighlight">
+\[
+|\text{bias}| \leq \sqrt{R^2_{Y \sim U \mid T, X} \cdot R^2_{T \sim U \mid X}} \cdot \frac{\text{SD}(Y_{\text{res}})}{\text{SD}(T_{\text{res}})}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(Y_{\text{res}}\)</span> and <span class="math notranslate nohighlight">\(T_{\text{res}}\)</span> are residuals from regressions on <span class="math notranslate nohighlight">\(X\)</span>.</p>
+</section>
+</div><p>This framework is particularly intuitive because the required confounding strengths can be <strong>benchmarked against observed covariates</strong>: “the unmeasured confounder would need to be as strong as [observed covariate <span class="math notranslate nohighlight">\(X_j\)</span>] to reduce the effect to zero.”</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">sensemakr</span></code> R package implements this approach and produces <strong>contour plots</strong> showing how the estimated effect changes across a grid of <span class="math notranslate nohighlight">\((R^2_{Y \sim U \mid T, X}, R^2_{T \sim U \mid X})\)</span> values. The interactive map at the <a class="reference internal" href="#interactive-how-much-confounding-would-it-take"><span class="xref myst">top of this section</span></a> is exactly such a contour: the red frontier is the locus where the bias reaches the observed estimate, and the orange diamond is the “as strong as covariate <span class="math notranslate nohighlight">\(X\)</span>” benchmark. The further the benchmark sits inside the green (effect-survives) region, the more comfortably the conclusion withstands an omitted variable of comparable strength.</p>
+</section>
+<section id="bounds-on-treatment-effects">
+<h2>Bounds on Treatment Effects<a class="headerlink" href="#bounds-on-treatment-effects" title="Link to this heading">#</a></h2>
+<p>When parametric assumptions are undesirable, <strong>partial identification</strong> provides worst-case bounds on treatment effects under minimal assumptions.</p>
+<div class="proof definition dropdown admonition" id="manski-bounds">
+<p class="admonition-title"><span class="caption-number">Definition 17 </span> (Manski Bounds)</p>
+<section class="definition-content" id="proof-content">
+<p>Under no assumptions beyond bounded outcomes (<span class="math notranslate nohighlight">\(Y \in [y_{\min}, y_{\max}]\)</span>), the ATE is bounded by:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[Y \mid T=1] - y_{\max} \cdot P(T=0) - \mathbb{E}[Y \mid T=0] \cdot P(T=0) \;\leq\; \tau \;\leq\; \mathbb{E}[Y \mid T=1] + y_{\max} \cdot P(T=0) - \mathbb{E}[Y \mid T=0]
+\]</div>
+<p>These bounds are <strong>sharp</strong> (cannot be tightened without additional assumptions) but often wide. Adding monotonicity or instrumental variable assumptions narrows them considerably.</p>
+</section>
+</div><figure class="align-default" id="fig-manski-bounds">
+<a class="reference internal image-reference" href="../_images/manski_bounds.svg"><img alt="../_images/manski_bounds.svg" src="../_images/manski_bounds.svg" style="width: 90%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Worst-case bounds and the price of assumptions. Each bar is the <em>range</em> of treatment effects compatible with the data under a given set of assumptions. With <strong>no assumptions</strong> beyond a bounded outcome, the interval is so wide it straddles zero — the data alone cannot even tell us the <em>sign</em> of the effect. Adding <strong>monotonicity</strong> (the treatment never hurts) shifts the lower edge above zero. Adding a valid <strong>instrument</strong> collapses the range to a single point — the familiar point estimate <span class="math notranslate nohighlight">\(\hat{\tau}\)</span>. The dashed olive line marks that point estimate; the dashed line at <span class="math notranslate nohighlight">\(\tau = 0\)</span> marks no effect.</span><a class="headerlink" href="#fig-manski-bounds" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p><strong>Reading the figure.</strong> This answers question 3 — <em>what are the bounds under worst-case confounding?</em> — from the opposite direction to the E-value and Rosenbaum tools. Rather than asking how strong a confounder would have to be, partial identification asks what we can say <em>while assuming as little as possible</em>. The honest starting point (top bar) is often uncomfortably wide, which is precisely the message: a single number is only as credible as the assumptions that pin it down. Each assumption we are willing to defend buys a narrower interval, and the figure makes that trade-off explicit — a transparent alternative to reporting one estimate as if it were assumption-free.</p>
+</section>
+<section id="actuarial-sensitivity-analysis-workflow">
+<h2>Actuarial Sensitivity Analysis Workflow<a class="headerlink" href="#actuarial-sensitivity-analysis-workflow" title="Link to this heading">#</a></h2>
+<p>The tools above slot into a single decision pipeline. The estimate is only trustworthy once it has survived three sequential gates — <strong>balance</strong>, <strong>falsification</strong>, and <strong>robustness to unmeasured confounding</strong> — each with a concrete remedy if the check fails.</p>
+<figure class="align-default" id="fig-pipeline-sensitivity">
+<a class="reference internal image-reference" href="../_images/pipeline_sensitivity.svg"><img alt="../_images/pipeline_sensitivity.svg" src="../_images/pipeline_sensitivity.svg" style="width: 85%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">The actuarial sensitivity-analysis workflow. After estimating an adjusted effect, three diagnostic gates are applied in turn. Each decision either <strong>passes</strong> the estimate downstream or routes it to a red <strong>remedy</strong> that is re-run before continuing. (1) If covariates are not balanced (<span class="math notranslate nohighlight">\(|\text{SMD}| \ge 0.1\)</span>), re-specify the propensity model — add splines/interactions, trim non-overlap, or switch between matching and weighting. (2) If a placebo / negative-control test detects a non-zero effect, treat it as residual confounding: revisit the DAG, add proxy controls, or move to an instrument or difference-in-differences design. (3) If the effect is not robust to a plausible unmeasured confounder (small E-value, low critical <span class="math notranslate nohighlight">\(\Gamma\)</span>, wide partial-<span class="math notranslate nohighlight">\(R^2\)</span> bias), treat the estimate as fragile — gather more covariates, report worst-case Manski bounds, and temper the pricing or reserving decision. Only an estimate that clears all three gates reaches the transparent report.</span><a class="headerlink" href="#fig-pipeline-sensitivity" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sensitivity.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Validation and Sensitivity Analysis</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="debias.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Biases and De-Biasing Toolkit</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-sensitivity-analysis">Why Sensitivity Analysis?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-r-2-how-much-confounding-would-it-take">Partial R^2: how much confounding would it take?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#balance-diagnostics">Balance Diagnostics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#placebo-and-falsification-tests">Placebo and Falsification Tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rosenbaum-bounds">Rosenbaum Bounds</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#e-values">E-Values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-r-2-and-omitted-variable-bias">Partial <span class="math notranslate nohighlight">\(R^2\)</span> and Omitted Variable Bias</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bounds-on-treatment-effects">Bounds on Treatment Effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#actuarial-sensitivity-analysis-workflow">Actuarial Sensitivity Analysis Workflow</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theresa Blümlein, Patrick Cheridito, and Daniel Meier
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

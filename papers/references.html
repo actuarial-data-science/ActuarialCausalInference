@@ -1,0 +1,635 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>References &#8212; Actuarial Causal Inference Tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../_static/dark_mode_widget.css?v=7446dea4" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe-button-patch.css?v=e3482d12" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/figure-theme.css?v=61ffb31e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script src="../_static/sphinx-thebe-i18n.js?v=ea266e56"></script>
+    <script defer="defer" src="../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../_static/sphinx-thebe-lite.js?v=93e2d225"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'papers/references';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/figure-theme.js?v=29b104fa"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Synthetic Health Dataset for Causal Inference Tutorial" href="../application/health_interventions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Actuarial Causal Inference Tutorial - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Actuarial Causal Inference Tutorial - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Actuarial Causal Inference Tutorial
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/concepts.html">Concepts of Causal Inference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorial/identification.html">Identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/assumptions.html">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/graphical_models.html">Graphical Causal Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/methods.html">Identification Strategies</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorial/inference.html">Causal Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/propensity.html">Propensity Score Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/regression_methods.html">Regression Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/tree_based_methods.html">Tree-Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/bayesian.html">Bayesian Causal Inference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorial/sensitivity.html">Validation and Sensitivity Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/diagnostics.html">Diagnostics and Sensitivity Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/debias.html">Biases and De-Biasing Toolkit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/fairness.html">Why Causal Inference Resolves the Fairness Problem</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Actuarial Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../application/observational_data.html">Observational Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/pricing.html">Fairness in Insurance Pricing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/claims_triage.html">Explainable Motor Claims Triage with CATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/health_interventions.html">Synthetic Health Dataset for Causal Inference Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/papers/references.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>References</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#publications">Publications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#useful-links">Useful Links</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-sets-and-potential-use-cases">Data Sets and Potential Use Cases</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="references">
+<h1>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h1>
+<section id="publications">
+<h2>Publications<a class="headerlink" href="#publications" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Abadie, A., Diamond, A., &amp; Hainmueller, J. (2010).</strong> <em>Synthetic control methods for comparative case studies: Estimating the effect of California’s tobacco control program.</em> Journal of the American Statistical Association, 105(490), 493-505. <a class="reference external" href="https://doi.org/10.1198/jasa.2009.ap08746">DOI: 10.1198/jasa.2009.ap08746</a></p></li>
+<li><p><strong>Abadie, A., &amp; Gardeazabal, J. (2003).</strong> <em>The economic costs of conflict: A case study of the Basque Country.</em> American Economic Review, 93(1), 113-132. <a class="reference external" href="https://doi.org/10.1257/000282803321455188">DOI: 10.1257/000282803321455188</a></p></li>
+<li><p><strong>Angrist, J. D., Imbens, G. W., &amp; Rubin, D. B. (1996).</strong> <em>Identification of causal effects using instrumental variables.</em> Journal of the American Statistical Association, 91(434), 444-455. <a class="reference external" href="https://doi.org/10.1080/01621459.1996.10476902">DOI: 10.1080/01621459.1996.10476902</a></p></li>
+<li><p><strong>Angrist, J. D., &amp; Krueger, A. B. (1991).</strong> <em>Does compulsory school attendance affect schooling and earnings?</em> The Quarterly Journal of Economics, 106(4), 979-1014. <a class="reference external" href="https://doi.org/10.2307/2937954">DOI: 10.2307/2937954</a></p></li>
+<li><p><strong>Angrist, J. D., &amp; Pischke, J.-S. (2009).</strong> <em>Mostly Harmless Econometrics: An Empiricist’s Companion.</em> Princeton University Press. <a class="reference external" href="https://doi.org/10.1515/9781400829828">DOI: 10.1515/9781400829828</a></p></li>
+<li><p><strong>Angrist, J. D., &amp; Pischke, J.-S. (2015).</strong> <a class="reference external" href="https://press.princeton.edu/books/paperback/9780691152844/mastering-metrics"><em>Mastering ‘Metrics: The Path from Cause to Effect.</em></a> Princeton University Press.</p></li>
+<li><p><strong>Ashenfelter, O., &amp; Card, D. (1985).</strong> <em>Using the longitudinal structure of earnings to estimate the effect of training programs.</em> The Review of Economics and Statistics, 67(4), 648-660. <a class="reference external" href="https://doi.org/10.2307/1924810">DOI: 10.2307/1924810</a></p></li>
+<li><p><strong>Athey, S., &amp; Imbens, G. (2016).</strong> <em>Recursive partitioning for heterogeneous causal effects.</em> Proceedings of the National Academy of Sciences, 113(27), 7353-7360. <a class="reference external" href="https://doi.org/10.1073/pnas.1510489113">DOI: 10.1073/pnas.1510489113</a></p></li>
+<li><p><strong>Athey, S., &amp; Imbens, G. W. (2019).</strong> <em>Machine learning methods that economists should know about.</em> Annual Review of Economics, 11, 685-725. <a class="reference external" href="https://doi.org/10.1146/annurev-economics-080217-053433">DOI: 10.1146/annurev-economics-080217-053433</a></p></li>
+<li><p><strong>Athey, S., Tibshirani, J., &amp; Wager, S. (2019).</strong> <em>Generalized random forests.</em> The Annals of Statistics, 47(2), 1148-1178. <a class="reference external" href="https://doi.org/10.1214/18-AOS1709">https://doi.org/10.1214/18-AOS1709</a></p></li>
+<li><p><strong>Athey, S., &amp; Wager, S. (2019).</strong> <em>Estimating treatment effects with causal forests: An application.</em> Observational Studies, 5, 37-51. <a class="reference external" href="https://doi.org/10.1353/obs.2019.0001">DOI: 10.1353/obs.2019.0001</a></p></li>
+<li><p><strong>Austin, P. C. (2011).</strong> <em>An introduction to propensity score methods for reducing the effects of confounding in observational studies.</em> Multivariate Behavioral Research, 46(3), 399-424. <a class="reference external" href="https://doi.org/10.1080/00273171.2011.568786">DOI: 10.1080/00273171.2011.568786</a></p></li>
+<li><p><strong>Bang, H., &amp; Robins, J. M. (2005).</strong> <em>Doubly robust estimation in missing data and causal inference models.</em> Biometrics, 61(4), 962-973. <a class="reference external" href="https://doi.org/10.1111/j.1541-0420.2005.00377.x">DOI: 10.1111/j.1541-0420.2005.00377.x</a></p></li>
+<li><p><strong>Barocas, S., Hardt, M., &amp; Narayanan, A. (2019).</strong> <a class="reference external" href="https://fairmlbook.org/"><em>Fairness and Machine Learning: Limitations and Opportunities.</em></a> MIT Press.</p></li>
+<li><p><strong>Berk, R., Heidari, H., Jabbari, S., Kearns, M., &amp; Roth, A. (2021).</strong> <em>Fairness in criminal justice risk assessments: The state of the art.</em> Sociological Methods &amp; Research, 50(1), 3-44. <a class="reference external" href="https://doi.org/10.1177/0049124118782533">DOI: 10.1177/0049124118782533</a></p></li>
+<li><p><strong>Breiman, L. (2001).</strong> <em>Random forests.</em> Machine Learning, 45(1), 5-32. <a class="reference external" href="https://doi.org/10.1023/A:1010933404324">DOI: 10.1023/A:1010933404324</a></p></li>
+<li><p><strong>Breiman, L., Friedman, J. H., Olshen, R., &amp; Stone, C. J. (1984).</strong> <em>Classification and regression trees.</em> Wadsworth. <a class="reference external" href="https://doi.org/10.1201/9781315139470">DOI: 10.1201/9781315139470</a></p></li>
+<li><p><strong>Callaway, B., &amp; Sant’Anna, P. H. C. (2021).</strong> <em>Difference-in-differences with multiple time periods.</em> Journal of Econometrics, 225(2), 200-230. <a class="reference external" href="https://doi.org/10.1016/j.jeconom.2020.12.001">DOI: 10.1016/j.jeconom.2020.12.001</a></p></li>
+<li><p><strong>Card, D., &amp; Krueger, A. B. (1994).</strong> <em>Minimum wages and employment: A case study of the fast-food industry in New Jersey and Pennsylvania.</em> American Economic Review, 84(4), 772-793. <a class="reference external" href="https://doi.org/10.1257/aer.84.4.772">DOI: 10.1257/aer.84.4.772</a></p></li>
+<li><p><strong>Chernozhukov, V., Chetverikov, D., Demirer, M., Duflo, E., Hansen, C., Newey, W., &amp; Robins, J. (2018).</strong> <em>Double/debiased machine learning for treatment and structural parameters.</em> The Econometrics Journal, 21(1), C1-C68. <a class="reference external" href="https://doi.org/10.1111/ectj.12097">DOI: 10.1111/ectj.12097</a></p></li>
+<li><p><strong>Chipman, H. A., George, E. I., &amp; McCulloch, R. E. (2010).</strong> <em>BART: Bayesian additive regression trees.</em> The Annals of Applied Statistics, 4(1), 266-298. <a class="reference external" href="https://doi.org/10.1214/09-AOAS285">DOI: 10.1214/09-AOAS285</a></p></li>
+<li><p><strong>Chouldechova, A. (2017).</strong> <em>Fair prediction with disparate impact: A study of bias in recidivism prediction instruments.</em> Big Data, 5(2), 153-163. <a class="reference external" href="https://doi.org/10.1089/big.2016.0047">DOI: 10.1089/big.2016.0047</a></p></li>
+<li><p><strong>Cunningham, S. (2021).</strong> <a class="reference external" href="https://mixtape.scunning.com/"><em>Causal Inference: The Mixtape.</em></a> Yale University Press. <a class="reference external" href="https://doi.org/10.12987/9780300255881">DOI: 10.12987/9780300255881</a></p></li>
+<li><p><strong>Dwork, C., Hardt, M., Pitassi, T., Reingold, O., &amp; Zemel, R. (2012).</strong> <em>Fairness through awareness.</em> Proceedings of the 3rd Innovations in Theoretical Computer Science Conference (ITCS), 214-226. <a class="reference external" href="https://arxiv.org/abs/1104.3913">arXiv:1104.3913</a></p></li>
+<li><p><strong>Goodman-Bacon, A. (2021).</strong> <em>Difference-in-differences with variation in treatment timing.</em> Journal of Econometrics, 225(2), 254-277. <a class="reference external" href="https://doi.org/10.1016/j.jeconom.2021.03.014">DOI: 10.1016/j.jeconom.2021.03.014</a></p></li>
+<li><p><strong>Hahn, J., Todd, P., &amp; van der Klaauw, W. (2001).</strong> <em>Identification and estimation of treatment effects with a regression-discontinuity design.</em> Econometrica, 69(1), 201-209. <a class="reference external" href="https://doi.org/10.1111/1468-0262.00183">DOI: 10.1111/1468-0262.00183</a></p></li>
+<li><p><strong>Hahn, P. R., Murray, J. S., &amp; Carvalho, C. M. (2020).</strong> <em>Bayesian regression tree models for causal inference: Regularization, confounding, and heterogeneous effects.</em> Bayesian Analysis, 15(3), 965-1056. <a class="reference external" href="https://doi.org/10.1214/19-BA1195">DOI: 10.1214/19-BA1195</a></p></li>
+<li><p><strong>Hardt, M., Price, E., &amp; Srebro, N. (2016).</strong> <em>Equality of opportunity in supervised learning.</em> Advances in Neural Information Processing Systems 29, 3315–3323. <a class="reference external" href="https://arxiv.org/abs/1610.02413">arXiv:1610.02413</a></p></li>
+<li><p><strong>Hastie, T., Tibshirani, R., &amp; Friedman, J. (2009).</strong> <a class="reference external" href="https://hastie.su.domains/ElemStatLearn/"><em>The Elements of Statistical Learning: Data Mining, Inference, and Prediction</em> (2nd ed.).</a> Springer. <a class="reference external" href="https://doi.org/10.1007/978-0-387-84858-7">DOI: 10.1007/978-0-387-84858-7</a></p></li>
+<li><p><strong>Hernán, M. A., &amp; Robins, J. M. (2020).</strong> <a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/"><em>Causal Inference: What If.</em></a> Boca Raton: Chapman &amp; Hall/CRC.</p></li>
+<li><p><strong>Hill, J. L. (2011).</strong> <em>Bayesian nonparametric modeling for causal inference.</em> Journal of Computational and Graphical Statistics, 20(1), 217-240. <a class="reference external" href="https://doi.org/10.1198/jcgs.2010.08162">DOI: 10.1198/jcgs.2010.08162</a></p></li>
+<li><p><strong>Imbens, G. W., &amp; Angrist, J. D. (1994).</strong> <em>Identification and estimation of local average treatment effects.</em> Econometrica, 62(2), 467-475. <a class="reference external" href="https://doi.org/10.2307/2951620">DOI: 10.2307/2951620</a></p></li>
+<li><p><strong>Imbens, G. W., &amp; Lemieux, T. (2008).</strong> <em>Regression discontinuity designs: A guide to practice.</em> Journal of Econometrics, 142(2), 615-635. <a class="reference external" href="https://doi.org/10.1016/j.jeconom.2007.05.001">DOI: 10.1016/j.jeconom.2007.05.001</a></p></li>
+<li><p><strong>Imbens, G. W., &amp; Rubin, D. B. (2015).</strong> <em>Causal Inference for Statistics, Social, and Biomedical Sciences: An Introduction.</em> Cambridge University Press. <a class="reference external" href="https://doi.org/10.1017/CBO9781139025751">DOI: 10.1017/CBO9781139025751</a></p></li>
+<li><p><strong>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2021).</strong> <a class="reference external" href="https://www.statlearning.com/"><em>An Introduction to Statistical Learning with Applications in R</em> (2nd ed.).</a> Springer. <a class="reference external" href="https://doi.org/10.1007/978-1-0716-1418-1">DOI: 10.1007/978-1-0716-1418-1</a></p></li>
+<li><p><strong>Kennedy, E. H. (2023).</strong> <em>Towards optimal doubly robust estimation of heterogeneous causal effects.</em> Electronic Journal of Statistics, 17(2), 3008-3049. <a class="reference external" href="https://doi.org/10.1214/23-EJS2157">DOI: 10.1214/23-EJS2157</a></p></li>
+<li><p><strong>Kleinberg, J., Mullainathan, S., &amp; Raghavan, M. (2017).</strong> <em>Inherent trade-offs in the fair determination of risk scores.</em> 8th Innovations in Theoretical Computer Science Conference (ITCS). <a class="reference external" href="https://arxiv.org/abs/1609.05807">arXiv:1609.05807</a></p></li>
+<li><p><strong>Künzel, S. R., Sekhon, J. S., Bickel, P. J., &amp; Yu, B. (2019).</strong> <em>Metalearners for estimating heterogeneous treatment effects using machine learning.</em> Proceedings of the National Academy of Sciences, 116(10), 4156-4165. <a class="reference external" href="https://doi.org/10.1073/pnas.1804597116">DOI: 10.1073/pnas.1804597116</a></p></li>
+<li><p><strong>Kusner, M. J., Loftus, J., Russell, C., &amp; Silva, R. (2017).</strong> <em>Counterfactual fairness.</em> Advances in Neural Information Processing Systems 30, 4066–4076. <a class="reference external" href="https://arxiv.org/abs/1703.06856">arXiv:1703.06856</a></p></li>
+<li><p><strong>Lindholm, M., Richman, R., Tsanakas, A., &amp; Wüthrich, M. V. (2022).</strong> <em>A discussion of discrimination and fairness in insurance pricing.</em> <a class="reference external" href="https://arxiv.org/abs/2209.00858">arXiv:2209.00858</a></p></li>
+<li><p><strong>Linero, A. R. (2018).</strong> <em>Bayesian regression trees for high-dimensional prediction and variable selection.</em> Journal of the American Statistical Association, 113(522), 626-636. <a class="reference external" href="https://doi.org/10.1080/01621459.2016.1264957">DOI: 10.1080/01621459.2016.1264957</a></p></li>
+<li><p><strong>Neyman, J. (Splawa-Neyman). (1923).</strong> <em>On the application of probability theory to agricultural experiments. Essay on principles. Section 9.</em> (Translated and edited by D. M. Dabrowska &amp; T. P. Speed, 1990.) Statistical Science, 5(4), 465-472. <a class="reference external" href="https://doi.org/10.1214/ss/1177012031">DOI: 10.1214/ss/1177012031</a></p></li>
+<li><p><strong>Nie, X., &amp; Wager, S. (2021).</strong> <em>Quasi-oracle estimation of heterogeneous treatment effects.</em> Biometrika, 108(2), 299-319. <a class="reference external" href="https://doi.org/10.1093/biomet/asaa076">DOI: 10.1093/biomet/asaa076</a></p></li>
+<li><p><strong>Pearl, J. (1995).</strong> <em>Causal diagrams for empirical research.</em> Biometrika, 82(4), 669-688. <a class="reference external" href="https://doi.org/10.1093/biomet/82.4.669">DOI: 10.1093/biomet/82.4.669</a></p></li>
+<li><p><strong>Pearl, J. (2009).</strong> <em>Causality: Models, Reasoning, and Inference</em> (2nd ed.). Cambridge University Press. <a class="reference external" href="https://doi.org/10.1017/CBO9780511803161">DOI: 10.1017/CBO9780511803161</a></p></li>
+<li><p><strong>Robins, J. M. (1986).</strong> <em>A new approach to causal inference in mortality studies with a sustained exposure period—application to control of the healthy worker survivor effect.</em> Mathematical Modelling, 7(9-12), 1393-1512. <a class="reference external" href="https://doi.org/10.1016/0270-0255(86)90088-6">DOI: 10.1016/0270-0255(86)90088-6</a></p></li>
+<li><p><strong>Robins, J. M., Rotnitzky, A., &amp; Zhao, L. P. (1994).</strong> <em>Estimation of regression coefficients when some regressors are not always observed.</em> Journal of the American Statistical Association, 89(427), 846-866. <a class="reference external" href="https://doi.org/10.1080/01621459.1994.10476818">DOI: 10.1080/01621459.1994.10476818</a></p></li>
+<li><p><strong>Robinson, P. M. (1988).</strong> <em>Root-N-consistent semiparametric regression.</em> Econometrica, 56(4), 931-954. <a class="reference external" href="https://doi.org/10.2307/1912705">DOI: 10.2307/1912705</a></p></li>
+<li><p><strong>Rosenbaum, P. R., &amp; Rubin, D. B. (1983).</strong> <em>The central role of the propensity score in observational studies for causal effects.</em> Biometrika, 70(1), 41-55. <a class="reference external" href="https://doi.org/10.1093/biomet/70.1.41">DOI: 10.1093/biomet/70.1.41</a></p></li>
+<li><p><strong>Rubin, D. B. (1974).</strong> <em>Estimating causal effects of treatments in randomized and nonrandomized studies.</em> Journal of Educational Psychology, 66(5), 688-701. <a class="reference external" href="https://doi.org/10.1037/h0037350">DOI: 10.1037/h0037350</a></p></li>
+<li><p><strong>Rubin, D. B. (1978).</strong> <em>Bayesian inference for causal effects: The role of randomization.</em> The Annals of Statistics, 6(1), 34-58. <a class="reference external" href="https://doi.org/10.1214/aos/1176344064">DOI: 10.1214/aos/1176344064</a></p></li>
+<li><p><strong>Sant’Anna, P. H. C., &amp; Zhao, J. (2020).</strong> <em>Doubly robust difference-in-differences estimators.</em> Journal of Econometrics, 219(1), 101-122. <a class="reference external" href="https://doi.org/10.1016/j.jeconom.2020.06.003">DOI: 10.1016/j.jeconom.2020.06.003</a></p></li>
+<li><p><strong>Semenova, V., &amp; Chernozhukov, V. (2021).</strong> <em>Debiased machine learning of conditional average treatment effects and other causal functions.</em> The Econometrics Journal, 24(2), 264-289. <a class="reference external" href="https://doi.org/10.1093/ectj/utaa027">DOI: 10.1093/ectj/utaa027</a></p></li>
+<li><p><strong>Shalizi, C. R. (2025).</strong> <a class="reference external" href="https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf"><em>Advanced Data Analysis from an Elementary Point of View.</em></a></p></li>
+<li><p><strong>Thistlethwaite, D. L., &amp; Campbell, D. T. (1960).</strong> <em>Regression-discontinuity analysis: An alternative to the ex post facto experiment.</em> Journal of Educational Psychology, 51(6), 309-317. <a class="reference external" href="https://doi.org/10.1037/h0044319">DOI: 10.1037/h0044319</a></p></li>
+<li><p><strong>van der Laan, M. J., &amp; Rubin, D. (2006).</strong> <em>Targeted maximum likelihood learning.</em> The International Journal of Biostatistics, 2(1), Article 11. <a class="reference external" href="https://doi.org/10.2202/1557-4679.1043">DOI: 10.2202/1557-4679.1043</a></p></li>
+<li><p><strong>Wager, S., &amp; Athey, S. (2018).</strong> <em>Estimation and inference of heterogeneous treatment effects using random forests.</em> Journal of the American Statistical Association, 113(523), 1228-1242. <a class="reference external" href="https://doi.org/10.1080/01621459.2017.1319839">DOI: 10.1080/01621459.2017.1319839</a></p></li>
+<li><p><strong>Wright, S. (1934).</strong> <em>The method of path coefficients.</em> The Annals of Mathematical Statistics, 5(3), 161-215. <a class="reference external" href="https://doi.org/10.1214/aoms/1177732676">DOI: 10.1214/aoms/1177732676</a></p></li>
+</ul>
+</section>
+<section id="useful-links">
+<h2>Useful Links<a class="headerlink" href="#useful-links" title="Link to this heading">#</a></h2>
+<section id="theory">
+<h3>Theory<a class="headerlink" href="#theory" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.causalmlbook.com/synthetic-did-and-regression-discontinuity.html">Causal ML Book</a></p></li>
+<li><p><a class="reference external" href="https://www.bradyneal.com/Introduction_to_Causal_Inference-Aug27_2020-Neal.pdf">Introduction to Causal Inference (Brady Neal, 2020)</a></p></li>
+<li><p><a class="reference external" href="https://matheusfacure.github.io/python-causality-handbook/">Python Causality Handbook</a></p></li>
+<li><p><a class="reference external" href="https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html">Oxford: Causal Assumptions</a></p></li>
+<li><p><a class="reference external" href="https://bookdown.org/mike/data_analysis/sec-causal-inference.html">Tutorial on Causal Inference</a></p></li>
+<li><p><a class="reference external" href="https://www.uniqcret.com/post/causal-inference-assumptions-guide">Causal Assumptions</a></p></li>
+<li><p><a class="reference external" href="https://tech.quantco.com/blog/metalearners">QuantCo Blog Article: MetaLearners for CATE Estimation</a></p></li>
+<li><p><a class="reference external" href="https://matheusfacure.github.io/python-causality-handbook/02-Randomised-Experiments.html">Causality Handbook</a></p></li>
+<li><p><a class="reference external" href="https://pair.withgoogle.com/explorables/measuring-fairness/">Google PAIR: <em>Measuring Fairness</em> explorable (2020)</a></p></li>
+</ul>
+</section>
+<section id="data-sets-and-potential-use-cases">
+<h3>Data Sets and Potential Use Cases<a class="headerlink" href="#data-sets-and-potential-use-cases" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.kaggle.com/datasets/karansarpal/fremtpl2-french-motor-tpl-insurance-claims/data">French Motor TPL Claims Data Set</a></p></li>
+<li><p><a class="reference external" href="https://www.kaggle.com/datasets/mirichoi0218/insurance">Medical Cost Data Set</a></p></li>
+<li><p><a class="reference external" href="https://causalml.readthedocs.io/en/stable/examples/causal_trees_interpretation.html">CausalML: Interpretation of causal trees</a></p></li>
+<li><p><a class="reference external" href="https://lorentzen.ch/index.php/2024/09/02/explaining-a-causal-forest/">Interpretation of causal forests</a> (Waterfall Plot, SHAP Values)</p></li>
+<li><p><a class="reference external" href="https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/4954928053318020/1058911316420443/167703932442645/latest.html">Insurance Fraud Data Set</a> Fraud</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../application/health_interventions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Synthetic Health Dataset for Causal Inference Tutorial</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#publications">Publications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#useful-links">Useful Links</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#theory">Theory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-sets-and-potential-use-cases">Data Sets and Potential Use Cases</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theresa Blümlein, Patrick Cheridito, and Daniel Meier
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

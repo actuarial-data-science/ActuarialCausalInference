@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Covariate balance — interactive Love plot</title>
+<style>
+  :root{
+    --txt:#2c2c2a; --txt2:#5f5e5a; --txt3:#8a897f;
+    --card:#e8eae6; --bd:rgba(0,0,0,0.14); --bd2:rgba(0,0,0,0.28);
+    --accent:#7d9f17; --track:rgba(0,0,0,0.12);
+    --safe:#7d9f17; --danger:#d62728; --before:#8a8b8e; --blue:#378ADD;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --txt:#e6e6e3; --txt2:#aeaca4; --txt3:#86857d;
+      --card:rgba(255,255,255,0.06); --bd:rgba(255,255,255,0.16); --bd2:rgba(255,255,255,0.30);
+      --accent:#aacb3f; --track:rgba(255,255,255,0.16);
+      --safe:#aacb3f; --danger:#ef5552; --before:#9a9ba0; --blue:#5aa0e6;
+    }
+  }
+  html[data-mode="light"]{
+    --txt:#2c2c2a; --txt2:#5f5e5a; --txt3:#8a897f;
+    --card:#e8eae6; --bd:rgba(0,0,0,0.14); --bd2:rgba(0,0,0,0.28);
+    --accent:#7d9f17; --track:rgba(0,0,0,0.12);
+    --safe:#7d9f17; --danger:#d62728; --before:#8a8b8e; --blue:#378ADD;
+  }
+  html[data-mode="dark"]{
+    --txt:#e6e6e3; --txt2:#aeaca4; --txt3:#86857d;
+    --card:rgba(255,255,255,0.06); --bd:rgba(255,255,255,0.16); --bd2:rgba(255,255,255,0.30);
+    --accent:#aacb3f; --track:rgba(255,255,255,0.16);
+    --safe:#aacb3f; --danger:#ef5552; --before:#9a9ba0; --blue:#5aa0e6;
+  }
+  html,body{background:transparent; margin:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--txt); font-size:15px; line-height:1.6; padding:8px 2px 16px;
+  }
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+  .ctrls{margin-bottom:0.5rem;max-width:520px;}
+  .lblrow{display:flex;justify-content:space-between;font-size:13px;color:var(--txt2);margin-bottom:5px;}
+  .lblrow b{color:var(--txt);font-weight:500;}
+  .hint{font-size:12px;color:var(--txt3);margin-top:3px;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:var(--track);outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 1px var(--accent);}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 1px var(--accent);}
+  button{font:inherit;font-size:14px;color:var(--txt);background:transparent;border:0.5px solid var(--bd2);border-radius:8px;padding:7px 14px;cursor:pointer;}
+  button:hover{background:var(--card);}
+  button:active{transform:scale(0.98);}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:1.25rem 0 1.5rem;}
+  .card{background:var(--card);border-radius:8px;padding:0.85rem 1rem;}
+  .card .k{font-size:13px;color:var(--txt2);}
+  .card .v{font-size:24px;font-weight:500;}
+  .legend{display:flex;flex-wrap:wrap;align-items:center;gap:16px;font-size:12px;color:var(--txt2);margin-bottom:6px;}
+  .legend span{display:flex;align-items:center;gap:5px;}
+  .legend svg{display:inline-block;vertical-align:middle;}
+  .panlbl{font-size:13px;color:var(--txt2);margin:0 0 4px;display:flex;justify-content:space-between;gap:12px;}
+  .panlbl em{font-style:normal;color:var(--txt3);}
+  .pan{margin-bottom:1.25rem;}
+  .daglbl{font-size:12px;color:var(--txt3);margin:0.25rem 0 0.25rem;}
+</style>
+</head>
+<body>
+<h2 class="sr-only">Interactive covariate balance. A slider sets how strongly the adjustment (for example propensity-score weighting) balances the measured confounders; a causal diagram shows the backdoor path closing, and a Love plot shows the standardised mean differences shrinking below the balance threshold.</h2>
+
+<div class="ctrls">
+  <div class="lblrow"><span>Adjustment strength&#160;&#160;(e.g. propensity-score weighting)</span><b id="sOut">0%</b></div>
+  <input id="strength" type="range" min="0" max="1" step="0.01" value="0" />
+  <div class="hint">0% = raw, unadjusted sample&#160;&#8231;&#160;100% = fully weighted to balance the measured covariates</div>
+</div>
+
+<div class="daglbl">As adjustment increases, the backdoor path <b>X &rarr; T</b> is closed &mdash; the confounder is balanced across treatment groups.</div>
+<div class="pan" id="pDag" style="max-width:360px;"></div>
+
+<div style="margin-bottom:0.25rem;">
+  <button id="resetBtn" type="button">&#8635;&nbsp; Reset to unadjusted</button>
+</div>
+
+<div class="cards">
+  <div class="card"><div class="k">Worst |SMD|</div><div class="v" id="mMax">&mdash;</div></div>
+  <div class="card"><div class="k">Covariates balanced</div><div class="v" id="mBal">&mdash;</div></div>
+  <div class="card"><div class="k">Mean |SMD|</div><div class="v" id="mMean">&mdash;</div></div>
+</div>
+
+<div class="legend">
+  <span><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="#8a8b8e" stroke-width="1.6"/></svg>before adjustment</span>
+  <span><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="#7d9f17"/></svg>after &mdash; balanced</span>
+  <span><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="#d62728"/></svg>after &mdash; still imbalanced</span>
+  <span><svg width="26" height="12" viewBox="0 0 26 12" aria-hidden="true"><line x1="0" y1="6" x2="26" y2="6" stroke="#8a8b8e" stroke-width="1.4" stroke-dasharray="5,3"/></svg>|SMD| = 0.1 threshold</span>
+</div>
+
+<div class="panlbl"><span>Love plot &mdash; standardised mean difference per covariate</span><em id="panInfo"></em></div>
+<div class="pan" id="pLove"></div>
+
+<script>
+(function(){
+  var p=new URLSearchParams(location.search).get('theme');
+  function apply(t){document.documentElement.setAttribute('data-mode',t);}
+  function systemTheme(){return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  function parentTheme(){
+    try{
+      var root=window.parent.document.documentElement;
+      var t=root.getAttribute('data-theme');
+      if(t==='light'||t==='dark')return t;
+      var m=root.getAttribute('data-mode');
+      if(m==='light'||m==='dark')return m;
+    }catch(e){}
+    return null;
+  }
+  if(p==='dark'||p==='light')apply(p);
+  else apply(parentTheme()||systemTheme());
+  if(!p){matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){if(!parentTheme())apply(e.matches?'dark':'light');});}
+  window.addEventListener('message',function(ev){
+    var d=ev.data;
+    if(d&&d.type==='set-theme'){
+      if(d.value==='dark'||d.value==='light')apply(d.value);
+      else if(d.value==='auto')apply(parentTheme()||systemTheme());
+    }
+  });
+  if(window.parent&&window.parent!==window){window.parent.postMessage({type:'love-ready'},'*');}
+})();
+
+(function(){
+  // --- Stylised covariate set (insurance flavour) -------------------------
+  // b = unadjusted SMD; eff = how effectively the adjustment balances it
+  var COVS=[
+    {name:'Age',            b: 0.62, eff:0.95},
+    {name:'Smoker',         b: 0.55, eff:0.93},
+    {name:'Prior claims',   b: 0.48, eff:0.90},
+    {name:'Annual income',  b: 0.41, eff:0.86},
+    {name:'BMI',            b:-0.35, eff:0.92},
+    {name:'Urban region',   b:-0.28, eff:0.80},
+    {name:'Policy tenure',  b: 0.22, eff:0.70},
+    {name:'Vehicle age',    b:-0.18, eff:0.60}
+  ];
+  var THR=0.1, XMAX=0.7;
+
+  var sEl=document.getElementById('strength');
+
+  function adj(c,s){return c.b*(1 - s*c.eff);}
+  function postHeight(){try{parent.postMessage({type:'love-height',height:Math.ceil(document.body.getBoundingClientRect().height)},'*');}catch(e){}}
+
+  function render(){
+    var s=parseFloat(sEl.value);
+    document.getElementById('sOut').textContent=Math.round(s*100)+'%';
+
+    var after=COVS.map(function(c){return adj(c,s);});
+    var absAfter=after.map(Math.abs);
+    var maxA=Math.max.apply(null,absAfter);
+    var meanA=absAfter.reduce(function(a,b){return a+b;},0)/absAfter.length;
+    var nbal=absAfter.filter(function(v){return v<THR;}).length;
+
+    document.getElementById('mMax').textContent=maxA.toFixed(2);
+    var maxEl=document.getElementById('mMax'); maxEl.style.color=maxA<THR?'var(--safe)':'var(--danger)';
+    document.getElementById('mBal').textContent=nbal+' / '+COVS.length;
+    var balEl=document.getElementById('mBal'); balEl.style.color=nbal===COVS.length?'var(--safe)':'var(--txt)';
+    document.getElementById('mMean').textContent=meanA.toFixed(2);
+    document.getElementById('panInfo').textContent=
+      nbal===COVS.length ? 'all covariates within |SMD| < 0.1' : (COVS.length-nbal)+' still above threshold';
+
+    // ---------- DAG ----------
+    var DW=360,DH=190;
+    var Xn={x:180,y:40}, Tn={x:80,y:150}, Yn={x:280,y:150};
+    var back=1-s;            // strength of the X->T backdoor edge
+    var dg='<svg viewBox="0 0 '+DW+' '+DH+'" width="100%" role="img" aria-label="Causal diagram: confounder X points to treatment T and outcome Y; T points to Y. Adjustment closes the X to T edge.">';
+    dg+='<defs>'+
+        '<marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--txt2)"/></marker>'+
+        '<marker id="ahb" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--before)"/></marker>'+
+        '<marker id="ahc" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="var(--blue)"/></marker>'+
+        '</defs>';
+    function edge(a,b,opts){
+      var ang=Math.atan2(b.y-a.y,b.x-a.x), r=22;
+      var x1=(a.x+r*Math.cos(ang)).toFixed(1), y1=(a.y+r*Math.sin(ang)).toFixed(1);
+      var x2=(b.x-r*Math.cos(ang)).toFixed(1), y2=(b.y-r*Math.sin(ang)).toFixed(1);
+      return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+opts.stroke+'" stroke-width="'+opts.w+'"'+
+             (opts.dash?' stroke-dasharray="'+opts.dash+'"':'')+' opacity="'+opts.op+'" marker-end="url(#'+opts.m+')"/>';
+    }
+    // X -> Y (backdoor part, stays)
+    dg+=edge(Xn,Yn,{stroke:'var(--txt2)',w:1.8,op:0.85,m:'ah'});
+    // T -> Y (causal effect, blue, always solid)
+    dg+=edge(Tn,Yn,{stroke:'var(--blue)',w:2.4,op:1,m:'ahc'});
+    // X -> T (closed by adjustment): fades + dashes as s grows
+    if(back>0.02){
+      dg+=edge(Xn,Tn,{stroke:'var(--before)',w:(1.2+1.6*back).toFixed(2),op:(0.25+0.6*back).toFixed(2),
+                      dash:(s>0.05?'5,4':null),m:'ahb'});
+    }else{
+      // fully closed: faint dashed stub + check
+      dg+=edge(Xn,Tn,{stroke:'var(--safe)',w:1.2,op:0.35,dash:'2,5',m:'ahb'});
+    }
+    // "blocked" badge on the X->T edge
+    var mid={x:(Xn.x+Tn.x)/2-6,y:(Xn.y+Tn.y)/2};
+    if(s>0.5){
+      dg+='<text x="'+mid.x+'" y="'+mid.y+'" font-size="11" fill="var(--safe)" text-anchor="end" font-weight="bold">balanced</text>';
+    }
+    // nodes
+    function node(n,label,fill){
+      return '<circle cx="'+n.x+'" cy="'+n.y+'" r="20" fill="'+fill+'" stroke="var(--bd2)" stroke-width="1"/>'+
+             '<text x="'+n.x+'" y="'+(n.y+5)+'" font-size="15" font-weight="bold" text-anchor="middle" fill="#fff">'+label+'</text>';
+    }
+    dg+=node(Xn,'X','#8a8b8e');
+    dg+=node(Tn,'T','#7d9f17');
+    dg+=node(Yn,'Y','#378ADD');
+    dg+='<text x="'+Xn.x+'" y="'+(Xn.y-26)+'" font-size="11" fill="var(--txt3)" text-anchor="middle">confounder</text>';
+    dg+='<text x="'+Tn.x+'" y="'+(Tn.y+36)+'" font-size="11" fill="var(--txt3)" text-anchor="middle">treatment</text>';
+    dg+='<text x="'+Yn.x+'" y="'+(Yn.y+36)+'" font-size="11" fill="var(--txt3)" text-anchor="middle">outcome</text>';
+    dg+='</svg>';
+    document.getElementById('pDag').innerHTML=dg;
+
+    // ---------- Love plot ----------
+    var W=560,Pa=130,Pb=520,Yt=20,rowH=30;
+    var H=Yt+COVS.length*rowH+44;
+    var x0=Pa+(Pb-Pa)*0.5;  // SMD = 0 position (centred)
+    function X(v){return x0+(Pb-Pa)*0.5*(v/XMAX);}
+
+    var lv='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Love plot of standardised mean differences for each covariate, before and after adjustment, relative to the 0.1 balance threshold.">';
+    // threshold + zero guides
+    lv+='<line x1="'+X(0).toFixed(1)+'" y1="'+Yt+'" x2="'+X(0).toFixed(1)+'" y2="'+(Yt+COVS.length*rowH)+'" stroke="var(--bd2)" stroke-width="1"/>';
+    [-THR,THR].forEach(function(t){
+      lv+='<line x1="'+X(t).toFixed(1)+'" y1="'+Yt+'" x2="'+X(t).toFixed(1)+'" y2="'+(Yt+COVS.length*rowH)+'" stroke="var(--before)" stroke-width="1.2" stroke-dasharray="5,3" opacity="0.8"/>';
+    });
+    lv+='<text x="'+X(THR).toFixed(1)+'" y="'+(Yt+COVS.length*rowH+16)+'" font-size="10.5" fill="var(--txt3)" text-anchor="middle">+0.1</text>';
+    lv+='<text x="'+X(-THR).toFixed(1)+'" y="'+(Yt+COVS.length*rowH+16)+'" font-size="10.5" fill="var(--txt3)" text-anchor="middle">&#8722;0.1</text>';
+    lv+='<text x="'+X(0).toFixed(1)+'" y="'+(Yt+COVS.length*rowH+16)+'" font-size="10.5" fill="var(--txt3)" text-anchor="middle">0</text>';
+    // x scale ends
+    lv+='<text x="'+X(-XMAX*0.92).toFixed(1)+'" y="'+(Yt+COVS.length*rowH+16)+'" font-size="10.5" fill="var(--txt3)" text-anchor="middle">&#8722;0.6</text>';
+    lv+='<text x="'+X(XMAX*0.92).toFixed(1)+'" y="'+(Yt+COVS.length*rowH+16)+'" font-size="10.5" fill="var(--txt3)" text-anchor="middle">+0.6</text>';
+    lv+='<text x="'+X(0).toFixed(1)+'" y="'+(H-4)+'" font-size="12" fill="var(--txt2)" text-anchor="middle">standardised mean difference (SMD)</text>';
+
+    COVS.forEach(function(c,i){
+      var cy=Yt+rowH*i+rowH/2;
+      var bx=X(c.b), ax=X(after[i]);
+      var bal=Math.abs(after[i])<THR;
+      var col=bal?'var(--safe)':'var(--danger)';
+      // covariate label
+      lv+='<text x="'+(Pa-12)+'" y="'+(cy+4)+'" font-size="12" fill="var(--txt2)" text-anchor="end">'+c.name+'</text>';
+      // connector before->after
+      lv+='<line x1="'+bx.toFixed(1)+'" y1="'+cy+'" x2="'+ax.toFixed(1)+'" y2="'+cy+'" stroke="var(--before)" stroke-width="1.4" opacity="0.55"/>';
+      // before (open)
+      lv+='<circle cx="'+bx.toFixed(1)+'" cy="'+cy+'" r="5" fill="var(--card)" stroke="var(--before)" stroke-width="1.8"/>';
+      // after (filled)
+      lv+='<circle cx="'+ax.toFixed(1)+'" cy="'+cy+'" r="5.5" fill="'+col+'" stroke="#fff" stroke-width="1.4"/>';
+    });
+    lv+='</svg>';
+    document.getElementById('pLove').innerHTML=lv;
+
+    postHeight();
+  }
+
+  sEl.addEventListener('input',render);
+  document.getElementById('resetBtn').addEventListener('click',function(){sEl.value=0;render();});
+  window.addEventListener('resize',postHeight);
+  window.addEventListener('load',postHeight);
+  render();
+})();
+</script>
+</body>
+</html>

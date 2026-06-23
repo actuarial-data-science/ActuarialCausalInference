@@ -1,0 +1,682 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Why Causal Inference Resolves the Fairness Problem &#8212; Actuarial Causal Inference Tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../_static/dark_mode_widget.css?v=7446dea4" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe-button-patch.css?v=e3482d12" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/figure-theme.css?v=61ffb31e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script src="../_static/sphinx-thebe-i18n.js?v=ea266e56"></script>
+    <script defer="defer" src="../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../_static/sphinx-thebe-lite.js?v=93e2d225"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial/fairness';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/figure-theme.js?v=29b104fa"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Observational Data" href="../application/observational_data.html" />
+    <link rel="prev" title="Biases and De-Biasing Toolkit" href="debias.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Actuarial Causal Inference Tutorial - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Actuarial Causal Inference Tutorial - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Actuarial Causal Inference Tutorial
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts of Causal Inference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="identification.html">Identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="assumptions.html">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graphical_models.html">Graphical Causal Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html">Identification Strategies</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="inference.html">Causal Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="propensity.html">Propensity Score Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regression_methods.html">Regression Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tree_based_methods.html">Tree-Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bayesian.html">Bayesian Causal Inference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="sensitivity.html">Validation and Sensitivity Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="diagnostics.html">Diagnostics and Sensitivity Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debias.html">Biases and De-Biasing Toolkit</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Why Causal Inference Resolves the Fairness Problem</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Actuarial Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../application/observational_data.html">Observational Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/pricing.html">Fairness in Insurance Pricing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/claims_triage.html">Explainable Motor Claims Triage with CATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/health_interventions.html">Synthetic Health Dataset for Causal Inference Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../papers/references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorial/fairness.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Why Causal Inference Resolves the Fairness Problem</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proxy-discrimination">Proxy Discrimination</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-unawareness-to-counterfactual-fairness">From Unawareness to Counterfactual Fairness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-fairness-criteria-as-diagnostic-checks">Group Fairness Criteria as Diagnostic Checks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-causal-inference-resolves-the-fairness-problem">How Causal Inference Resolves the Fairness Problem</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="why-causal-inference-resolves-the-fairness-problem">
+<h1>Why Causal Inference Resolves the Fairness Problem<a class="headerlink" href="#why-causal-inference-resolves-the-fairness-problem" title="Link to this heading">#</a></h1>
+<p>Beyond causal bias, actuaries face a distinct but related challenge: ensuring that models do not discriminate against protected groups. EU regulation prohibits the use of protected characteristics (e.g. gender, ethnicity) for insurance pricing, but simply dropping the sensitive attribute <span class="math notranslate nohighlight">\(S\)</span> does not solve the problem.</p>
+<section id="proxy-discrimination">
+<h2>Proxy Discrimination<a class="headerlink" href="#proxy-discrimination" title="Link to this heading">#</a></h2>
+<div class="proof definition dropdown admonition" id="proxy-discrimination-def">
+<p class="admonition-title"><span class="caption-number">Definition 21 </span> (Proxy Discrimination)</p>
+<section class="definition-content" id="proof-content">
+<p><strong>Proxy discrimination</strong> (indirect discrimination) occurs when non-protected covariates <span class="math notranslate nohighlight">\(X\)</span> that are correlated with the sensitive attribute <span class="math notranslate nohighlight">\(S\)</span> allow the model to implicitly reconstruct <span class="math notranslate nohighlight">\(S\)</span>, even though <span class="math notranslate nohighlight">\(S\)</span> is not used as an input.</p>
+</section>
+</div><p>The mechanism is the tower property of conditional expectation: <span class="math notranslate nohighlight">\(\mu(X) = \int \mu(X, s) \, \mathrm{d}P(S{=}s \mid X)\)</span>. If <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(S\)</span> are dependent, the unawareness price channels information about <span class="math notranslate nohighlight">\(S\)</span> through <span class="math notranslate nohighlight">\(X\)</span> (<a class="reference external" href="https://arxiv.org/abs/2209.00858">Lindholm et al., 2022</a>).</p>
+</section>
+<section id="from-unawareness-to-counterfactual-fairness">
+<h2>From Unawareness to Counterfactual Fairness<a class="headerlink" href="#from-unawareness-to-counterfactual-fairness" title="Link to this heading">#</a></h2>
+<div class="proof definition dropdown admonition" id="fairness-unawareness">
+<p class="admonition-title"><span class="caption-number">Definition 22 </span> (Fairness through Unawareness)</p>
+<section class="definition-content" id="proof-content">
+<p>A model satisfies <strong>fairness through unawareness</strong> if it does not use the sensitive attribute <span class="math notranslate nohighlight">\(S\)</span> as input: <span class="math notranslate nohighlight">\(\hat{\mu}(X) = f(X)\)</span>.</p>
+</section>
+</div><p>Unawareness is necessary but not sufficient — it does not prevent proxy discrimination.</p>
+<div class="proof definition dropdown admonition" id="discrimination-free-pricing">
+<p class="admonition-title"><span class="caption-number">Definition 23 </span> (Discrimination-Free Pricing)</p>
+<section class="definition-content" id="proof-content">
+<p>An insurance price is <strong>discrimination-free</strong> (<a class="reference external" href="https://arxiv.org/abs/2209.00858">Lindholm et al., 2022</a>) if</p>
+<div class="math notranslate nohighlight">
+\[
+P(Y \leq y \mid X, S) = P(Y \leq y \mid X) \quad \text{for all } y
+\]</div>
+<p>i.e., the sensitive attribute <span class="math notranslate nohighlight">\(S\)</span> carries no additional information about <span class="math notranslate nohighlight">\(Y\)</span> beyond the non-protected covariates <span class="math notranslate nohighlight">\(X\)</span>.</p>
+</section>
+</div><div class="proof definition dropdown admonition" id="counterfactual-fairness">
+<p class="admonition-title"><span class="caption-number">Definition 24 </span> (Counterfactual Fairness)</p>
+<section class="definition-content" id="proof-content">
+<p>A predictor <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> is <strong>counterfactually fair</strong> (<a class="reference external" href="https://arxiv.org/abs/1703.06856">Kusner et al., 2017</a>) if, for all <span class="math notranslate nohighlight">\(s, s'\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+P\bigl(\hat{\mu}_{S \leftarrow s}(X) = y \mid X{=}x, S{=}s\bigr) = P\bigl(\hat{\mu}_{S \leftarrow s'}(X) = y \mid X{=}x, S{=}s\bigr)
+\]</div>
+<p>i.e., the prediction would not change had the individual belonged to a different demographic group, all else being equal.</p>
+</section>
+</div></section>
+<section id="group-fairness-criteria-as-diagnostic-checks">
+<h2>Group Fairness Criteria as Diagnostic Checks<a class="headerlink" href="#group-fairness-criteria-as-diagnostic-checks" title="Link to this heading">#</a></h2>
+<div class="proof remark dropdown admonition" id="group-fairness-criteria">
+<p class="admonition-title"><span class="caption-number">Remark 2 </span> (Group Fairness Criteria)</p>
+<section class="remark-content" id="proof-content">
+<p>The machine learning literature evaluates a predictor against several <strong>group fairness criteria</strong> (<a class="reference external" href="https://fairmlbook.org/">Barocas et al., 2019</a>). The interactive explainer in <a class="reference internal" href="../application/pricing.html"><span class="doc">Fairness in Insurance Pricing</span></a> lets you toggle between the criteria defined below and watch the consequence of each choice. Each criterion is an independence condition on <span class="math notranslate nohighlight">\(\hat{Y}\)</span>; what distinguishes them is <em>which</em> errors they equalise, and therefore <em>what they cost</em> when the groups have genuinely different risk.</p>
+</section>
+</div><p>The <strong>weakest</strong> criterion is <a class="reference internal" href="#fairness-unawareness">Definition 22</a> (group unawareness): <span class="math notranslate nohighlight">\(S\)</span> is simply not an input. As the whole of this page argues, proxy discrimination defeats it. The four criteria below are progressively more demanding constraints on the <em>decisions</em>, not the inputs.</p>
+<div class="proof definition dropdown admonition" id="demographic-parity">
+<p class="admonition-title"><span class="caption-number">Definition 25 </span> (Demographic (Statistical) Parity)</p>
+<section class="definition-content" id="proof-content">
+<p>A decision satisfies <strong>demographic parity</strong> if the flag is independent of the protected attribute,</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{Y} \perp\!\!\!\perp S \quad\Longleftrightarrow\quad P(\hat{Y}{=}1 \mid S{=}s) \text{ is equal for all } s,
+\]</div>
+<p>i.e. each group is flagged at the same rate (<a class="reference external" href="https://arxiv.org/abs/1104.3913">Dwork et al., 2012</a>).</p>
+<p><strong>Interpretation</strong> Parity is enforced <em>regardless of true risk</em>. When base rates genuinely differ, equalising selection rates means either lowering the bar for the lower-risk group or raising it for the higher-risk group — so qualified individuals are passed over in one group and unqualified ones flagged in the other. It maximally protects against disparate impact but is the most costly in accuracy and induces explicit cross-subsidy between groups.</p>
+</section>
+</div><div class="proof definition dropdown admonition" id="equal-opportunity">
+<p class="admonition-title"><span class="caption-number">Definition 26 </span> (Equal Opportunity &amp; Equalised Odds)</p>
+<section class="definition-content" id="proof-content">
+<p>A decision satisfies <strong>equal opportunity</strong> if the true-positive rate is equal across groups,</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{Y} \perp\!\!\!\perp S \mid Y{=}1 \quad\Longleftrightarrow\quad P(\hat{Y}{=}1 \mid Y{=}1, S{=}s) \text{ is equal for all } s,
+\]</div>
+<p>so genuinely high-cost risks are caught at the same rate in every group (<a class="reference external" href="https://arxiv.org/abs/1610.02413">Hardt et al., 2016</a>). Requiring equality of <em>both</em> the true- and false-positive rates is the stronger <strong>equalised odds</strong> criterion.</p>
+<p><strong>Interpretation</strong> Equal opportunity controls only the <em>miss</em> rate: it guarantees no group is systematically under-served among the truly high-risk, but says nothing about false positives, so one group may still bear more unwarranted reviews. Equalised odds closes that gap, but is so restrictive that — except in degenerate cases — it cannot hold together with calibration when base rates differ, and may force the model to <em>discard</em> predictive information to balance the error rates.</p>
+</section>
+</div><div class="proof definition dropdown admonition" id="equal-accuracy">
+<p class="admonition-title"><span class="caption-number">Definition 27 </span> (Equal Accuracy)</p>
+<section class="definition-content" id="proof-content">
+<p>A decision satisfies <strong>equal accuracy</strong> (overall accuracy equality) if it is correct equally often in each group,</p>
+<div class="math notranslate nohighlight">
+\[
+P(\hat{Y}{=}Y \mid S{=}s) \text{ is equal for all } s
+\]</div>
+<p>(<a class="reference external" href="https://doi.org/10.1177/0049124118782533">Berk et al., 2021</a>).</p>
+<p><strong>Interpretation</strong> Equal accuracy treats a false positive and a false negative as interchangeable, so two groups can have identical accuracy while one suffers mostly missed high-risk cases and the other mostly false alarms. It is easy to communicate but blind to <em>which kind</em> of error each group bears — usually the distinction that matters most for fairness.</p>
+</section>
+</div><div class="proof definition dropdown admonition" id="predictive-parity">
+<p class="admonition-title"><span class="caption-number">Definition 28 </span> (Predictive Parity (Calibration))</p>
+<section class="definition-content" id="proof-content">
+<p>A score satisfies <strong>predictive parity / calibration</strong> if its meaning does not depend on the group,</p>
+<div class="math notranslate nohighlight">
+\[
+Y \perp\!\!\!\perp S \mid \hat{\mu}(X),
+\]</div>
+<p>i.e. among everyone assigned the same price <span class="math notranslate nohighlight">\(\hat{\mu}(X)\)</span>, the realised risk is the same regardless of group (<a class="reference external" href="https://doi.org/10.1089/big.2016.0047">Chouldechova, 2017</a>).</p>
+<p><strong>Interpretation</strong> Calibration is what actuarial soundness and most regulators implicitly demand: a given premium must correspond to the same expected cost for everyone. The price of insisting on it is that, at unequal base rates, a calibrated score <em>cannot</em> also equalise true- and false-positive rates — so a calibrated, actuarially fair price will necessarily show group differences in error rates (<a class="reference external" href="https://arxiv.org/abs/1609.05807">Kleinberg et al., 2017</a>).</p>
+</section>
+</div><div class="proof remark dropdown admonition" id="fairness-incompatibility">
+<p class="admonition-title"><span class="caption-number">Remark 3 </span> (The criteria are mutually incompatible)</p>
+<section class="remark-content" id="proof-content">
+<p>These criteria are useful <strong>diagnostic checks</strong> but cannot replace causal reasoning. <a class="reference external" href="https://arxiv.org/abs/2209.00858">Lindholm et al. (2022)</a> show that even a genuinely discrimination-free model violates them whenever <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(S\)</span> are statistically dependent. Moreover, except in trivial cases, the criteria are mutually incompatible at unequal base rates: no decision can be simultaneously calibrated <em>and</em> equalise both error rates (<a class="reference external" href="https://arxiv.org/abs/1609.05807">Kleinberg et al., 2017</a>; <a class="reference external" href="https://doi.org/10.1089/big.2016.0047">Chouldechova, 2017</a>). Choosing a criterion is therefore a value judgement about <em>which</em> fairness to buy and <em>which</em> to forgo — not a technical detail the model can settle on its own.</p>
+</section>
+</div></section>
+<section id="how-causal-inference-resolves-the-fairness-problem">
+<h2>How Causal Inference Resolves the Fairness Problem<a class="headerlink" href="#how-causal-inference-resolves-the-fairness-problem" title="Link to this heading">#</a></h2>
+<figure class="align-default" id="fig-fairness-dag">
+<a class="reference internal image-reference" href="../_images/fairness_dag.svg"><img alt="../_images/fairness_dag.svg" src="../_images/fairness_dag.svg" style="width: 85%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 24 </span><span class="caption-text">The fairness DAG: the sensitive attribute <span class="math notranslate nohighlight">\(S\)</span> reaches the claim <span class="math notranslate nohighlight">\(Y\)</span> via a discriminatory proxy path through <span class="math notranslate nohighlight">\(X_1\)</span> and a legitimate path through the risk factor <span class="math notranslate nohighlight">\(X_2\)</span>, while the confounder <span class="math notranslate nohighlight">\(F\)</span> creates a spurious <span class="math notranslate nohighlight">\(S\)</span>–<span class="math notranslate nohighlight">\(Y\)</span> association.</span><a class="headerlink" href="#fig-fairness-dag" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The DAG makes precise why purely statistical constraints fail: not every <span class="math notranslate nohighlight">\(S \to Y\)</span> path is illegitimate. The strength of causal inference is that it lets us reason about <em>which</em> paths are admissible instead of imposing a blanket independence requirement. Three steps follow directly from the graph:</p>
+<ul class="simple">
+<li><p><strong>Block the spurious path.</strong> The association <span class="math notranslate nohighlight">\(S \leftarrow F \rightarrow Y\)</span> is confounding, not discrimination. Conditioning on (or adjusting for) <span class="math notranslate nohighlight">\(F\)</span> closes this back-door path, so that any remaining <span class="math notranslate nohighlight">\(S\)</span>–<span class="math notranslate nohighlight">\(Y\)</span> dependence reflects genuine causal channels rather than artefacts.</p></li>
+<li><p><strong>Separate proxy from legitimate channels.</strong> The proxy path <span class="math notranslate nohighlight">\(S \to X_1 \to Y\)</span> is the discriminatory mechanism, whereas <span class="math notranslate nohighlight">\(S \to X_2 \to Y\)</span> runs through a bona fide risk factor and may be defensible. <strong>Path-specific (counterfactual) effects</strong> let us neutralise only the unfair path while preserving the predictive signal carried by the legitimate one (<a class="reference external" href="https://arxiv.org/abs/1802.08139">Chiappa, 2019</a>; <a class="reference external" href="https://arxiv.org/abs/1703.06856">Kusner et al., 2017</a>).</p></li>
+<li><p><strong>Construct the discrimination-free price.</strong> Operationally, <a class="reference internal" href="#discrimination-free-pricing">Definition 23</a> is obtained by integrating the price over the <em>marginal</em> <span class="math notranslate nohighlight">\(P(S)\)</span> rather than the conditional <span class="math notranslate nohighlight">\(P(S \mid X)\)</span>, which severs the <span class="math notranslate nohighlight">\(X\)</span>–<span class="math notranslate nohighlight">\(S\)</span> dependence that the tower property would otherwise exploit (<a class="reference external" href="https://arxiv.org/abs/2209.00858">Lindholm et al., 2022</a>).</p></li>
+</ul>
+<p><strong>Where the Wasserstein distance fits in.</strong> When the dependence between <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(S\)</span> cannot be fully removed — or when statistical parity is required as a hard constraint — fairness can be enforced <em>geometrically</em> via optimal transport.</p>
+<div class="proof definition dropdown admonition" id="wasserstein-barycenter">
+<p class="admonition-title"><span class="caption-number">Definition 29 </span> (Wasserstein-2 Distance and Barycenter)</p>
+<section class="definition-content" id="proof-content">
+<p>For two distributions <span class="math notranslate nohighlight">\(P, Q\)</span> on <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> with finite second moments, the <strong>Wasserstein-2 distance</strong> is the minimal expected squared cost of transporting one onto the other,</p>
+<div class="math notranslate nohighlight">
+\[
+W_2(P, Q) = \left( \inf_{\pi \in \Pi(P, Q)} \int |u - v|^2 \, \mathrm{d}\pi(u, v) \right)^{1/2},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\Pi(P, Q)\)</span> is the set of couplings (joint distributions) with marginals <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(Q\)</span>. Given the group-conditional price distributions <span class="math notranslate nohighlight">\(P(\hat{\mu} \mid S{=}s)\)</span> with group shares <span class="math notranslate nohighlight">\(P(S{=}s)\)</span>, their <strong>Wasserstein barycenter</strong> is the distribution that minimises the total squared <span class="math notranslate nohighlight">\(W_2\)</span> distance to all of them,</p>
+<div class="math notranslate nohighlight">
+\[
+\bar{P} = \arg\min_{P} \sum_{s} P(S{=}s)\, W_2^2\bigl(P,\; P(\hat{\mu} \mid S{=}s)\bigr).
+\]</div>
+</section>
+</div><p>The idea is to map each group-conditional price distribution <span class="math notranslate nohighlight">\(P(\hat{\mu} \mid S{=}s)\)</span> onto a common target — the <strong>Wasserstein barycenter</strong> <span class="math notranslate nohighlight">\(\bar{P}\)</span> (<a class="reference internal" href="#wasserstein-barycenter">Definition 29</a>). Projecting onto this barycenter yields (approximate) demographic parity while distorting the original prices as little as possible, since <span class="math notranslate nohighlight">\(W_2\)</span> measures the minimal “cost” of reshaping one distribution into another (<a class="reference external" href="https://arxiv.org/abs/2006.07286">Chzhen et al., 2020</a>; <a class="reference external" href="https://arxiv.org/abs/1911.06685">Plečko &amp; Meinshausen, 2020</a>). Beyond repair, the Wasserstein distance also serves as a continuous <strong>fairness metric</strong>: <span class="math notranslate nohighlight">\(W_2\bigl(P(\hat{\mu}\mid S{=}s),\, P(\hat{\mu}\mid S{=}s')\bigr)\)</span> quantifies how far apart the price distributions of two groups remain, complementing the binary independence tests of the group-fairness criteria above.</p>
+</section>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="debias.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Biases and De-Biasing Toolkit</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../application/observational_data.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Observational Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proxy-discrimination">Proxy Discrimination</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-unawareness-to-counterfactual-fairness">From Unawareness to Counterfactual Fairness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#group-fairness-criteria-as-diagnostic-checks">Group Fairness Criteria as Diagnostic Checks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-causal-inference-resolves-the-fairness-problem">How Causal Inference Resolves the Fairness Problem</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theresa Blümlein, Patrick Cheridito, and Daniel Meier
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

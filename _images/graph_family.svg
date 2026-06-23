@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="210" viewBox="0 0 640 210" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .arrow { fill: #333; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="arFam" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L9,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- Z (Parent) -->
+  <circle cx="80" cy="110" r="32" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <text x="80" y="116" text-anchor="middle" font-size="20" fill="#3a4149">Z</text>
+  <text class="muted" x="80" y="166" text-anchor="middle" font-size="12">parent</text>
+
+  <!-- X (focus) -->
+  <circle cx="240" cy="110" r="32" fill="#eaf2fb" stroke="#4a90d9" stroke-width="2"/>
+  <text x="240" y="116" text-anchor="middle" font-size="20" fill="#1f5fa0">X</text>
+  <text class="muted" x="240" y="166" text-anchor="middle" font-size="12">node of interest</text>
+
+  <!-- W (Child) -->
+  <circle cx="400" cy="110" r="32" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <text x="400" y="116" text-anchor="middle" font-size="20" fill="#3a4149">W</text>
+  <text class="muted" x="400" y="166" text-anchor="middle" font-size="12">child</text>
+
+  <!-- Y (Descendant) -->
+  <circle cx="560" cy="110" r="32" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <text x="560" y="116" text-anchor="middle" font-size="20" fill="#3a4149">Y</text>
+  <text class="muted" x="560" y="166" text-anchor="middle" font-size="12">descendant of X</text>
+
+  <line class="ink-l" x1="112" y1="110" x2="206" y2="110" stroke-width="2" marker-end="url(#arFam)"/>
+  <line class="ink-l" x1="272" y1="110" x2="366" y2="110" stroke-width="2" marker-end="url(#arFam)"/>
+  <line class="ink-l" x1="432" y1="110" x2="526" y2="110" stroke-width="2" marker-end="url(#arFam)"/>
+</svg>

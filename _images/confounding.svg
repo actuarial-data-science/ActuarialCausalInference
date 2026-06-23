@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="270" viewBox="0 0 420 270" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .arrow { fill: #333; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="arConf" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L9,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- F (Confounder) -->
+  <text class="muted" x="210" y="22" text-anchor="middle" font-size="12">confounder</text>
+  <circle cx="210" cy="62" r="32" fill="#fdecec" stroke="#cc3b3b" stroke-width="2"/>
+  <text x="210" y="68" text-anchor="middle" font-size="20" fill="#8a1f1f">F</text>
+
+  <!-- T (Treatment) -->
+  <circle cx="100" cy="200" r="32" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="100" y="206" text-anchor="middle" font-size="20" fill="#136c3a">T</text>
+  <text class="muted" x="100" y="256" text-anchor="middle" font-size="12">treatment</text>
+
+  <!-- Y (Outcome) -->
+  <circle cx="320" cy="200" r="32" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <text x="320" y="206" text-anchor="middle" font-size="20" fill="#3a4149">Y</text>
+  <text class="muted" x="320" y="256" text-anchor="middle" font-size="12">outcome</text>
+
+  <line class="ink-l" x1="188" y1="86" x2="120" y2="176" stroke-width="2" marker-end="url(#arConf)"/>
+  <line class="ink-l" x1="232" y1="86" x2="300" y2="176" stroke-width="2" marker-end="url(#arConf)"/>
+  <line class="ink-l" x1="132" y1="200" x2="284" y2="200" stroke-width="2" marker-end="url(#arConf)"/>
+</svg>

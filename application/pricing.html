@@ -1,0 +1,1315 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Fairness in Insurance Pricing &#8212; Actuarial Causal Inference Tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../_static/dark_mode_widget.css?v=7446dea4" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe-button-patch.css?v=e3482d12" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/figure-theme.css?v=61ffb31e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script src="../_static/sphinx-thebe-i18n.js?v=ea266e56"></script>
+    <script defer="defer" src="../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../_static/sphinx-thebe-lite.js?v=93e2d225"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'application/pricing';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/figure-theme.js?v=29b104fa"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Explainable Motor Claims Triage with CATE" href="claims_triage.html" />
+    <link rel="prev" title="Observational Data" href="observational_data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Actuarial Causal Inference Tutorial - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Actuarial Causal Inference Tutorial - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Actuarial Causal Inference Tutorial
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/concepts.html">Concepts of Causal Inference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorial/identification.html">Identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/assumptions.html">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/graphical_models.html">Graphical Causal Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/methods.html">Identification Strategies</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorial/inference.html">Causal Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/propensity.html">Propensity Score Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/regression_methods.html">Regression Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/tree_based_methods.html">Tree-Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/bayesian.html">Bayesian Causal Inference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorial/sensitivity.html">Validation and Sensitivity Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/diagnostics.html">Diagnostics and Sensitivity Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/debias.html">Biases and De-Biasing Toolkit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/fairness.html">Why Causal Inference Resolves the Fairness Problem</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Actuarial Applications</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="observational_data.html">Observational Data</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Fairness in Insurance Pricing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="claims_triage.html">Explainable Motor Claims Triage with CATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="health_interventions.html">Synthetic Health Dataset for Causal Inference Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../papers/references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/actuarial-data-science/ActuarialCausalInference/main?urlpath=tree/application/pricing.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Binder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Binder logo" src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/actuarial-data-science/ActuarialCausalInference/blob/main/application/pricing.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/application/pricing.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Fairness in Insurance Pricing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-is-risk-classification-discrimination">When is risk classification <em>discrimination</em>?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-the-protected-attribute-onto-the-dag">Mapping the protected attribute onto the DAG</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#three-prices-three-notions-of-fairness">Three prices, three notions of fairness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-synthetic-health-insurance-portfolio">A synthetic health-insurance portfolio</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-three-prices">Fitting the three prices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-the-result-the-proxy-inference-surcharge">Reading the result: the proxy “inference surcharge”</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-statistical-to-causal-fairness-counterfactuals-and-path-specific-effects">From statistical to causal fairness: counterfactuals and path-specific effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-you-cannot-satisfy-every-fairness-definition-at-once">Why you cannot satisfy every fairness definition at once</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-map-of-the-fairness-definitions">A map of the fairness definitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-prices-vs-fairness-measures">Interactive: prices vs. fairness measures</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#takeaways-for-the-actuary">Takeaways for the actuary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="fairness-in-insurance-pricing">
+
+<div class="cell docutils container tag_thebe-remove-input-init">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre>import matplotlib
+if not hasattr(matplotlib.RcParams, "_get"):
+    matplotlib.RcParams._get = dict.get</pre>
+</div></div></div></div><h1>Fairness in Insurance Pricing<a class="headerlink" href="#fairness-in-insurance-pricing" title="Link to this heading">#</a></h1>
+<p>Insurance is, by construction, a business of <strong>risk discrimination</strong>: premiums are deliberately differentiated so that policyholders who bring more expected cost to the pool pay more. The actuarial question is therefore never <em>“should we distinguish between risks?”</em> — solidarity through a risk-rated pool requires that we do — but <strong>which distinctions are permissible, and which are unfair?</strong></p>
+<p>The line society draws is between two kinds of differentiation:</p>
+<ul class="simple">
+<li><p><strong>Direct discrimination</strong> — using a <em>protected attribute</em> <span class="math notranslate nohighlight">\(S\)</span> (sex, race, ethnicity, sometimes health or disability status) directly as a rating factor.</p></li>
+<li><p><strong>Indirect / proxy discrimination</strong> — using non-protected covariates <span class="math notranslate nohighlight">\(X\)</span> (postcode, occupation, car model, a lifestyle flag) that are <em>correlated</em> with <span class="math notranslate nohighlight">\(S\)</span>, so the model can implicitly reconstruct the protected attribute even though it was never an input.</p></li>
+</ul>
+<p>The central, counter-intuitive lesson of this page is that <strong>“fairness through unawareness” — simply deleting <span class="math notranslate nohighlight">\(S\)</span> — does not remove discrimination</strong>. Because the remaining covariates still carry information about <span class="math notranslate nohighlight">\(S\)</span>, an unaware model can keep pricing on the protected attribute through the back door, and in some cases does so <em>more</em> opaquely than a model that used <span class="math notranslate nohighlight">\(S\)</span> openly. Deciding whether a correlated covariate is a <em>legitimate risk factor</em> or a <em>discriminatory proxy</em> is not a question the correlation matrix can answer — it is a <strong>causal</strong> question. That is where the machinery from <a class="reference internal" href="../tutorial/graphical_models.html"><span class="doc">Graphical Causal Models</span></a> and <a class="reference internal" href="../tutorial/debias.html"><span class="doc">Biases and De-Biasing Toolkit</span></a> earns its place.</p>
+<p>This notebook makes the fairness concepts from <a class="reference internal" href="../tutorial/debias.html"><span class="doc">Biases and De-Biasing Toolkit</span></a> — <code class="xref prf prf-ref docutils literal notranslate"><span class="pre">proxy-discrimination</span></code>, <a class="reference internal" href="../tutorial/fairness.html#fairness-unawareness">Definition 22</a>, <a class="reference internal" href="../tutorial/fairness.html#discrimination-free-pricing">Definition 23</a>, <a class="reference internal" href="../tutorial/fairness.html#counterfactual-fairness">Definition 24</a> and the <a class="reference internal" href="../tutorial/fairness.html#group-fairness-criteria">Remark 2</a> — concrete on a synthetic insurance portfolio. The treatment of the three prices follows <a class="reference external" href="https://arxiv.org/abs/2209.00858">Lindholm, Richman, Tsanakas &amp; Wüthrich (2022)</a>, the canonical actuarial reference; the comparison of statistical fairness definitions follows the <a class="reference external" href="https://pair.withgoogle.com/explorables/measuring-fairness/">Google PAIR <em>Measuring Fairness</em> explorable (2020)</a> and the impossibility result of <a class="reference external" href="https://doi.org/10.1089/big.2016.0047">Chouldechova (2017)</a>.</p>
+<p><strong>Road map</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Frame the tension</strong> — why risk classification is discriminatory by design, and what makes a distinction <em>unfair</em>.</p></li>
+<li><p><strong>Map the protected attribute onto a DAG</strong> — classify each pathway as fair (legitimate risk) or unfair (direct / proxy).</p></li>
+<li><p><strong>The three prices</strong> — best-estimate, unawareness, and <em>discrimination-free</em> — and why unawareness leaks (<a class="reference internal" href="#alg-discfree-price">Algorithm 18</a>).</p></li>
+<li><p><strong>An applied example</strong> — build a portfolio, price it three ways, and watch proxy discrimination appear and then be removed.</p></li>
+<li><p><strong>Counterfactual fairness and path-specific effects</strong> — the causal reading of “would this price change if the policyholder’s group were different?”</p></li>
+<li><p><strong>Statistical vs causal fairness</strong> — the group-fairness criteria, their mutual incompatibility, and what regulation requires.</p></li>
+</ol>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<p>We use a small, self-contained toolkit: <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> for the pricing models, <code class="docutils literal notranslate"><span class="pre">scipy</span></code> for the logistic link, and the <code class="docutils literal notranslate"><span class="pre">draw_causal_graph_svg</span></code> helper from <code class="docutils literal notranslate"><span class="pre">utils.py</span></code> to render the fairness DAG as a crisp vector figure (the same helper used in <a class="reference internal" href="observational_data.html"><span class="doc">Observational Data</span></a>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">expit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">SVG</span><span class="p">,</span> <span class="n">display</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">draw_causal_graph_svg</span>
+
+<span class="c1"># Hide benign numerical RuntimeWarnings from sklearn&#39;s solvers (overflow/divide</span>
+<span class="c1"># in intermediate matmuls) so the rendered page stays clean.</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">seterr</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>  <span class="c1"># NumPy floating-point warnings (divide/overflow/invalid)</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+
+<span class="n">FIG_DIR</span> <span class="o">=</span> <span class="s2">&quot;figs&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">FIG_DIR</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;figure.dpi&quot;</span><span class="p">:</span> <span class="mi">110</span><span class="p">,</span> <span class="s2">&quot;axes.grid&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;grid.alpha&quot;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">})</span>
+
+<span class="c1"># Consistent colours for the two protected groups throughout the notebook.</span>
+<span class="n">SEX_COLORS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Female&quot;</span><span class="p">:</span> <span class="s2">&quot;#e377c2&quot;</span><span class="p">,</span> <span class="s2">&quot;Male&quot;</span><span class="p">:</span> <span class="s2">&quot;#1f77b4&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="when-is-risk-classification-discrimination">
+<h2>When is risk classification <em>discrimination</em>?<a class="headerlink" href="#when-is-risk-classification-discrimination" title="Link to this heading">#</a></h2>
+<p>A premium is a price for expected risk. Charging a 70-year-old more than a 30-year-old for life cover is differentiation that virtually everyone accepts, because age is a genuine, causal driver of mortality. Charging a woman more than an otherwise-identical man for the <em>same</em> cover — purely because of her sex — is differentiation that most legal systems now <strong>prohibit</strong>. The difference is not statistical strength (sex can be a very strong predictor); it is a societal judgement that some characteristics must not be priced on, even when they are predictive.</p>
+<p>This judgement is encoded in regulation:</p>
+<ul class="simple">
+<li><p><strong>EU — sex.</strong> The Gender Directive (2004/113/EC), as interpreted by the Court of Justice in the <em>Test-Achats</em> ruling (<a class="reference external" href="https://curia.europa.eu/juris/liste.jsf?num=C-236/09">C-236/09</a>, effective 21 December 2012), requires <strong>unisex pricing</strong>: sex may not be used as a rating factor that produces differences in individual premiums or benefits.</p></li>
+<li><p><strong>EU — AI systems.</strong> Under the EU AI Act (<a class="reference external" href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">Regulation (EU) 2024/1689</a>), AI systems used for <strong>risk assessment and pricing in life and health insurance</strong> are classified as <em>high-risk</em>, triggering obligations on data governance, transparency and bias monitoring.</p></li>
+<li><p><strong>Switzerland (the SAV context).</strong> Switzerland is outside the EU, and sex-differentiated tariffs have historically been permitted in private insurance; supervision focuses on actuarial justification and the revised Federal Act on Data Protection (nFADP, in force 2023). The direction of travel — scrutiny of proxy discrimination in algorithmic pricing — nonetheless mirrors the EU debate.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Regulation in this area moves quickly and differs by line of business and jurisdiction. The specifics above are orientation, not legal advice — <strong>verify the current rules</strong> for your market and product before relying on them.</p>
+</div>
+<p>The actuarial problem this creates is precise: we must build a price that is <strong>predictive of risk</strong> yet <strong>free of (direct and indirect) dependence on the protected attribute</strong> <span class="math notranslate nohighlight">\(S\)</span>. Deleting <span class="math notranslate nohighlight">\(S\)</span> is necessary but, as we now show, far from sufficient.</p>
+<section id="mapping-the-protected-attribute-onto-the-dag">
+<h3>Mapping the protected attribute onto the DAG<a class="headerlink" href="#mapping-the-protected-attribute-onto-the-dag" title="Link to this heading">#</a></h3>
+<p>Whether a covariate is a <em>legitimate risk factor</em> or a <em>discriminatory proxy</em> depends on the <strong>causal structure</strong>, not on how strongly it correlates with <span class="math notranslate nohighlight">\(S\)</span>. We therefore start, as always, by drawing the graph (<a class="reference internal" href="../tutorial/graphical_models.html"><span class="doc">Graphical Causal Models</span></a>) and labelling every pathway from the protected attribute <span class="math notranslate nohighlight">\(S\)</span> to the claim <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<p>In the portfolio below there are three covariates and three pathways:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Pathway</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Verdict</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(S \rightarrow Y\)</span></p></td>
+<td><p><strong>Direct</strong> effect of the protected attribute on claims</p></td>
+<td><p>Unfair — direct discrimination</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(S \rightarrow \text{Proxy} \rightarrow Y\)</span></p></td>
+<td><p><strong>Indirect</strong> effect through a non-protected covariate correlated with <span class="math notranslate nohighlight">\(S\)</span></p></td>
+<td><p>Disputed — <em>proxy</em> discrimination if the covariate is judged a mere stand-in for <span class="math notranslate nohighlight">\(S\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\text{Age} \rightarrow Y\)</span></p></td>
+<td><p>A risk factor <strong>independent of <span class="math notranslate nohighlight">\(S\)</span></strong></p></td>
+<td><p>Fair — legitimate risk classification</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The colours below follow the DAG palette from the tutorial: the <strong>sensitive</strong> node <span class="math notranslate nohighlight">\(S\)</span> is highlighted, dashed-red edges mark the channels that transmit protected information to the price, and solid edges mark causal effects we are happy to price on. The art of fair pricing is to keep the legitimate (solid) paths and close the discriminatory (dashed) ones.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fairness DAG: S is the protected attribute; the dashed-red edges are the</span>
+<span class="c1"># channels (direct + proxy) through which S can leak into the price.</span>
+<span class="n">positions</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;S&quot;</span><span class="p">:</span>     <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span>   <span class="c1"># protected attribute (sex)</span>
+    <span class="s2">&quot;Proxy&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span>   <span class="c1"># non-protected covariate correlated with S (lifestyle flag)</span>
+    <span class="s2">&quot;Age&quot;</span><span class="p">:</span>   <span class="p">(</span><span class="mf">2.8</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span>   <span class="c1"># legitimate risk factor, independent of S</span>
+    <span class="s2">&quot;Y&quot;</span><span class="p">:</span>     <span class="p">(</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span>   <span class="c1"># claim cost</span>
+<span class="p">}</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;Proxy&quot;</span><span class="p">,</span> <span class="s2">&quot;biasing&quot;</span><span class="p">),</span>   <span class="c1"># S shapes the proxy            -&gt; indirect channel</span>
+    <span class="p">(</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span>     <span class="s2">&quot;biasing&quot;</span><span class="p">),</span>   <span class="c1"># direct effect of S on claims  -&gt; direct discrimination</span>
+    <span class="p">(</span><span class="s2">&quot;Proxy&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;causal&quot;</span><span class="p">),</span>    <span class="c1"># proxy affects claims</span>
+    <span class="p">(</span><span class="s2">&quot;Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span>   <span class="s2">&quot;causal&quot;</span><span class="p">),</span>    <span class="c1"># legitimate risk factor</span>
+<span class="p">]</span>
+<span class="n">node_styles</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;S&quot;</span><span class="p">:</span> <span class="s2">&quot;sensitive&quot;</span><span class="p">,</span> <span class="s2">&quot;Proxy&quot;</span><span class="p">:</span> <span class="s2">&quot;covariate&quot;</span><span class="p">,</span> <span class="s2">&quot;Age&quot;</span><span class="p">:</span> <span class="s2">&quot;covariate&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="s2">&quot;outcome&quot;</span><span class="p">}</span>
+
+<span class="n">svg_path</span> <span class="o">=</span> <span class="n">draw_causal_graph_svg</span><span class="p">(</span>
+    <span class="n">edges</span><span class="o">=</span><span class="n">edges</span><span class="p">,</span>
+    <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">,</span>
+    <span class="n">node_styles</span><span class="o">=</span><span class="n">node_styles</span><span class="p">,</span>
+    <span class="n">filepath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FIG_DIR</span><span class="p">,</span> <span class="s2">&quot;dag_fairness.svg&quot;</span><span class="p">),</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Fairness DAG: legitimate (solid) vs discriminatory (dashed) pathways&quot;</span><span class="p">,</span>
+    <span class="n">legend_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sensitive&quot;</span><span class="p">,</span> <span class="s2">&quot;covariate&quot;</span><span class="p">,</span> <span class="s2">&quot;outcome&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">SVG</span><span class="p">(</span><span class="n">svg_path</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/deea7276a88fb3784aae3ff1faf439f8b18957e8bf7c744dd54f1017166a273b.svg" src="../_images/deea7276a88fb3784aae3ff1faf439f8b18957e8bf7c744dd54f1017166a273b.svg" />
+</div>
+</div>
+</section>
+</section>
+<section id="three-prices-three-notions-of-fairness">
+<h2>Three prices, three notions of fairness<a class="headerlink" href="#three-prices-three-notions-of-fairness" title="Link to this heading">#</a></h2>
+<p>Let <span class="math notranslate nohighlight">\(Y\)</span> be the claim cost, <span class="math notranslate nohighlight">\(X\)</span> the vector of <strong>non-protected</strong> covariates, and <span class="math notranslate nohighlight">\(S\)</span> the protected attribute. <a class="reference external" href="https://arxiv.org/abs/2209.00858">Lindholm et al. (2022)</a> compare three candidate prices.</p>
+<div class="proof definition admonition" id="best-estimate-price">
+<p class="admonition-title"><span class="caption-number">Definition 30 </span> (Best-estimate price)</p>
+<section class="definition-content" id="proof-content">
+<p>The <strong>best-estimate price</strong> is the full conditional expectation, using <em>every</em> covariate including the protected attribute:</p>
+<div class="math notranslate nohighlight">
+\[
+\mu(x, s) = \mathbb{E}[Y \mid X = x,\, S = s].
+\]</div>
+<p>It is the most accurate price, but it discriminates <strong>directly</strong> — two policyholders identical in <span class="math notranslate nohighlight">\(X\)</span> are charged differently because of <span class="math notranslate nohighlight">\(S\)</span>.</p>
+</section>
+</div><div class="proof definition admonition" id="unawareness-price">
+<p class="admonition-title"><span class="caption-number">Definition 31 </span> (Unawareness price)</p>
+<section class="definition-content" id="proof-content">
+<p>The <strong>unawareness price</strong> drops the protected attribute and conditions on <span class="math notranslate nohighlight">\(X\)</span> only:</p>
+<div class="math notranslate nohighlight">
+\[
+\mu(x) = \mathbb{E}[Y \mid X = x] = \sum_{s} \mu(x, s)\, \underbrace{P(S = s \mid X = x)}_{\text{conditional}}.
+\]</div>
+<p>It satisfies <a class="reference internal" href="../tutorial/fairness.html#fairness-unawareness">Definition 22</a>, yet the tower property shows it is a <strong>weighted average of the best-estimate price using the conditional <span class="math notranslate nohighlight">\(P(S \mid X)\)</span></strong> — exactly the term that lets <span class="math notranslate nohighlight">\(X\)</span> <em>infer</em> <span class="math notranslate nohighlight">\(S\)</span>. Whenever <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(S\)</span> are dependent, the unawareness price still channels protected information: this is <code class="xref prf prf-ref docutils literal notranslate"><span class="pre">proxy-discrimination</span></code>.</p>
+</section>
+</div><div class="proof definition admonition" id="discrimination-free-price-app">
+<p class="admonition-title"><span class="caption-number">Definition 32 </span> (Discrimination-free price)</p>
+<section class="definition-content" id="proof-content">
+<p>The <strong>discrimination-free price</strong> (<a class="reference external" href="https://arxiv.org/abs/2209.00858">Lindholm et al., 2022</a>) averages the best-estimate price over a <strong>marginal</strong> distribution <span class="math notranslate nohighlight">\(P^{*}(S)\)</span> that does <em>not</em> depend on <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+h(x) = \sum_{s} \mu(x, s)\, P^{*}(S = s).
+\]</div>
+<p>By replacing the conditional <span class="math notranslate nohighlight">\(P(S \mid X)\)</span> with a fixed marginal <span class="math notranslate nohighlight">\(P^{*}(S)\)</span>, it severs the inference channel: <span class="math notranslate nohighlight">\(h\)</span> depends on <span class="math notranslate nohighlight">\(x\)</span> only, and no longer uses <span class="math notranslate nohighlight">\(X\)</span> to deduce <span class="math notranslate nohighlight">\(S\)</span>. It is the actuarial realisation of <a class="reference internal" href="../tutorial/fairness.html#discrimination-free-pricing">Definition 23</a>.</p>
+</section>
+</div><p>The contrast that matters is the <strong>weighting</strong>: the unawareness price weights <span class="math notranslate nohighlight">\(\mu(x,s)\)</span> by the <em>conditional</em> <span class="math notranslate nohighlight">\(P(S\mid X)\)</span> (which encodes how much <span class="math notranslate nohighlight">\(X\)</span> reveals about <span class="math notranslate nohighlight">\(S\)</span>), whereas the discrimination-free price weights by a <em>marginal</em> <span class="math notranslate nohighlight">\(P^{*}(S)\)</span> (which reveals nothing). Their difference,</p>
+<div class="math notranslate nohighlight">
+\[
+\mu(x) - h(x) = \sum_s \mu(x,s)\,\bigl[P(S = s \mid X = x) - P^{*}(S = s)\bigr],
+\]</div>
+<p>is precisely the <strong>inference / proxy component</strong> baked into the unawareness price.</p>
+<div class="proof algorithm dropdown admonition" id="alg-discfree-price">
+<p class="admonition-title"><span class="caption-number">Algorithm 18 </span> (Discrimination-Free Pricing)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D = \{(X_i, S_i, Y_i)\}_{i=1}^{n}\)</span>, ML learner <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>, reference marginal <span class="math notranslate nohighlight">\(P^{*}(S)\)</span></p>
+<p><strong>Outputs</strong> Discrimination-free price <span class="math notranslate nohighlight">\(h(x)\)</span></p>
+<ol class="arabic simple">
+<li><p>Fit the best-estimate model <span class="math notranslate nohighlight">\(\hat{\mu}(x, s) = \mathcal{L}(Y \sim X, S)\)</span> on <span class="math notranslate nohighlight">\(D\)</span> <em>(this step uses the protected <span class="math notranslate nohighlight">\(S\)</span>)</em></p></li>
+<li><p>Choose a reference marginal <span class="math notranslate nohighlight">\(P^{*}(S)\)</span> — e.g. the portfolio proportions <span class="math notranslate nohighlight">\(P^{*}(S = s) = \frac{1}{n}\sum_i \mathbb{1}\{S_i = s\}\)</span>, independent of <span class="math notranslate nohighlight">\(x\)</span></p></li>
+<li><p>For every policyholder <span class="math notranslate nohighlight">\(i\)</span> and each level <span class="math notranslate nohighlight">\(s\)</span>, predict the counterfactual claim cost <span class="math notranslate nohighlight">\(\hat{\mu}(x_i, s)\)</span></p></li>
+<li><p>Average over the <strong>marginal</strong>, not the conditional: <span class="math notranslate nohighlight">\(h(x_i) = \sum_{s} \hat{\mu}(x_i, s)\, P^{*}(S = s)\)</span></p></li>
+<li><p>Return <span class="math notranslate nohighlight">\(h(x_i)\)</span> <em>(a function of <span class="math notranslate nohighlight">\(x\)</span> alone — the <span class="math notranslate nohighlight">\(X \to S\)</span> inference channel is removed)</em></p></li>
+</ol>
+</section>
+</div><p>Note that the algorithm still needs <span class="math notranslate nohighlight">\(S\)</span> <em>at training time</em> (to fit <span class="math notranslate nohighlight">\(\hat\mu(x,s)\)</span> and predict at each level of <span class="math notranslate nohighlight">\(s\)</span>). This is the crucial practical twist: <strong>you must collect the protected attribute in order to neutralise it</strong>. An organisation that never records <span class="math notranslate nohighlight">\(S\)</span> cannot build a discrimination-free price and is stuck with the leaky unawareness price.</p>
+</section>
+<section id="a-synthetic-health-insurance-portfolio">
+<h2>A synthetic health-insurance portfolio<a class="headerlink" href="#a-synthetic-health-insurance-portfolio" title="Link to this heading">#</a></h2>
+<p>To make the three prices tangible we simulate a health-insurance book where the data-generating process is known, so we can check the prices against ground truth. Each of <span class="math notranslate nohighlight">\(N = 6000\)</span> policyholders has:</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sex</span></code></strong> (<span class="math notranslate nohighlight">\(S \in \{0, 1\}\)</span>, <span class="math notranslate nohighlight">\(1 =\)</span> male) — the <strong>protected</strong> attribute, roughly balanced across the book;</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">age</span></code></strong> — a <strong>legitimate</strong> risk factor, drawn independently of <span class="math notranslate nohighlight">\(S\)</span>, so any premium difference it creates between the sexes is incidental;</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">lifestyle</span></code></strong> — a non-protected <strong>proxy</strong> flag (think of a high-risk-occupation or lifestyle indicator) that is <em>statistically dependent on <span class="math notranslate nohighlight">\(S\)</span></em>: males carry it about twice as often;</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">claims</span></code></strong> — the annual claim cost, with Gamma noise around a mean that rises with age, with the lifestyle flag, <strong>and directly with sex</strong> (a genuine morbidity difference).</p></li>
+</ul>
+<p>The direct <span class="math notranslate nohighlight">\(S \rightarrow Y\)</span> edge is what makes the unawareness price leak: because <code class="docutils literal notranslate"><span class="pre">lifestyle</span></code> predicts <code class="docutils literal notranslate"><span class="pre">sex</span></code>, dropping <code class="docutils literal notranslate"><span class="pre">sex</span></code> does not stop the model from re-deriving the male morbidity loading through the proxy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">6000</span>
+
+<span class="c1"># Protected attribute S: sex (0 = female, 1 = male), a roughly balanced book.</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+
+<span class="c1"># Legitimate risk factor: age, drawn INDEPENDENTLY of S.</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">80</span><span class="p">)</span>
+
+<span class="c1"># Proxy covariate: a non-protected lifestyle flag that depends on S. We keep the</span>
+<span class="c1"># structural noise U_life explicit so we can compute clean counterfactuals later.</span>
+<span class="n">U_life</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+<span class="n">lifestyle</span> <span class="o">=</span> <span class="p">(</span><span class="n">U_life</span> <span class="o">&lt;</span> <span class="n">expit</span><span class="p">(</span><span class="o">-</span><span class="mf">0.6</span> <span class="o">+</span> <span class="mf">1.4</span> <span class="o">*</span> <span class="n">S</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>   <span class="c1"># P(flag | S): F ~ 35%, M ~ 69%</span>
+
+<span class="c1"># True expected annual claim cost: rises with age, with the lifestyle flag, and</span>
+<span class="c1"># DIRECTLY with sex (a genuine morbidity loading -&gt; the S -&gt; Y edge).</span>
+<span class="n">base</span> <span class="o">=</span> <span class="mf">800.0</span>
+<span class="n">mu_true</span> <span class="o">=</span> <span class="n">base</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+    <span class="mf">0.020</span> <span class="o">*</span> <span class="p">(</span><span class="n">age</span> <span class="o">-</span> <span class="mi">45</span><span class="p">)</span>   <span class="c1"># legitimate age gradient</span>
+    <span class="o">+</span> <span class="mf">0.55</span> <span class="o">*</span> <span class="n">lifestyle</span>   <span class="c1"># lifestyle risk</span>
+    <span class="o">+</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">S</span>           <span class="c1"># direct effect of sex on claims</span>
+<span class="p">)</span>
+
+<span class="c1"># Observed claims: positive, right-skewed Gamma costs around the mean.</span>
+<span class="n">shape_k</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">claims</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">shape_k</span><span class="p">,</span> <span class="n">mu_true</span> <span class="o">/</span> <span class="n">shape_k</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="n">age</span><span class="p">,</span> <span class="s2">&quot;lifestyle&quot;</span><span class="p">:</span> <span class="n">lifestyle</span><span class="p">,</span> <span class="s2">&quot;sex&quot;</span><span class="p">:</span> <span class="n">S</span><span class="p">,</span> <span class="s2">&quot;claims&quot;</span><span class="p">:</span> <span class="n">claims</span><span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Portfolio: </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2"> policyholders | male share = </span><span class="si">{</span><span class="n">S</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2"> | &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;lifestyle-flag rate -&gt; female </span><span class="si">{</span><span class="n">lifestyle</span><span class="p">[</span><span class="n">S</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">, &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;male </span><span class="si">{</span><span class="n">lifestyle</span><span class="p">[</span><span class="n">S</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Portfolio: 6000 policyholders | male share = 49% | lifestyle-flag rate -&gt; female 34%, male 68%
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>lifestyle</th>
+      <th>sex</th>
+      <th>claims</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>65.187465</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3055.631711</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>45.926668</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1338.411916</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>41.353530</td>
+      <td>0</td>
+      <td>1</td>
+      <td>306.187224</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>42.372466</td>
+      <td>0</td>
+      <td>0</td>
+      <td>970.628693</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>42.798343</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1124.842408</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="fitting-the-three-prices">
+<h3>Fitting the three prices<a class="headerlink" href="#fitting-the-three-prices" title="Link to this heading">#</a></h3>
+<p>We follow <a class="reference internal" href="#alg-discfree-price">Algorithm 18</a>. A gradient-boosting model estimates the best-estimate price <span class="math notranslate nohighlight">\(\hat\mu(x,s)\)</span> from <strong>all</strong> covariates. We then predict each policyholder’s cost at <em>both</em> sexes, holding the covariates fixed, and combine those two predictions in two different ways:</p>
+<ul class="simple">
+<li><p>the <strong>unawareness</strong> price weights them by the conditional <span class="math notranslate nohighlight">\(\hat P(S\mid X)\)</span>, obtained from a logistic model of <code class="docutils literal notranslate"><span class="pre">sex</span></code> on the covariates — this is the inference channel;</p></li>
+<li><p>the <strong>discrimination-free</strong> price weights them by the fixed marginal <span class="math notranslate nohighlight">\(P^{*}(S)\)</span> (the portfolio sex split).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FEAT_FULL</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;lifestyle&quot;</span><span class="p">,</span> <span class="s2">&quot;sex&quot;</span><span class="p">]</span>
+<span class="n">FEAT_X</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;lifestyle&quot;</span><span class="p">]</span>
+
+<span class="c1"># 1. Best-estimate model mu(x, s): uses the protected attribute.</span>
+<span class="n">m_full</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span>
+    <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+<span class="n">m_full</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">FEAT_FULL</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;claims&quot;</span><span class="p">])</span>
+
+<span class="c1"># Predict the claim cost at BOTH sexes, holding the covariates fixed.</span>
+<span class="n">mu1</span> <span class="o">=</span> <span class="n">m_full</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">FEAT_X</span><span class="p">]</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">sex</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="n">FEAT_FULL</span><span class="p">])</span>   <span class="c1"># mu(x, S=male)</span>
+<span class="n">mu0</span> <span class="o">=</span> <span class="n">m_full</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">FEAT_X</span><span class="p">]</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">sex</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">FEAT_FULL</span><span class="p">])</span>   <span class="c1"># mu(x, S=female)</span>
+
+<span class="c1"># 2. P(S = male | X): the inference channel the proxy opens up.</span>
+<span class="n">clf_s</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">FEAT_X</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">])</span>
+<span class="n">ps_x</span> <span class="o">=</span> <span class="n">clf_s</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">FEAT_X</span><span class="p">])[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># 3. The three prices (same mu&#39;s, different weighting of S).</span>
+<span class="n">pS1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>                                       <span class="c1"># marginal P*(S = male)</span>
+<span class="n">price_best</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mu1</span><span class="p">,</span> <span class="n">mu0</span><span class="p">)</span>       <span class="c1"># uses the realised S</span>
+<span class="n">price_unaware</span> <span class="o">=</span> <span class="n">ps_x</span> <span class="o">*</span> <span class="n">mu1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">ps_x</span><span class="p">)</span> <span class="o">*</span> <span class="n">mu0</span>               <span class="c1"># weights by CONDITIONAL P(S|X)</span>
+<span class="n">price_disc_free</span> <span class="o">=</span> <span class="n">pS1</span> <span class="o">*</span> <span class="n">mu1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pS1</span><span class="p">)</span> <span class="o">*</span> <span class="n">mu0</span>               <span class="c1"># weights by MARGINAL P*(S)</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;price_best&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">price_best</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;price_unaware&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">price_unaware</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;price_disc_free&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">price_disc_free</span>
+
+<span class="c1"># Average premium gap between the sexes under each price.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean price gap (male - female):&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">lab</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;price_best&quot;</span><span class="p">,</span> <span class="s2">&quot;price_unaware&quot;</span><span class="p">,</span> <span class="s2">&quot;price_disc_free&quot;</span><span class="p">],</span>
+    <span class="p">[</span><span class="s2">&quot;Best-estimate&quot;</span><span class="p">,</span> <span class="s2">&quot;Unawareness&quot;</span><span class="p">,</span> <span class="s2">&quot;Discrimination-free&quot;</span><span class="p">],</span>
+<span class="p">):</span>
+    <span class="n">gap</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">lab</span><span class="si">:</span><span class="s2">&gt;22s</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">gap</span><span class="si">:</span><span class="s2">8.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean price gap (male - female):
+           Best-estimate:    561.0
+             Unawareness:    275.4
+     Discrimination-free:    238.3
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="reading-the-result-the-proxy-inference-surcharge">
+<h3>Reading the result: the proxy “inference surcharge”<a class="headerlink" href="#reading-the-result-the-proxy-inference-surcharge" title="Link to this heading">#</a></h3>
+<p>The printed gaps fall in a telling order: <strong>best-estimate &gt; unawareness &gt; discrimination-free</strong>.</p>
+<ul class="simple">
+<li><p>The <strong>best-estimate</strong> gap is the largest — it contains the direct sex loading <em>and</em> the lifestyle difference.</p></li>
+<li><p>The <strong>unawareness</strong> gap shrinks but does <strong>not</strong> vanish: even though <code class="docutils literal notranslate"><span class="pre">sex</span></code> was deleted, the model rebuilds part of the loading by inferring sex from <code class="docutils literal notranslate"><span class="pre">lifestyle</span></code>. This residual is the proxy discrimination.</p></li>
+<li><p>The <strong>discrimination-free</strong> gap is smaller still — what remains reflects only the legitimate variation in <span class="math notranslate nohighlight">\(X\)</span>, priced through the fixed marginal weighting.</p></li>
+</ul>
+<p>The left panel below contrasts the average premium by sex under each price. The right panel isolates the inference surcharge <span class="math notranslate nohighlight">\(\mu(x) - h(x)\)</span> (unawareness minus discrimination-free): it is <strong>positive for the lifestyle-flagged group</strong> (predominantly male, so the unawareness price reads the flag as a signal of higher male morbidity and adds a loading) and <strong>negative for the unflagged group</strong>. That sign pattern <em>is</em> proxy discrimination — a sex loading applied via a non-protected variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;price_best&quot;</span><span class="p">,</span> <span class="s2">&quot;price_unaware&quot;</span><span class="p">,</span> <span class="s2">&quot;price_disc_free&quot;</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Best-estimate</span><span class="se">\n</span><span class="s2">(uses S)&quot;</span><span class="p">,</span> <span class="s2">&quot;Unawareness</span><span class="se">\n</span><span class="s2">(drops S)&quot;</span><span class="p">,</span> <span class="s2">&quot;Discrimination-free</span><span class="se">\n</span><span class="s2">(marginal over S)&quot;</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">))</span>
+
+<span class="c1"># Left: mean premium by sex under each price.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">methods</span><span class="p">))</span>
+<span class="n">w</span> <span class="o">=</span> <span class="mf">0.36</span>
+<span class="n">f_means</span> <span class="o">=</span> <span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">]</span>
+<span class="n">m_means</span> <span class="o">=</span> <span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">]</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">f_means</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Female&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SEX_COLORS</span><span class="p">[</span><span class="s2">&quot;Female&quot;</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m_means</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Male&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SEX_COLORS</span><span class="p">[</span><span class="s2">&quot;Male&quot;</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Mean annual price&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Average premium by sex&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Right: the inference surcharge, split by the proxy flag.</span>
+<span class="n">surcharge</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;price_unaware&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;price_disc_free&quot;</span><span class="p">]</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">surcharge</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">lifestyle</span> <span class="o">==</span> <span class="mi">0</span><span class="p">],</span> <span class="n">surcharge</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">lifestyle</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">showfliers</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s2">&quot;No flag</span><span class="se">\n</span><span class="s2">(more female)&quot;</span><span class="p">,</span> <span class="s2">&quot;Lifestyle flag</span><span class="se">\n</span><span class="s2">(more male)&quot;</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Unawareness − Discrimination-free&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Proxy &#39;inference surcharge&#39;  μ(x) − h(x)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/96263dc052fb48b91474e147574bcd42a93703cfc201329fba78e8c205842baa.png" src="../_images/96263dc052fb48b91474e147574bcd42a93703cfc201329fba78e8c205842baa.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="from-statistical-to-causal-fairness-counterfactuals-and-path-specific-effects">
+<h2>From statistical to causal fairness: counterfactuals and path-specific effects<a class="headerlink" href="#from-statistical-to-causal-fairness-counterfactuals-and-path-specific-effects" title="Link to this heading">#</a></h2>
+<p>The discrimination-free price answers an <em>associational</em> question — it removes the <span class="math notranslate nohighlight">\(X \to S\)</span> inference channel. But it still prices on <code class="docutils literal notranslate"><span class="pre">lifestyle</span></code>, and we have not yet asked the genuinely causal question: <strong>is the <span class="math notranslate nohighlight">\(S \rightarrow \text{lifestyle} \rightarrow Y\)</span> path a legitimate risk pathway, or proxy discrimination we should also remove?</strong> Answering that requires a model of <em>counterfactuals</em>, not just conditional expectations.</p>
+<p><a class="reference internal" href="../tutorial/fairness.html#counterfactual-fairness">Definition 24</a> (<a class="reference external" href="https://arxiv.org/abs/1703.06856">Kusner et al., 2017</a>) formalises it: a price is counterfactually fair if it would be <strong>unchanged in the world where the policyholder’s protected attribute had been different</strong>, with everything that descends from <span class="math notranslate nohighlight">\(S\)</span> propagated accordingly. Computing such a counterfactual is the three-step recipe from <a class="reference internal" href="../tutorial/debias.html"><span class="doc">Biases and De-Biasing Toolkit</span></a>: <em>abduction</em> (recover the structural noise — here <code class="docutils literal notranslate"><span class="pre">U_life</span></code>), <em>action</em> (set <span class="math notranslate nohighlight">\(S \leftarrow 1 - S\)</span>), <em>prediction</em> (recompute the descendants).</p>
+<p>This exposes a trap. Consider two ways of “flipping the sex”:</p>
+<ol class="arabic simple">
+<li><p><strong>Naive flip</strong> — change <span class="math notranslate nohighlight">\(S\)</span> but leave the covariates untouched. The unawareness price never reads <span class="math notranslate nohighlight">\(S\)</span>, so it is <strong>unchanged</strong> — it looks counterfactually fair.</p></li>
+<li><p><strong>Full flip</strong> — change <span class="math notranslate nohighlight">\(S\)</span> <em>and</em> propagate it through its descendant <code class="docutils literal notranslate"><span class="pre">lifestyle</span></code> (using the fixed noise <code class="docutils literal notranslate"><span class="pre">U_life</span></code>). Now the proxy moves, and so does the unawareness price.</p></li>
+</ol>
+<p>The gap between (1) and (2) is exactly the <strong>path-specific effect</strong> of <span class="math notranslate nohighlight">\(S\)</span> through the proxy. A fairness audit that only does the naive flip would certify a discriminatory price as fair.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Counterfactual sex, holding the structural noise U_life fixed (abduction-action-prediction).</span>
+<span class="n">S_cf</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">life_cf</span> <span class="o">=</span> <span class="p">(</span><span class="n">U_life</span> <span class="o">&lt;</span> <span class="n">expit</span><span class="p">(</span><span class="o">-</span><span class="mf">0.6</span> <span class="o">+</span> <span class="mf">1.4</span> <span class="o">*</span> <span class="n">S_cf</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>   <span class="c1"># proxy propagated to the new sex</span>
+
+<span class="c1"># (1) NAIVE flip: change S only, leave covariates as observed.</span>
+<span class="c1">#     Best-estimate reads S directly -&gt; it moves. Unawareness ignores S -&gt; unchanged.</span>
+<span class="n">price_best_naive</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">S_cf</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mu1</span><span class="p">,</span> <span class="n">mu0</span><span class="p">)</span>
+<span class="n">delta_best_naive</span> <span class="o">=</span> <span class="n">price_best_naive</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;price_best&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">delta_unaware_naive</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>   <span class="c1"># unawareness price does not depend on S at all</span>
+
+<span class="c1"># (2) FULL flip: propagate S through the proxy `lifestyle`, then re-price.</span>
+<span class="n">Xcf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="s2">&quot;lifestyle&quot;</span><span class="p">:</span> <span class="n">life_cf</span><span class="p">})</span>
+<span class="n">ps_x_cf</span> <span class="o">=</span> <span class="n">clf_s</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">Xcf</span><span class="p">[</span><span class="n">FEAT_X</span><span class="p">])[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">mu1_cf</span> <span class="o">=</span> <span class="n">m_full</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xcf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">sex</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="n">FEAT_FULL</span><span class="p">])</span>
+<span class="n">mu0_cf</span> <span class="o">=</span> <span class="n">m_full</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xcf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">sex</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">FEAT_FULL</span><span class="p">])</span>
+<span class="n">price_unaware_full</span> <span class="o">=</span> <span class="n">ps_x_cf</span> <span class="o">*</span> <span class="n">mu1_cf</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">ps_x_cf</span><span class="p">)</span> <span class="o">*</span> <span class="n">mu0_cf</span>
+<span class="n">delta_unaware_full</span> <span class="o">=</span> <span class="n">price_unaware_full</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;price_unaware&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean absolute change in price when we flip the protected attribute:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Best-estimate, naive flip (S only)          : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">delta_best_naive</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">7.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Unawareness,   naive flip (S only)          : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">delta_unaware_naive</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">7.1f</span><span class="si">}</span><span class="s2">  &lt;- looks &#39;fair&#39;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Unawareness,   full flip (S -&gt; proxy -&gt; Y)  : </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">delta_unaware_full</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">7.1f</span><span class="si">}</span><span class="s2">  &lt;- path-specific leak revealed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean absolute change in price when we flip the protected attribute:
+  Best-estimate, naive flip (S only)          :   323.3
+  Unawareness,   naive flip (S only)          :     0.0  &lt;- looks &#39;fair&#39;
+  Unawareness,   full flip (S -&gt; proxy -&gt; Y)  :   255.4  &lt;- path-specific leak revealed
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="why-you-cannot-satisfy-every-fairness-definition-at-once">
+<h2>Why you cannot satisfy every fairness definition at once<a class="headerlink" href="#why-you-cannot-satisfy-every-fairness-definition-at-once" title="Link to this heading">#</a></h2>
+<p>It is tempting to ask for a price that is fair by <em>every</em> statistical yardstick — equal acceptance rates, equal error rates, and equal predictive accuracy across groups. The <a class="reference external" href="https://pair.withgoogle.com/explorables/measuring-fairness/">Google PAIR “Measuring Fairness” explorable</a> shows visually why this is impossible whenever the groups have <strong>different base rates</strong>, and the result is made precise by the impossibility theorems of <a class="reference external" href="https://arxiv.org/abs/1609.05807">Kleinberg, Mullainathan &amp; Raghavan (2017)</a> and <a class="reference external" href="https://arxiv.org/abs/1703.00056">Chouldechova (2017)</a>: except in degenerate cases, <strong>calibration and equalised error rates cannot both hold</strong>.</p>
+<p>To see it on our portfolio, recast pricing as a binary decision — flag the costliest policyholders (top 20% of claims) for a manual underwriting review, using the discrimination-free price as the score — and compute the classic group-fairness diagnostics (<a class="reference internal" href="../tutorial/fairness.html#group-fairness-criteria">Remark 2</a>):</p>
+<ul class="simple">
+<li><p><strong>Selection rate</strong> — share flagged in each group (<em>demographic / statistical parity</em>);</p></li>
+<li><p><strong>TPR / recall</strong> — of the truly high-cost, the share flagged (<em>equal opportunity</em>, <a class="reference external" href="https://arxiv.org/abs/1610.02413">Hardt et al., 2016</a>);</p></li>
+<li><p><strong>PPV / precision</strong> — of those flagged, the share truly high-cost (<em>predictive parity / calibration</em>).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Binary decision: flag the costliest policyholders for review.</span>
+<span class="n">high_cost</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;claims&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;claims&quot;</span><span class="p">],</span> <span class="mf">0.80</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;price_disc_free&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">flagged</span> <span class="o">=</span> <span class="p">(</span><span class="n">score</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="mf">0.80</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;high_cost&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;flagged&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">high_cost</span><span class="p">,</span> <span class="n">flagged</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">group_metrics</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="n">sub</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="n">g</span><span class="p">]</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">sub</span><span class="p">[</span><span class="s2">&quot;high_cost&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>                          <span class="c1"># base rate</span>
+    <span class="n">sel</span> <span class="o">=</span> <span class="n">sub</span><span class="p">[</span><span class="s2">&quot;flagged&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>                             <span class="c1"># selection rate (demographic parity)</span>
+    <span class="n">tpr</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sub</span><span class="o">.</span><span class="n">high_cost</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;flagged&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>     <span class="c1"># equal opportunity</span>
+    <span class="n">ppv</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sub</span><span class="o">.</span><span class="n">flagged</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;high_cost&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>     <span class="c1"># predictive parity</span>
+    <span class="k">return</span> <span class="n">base</span><span class="p">,</span> <span class="n">sel</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">ppv</span>
+
+
+<span class="n">fair_tbl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">[(</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">group_metrics</span><span class="p">(</span><span class="n">g</span><span class="p">))</span> <span class="k">for</span> <span class="n">g</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Female&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Male&quot;</span><span class="p">)]],</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Group&quot;</span><span class="p">,</span> <span class="s2">&quot;Base rate&quot;</span><span class="p">,</span> <span class="s2">&quot;Selection rate&quot;</span><span class="p">,</span> <span class="s2">&quot;TPR (equal opp.)&quot;</span><span class="p">,</span> <span class="s2">&quot;PPV (calibration)&quot;</span><span class="p">],</span>
+<span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Group&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Different base rates -&gt; the fairness criteria below cannot all be equalised at once:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">fair_tbl</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Different base rates -&gt; the fairness criteria below cannot all be equalised at once:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Base rate</th>
+      <th>Selection rate</th>
+      <th>TPR (equal opp.)</th>
+      <th>PPV (calibration)</th>
+    </tr>
+    <tr>
+      <th>Group</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Female</th>
+      <td>0.115</td>
+      <td>0.135</td>
+      <td>0.433</td>
+      <td>0.369</td>
+    </tr>
+    <tr>
+      <th>Male</th>
+      <td>0.288</td>
+      <td>0.261</td>
+      <td>0.499</td>
+      <td>0.551</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Males have the higher base rate of high claims (the direct morbidity loading plus the proxy), so a single score threshold cannot equalise the selection rate, the TPR <strong>and</strong> the PPV simultaneously — pushing two into balance throws the third out. This is the actuarial face of the impossibility theorem: <strong>“fair” is not one property to optimise but a menu of mutually incompatible ones, and choosing among them is a value judgement, not a statistical one.</strong></p>
+<section id="a-map-of-the-fairness-definitions">
+<h3>A map of the fairness definitions<a class="headerlink" href="#a-map-of-the-fairness-definitions" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Definition</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>What it requires</p></th>
+<th class="head"><p>What it misses</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Fairness through unawareness</strong></p></td>
+<td><p>Statistical</p></td>
+<td><p>Do not use <span class="math notranslate nohighlight">\(S\)</span> as an input</p></td>
+<td><p>Proxy discrimination via <span class="math notranslate nohighlight">\(X\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Demographic / statistical parity</strong></p></td>
+<td><p>Statistical</p></td>
+<td><p>Equal selection rate across groups</p></td>
+<td><p>Ignores genuine risk differences; hurts accuracy</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Equalised odds / equal opportunity</strong></p></td>
+<td><p>Statistical</p></td>
+<td><p>Equal error rates across groups</p></td>
+<td><p>Incompatible with calibration at unequal base rates</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Predictive parity / calibration</strong></p></td>
+<td><p>Statistical</p></td>
+<td><p>Score means the same thing across groups</p></td>
+<td><p>Incompatible with equal error rates</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Discrimination-free price</strong> (Lindholm et al.)</p></td>
+<td><p>Causal-ish</p></td>
+<td><p>Average <span class="math notranslate nohighlight">\(\mu(x,s)\)</span> over a marginal <span class="math notranslate nohighlight">\(P^{*}(S)\)</span></p></td>
+<td><p>Still prices on proxy <em>paths</em> through <span class="math notranslate nohighlight">\(X\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Counterfactual fairness</strong> (Kusner et al.)</p></td>
+<td><p>Causal</p></td>
+<td><p>Price invariant to flipping <span class="math notranslate nohighlight">\(S\)</span> and its descendants</p></td>
+<td><p>Needs a (partly untestable) causal model</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The lesson of <a class="reference internal" href="../tutorial/debias.html"><span class="doc">Biases and De-Biasing Toolkit</span></a> returns here in applied form: the <strong>statistical</strong> definitions disagree with one another and none of them, on its own, captures “this price does not discriminate.” Only by drawing the DAG and naming which <strong>paths</strong> from <span class="math notranslate nohighlight">\(S\)</span> to <span class="math notranslate nohighlight">\(Y\)</span> are legitimate can an actuary state precisely what fairness means for a given product — and the discrimination-free price plus a path-specific / counterfactual audit operationalises that choice.</p>
+</section>
+<section id="interactive-prices-vs-fairness-measures">
+<h3>Interactive: prices vs. fairness measures<a class="headerlink" href="#interactive-prices-vs-fairness-measures" title="Link to this heading">#</a></h3>
+<p>The explainer below puts the two choices side by side on one simulated portfolio. Pick a <strong>price approach</strong> (best-estimate, unawareness, or discrimination-free) and a <strong>fairness measure</strong> (group unaware, demographic parity, equal opportunity, equal accuracy), and watch the consequences:</p>
+<ul class="simple">
+<li><p>the <strong>premium gap</strong> between the sexes and the <strong>proxy leakage</strong> (<span class="math notranslate nohighlight">\(\mu(x) - h(x)\)</span>) react to the approach and to the <em>proxy-strength</em> slider — turn the proxy up and the unawareness price leaks more;</p></li>
+<li><p>the selected <strong>fairness measure</strong> is judged <em>fair</em> or <em>unfair</em> for that approach;</p></li>
+<li><p>the <strong>all-measures panel</strong> shows that no single price satisfies every criterion at once — switching the approach trades one violation for another. Press <strong>New portfolio</strong> to redraw the data.</p></li>
+</ul>
+<iframe id="fair-price" src="../figure/fairness_price_explainer.html?v=20260610d"
+        style="width:100%; border:none; height:1400px;"
+        title="Fairness pricing interactive explainer"></iframe>
+<script>
+(function () {
+  var iframe = document.getElementById('fair-price');
+
+  function currentTheme() {
+    var root = document.documentElement;
+    var theme = root.getAttribute('data-theme');
+    if (theme === 'light' || theme === 'dark') return theme;
+    var mode = root.getAttribute('data-mode') || 'auto';
+    if (mode === 'light' || mode === 'dark') return mode;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function sendTheme() {
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'set-theme', value: currentTheme() }, '*');
+    }
+  }
+
+  window.addEventListener('message', function (e) {
+    if (!e.data) return;
+    if (e.data.type === 'fair-price-height') {
+      iframe.style.height = (e.data.height + 20) + 'px';
+    } else if (e.data.type === 'fair-price-ready') {
+      sendTheme();
+    }
+  });
+
+  new MutationObserver(sendTheme).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-mode', 'data-theme']
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sendTheme);
+
+  iframe.addEventListener('load', sendTheme);
+  sendTheme();
+})();
+</script></section>
+</section>
+<section id="takeaways-for-the-actuary">
+<h2>Takeaways for the actuary<a class="headerlink" href="#takeaways-for-the-actuary" title="Link to this heading">#</a></h2>
+<div class="tip admonition">
+<p class="admonition-title">A practical workflow for fair pricing</p>
+<ol class="arabic simple">
+<li><p><strong>Draw the DAG.</strong> Place the protected attribute <span class="math notranslate nohighlight">\(S\)</span>, the covariates <span class="math notranslate nohighlight">\(X\)</span>, and the outcome <span class="math notranslate nohighlight">\(Y\)</span>, and enumerate every path <span class="math notranslate nohighlight">\(S \rightsquigarrow Y\)</span> (<a class="reference internal" href="../tutorial/graphical_models.html"><span class="doc">Graphical Causal Models</span></a>).</p></li>
+<li><p><strong>Classify the paths.</strong> Direct <span class="math notranslate nohighlight">\(S \to Y\)</span> effects are off-limits; legitimate factors independent of <span class="math notranslate nohighlight">\(S\)</span> are fine; proxy paths <span class="math notranslate nohighlight">\(S \to X \to Y\)</span> require an explicit, documented judgement.</p></li>
+<li><p><strong>Do not rely on unawareness.</strong> Dropping <span class="math notranslate nohighlight">\(S\)</span> leaves proxy discrimination intact and may even <em>hide</em> it from audit.</p></li>
+<li><p><strong>Collect <span class="math notranslate nohighlight">\(S\)</span> to neutralise <span class="math notranslate nohighlight">\(S\)</span>.</strong> The discrimination-free price (<a class="reference internal" href="#alg-discfree-price">Algorithm 18</a>) needs the protected attribute at training time, then averages it out with a marginal <span class="math notranslate nohighlight">\(P^{*}(S)\)</span>.</p></li>
+<li><p><strong>Audit causally, not just statistically.</strong> Use a counterfactual / path-specific check to confirm the price would not move if <span class="math notranslate nohighlight">\(S\)</span> — and its descendants — had been different.</p></li>
+<li><p><strong>Pick your fairness criterion deliberately.</strong> The statistical definitions are mutually incompatible at unequal base rates; document which one the product targets and why.</p></li>
+</ol>
+</div>
+<p><strong>The bottom line.</strong> Insurance must discriminate between <em>risks</em>; it must not discriminate on <em>protected attributes</em>, directly or by proxy. “Fairness through unawareness” fails because correlated covariates reconstruct the protected attribute. The discrimination-free price of <a class="reference external" href="https://arxiv.org/abs/2209.00858">Lindholm et al. (2022)</a> gives actuaries a concrete, implementable remedy for the inference channel, and the causal toolkit of this book — DAGs, path-specific effects and <a class="reference internal" href="../tutorial/fairness.html#counterfactual-fairness">Definition 24</a> — is what lets us decide <em>which</em> differences are legitimate in the first place. Fairness is ultimately a causal question dressed as a statistical one.</p>
+<p>For the underlying definitions and theory, see <a class="reference internal" href="../tutorial/debias.html"><span class="doc">Biases and De-Biasing Toolkit</span></a>; the references are collected in <a class="reference internal" href="../papers/references.html"><span class="doc">References</span></a>.</p>
+</section>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="observational_data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Observational Data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="claims_triage.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Explainable Motor Claims Triage with CATE</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-is-risk-classification-discrimination">When is risk classification <em>discrimination</em>?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-the-protected-attribute-onto-the-dag">Mapping the protected attribute onto the DAG</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#three-prices-three-notions-of-fairness">Three prices, three notions of fairness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-synthetic-health-insurance-portfolio">A synthetic health-insurance portfolio</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-three-prices">Fitting the three prices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-the-result-the-proxy-inference-surcharge">Reading the result: the proxy “inference surcharge”</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-statistical-to-causal-fairness-counterfactuals-and-path-specific-effects">From statistical to causal fairness: counterfactuals and path-specific effects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-you-cannot-satisfy-every-fairness-definition-at-once">Why you cannot satisfy every fairness definition at once</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-map-of-the-fairness-definitions">A map of the fairness definitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-prices-vs-fairness-measures">Interactive: prices vs. fairness measures</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#takeaways-for-the-actuary">Takeaways for the actuary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theresa Blümlein, Patrick Cheridito, and Daniel Meier
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

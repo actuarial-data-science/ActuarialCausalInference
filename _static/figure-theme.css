@@ -1,0 +1,499 @@
+/* ===================================================================== *
+ * Theme-adaptive figures
+ * ---------------------------------------------------------------------
+ * The hand-authored SVGs in tutorial/figs use a small set of shared
+ * semantic classes (.ink-t, .muted, .ax, .node, .leaf, ...). They ship
+ * with light defaults baked into each file. `figure-theme.js` inlines
+ * them into the page and strips their internal
+ * `@media (prefers-color-scheme: dark)` block, so the rules below — keyed
+ * on the Jupyter Book theme toggle (data-theme / data-mode on <html>) —
+ * are the single source of truth for dark mode.
+ * ===================================================================== */
+
+/* Inlined figures never paint their own background, so the page colour
+   (light or dark) always shows through. */
+svg.themed-svg {
+  background: transparent;
+  height: auto;
+}
+
+/* --- Dark-mode overrides (explicit book toggle) --------------------- */
+html[data-theme="dark"] svg.themed-svg .ink-l,
+html[data-mode="dark"]  svg.themed-svg .ink-l { stroke: #c9d1d9; }
+html[data-theme="dark"] svg.themed-svg .ink-t,
+html[data-mode="dark"]  svg.themed-svg .ink-t { fill: #e6edf3; }
+html[data-theme="dark"] svg.themed-svg .muted,
+html[data-mode="dark"]  svg.themed-svg .muted { fill: #9aa4af; }
+html[data-theme="dark"] svg.themed-svg .muted-l,
+html[data-mode="dark"]  svg.themed-svg .muted-l { stroke: #9aa4af; }
+html[data-theme="dark"] svg.themed-svg .ax,
+html[data-mode="dark"]  svg.themed-svg .ax { stroke: #c9d1d9; }
+html[data-theme="dark"] svg.themed-svg .arrow,
+html[data-mode="dark"]  svg.themed-svg .arrow { fill: #c9d1d9; }
+html[data-theme="dark"] svg.themed-svg .faint-l,
+html[data-mode="dark"]  svg.themed-svg .faint-l { stroke: #6b727c; }
+html[data-theme="dark"] svg.themed-svg .faint-t,
+html[data-mode="dark"]  svg.themed-svg .faint-t { fill: #8b929c; }
+html[data-theme="dark"] svg.themed-svg .axis,
+html[data-mode="dark"]  svg.themed-svg .axis { stroke: #6b7280; }
+html[data-theme="dark"] svg.themed-svg .edge,
+html[data-mode="dark"]  svg.themed-svg .edge { stroke: #6b7280; }
+html[data-theme="dark"] svg.themed-svg .node,
+html[data-mode="dark"]  svg.themed-svg .node { fill: #20294d; stroke: #8893e6; }
+html[data-theme="dark"] svg.themed-svg .nodet,
+html[data-mode="dark"]  svg.themed-svg .nodet { fill: #cdd4ff; }
+html[data-theme="dark"] svg.themed-svg .leafbox,
+html[data-mode="dark"]  svg.themed-svg .leafbox { fill: #161b22; stroke: #3a4150; }
+html[data-theme="dark"] svg.themed-svg .panel,
+html[data-mode="dark"]  svg.themed-svg .panel { fill: #161b22; stroke: #3a4150; }
+html[data-theme="dark"] svg.themed-svg .leaf,
+html[data-mode="dark"]  svg.themed-svg .leaf { fill: #20294d; stroke: #3a4150; }
+html[data-theme="dark"] svg.themed-svg .leafhi,
+html[data-mode="dark"]  svg.themed-svg .leafhi { fill: #3a2f12; stroke: #f59e0b; }
+html[data-theme="dark"] svg.themed-svg .root,
+html[data-mode="dark"]  svg.themed-svg .root { fill: #20294d; stroke: #8893e6; }
+html[data-theme="dark"] svg.themed-svg .star,
+html[data-mode="dark"]  svg.themed-svg .star { fill: #f0f0f0; stroke: #f0f0f0; }
+
+/* --- Auto mode: follow the OS only when no explicit choice is set --- */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .ink-l { stroke: #c9d1d9; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .ink-t { fill: #e6edf3; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .muted { fill: #9aa4af; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .muted-l { stroke: #9aa4af; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .ax { stroke: #c9d1d9; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .arrow { fill: #c9d1d9; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .faint-l { stroke: #6b727c; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .faint-t { fill: #8b929c; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .axis { stroke: #6b7280; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .edge { stroke: #6b7280; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .node { fill: #20294d; stroke: #8893e6; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .nodet { fill: #cdd4ff; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .leafbox { fill: #161b22; stroke: #3a4150; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .panel { fill: #161b22; stroke: #3a4150; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .leaf { fill: #20294d; stroke: #3a4150; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .leafhi { fill: #3a2f12; stroke: #f59e0b; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .root { fill: #20294d; stroke: #8893e6; }
+  html:not([data-theme="light"]):not([data-mode="light"]) svg.themed-svg .star { fill: #f0f0f0; stroke: #f0f0f0; }
+}
+
+/* ===================================================================== *
+ * Notebook output SVGs (matplotlib DAGs)
+ * ---------------------------------------------------------------------
+ * sphinx-book-theme paints a light card behind every `.cell_output img`
+ * in dark mode so plots with dark ink stay legible. Our DAGs are saved
+ * with a transparent background and theme-neutral ink (mid-grey arrows /
+ * labels, saturated nodes), so they read on the dark page directly — the
+ * light card just looks like an out-of-place island. Drop it for SVG
+ * outputs so they adapt with the page. (PNG plots keep their card.)
+ * ===================================================================== */
+html[data-theme="dark"] .bd-content div.cell_output img[src$=".svg"],
+html[data-mode="dark"]  .bd-content div.cell_output img[src$=".svg"] {
+  background-color: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]):not([data-mode="light"])
+    .bd-content div.cell_output img[src$=".svg"] {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* ===================================================================== *
+ * Tutorial subtitle (under the H1 on the landing page)
+ * ===================================================================== */
+.tutorial-subtitle {
+  margin-top: -0.4rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.35rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.3;
+  color: #5f6b7a;
+}
+
+html[data-theme="dark"] .tutorial-subtitle,
+html[data-mode="dark"]  .tutorial-subtitle { color: #aab3c0; }
+
+/* ===================================================================== *
+ * Table row hover colour
+ * ---------------------------------------------------------------------
+ * pydata-sphinx-theme highlights the hovered table row with a violet
+ * (`--pst-color-table-row-hover-bg`: #b780ff light / #6432bd dark). That
+ * purple clashes with the SAV/ASA brand palette, so we re-point the
+ * variable to an on-brand SAV-green tint. Every table-hover rule in the
+ * theme reads this variable, so overriding it here is enough.
+ * ===================================================================== */
+:root,
+html,
+html[data-theme="light"],
+html[data-mode="light"] {
+  --pst-color-table-row-hover-bg: #dce9b3;   /* soft SAV-green tint */
+}
+
+html[data-theme="dark"],
+html[data-mode="dark"] {
+  --pst-color-table-row-hover-bg: #45561a;   /* deep SAV-green tint */
+}
+
+/* ===================================================================== *
+ * Table header underline
+ * ---------------------------------------------------------------------
+ * pydata-sphinx-theme draws a 2px underline beneath the table header in
+ * `--pst-color-primary` (teal/blue). Re-colour it to SAV green so tables
+ * match the brand palette, for both Markdown tables (`.table`) and
+ * rendered DataFrame outputs (`table.dataframe`).
+ * ===================================================================== */
+.bd-content table.table thead tr,
+.bd-content div.cell_output table.dataframe thead tr,
+.bd-content .nboutput table.dataframe thead tr,
+.bd-content div.cell_output table thead tr,
+.bd-content table.dataframe thead tr {
+  border-bottom-color: #98C21F !important;   /* SAV green */
+}
+
+/* ===================================================================== *
+ * Navigation & content link colours
+ * ---------------------------------------------------------------------
+ * pydata-sphinx-theme colours links and the active sidebar entry with its
+ * blue/teal `--pst-color-primary` and an orange hover accent. Re-point
+ * everything to the SAV/ASA palette:
+ *   - active / current item -> SAV charcoal grey (a light grey in dark mode
+ *     so it stays legible against the dark sidebar)
+ *   - hover -> SAV lime green
+ * The variable overrides cover most theme rules; the explicit selectors
+ * below pin the sidebar nav and right-hand page TOC, which carry their own
+ * specificity.
+ * ===================================================================== */
+:root,
+html,
+html[data-theme="light"],
+html[data-mode="light"] {
+  --pst-color-link: #5F625F;          /* SAV charcoal */
+  --pst-color-link-hover: #98C21F;    /* SAV green */
+  --pst-color-primary: #5F625F;       /* active nav + accent bar */
+  --pst-color-primary-highlight: #98C21F;
+}
+
+html[data-theme="dark"],
+html[data-mode="dark"] {
+  --pst-color-link: #C2C5C2;          /* light SAV grey, readable on dark */
+  --pst-color-link-hover: #C5DE7A;    /* light SAV green */
+  --pst-color-primary: #C2C5C2;
+  --pst-color-primary-highlight: #C5DE7A;
+}
+
+/* Active (current) sidebar entry + its left accent bar */
+nav.bd-links .current > a.reference,
+nav.bd-links li.current > a.reference,
+nav.bd-links a.current.reference {
+  color: #5F625F !important;          /* SAV charcoal */
+  border-left-color: #5F625F !important;
+}
+html[data-theme="dark"] nav.bd-links .current > a.reference,
+html[data-theme="dark"] nav.bd-links li.current > a.reference,
+html[data-theme="dark"] nav.bd-links a.current.reference,
+html[data-mode="dark"]  nav.bd-links .current > a.reference,
+html[data-mode="dark"]  nav.bd-links li.current > a.reference,
+html[data-mode="dark"]  nav.bd-links a.current.reference {
+  color: #C2C5C2 !important;          /* light SAV grey */
+  border-left-color: #C2C5C2 !important;
+}
+
+/* Hover on any sidebar / page-TOC link -> SAV green */
+nav.bd-links a.reference:hover,
+nav.bd-toc-nav a.reference:hover {
+  color: #98C21F !important;          /* SAV green */
+}
+html[data-theme="dark"] nav.bd-links a.reference:hover,
+html[data-theme="dark"] nav.bd-toc-nav a.reference:hover,
+html[data-mode="dark"]  nav.bd-links a.reference:hover,
+html[data-mode="dark"]  nav.bd-toc-nav a.reference:hover {
+  color: #C5DE7A !important;          /* light SAV green */
+}
+
+/* ===================================================================== *
+ * SAV-conform palette for proof / admonition boxes
+ * ---------------------------------------------------------------------
+ * sphinx-proof ships a fully-saturated rainbow palette for its directive
+ * boxes (definition = bright blue, assumption = electric cyan, example =
+ * hot pink, ...). Re-colour every directive in use to the SAV/ASA brand
+ * family so the boxes read as one coherent set:
+ *   - "theory you expand" (definition / assumption / property) -> greens
+ *   - "procedure"          (algorithm / criterion)             -> greys
+ *   - "illustration"       (example / remark)                  -> warm/sage
+ *   - plain note / important admonitions                       -> charcoal
+ * Each rule pins the box border + the translucent title-bar tint, with a
+ * lighter variant for dark mode so the colours stay legible on a dark page.
+ * ===================================================================== */
+
+/* ---- Definition -> SAV green --------------------------------------- */
+div.definition {
+  border-color: #98C21F !important;
+  background-color: rgba(152, 194, 31, 0.10) !important;
+}
+div.definition p.admonition-title {
+  background-color: rgba(152, 194, 31, 0.10) !important;
+}
+html[data-theme="dark"] div.definition,
+html[data-mode="dark"]  div.definition {
+  border-color: #C5DE7A !important;
+  background-color: rgba(197, 222, 122, 0.10) !important;
+}
+html[data-theme="dark"] div.definition p.admonition-title,
+html[data-mode="dark"]  div.definition p.admonition-title {
+  background-color: rgba(197, 222, 122, 0.10) !important;
+}
+
+/* ---- Assumption -> deep SAV green ---------------------------------- */
+div.assumption {
+  border-color: #5B7A1A !important;
+  background-color: rgba(91, 122, 26, 0.12) !important;
+}
+div.assumption p.admonition-title {
+  background-color: rgba(91, 122, 26, 0.12) !important;
+}
+html[data-theme="dark"] div.assumption,
+html[data-mode="dark"]  div.assumption {
+  border-color: #A7C44E !important;
+  background-color: rgba(167, 196, 78, 0.12) !important;
+}
+html[data-theme="dark"] div.assumption p.admonition-title,
+html[data-mode="dark"]  div.assumption p.admonition-title {
+  background-color: rgba(167, 196, 78, 0.12) !important;
+}
+
+/* ---- Property -> light SAV green ----------------------------------- */
+div.property {
+  border-color: #BCD45F !important;
+  background-color: rgba(188, 212, 95, 0.12) !important;
+}
+div.property p.admonition-title {
+  background-color: rgba(188, 212, 95, 0.12) !important;
+}
+html[data-theme="dark"] div.property,
+html[data-mode="dark"]  div.property {
+  border-color: #D2E68C !important;
+  background-color: rgba(210, 230, 140, 0.12) !important;
+}
+html[data-theme="dark"] div.property p.admonition-title,
+html[data-mode="dark"]  div.property p.admonition-title {
+  background-color: rgba(210, 230, 140, 0.12) !important;
+}
+
+/* ---- Algorithm -> SAV charcoal rules (keep monospace look) --------- */
+div.algorithm p.admonition-title {
+  border-top-color: #5F625F !important;
+  border-bottom-color: #5F625F !important;
+}
+html[data-theme="dark"] div.algorithm p.admonition-title,
+html[data-mode="dark"]  div.algorithm p.admonition-title {
+  border-top-color: #C2C5C2 !important;
+  border-bottom-color: #C2C5C2 !important;
+}
+
+/* ---- Criterion -> stone grey --------------------------------------- */
+div.criterion {
+  border-color: #8A8D86 !important;
+  background-color: rgba(138, 141, 134, 0.12) !important;
+}
+div.criterion p.admonition-title {
+  background-color: rgba(138, 141, 134, 0.12) !important;
+}
+html[data-theme="dark"] div.criterion,
+html[data-mode="dark"]  div.criterion {
+  border-color: #AEB1AA !important;
+  background-color: rgba(174, 177, 170, 0.12) !important;
+}
+html[data-theme="dark"] div.criterion p.admonition-title,
+html[data-mode="dark"]  div.criterion p.admonition-title {
+  background-color: rgba(174, 177, 170, 0.12) !important;
+}
+
+/* ---- Example -> warm ochre accent ---------------------------------- */
+div.example {
+  border-color: #C9A227 !important;
+  background-color: rgba(201, 162, 39, 0.10) !important;
+}
+div.example p.admonition-title {
+  background-color: rgba(201, 162, 39, 0.10) !important;
+}
+html[data-theme="dark"] div.example,
+html[data-mode="dark"]  div.example {
+  border-color: #E0C566 !important;
+  background-color: rgba(224, 197, 102, 0.10) !important;
+}
+html[data-theme="dark"] div.example p.admonition-title,
+html[data-mode="dark"]  div.example p.admonition-title {
+  background-color: rgba(224, 197, 102, 0.10) !important;
+}
+
+/* ---- Remark -> muted sage accent ----------------------------------- */
+div.remark {
+  border-color: #A7B98A !important;
+  background-color: rgba(167, 185, 138, 0.12) !important;
+}
+div.remark p.admonition-title {
+  background-color: rgba(167, 185, 138, 0.12) !important;
+}
+html[data-theme="dark"] div.remark,
+html[data-mode="dark"]  div.remark {
+  border-color: #C3D1AC !important;
+  background-color: rgba(195, 209, 172, 0.12) !important;
+}
+html[data-theme="dark"] div.remark p.admonition-title,
+html[data-mode="dark"]  div.remark p.admonition-title {
+  background-color: rgba(195, 209, 172, 0.12) !important;
+}
+
+/* ---- Plain note / important admonitions -> SAV charcoal ------------ */
+div.admonition.note,
+div.admonition.important {
+  border-color: #5F625F !important;
+}
+div.admonition.note > .admonition-title,
+div.admonition.important > .admonition-title {
+  background-color: rgba(95, 98, 95, 0.10) !important;
+}
+div.admonition.note > .admonition-title::after,
+div.admonition.important > .admonition-title::after {
+  color: #5F625F !important;
+}
+html[data-theme="dark"] div.admonition.note,
+html[data-theme="dark"] div.admonition.important,
+html[data-mode="dark"]  div.admonition.note,
+html[data-mode="dark"]  div.admonition.important {
+  border-color: #C2C5C2 !important;
+}
+html[data-theme="dark"] div.admonition.note > .admonition-title,
+html[data-theme="dark"] div.admonition.important > .admonition-title,
+html[data-mode="dark"]  div.admonition.note > .admonition-title,
+html[data-mode="dark"]  div.admonition.important > .admonition-title {
+  background-color: rgba(194, 197, 194, 0.12) !important;
+}
+html[data-theme="dark"] div.admonition.note > .admonition-title::after,
+html[data-theme="dark"] div.admonition.important > .admonition-title::after,
+html[data-mode="dark"]  div.admonition.note > .admonition-title::after,
+html[data-mode="dark"]  div.admonition.important > .admonition-title::after {
+  color: #C2C5C2 !important;
+}
+
+/* ===================================================================== *
+ * Proof-box icons (the "bell")
+ * ---------------------------------------------------------------------
+ * Every sphinx-proof directive renders as a generic `.admonition`, so the
+ * pydata theme stamps its default icon (a bell, `--pst-icon-bell`) in blue
+ * (`--pst-color-info`) via `.admonition-title::after`. Two problems: the
+ * glyph is always the same bell, and its colour clashes with the on-brand
+ * box. Below we (a) swap the glyph for a directive-appropriate Font Awesome
+ * icon and (b) recolour it to match each box's border. The icon font is
+ * already set by the theme rule (`font: var(--fa-font-solid)`), so we only
+ * override `content` + `color`. Dark-mode rules re-point the colour to the
+ * lighter brand tint used for the box in dark mode.
+ * ===================================================================== */
+
+/* ---- Definition -> book, SAV green --------------------------------- */
+div.proof.definition > .admonition-title::after {
+  content: "\f02d" !important;          /* book */
+  color: #98C21F !important;
+}
+html[data-theme="dark"] div.proof.definition > .admonition-title::after,
+html[data-mode="dark"]  div.proof.definition > .admonition-title::after {
+  color: #C5DE7A !important;
+}
+
+/* ---- Assumption -> balance scale, deep green ----------------------- */
+div.proof.assumption > .admonition-title::after {
+  content: "\f24e" !important;          /* scale-balanced */
+  color: #5B7A1A !important;
+}
+html[data-theme="dark"] div.proof.assumption > .admonition-title::after,
+html[data-mode="dark"]  div.proof.assumption > .admonition-title::after {
+  color: #A7C44E !important;
+}
+
+/* ---- Property -> cube, light green --------------------------------- */
+div.proof.property > .admonition-title::after {
+  content: "\f1b2" !important;          /* cube */
+  color: #BCD45F !important;
+}
+html[data-theme="dark"] div.proof.property > .admonition-title::after,
+html[data-mode="dark"]  div.proof.property > .admonition-title::after {
+  color: #D2E68C !important;
+}
+
+/* ---- Algorithm -> numbered list, charcoal -------------------------- */
+div.proof.algorithm > .admonition-title::after {
+  content: "\f0cb" !important;          /* list-ol */
+  color: #5F625F !important;
+}
+html[data-theme="dark"] div.proof.algorithm > .admonition-title::after,
+html[data-mode="dark"]  div.proof.algorithm > .admonition-title::after {
+  color: #C2C5C2 !important;
+}
+
+/* ---- Criterion -> checked box, stone grey -------------------------- */
+div.proof.criterion > .admonition-title::after {
+  content: "\f14a" !important;          /* square-check */
+  color: #8A8D86 !important;
+}
+html[data-theme="dark"] div.proof.criterion > .admonition-title::after,
+html[data-mode="dark"]  div.proof.criterion > .admonition-title::after {
+  color: #AEB1AA !important;
+}
+
+/* ---- Example -> flask, warm ochre ---------------------------------- */
+div.proof.example > .admonition-title::after {
+  content: "\f0c3" !important;          /* flask */
+  color: #C9A227 !important;
+}
+html[data-theme="dark"] div.proof.example > .admonition-title::after,
+html[data-mode="dark"]  div.proof.example > .admonition-title::after {
+  color: #E0C566 !important;
+}
+
+/* ---- Remark -> comment, muted sage --------------------------------- */
+div.proof.remark > .admonition-title::after {
+  content: "\f075" !important;          /* comment */
+  color: #A7B98A !important;
+}
+html[data-theme="dark"] div.proof.remark > .admonition-title::after,
+html[data-mode="dark"]  div.proof.remark > .admonition-title::after {
+  color: #C3D1AC !important;
+}
+
+/* ===================================================================== *
+ * "Back to top" button
+ * ---------------------------------------------------------------------
+ * pydata-sphinx-theme paints the floating #pst-back-to-top pill with its
+ * secondary accent (orange `--pst-color-secondary`, purple-on-hover
+ * `--pst-color-secondary-highlight`). Both clash with the SAV/ASA logo, so
+ * re-colour the pill to the brand pair: SAV lime green at rest, SAV grey on
+ * hover, with a legible arrow in each theme.
+ * ===================================================================== */
+#pst-back-to-top {
+  background-color: #98C21F !important;   /* SAV lime green */
+  color: #ffffff !important;              /* white arrow */
+}
+#pst-back-to-top:hover,
+#pst-back-to-top:focus {
+  background-color: #5F625F !important;   /* SAV charcoal grey */
+  color: #ffffff !important;
+}
+html[data-theme="dark"] #pst-back-to-top,
+html[data-mode="dark"]  #pst-back-to-top {
+  background-color: #C5DE7A !important;   /* light SAV green */
+  color: #1b1f24 !important;              /* dark arrow for contrast */
+}
+html[data-theme="dark"] #pst-back-to-top:hover,
+html[data-theme="dark"] #pst-back-to-top:focus,
+html[data-mode="dark"]  #pst-back-to-top:hover,
+html[data-mode="dark"]  #pst-back-to-top:focus {
+  background-color: #C2C5C2 !important;   /* light SAV grey */
+  color: #1b1f24 !important;
+}
+

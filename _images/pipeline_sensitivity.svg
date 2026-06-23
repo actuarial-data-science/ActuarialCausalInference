@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    /* Connectors / arrows */
+    .conn { stroke: #6d6e71; }
+    .conn-mk { fill: #6d6e71; }
+    /* Grey (logo grey) - estimate, checks, report */
+    .grey-b { fill: #eceded; stroke: #8a8b8e; }
+    .grey-t { fill: #42434a; }
+    .grey-s { fill: #5f6066; }
+    /* Limegreen - decision diamonds */
+    .lime-b { fill: #eef3dd; stroke: #7d9f17; }
+    .lime-t { fill: #3d4f10; }
+    /* Red - recommendation on failure */
+    .red-b { fill: #fdecea; stroke: #e53935; }
+    .red-t { fill: #8e1d18; }
+    .red-s { fill: #a8332c; }
+    /* Decision labels */
+    .fail-t { fill: #c62828; }
+    .pass-t { fill: #5b7510; }
+
+    @media (prefers-color-scheme: dark) {
+      .conn { stroke: #9aa4af; }
+      .conn-mk { fill: #9aa4af; }
+      .grey-b { fill: #1b1f24; stroke: #7c7e85; }
+      .grey-t { fill: #c9cdd3; }
+      .grey-s { fill: #a7abb2; }
+      .lime-b { fill: #1f2a10; stroke: #aacb3f; }
+      .lime-t { fill: #cfe39a; }
+      .red-b { fill: #3a1715; stroke: #f06a66; }
+      .red-t { fill: #ffb3ae; }
+      .red-s { fill: #f0918c; }
+      .fail-t { fill: #f06a66; }
+      .pass-t { fill: #aacb3f; }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="conn-mk" d="M0,0 L8,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- ===================== Top: adjusted estimate (spans 3 columns) ===================== -->
+  <rect class="grey-b" x="40" y="20" width="1020" height="56" rx="8" stroke-width="1.6"/>
+  <text class="grey-t" x="550" y="46" text-anchor="middle" font-size="15" font-weight="bold">Adjusted effect estimate</text>
+  <text class="grey-s" x="550" y="65" text-anchor="middle" font-size="11.5">PS weighting &#183; matching &#183; outcome regression</text>
+
+  <!-- fan-out arrows to each column -->
+  <line class="conn" x1="190" y1="76" x2="190" y2="118" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line class="conn" x1="550" y1="76" x2="550" y2="118" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line class="conn" x1="910" y1="76" x2="910" y2="118" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- ===================== Column 1: Balance diagnostics ===================== -->
+  <rect class="grey-b" x="40" y="120" width="300" height="60" rx="8" stroke-width="1.6"/>
+  <text class="grey-t" x="190" y="145" text-anchor="middle" font-size="13.5" font-weight="bold">1 &#183; Balance diagnostics</text>
+  <text class="grey-s" x="190" y="164" text-anchor="middle" font-size="10.5">SMD &#183; Love plot &#183; variance ratios &#183; overlap</text>
+  <line class="conn" x1="190" y1="180" x2="190" y2="210" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <polygon class="lime-b" points="190,212 288,272 190,332 92,272" stroke-width="1.6"/>
+  <text class="lime-t" x="190" y="268" text-anchor="middle" font-size="12.5" font-weight="bold">Covariates balanced?</text>
+  <text class="lime-t" x="190" y="285" text-anchor="middle" font-size="10.5">(all |SMD| &lt; 0.1)</text>
+  <line class="conn" x1="190" y1="332" x2="190" y2="364" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="fail-t" x="202" y="352" font-size="11" font-weight="bold">If it fails</text>
+  <rect class="red-b" x="40" y="366" width="300" height="86" rx="8" stroke-width="1.6"/>
+  <text class="red-t" x="190" y="390" text-anchor="middle" font-size="12.5" font-weight="bold">Re-specify the propensity model</text>
+  <text class="red-s" x="190" y="409" text-anchor="middle" font-size="10.5">add splines / interactions</text>
+  <text class="red-s" x="190" y="425" text-anchor="middle" font-size="10.5">trim non-overlap regions</text>
+  <text class="red-s" x="190" y="441" text-anchor="middle" font-size="10.5">re-match or re-weight, then re-check</text>
+
+  <!-- ===================== Column 2: Placebo / falsification ===================== -->
+  <rect class="grey-b" x="400" y="120" width="300" height="60" rx="8" stroke-width="1.6"/>
+  <text class="grey-t" x="550" y="145" text-anchor="middle" font-size="13.5" font-weight="bold">2 &#183; Placebo / falsification</text>
+  <text class="grey-s" x="550" y="164" text-anchor="middle" font-size="10.5">negative-control outcome / treatment &#183; pre-trend</text>
+  <line class="conn" x1="550" y1="180" x2="550" y2="210" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <polygon class="lime-b" points="550,212 648,272 550,332 452,272" stroke-width="1.6"/>
+  <text class="lime-t" x="550" y="268" text-anchor="middle" font-size="12.5" font-weight="bold">Placebo tests pass?</text>
+  <text class="lime-t" x="550" y="285" text-anchor="middle" font-size="10.5">(effects &#8776; 0)</text>
+  <line class="conn" x1="550" y1="332" x2="550" y2="364" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="fail-t" x="562" y="352" font-size="11" font-weight="bold">If it fails</text>
+  <rect class="red-b" x="400" y="366" width="300" height="86" rx="8" stroke-width="1.6"/>
+  <text class="red-t" x="550" y="390" text-anchor="middle" font-size="12.5" font-weight="bold">Address residual confounding</text>
+  <text class="red-s" x="550" y="409" text-anchor="middle" font-size="10.5">revisit the DAG</text>
+  <text class="red-s" x="550" y="425" text-anchor="middle" font-size="10.5">add proxy / control variables</text>
+  <text class="red-s" x="550" y="441" text-anchor="middle" font-size="10.5">consider an instrument or diff-in-diff</text>
+
+  <!-- ===================== Column 3: Robustness to unmeasured U ===================== -->
+  <rect class="grey-b" x="760" y="120" width="300" height="60" rx="8" stroke-width="1.6"/>
+  <text class="grey-t" x="910" y="145" text-anchor="middle" font-size="13.5" font-weight="bold">3 &#183; Robustness to unmeasured U</text>
+  <text class="grey-s" x="910" y="164" text-anchor="middle" font-size="10.5">E-value &#183; partial R&#178; &#183; Rosenbaum &#915; &#183; Manski</text>
+  <line class="conn" x1="910" y1="180" x2="910" y2="210" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <polygon class="lime-b" points="910,212 1008,272 910,332 812,272" stroke-width="1.6"/>
+  <text class="lime-t" x="910" y="268" text-anchor="middle" font-size="12.5" font-weight="bold">Robust to a</text>
+  <text class="lime-t" x="910" y="285" text-anchor="middle" font-size="10.5">plausible confounder?</text>
+  <line class="conn" x1="910" y1="332" x2="910" y2="364" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="fail-t" x="922" y="352" font-size="11" font-weight="bold">If it fails</text>
+  <rect class="red-b" x="760" y="366" width="300" height="86" rx="8" stroke-width="1.6"/>
+  <text class="red-t" x="910" y="390" text-anchor="middle" font-size="12.5" font-weight="bold">Treat the estimate as fragile</text>
+  <text class="red-s" x="910" y="409" text-anchor="middle" font-size="10.5">gather more covariates</text>
+  <text class="red-s" x="910" y="425" text-anchor="middle" font-size="10.5">report worst-case bounds</text>
+  <text class="red-s" x="910" y="441" text-anchor="middle" font-size="10.5">temper the pricing / reserving decision</text>
+
+  <!-- ===================== Pass arrows (diamond to report, routed in the gaps) ===================== -->
+  <polyline class="conn" points="288,272 370,272 370,496" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="pass-t" x="296" y="264" font-size="11" font-weight="bold">Pass</text>
+  <polyline class="conn" points="648,272 730,272 730,496" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="pass-t" x="656" y="264" font-size="11" font-weight="bold">Pass</text>
+  <polyline class="conn" points="1008,272 1078,272 1078,496" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="pass-t" x="1016" y="264" font-size="11" font-weight="bold">Pass</text>
+
+  <!-- recommendation -> report (re-check after remedy) -->
+  <line class="conn" x1="190" y1="452" x2="190" y2="496" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line class="conn" x1="550" y1="452" x2="550" y2="496" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line class="conn" x1="910" y1="452" x2="910" y2="496" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- ===================== Bottom: transparent report (spans 3 columns, grey) ===================== -->
+  <rect class="grey-b" x="40" y="498" width="1020" height="60" rx="8" stroke-width="1.8"/>
+  <text class="grey-t" x="550" y="524" text-anchor="middle" font-size="15" font-weight="bold">Transparent actuarial report</text>
+  <text class="grey-s" x="550" y="544" text-anchor="middle" font-size="11.5">estimate + diagnostics + sensitivity bounds + pricing / reserving impact</text>
+</svg>

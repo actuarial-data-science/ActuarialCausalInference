@@ -1,0 +1,725 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Concepts of Causal Inference &#8212; Actuarial Causal Inference Tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../_static/dark_mode_widget.css?v=7446dea4" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe-button-patch.css?v=e3482d12" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/figure-theme.css?v=61ffb31e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script src="../_static/sphinx-thebe-i18n.js?v=ea266e56"></script>
+    <script defer="defer" src="../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../_static/sphinx-thebe-lite.js?v=93e2d225"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial/concepts';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/figure-theme.js?v=29b104fa"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Identification" href="identification.html" />
+    <link rel="prev" title="Actuarial Causal Inference Tutorial" href="../README.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Actuarial Causal Inference Tutorial - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Actuarial Causal Inference Tutorial - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Actuarial Causal Inference Tutorial
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Concepts of Causal Inference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="identification.html">Identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="assumptions.html">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graphical_models.html">Graphical Causal Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html">Identification Strategies</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="inference.html">Causal Inference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="propensity.html">Propensity Score Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regression_methods.html">Regression Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tree_based_methods.html">Tree-Based Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bayesian.html">Bayesian Causal Inference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="sensitivity.html">Validation and Sensitivity Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="diagnostics.html">Diagnostics and Sensitivity Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debias.html">Biases and De-Biasing Toolkit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fairness.html">Why Causal Inference Resolves the Fairness Problem</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Actuarial Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../application/observational_data.html">Observational Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/pricing.html">Fairness in Insurance Pricing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/claims_triage.html">Explainable Motor Claims Triage with CATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/health_interventions.html">Synthetic Health Dataset for Causal Inference Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../papers/references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorial/concepts.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Concepts of Causal Inference</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#association-is-not-causation">Association is not Causation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-traditions-of-causal-inference">Two Traditions of Causal Inference</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#treatments">Treatments</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#propensity-score">Propensity Score</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment-mechanism">Assignment Mechanism</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confounding">Confounding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#randomized-controlled-trials">Randomized Controlled Trials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observational-data">Observational Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fundamental-problem-of-causal-inference">Fundamental Problem of Causal Inference</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identifiability">Identifiability</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-conclusions-rest-on-untestable-assumptions">Causal Conclusions Rest on Untestable Assumptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notation">Notation</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="concepts-of-causal-inference">
+<h1>Concepts of Causal Inference<a class="headerlink" href="#concepts-of-causal-inference" title="Link to this heading">#</a></h1>
+<section id="association-is-not-causation">
+<h2>Association is not Causation<a class="headerlink" href="#association-is-not-causation" title="Link to this heading">#</a></h2>
+<p>A central lesson of statistics is that <strong>correlation does not imply causation</strong>. Two variables can be strongly associated without one causing the other. Classic examples include the correlation between ice cream sales and drowning rates (both driven by summer weather) or the correlation between the number of firefighters at a fire and the damage caused (both driven by fire severity).</p>
+<p>In <strong>actuarial science</strong>, this distinction is especially consequential. Insurance data is inherently observational: policyholders are not randomly assigned to risk factors or interventions. A pricing model may find that policyholders who purchase additional coverage have higher claim rates — but this likely reflects <strong>adverse selection</strong> (high-risk individuals self-selecting into more coverage), not a causal effect of coverage on claims.</p>
+<p>Confusing association with causation leads to flawed decisions:</p>
+<ul class="simple">
+<li><p><strong>Pricing:</strong> Adjusting premiums based on a spurious predictor introduces cross-subsidisation.</p></li>
+<li><p><strong>Interventions:</strong> A wellness programme that <em>appears</em> to reduce claims may simply attract healthier policyholders (<strong>healthy user bias</strong>).</p></li>
+<li><p><strong>Reserving:</strong> Trend extrapolations based on confounded associations can systematically over- or under-reserve.</p></li>
+</ul>
+<p>Causal inference provides the tools to move beyond “what predicts <span class="math notranslate nohighlight">\(Y\)</span>?” to “what happens to <span class="math notranslate nohighlight">\(Y\)</span> if we intervene on <span class="math notranslate nohighlight">\(T\)</span>?” — the question that matters for decision-making (<a class="reference external" href="https://doi.org/10.2307/j.ctt5vhbqm">Angrist &amp; Pischke, 2015</a>; <a class="reference external" href="https://matheusfacure.github.io/python-causality-handbook/01-Introduction-To-Causality.html">Python Causality Handbook, Ch. 1</a>).</p>
+</section>
+<section id="two-traditions-of-causal-inference">
+<h2>Two Traditions of Causal Inference<a class="headerlink" href="#two-traditions-of-causal-inference" title="Link to this heading">#</a></h2>
+<p>Modern causal inference grew out of two complementary traditions, and this tutorial draws on both.</p>
+<p>The <strong>potential-outcomes (or counterfactual) tradition</strong> originates with <a class="reference external" href="https://doi.org/10.1214/ss/1177012031">Neyman (1923)</a>, who introduced potential outcomes for randomized experiments, and was extended to observational studies by <a class="reference external" href="https://doi.org/10.1037/h0037350">Rubin (1974)</a>. The potential outcomes framework posits that for every unit, there are multiple outcomes that could happen, but we only ever observe the one corresponding to the treatment. It defines causal effects as contrasts between the outcomes a unit <em>would</em> experience under alternative treatments, and frames causal inference as a <strong>missing-data problem</strong>.</p>
+<p>The <strong>structural / graphical tradition</strong> traces back to the path analysis of <a class="reference external" href="https://doi.org/10.1214/aoms/1177732676">Wright (1934)</a> and was formalised by <a class="reference external" href="https://doi.org/10.1093/biomet/82.4.669">Pearl (1995)</a>, <a class="reference external" href="https://doi.org/10.1017/CBO9780511803161">2009</a>. It encodes causal assumptions in <strong>directed acyclic graphs (DAGs)</strong> and structural equations, making questions of confounding, adjustment, and identification graphically explicit.</p>
+<figure class="align-default" id="fig-two-traditions">
+<a class="reference internal image-reference" href="../_images/two_traditions.svg"><img alt="../_images/two_traditions.svg" src="../_images/two_traditions.svg" style="width: 95%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">The two pillars of causal inference. The potential-outcomes framework (left) reasons about unit-level counterfactuals and the effect <span class="math notranslate nohighlight">\(\tau = Y(1) - Y(0)\)</span>; structural causal models (right) reason about the graph of causal mechanisms. The two are formally equivalent and used together throughout this tutorial.</span><a class="headerlink" href="#fig-two-traditions" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The two languages are provably equivalent — every DAG implies a set of potential-outcome assumptions and vice versa (<a class="reference external" href="https://doi.org/10.1017/CBO9780511803161">Pearl, 2009</a>). We use <strong>potential outcomes</strong> to define estimands (Chapter <a class="reference internal" href="assumptions.html"><span class="doc">Assumptions</span></a>) and <strong>DAGs</strong> to reason about which variables to adjust for (Chapter <a class="reference internal" href="graphical_models.html"><span class="doc">Graphical Causal Models</span></a>).</p>
+<section id="treatments">
+<h3>Treatments<a class="headerlink" href="#treatments" title="Link to this heading">#</a></h3>
+<p>A <strong>treatment</strong> (or intervention) is the variable whose causal effect we want to study. We denote it <span class="math notranslate nohighlight">\(T\)</span>.</p>
+<p>In the simplest <strong>binary</strong> setting, <span class="math notranslate nohighlight">\(T \in \{0, 1\}\)</span>, where <span class="math notranslate nohighlight">\(T=1\)</span> indicates that the unit received the active treatment and <span class="math notranslate nohighlight">\(T=0\)</span> indicates control (no treatment, placebo, or standard of care). The framework generalises to <strong>multi-valued</strong> (<span class="math notranslate nohighlight">\(T \in \{0,1,\dots,K\}\)</span>) and <strong>continuous</strong> treatments (<span class="math notranslate nohighlight">\(T \in \mathbb{R}\)</span>), though most of this tutorial focuses on the binary case.</p>
+<p>A treatment must be a <strong>well-defined intervention</strong>: something that could, at least in principle, be manipulated or assigned to a unit. This is sometimes called the <em>“no causation without manipulation”</em> principle (<a class="reference external" href="https://doi.org/10.1037/h0037350">Rubin, 1974</a>; <a class="reference external" href="https://doi.org/10.2307/j.ctt5vhbqm">Angrist &amp; Pischke, 2015</a>). Vague or immutable attributes (e.g. “being older” or “being male”) are problematic because it is unclear what it would mean to intervene on them, making the potential outcomes ill-defined.</p>
+</section>
+<section id="propensity-score">
+<h3>Propensity Score<a class="headerlink" href="#propensity-score" title="Link to this heading">#</a></h3>
+<p>The probability of receiving treatment given a set of observed covariates <span class="math notranslate nohighlight">\(X\)</span>, defined as:
+$<span class="math notranslate nohighlight">\(\pi(x) = \mathbb{P}(T=1 \mid X=x)\)</span>$</p>
+<p>The propensity score was introduced by <a class="reference external" href="https://doi.org/10.1093/biomet/70.1.41">Rosenbaum &amp; Rubin (1983)</a>. For a practical introduction to propensity score methods, see <a class="reference external" href="https://doi.org/10.1080/00273171.2011.568786">Austin (2011)</a>.</p>
+</section>
+<section id="assignment-mechanism">
+<h3>Assignment Mechanism<a class="headerlink" href="#assignment-mechanism" title="Link to this heading">#</a></h3>
+<p>The <strong>assignment mechanism</strong> describes the process by which units come to receive a particular treatment. In an RCT the mechanism is known and controlled by the experimenter. In observational data, treatment is instead determined by factors such as self-selection, physician decisions, or policy rules — and these factors may themselves be related to the outcome (<a class="reference external" href="https://doi.org/10.1016/C2011-0-05506-1">Wooldridge, 2012</a>). Understanding (or modelling) the assignment mechanism is the central challenge of causal inference from observational data, and it is what the identification assumptions (consistency, positivity, exchangeability) are designed to address.</p>
+</section>
+<section id="confounding">
+<h3>Confounding<a class="headerlink" href="#confounding" title="Link to this heading">#</a></h3>
+<p>A <strong>confounder</strong> (or fork) <span class="math notranslate nohighlight">\(F\)</span> is a variable that causally influences both the treatment assignment <span class="math notranslate nohighlight">\(T\)</span> and the outcome <span class="math notranslate nohighlight">\(Y\)</span>. When confounders are present but not adjusted for, the observed association between <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> is a mixture of the true causal effect and the spurious association induced by the confounder — this is <strong>confounding bias</strong> (<a class="reference external" href="https://doi.org/10.1016/C2011-0-05506-1">Wooldridge, 2012</a>; <a class="reference external" href="https://doi.org/10.2307/j.ctt5vhbqm">Angrist &amp; Pischke, 2015</a>). For a visual tutorial on confounding via Simpson’s Paradox, see <a class="reference external" href="https://www.biostatistics.ca/when-data-lies-simpsons-paradox-a-step-by-step-simulation-code-notebook/">this simulation walkthrough</a>.</p>
+<div class="math notranslate nohighlight">
+\[
+\underbrace{\mathbb{E}[Y \mid T=1] - \mathbb{E}[Y \mid T=0]}_{\text{observed difference}} \;=\; \underbrace{\mathbb{E}[Y(1) - Y(0)]}_{\text{causal effect (ATE)}} \;+\; \underbrace{\text{bias}}_{\text{due to confounding}}
+\]</div>
+<p>The goal of causal inference methods (matching, weighting, regression adjustment, etc.) is to eliminate this bias by appropriately adjusting for the confounders.</p>
+</section>
+<section id="randomized-controlled-trials">
+<h3>Randomized Controlled Trials<a class="headerlink" href="#randomized-controlled-trials" title="Link to this heading">#</a></h3>
+<p>The <strong>“gold standard”</strong> for causal inference is the Randomized Controlled Trial (RCT). Randomization in treatment assignment ensures that treatment and control groups are as similar as possible, eliminating confounding and ensuring the treatment <span class="math notranslate nohighlight">\(T\)</span> is independent of potential outcomes (<a class="reference external" href="https://doi.org/10.1037/h0037350">Rubin, 1974</a>; <a class="reference external" href="https://doi.org/10.2307/j.ctt5vhbqm">Angrist &amp; Pischke, 2015</a>).</p>
+<figure class="align-default" id="fig-rct-benchmark">
+<a class="reference internal image-reference" href="../_images/rct_benchmark.svg"><img alt="../_images/rct_benchmark.svg" src="../_images/rct_benchmark.svg" style="width: 90%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">In an RCT, treatment is assigned by chance, so both measured and unmeasured covariates are balanced across the treatment and control arms. This balance is what makes the simple difference in means an unbiased estimate of the causal effect.</span><a class="headerlink" href="#fig-rct-benchmark" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Because randomization makes <span class="math notranslate nohighlight">\(T \perp (Y(1), Y(0))\)</span> hold <em>by design</em>, the RCT is best understood as the <strong>benchmark that observational methods try to emulate</strong>. When we cannot randomize, the methods in this tutorial — matching, weighting, regression adjustment, and graphical reasoning — all aim to reconstruct, <em>conditional on covariates</em>, the covariate balance that randomization would have produced automatically.</p>
+<div class="dropdown admonition note">
+<p class="admonition-title">Note</p>
+<p>RCTs are often infeasible in actuarial settings: we cannot randomly assign policyholders to claim, randomly grant coverage, or withhold a wellness programme for experimental purposes. Observational causal inference exists precisely to approximate the RCT benchmark from the data we <em>do</em> have.</p>
+</div>
+</section>
+<section id="observational-data">
+<h3>Observational Data<a class="headerlink" href="#observational-data" title="Link to this heading">#</a></h3>
+<p>Causal inference from observational data relies on the idea that, under the assumptions of the <strong>Rubin Causal Model</strong> (<a class="reference external" href="https://doi.org/10.1093/biomet/70.1.41">Rosenbaum &amp; Rubin, 1983</a>), an observational study can be regarded as a <em>conditionally randomized experiment</em>. Under the assumptions of ignorability, the observed data <span class="math notranslate nohighlight">\(D\)</span> represent the essential features of a randomized experiment, enabling the identification and consistent estimation of causal effects.</p>
+</section>
+</section>
+<section id="fundamental-problem-of-causal-inference">
+<h2>Fundamental Problem of Causal Inference<a class="headerlink" href="#fundamental-problem-of-causal-inference" title="Link to this heading">#</a></h2>
+<p>Using binary treatments, every unit <span class="math notranslate nohighlight">\(i\)</span> has two <strong>potential outcomes</strong> — <span class="math notranslate nohighlight">\(Y_i(1)\)</span> under treatment and <span class="math notranslate nohighlight">\(Y_i(0)\)</span> under control — but only one can ever be observed. The observed outcome is the <strong>factual</strong>; the outcome under the alternative treatment is the <strong>counterfactual</strong>. Since we cannot reset time to see what would have happened to the same unit under a different treatment, it is impossible to directly calculate individual treatment effects <span class="math notranslate nohighlight">\(\tau_i = Y_i(1) - Y_i(0)\)</span>. This fundamental identification problem was formalised by <a class="reference external" href="https://doi.org/10.1037/h0037350">Rubin (1974)</a> and is discussed in detail in <a class="reference external" href="https://doi.org/10.2307/j.ctt5vhbqm">Angrist &amp; Pischke (2015, Ch. 1)</a>.</p>
+<figure class="align-default" id="fig-fundamental-problem">
+<a class="reference internal image-reference" href="../_images/fundamental_problem.svg"><img alt="../_images/fundamental_problem.svg" src="../_images/fundamental_problem.svg" style="width: 80%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">The fundamental problem of causal inference: for each unit we observe the outcome under the treatment actually received and never the counterfactual. Causal inference therefore targets <em>average</em> effects across units rather than individual-level effects.</span><a class="headerlink" href="#fig-fundamental-problem" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="identifiability">
+<h3>Identifiability<a class="headerlink" href="#identifiability" title="Link to this heading">#</a></h3>
+<p>A causal effect is <strong>identifiable</strong> if it can be expressed purely in terms of the observed data distribution, given a set of structural assumptions.</p>
+<p>The key distinction is between a <strong>causal estimand</strong> — defined via potential outcomes (e.g. <span class="math notranslate nohighlight">\(\mathbb{E}[Y(1) - Y(0)]\)</span>) — and a <strong>statistical estimand</strong> — a quantity computable from the observed data (e.g. <span class="math notranslate nohighlight">\(\mathbb{E}[Y \mid T=1, X] - \mathbb{E}[Y \mid T=0, X]\)</span>). Identifiability is the bridge: the assumptions of consistency, positivity, and exchangeability allow us to equate the causal estimand with a statistical estimand, making estimation possible. For a formal treatment, see <a class="reference external" href="https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html">Oxford: Causal Assumptions</a> and the <a class="reference external" href="https://www.uniqcret.com/post/causal-inference-assumptions-guide">Assumptions Guide</a>.</p>
+<p>For heterogeneous treatment effect estimation, see <a class="reference external" href="https://doi.org/10.1073/pnas.1510489113">Athey &amp; Imbens (2016)</a>, <a class="reference external" href="https://doi.org/10.1080/01621459.2017.1319839">Wager &amp; Athey (2018)</a>, and <a class="reference external" href="https://doi.org/10.48550/arXiv.1810.13237">Schmidt (2018)</a>.</p>
+</section>
+</section>
+<section id="causal-conclusions-rest-on-untestable-assumptions">
+<h2>Causal Conclusions Rest on Untestable Assumptions<a class="headerlink" href="#causal-conclusions-rest-on-untestable-assumptions" title="Link to this heading">#</a></h2>
+<p>The bridge from a causal estimand to a statistical estimand is built entirely from <strong>assumptions</strong>, and the most important of them cannot be checked from the data alone. In particular, <strong>exchangeability / no unobserved confounding</strong> (<a class="reference internal" href="assumptions.html#exchangeability">Assumption 4</a> in <a class="reference internal" href="assumptions.html"><span class="doc">Assumptions</span></a>) is fundamentally untestable: the data are equally consistent with “no hidden confounder” and with “a hidden confounder we never measured” (<a class="reference external" href="https://doi.org/10.1037/h0037350">Rubin, 1974</a>; <a class="reference external" href="https://doi.org/10.1017/CBO9780511803161">Pearl, 2009</a>; <a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Hernán &amp; Robins, 2020</a>).</p>
+<div class="dropdown admonition important">
+<p class="admonition-title">Important</p>
+<p>No statistical procedure can <em>prove</em> a causal effect from observational data. Every estimate is conditional on assumptions that come from domain knowledge, not from the data. The role of the analyst is to (1) state these assumptions explicitly, (2) encode them in a DAG or potential-outcomes model, and (3) probe how fragile the conclusions are when the assumptions are relaxed.</p>
+</div>
+<p>This is why <strong>sensitivity analysis</strong> is not optional but a core part of any credible causal study: rather than asking “is exchangeability true?”, we ask “<em>how strong</em> would an unmeasured confounder have to be to overturn our conclusion?”. These tools — E-values, Rosenbaum bounds, and partial-<span class="math notranslate nohighlight">\(R^2\)</span> methods — are developed in <a class="reference internal" href="diagnostics.html"><span class="doc">Diagnostics and Sensitivity Analysis</span></a> and <a class="reference internal" href="sensitivity.html"><span class="doc">Validation and Sensitivity Analysis</span></a>.</p>
+<section id="notation">
+<h3>Notation<a class="headerlink" href="#notation" title="Link to this heading">#</a></h3>
+<p>Throughout this tutorial we adopt the following conventions. Let <span class="math notranslate nohighlight">\(D = \{(X_i, T_i, Y_i)\}_{i=1}^{n}\)</span> denote the observed dataset, where for each unit <span class="math notranslate nohighlight">\(i\)</span>:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(X\)</span></p></td>
+<td><p>Observed covariates (patient/policyholder characteristics)</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(T\)</span></p></td>
+<td><p>Treatment assignment (<span class="math notranslate nohighlight">\(T \in \{0,1\}\)</span> in the binary case)</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(Y\)</span></p></td>
+<td><p>Observed outcome</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(Y(1), Y(0)\)</span></p></td>
+<td><p>Potential outcomes under treatment and control</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(F\)</span></p></td>
+<td><p>Fork / confounder (common cause affecting both <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(C\)</span></p></td>
+<td><p>Collider (common effect of two or more variables)</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(M\)</span></p></td>
+<td><p>Mediator (variable on the causal path from <span class="math notranslate nohighlight">\(T\)</span> to <span class="math notranslate nohighlight">\(Y\)</span>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(S\)</span></p></td>
+<td><p>Sensitive attribute (protected characteristic, e.g. gender, ethnicity)</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(U\)</span></p></td>
+<td><p>Unmeasured / unobserved confounder</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(D\)</span></p></td>
+<td><p>Observed dataset: <span class="math notranslate nohighlight">\(D = \{(X_i, T_i, Y_i)\}_{i=1}^{n}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\pi(x)\)</span></p></td>
+<td><p>Propensity score: <span class="math notranslate nohighlight">\(\pi(x) = \mathbb{P}(T=1 \mid X=x)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../README.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Actuarial Causal Inference Tutorial</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="identification.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Identification</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#association-is-not-causation">Association is not Causation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-traditions-of-causal-inference">Two Traditions of Causal Inference</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#treatments">Treatments</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#propensity-score">Propensity Score</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment-mechanism">Assignment Mechanism</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confounding">Confounding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#randomized-controlled-trials">Randomized Controlled Trials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#observational-data">Observational Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fundamental-problem-of-causal-inference">Fundamental Problem of Causal Inference</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identifiability">Identifiability</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-conclusions-rest-on-untestable-assumptions">Causal Conclusions Rest on Untestable Assumptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notation">Notation</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theresa Blümlein, Patrick Cheridito, and Daniel Meier
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
