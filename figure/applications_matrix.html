@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actuarial Causal Inference — Applications Matrix</title>
+<style>
+  :root {
+    --color-bg:               #ffffff;
+    --color-bg-secondary:     #f5f4f0;
+    --color-border-tertiary:  rgba(60, 58, 52, 0.15);
+    --color-border-secondary: rgba(60, 58, 52, 0.30);
+    --color-text-primary:     #1a1a18;
+    --color-text-secondary:   #5f5e5a;
+    --color-text-tertiary:    #888780;
+
+    /* SAV/ASA brand palette — the legacy hue names are kept as opaque tokens:
+         blue   -> SAV charcoal grey  (column / structural headers)
+         teal   -> SAV lime green     (fairness in pricing)
+         purple -> warm ochre         (claims triage)
+         coral  -> muted sage         (health interventions)
+         gray   -> logo grey          (observational data & diagnostics) */
+    --blue-50:   #E9E9E7; --blue-600:  #5F625F; --blue-800:  #34362F;
+    --teal-50:   #EEF3DD; --teal-600:  #7D9F17; --teal-800:  #3D4F10;
+    --purple-50: #F6EFD8; --purple-600:#C9A227; --purple-800:#6E5713;
+    --coral-50:  #E7ECDD; --coral-600: #8AA06A; --coral-800: #3F4E26;
+    --gray-50:   #F1EFE8; --gray-600:  #8A8B86; --gray-800:  #44433F;
+
+    --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+  }
+
+  /* OS-level auto mode (only when the book has not pinned a choice). */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg:               #1a1a18;
+      --color-bg-secondary:     #242420;
+      --color-border-tertiary:  rgba(210, 208, 200, 0.12);
+      --color-border-secondary: rgba(210, 208, 200, 0.28);
+      --color-text-primary:     #e8e6de;
+      --color-text-secondary:   #a8a69e;
+      --color-text-tertiary:    #6e6d68;
+
+      --blue-50:   #2A2A2D; --blue-600:  #C2C5C2; --blue-800:  #DDE0DC;
+      --teal-50:   #1F2A10; --teal-600:  #AACB3F; --teal-800:  #CFE39A;
+      --purple-50: #332B12; --purple-600:#E0C566; --purple-800:#EFD98F;
+      --coral-50:  #222C16; --coral-600: #B3C68C; --coral-800: #D2E0B4;
+      --gray-50:   #22211D; --gray-600:  #7C7E85; --gray-800:  #C9CDD3;
+    }
+  }
+
+  /* Explicit book-toggle overrides — these win over the media query above
+     so the figure follows the Jupyter Book light/dark switch, not the OS. */
+  html[data-mode="light"] {
+    --color-bg:               #ffffff;
+    --color-bg-secondary:     #f5f4f0;
+    --color-border-tertiary:  rgba(60, 58, 52, 0.15);
+    --color-border-secondary: rgba(60, 58, 52, 0.30);
+    --color-text-primary:     #1a1a18;
+    --color-text-secondary:   #5f5e5a;
+    --color-text-tertiary:    #888780;
+
+    --blue-50:   #E9E9E7; --blue-600:  #5F625F; --blue-800:  #34362F;
+    --teal-50:   #EEF3DD; --teal-600:  #7D9F17; --teal-800:  #3D4F10;
+    --purple-50: #F6EFD8; --purple-600:#C9A227; --purple-800:#6E5713;
+    --coral-50:  #E7ECDD; --coral-600: #8AA06A; --coral-800: #3F4E26;
+    --gray-50:   #F1EFE8; --gray-600:  #8A8B86; --gray-800:  #44433F;
+  }
+  html[data-mode="dark"] {
+    --color-bg:               #1a1a18;
+    --color-bg-secondary:     #242420;
+    --color-border-tertiary:  rgba(210, 208, 200, 0.12);
+    --color-border-secondary: rgba(210, 208, 200, 0.28);
+    --color-text-primary:     #e8e6de;
+    --color-text-secondary:   #a8a69e;
+    --color-text-tertiary:    #6e6d68;
+
+    --blue-50:   #2A2A2D; --blue-600:  #C2C5C2; --blue-800:  #DDE0DC;
+    --teal-50:   #1F2A10; --teal-600:  #AACB3F; --teal-800:  #CFE39A;
+    --purple-50: #332B12; --purple-600:#E0C566; --purple-800:#EFD98F;
+    --coral-50:  #222C16; --coral-600: #B3C68C; --coral-800: #D2E0B4;
+    --gray-50:   #22211D; --gray-600:  #7C7E85; --gray-800:  #C9CDD3;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body { background: transparent; }
+
+  body {
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 0.5rem 0.25rem 1rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  header {
+    margin-bottom: 1.75rem;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    padding-bottom: 1.25rem;
+  }
+  header p {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-top: 0.4rem;
+  }
+  h1 {
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .matrix-wrap {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: var(--font-sans);
+  }
+
+  /* SVG colour classes — driven by the CSS vars above (light / dark). */
+  .c-blue   { fill: var(--blue-50);   stroke: var(--blue-600); }
+  .c-teal   { fill: var(--teal-50);   stroke: var(--teal-600); }
+  .c-purple { fill: var(--purple-50); stroke: var(--purple-600); }
+  .c-coral  { fill: var(--coral-50);  stroke: var(--coral-600); }
+  .c-gray   { fill: var(--gray-50);   stroke: var(--gray-600); }
+
+  /* Text inside coloured nodes */
+  .c-blue   .th, .c-blue   .ts { fill: var(--blue-800); }
+  .c-teal   .th, .c-teal   .ts { fill: var(--teal-800); }
+  .c-purple .th, .c-purple .ts { fill: var(--purple-800); }
+  .c-coral  .th, .c-coral  .ts { fill: var(--coral-800); }
+  .c-gray   .th, .c-gray   .ts { fill: var(--gray-800); }
+
+  .th { font-weight: 500; font-size: 12px; fill: var(--color-text-primary); }
+  .ts { font-weight: 400; font-size: 11px; fill: var(--color-text-secondary); }
+
+  /* Linked cell hover */
+  a.cell-link { text-decoration: none; cursor: pointer; }
+  a.cell-link:hover rect,
+  a.cell-link:focus rect { opacity: 0.82; outline: none; }
+  a.cell-link:focus-visible rect { stroke-width: 2px; }
+
+  /* Row / col header hover */
+  a.label-link { text-decoration: none; }
+  a.label-link:hover rect,
+  a.label-link:focus rect { opacity: 0.78; }
+
+  footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 0.5px solid var(--color-border-tertiary);
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  footer span { display: flex; align-items: center; gap: 6px; }
+  footer .swatch {
+    width: 10px; height: 10px; border-radius: 2px; display: inline-block; flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Actuarial applications — value chain × workflow matrix</h1>
+  <p>Each cell maps an application notebook to the insurance value chain stage (rows) and the actuary's causal inference workflow stage (columns). Click any cell to open the notebook.</p>
+</header>
+
+<div class="matrix-wrap">
+<svg viewBox="0 0 680 554" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Actuarial causal inference applications matrix: insurance value chain vs actuary workflow stages</title>
+<desc>A matrix with six insurance value chain stages as rows (Product design through Reporting and regulation) and four actuary workflow stages as columns (Concepts, Identification, Inference, Validation). Coloured cells show which application notebook is relevant at each intersection.</desc>
+
+<!-- ═══ AXIS LABELS ═══ -->
+<text class="ts" x="340" y="12" text-anchor="middle" dominant-baseline="auto" style="fill:var(--color-text-tertiary);font-size:11px">Actuary's workflow →</text>
+<text class="ts" x="10" y="57" dominant-baseline="auto" style="fill:var(--color-text-tertiary);font-size:10px">Value chain ↓</text>
+
+<!-- ═══ COLUMN HEADERS — workflow stages ═══ -->
+<a class="label-link" href="https://tbluemlein.github.io/causalinference/tutorial/1_concepts.html">
+  <g class="c-blue">
+    <rect x="134" y="20" width="126" height="32" rx="6" stroke-width="0.5"/>
+    <text class="th" x="197" y="36" text-anchor="middle" dominant-baseline="central">1 · Concepts</text>
+  </g>
+</a>
+<a class="label-link" href="https://tbluemlein.github.io/causalinference/tutorial/2_identification.html">
+  <g class="c-blue">
+    <rect x="268" y="20" width="126" height="32" rx="6" stroke-width="0.5"/>
+    <text class="th" x="331" y="36" text-anchor="middle" dominant-baseline="central">2 · Identification</text>
+  </g>
+</a>
+<a class="label-link" href="https://tbluemlein.github.io/causalinference/tutorial/3_inference.html">
+  <g class="c-blue">
+    <rect x="402" y="20" width="126" height="32" rx="6" stroke-width="0.5"/>
+    <text class="th" x="465" y="36" text-anchor="middle" dominant-baseline="central">3 · Inference</text>
+  </g>
+</a>
+<a class="label-link" href="https://tbluemlein.github.io/causalinference/tutorial/4_sensitivity.html">
+  <g class="c-blue">
+    <rect x="536" y="20" width="132" height="32" rx="6" stroke-width="0.5"/>
+    <text class="th" x="602" y="36" text-anchor="middle" dominant-baseline="central">4 · Validation</text>
+  </g>
+</a>
+
+<!-- ═══ GRID LINES ═══ -->
+<line x1="10"  y1="54"  x2="668" y2="54"  stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+<line x1="10"  y1="130" x2="668" y2="130" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+<line x1="10"  y1="206" x2="668" y2="206" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+<line x1="10"  y1="282" x2="668" y2="282" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+<line x1="10"  y1="358" x2="668" y2="358" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+<line x1="10"  y1="434" x2="668" y2="434" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+<line x1="10"  y1="510" x2="668" y2="510" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+<line x1="132" y1="54"  x2="132" y2="510" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+<line x1="266" y1="54"  x2="266" y2="510" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+<line x1="400" y1="54"  x2="400" y2="510" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+<line x1="534" y1="54"  x2="534" y2="510" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+<line x1="668" y1="54"  x2="668" y2="510" stroke="var(--color-border-tertiary)" stroke-width="0.5"/>
+
+<!-- ═══ ROW HEADERS — value chain stages ═══ -->
+<!-- Row 1: Product design -->
+<a class="label-link" href="https://tbluemlein.github.io/causalinference/README.html">
+  <g class="c-gray">
+    <rect x="10" y="58"  width="118" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="69" y="85"  text-anchor="middle" dominant-baseline="central">Product</text>
+    <text class="th" x="69" y="103" text-anchor="middle" dominant-baseline="central">design</text>
+  </g>
+</a>
+<!-- Row 2: Underwriting & pricing -->
+<a class="label-link" href="https://tbluemlein.github.io/causalinference/application/pricing.html">
+  <g class="c-teal">
+    <rect x="10" y="134" width="118" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="69" y="158" text-anchor="middle" dominant-baseline="central">Underwriting</text>
+    <text class="th" x="69" y="176" text-anchor="middle" dominant-baseline="central">&amp; pricing</text>
+  </g>
+</a>
+<!-- Row 3: Policy administration -->
+<a class="label-link" href="https://tbluemlein.github.io/causalinference/application/observational_data.html">
+  <g class="c-gray">
+    <rect x="10" y="210" width="118" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="69" y="234" text-anchor="middle" dominant-baseline="central">Policy</text>
+    <text class="th" x="69" y="252" text-anchor="middle" dominant-baseline="central">administration</text>
+  </g>
+</a>
+<!-- Row 4: Claims management -->
+<a class="label-link" href="https://tbluemlein.github.io/causalinference/application/claims_triage.html">
+  <g class="c-purple">
+    <rect x="10" y="286" width="118" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="69" y="310" text-anchor="middle" dominant-baseline="central">Claims</text>
+    <text class="th" x="69" y="328" text-anchor="middle" dominant-baseline="central">management</text>
+  </g>
+</a>
+<!-- Row 5: Portfolio & ALM -->
+<a class="label-link" href="https://tbluemlein.github.io/causalinference/application/health_interventions.html">
+  <g class="c-coral">
+    <rect x="10" y="362" width="118" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="69" y="386" text-anchor="middle" dominant-baseline="central">Portfolio</text>
+    <text class="th" x="69" y="404" text-anchor="middle" dominant-baseline="central">&amp; ALM</text>
+  </g>
+</a>
+<!-- Row 6: Reporting & regulation -->
+<a class="label-link" href="https://tbluemlein.github.io/causalinference/application/pricing.html#why-you-cannot-satisfy-every-fairness-definition-at-once">
+  <g class="c-teal">
+    <rect x="10" y="438" width="118" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="69" y="458" text-anchor="middle" dominant-baseline="central">Reporting &amp;</text>
+    <text class="th" x="69" y="476" text-anchor="middle" dominant-baseline="central">regulation</text>
+  </g>
+</a>
+
+<!-- ═══ FILLED CELLS ═══ -->
+
+<!-- ROW 1 · Product design -->
+<!-- col2: Observational Data — DAG / assumption check -->
+<a class="cell-link" href="https://tbluemlein.github.io/causalinference/application/observational_data.html">
+  <g class="c-gray">
+    <rect x="270" y="58" width="126" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="333" y="79"  text-anchor="middle" dominant-baseline="central">Observational data</text>
+    <text class="ts" x="333" y="97"  text-anchor="middle" dominant-baseline="central">DAG · assumption check</text>
+    <text class="ts" x="333" y="113" text-anchor="middle" dominant-baseline="central">data quality</text>
+  </g>
+</a>
+
+<!-- ROW 2 · Underwriting & pricing -->
+<!-- col1: Observational Data — concepts / overlap -->
+<a class="cell-link" href="https://tbluemlein.github.io/causalinference/application/observational_data.html">
+  <g class="c-gray">
+    <rect x="136" y="134" width="126" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="199" y="155" text-anchor="middle" dominant-baseline="central">Observational data</text>
+    <text class="ts" x="199" y="173" text-anchor="middle" dominant-baseline="central">SMD · overlap checks</text>
+    <text class="ts" x="199" y="189" text-anchor="middle" dominant-baseline="central">positivity diagnostics</text>
+  </g>
+</a>
+<!-- col2: Fairness in pricing — identification -->
+<a class="cell-link" href="https://tbluemlein.github.io/causalinference/application/pricing.html#mapping-the-protected-attribute-onto-the-dag">
+  <g class="c-teal">
+    <rect x="270" y="134" width="126" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="333" y="155" text-anchor="middle" dominant-baseline="central">Fairness in pricing</text>
+    <text class="ts" x="333" y="173" text-anchor="middle" dominant-baseline="central">DAG · proxy detection</text>
+    <text class="ts" x="333" y="189" text-anchor="middle" dominant-baseline="central">EU Gender Directive</text>
+  </g>
+</a>
+<!-- col3: Fairness in pricing — inference (three prices) -->
+<a class="cell-link" href="https://tbluemlein.github.io/causalinference/application/pricing.html#three-prices-three-notions-of-fairness">
+  <g class="c-teal">
+    <rect x="404" y="134" width="126" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="467" y="155" text-anchor="middle" dominant-baseline="central">Fairness in pricing</text>
+    <text class="ts" x="467" y="173" text-anchor="middle" dominant-baseline="central">DFIP · unawareness</text>
+    <text class="ts" x="467" y="189" text-anchor="middle" dominant-baseline="central">best-estimate price</text>
+  </g>
+</a>
+<!-- col4: Fairness in pricing — validation / counterfactual audit -->
+<a class="cell-link" href="https://tbluemlein.github.io/causalinference/application/pricing.html#from-statistical-to-causal-fairness-counterfactuals-and-path-specific-effects">
+  <g class="c-teal">
+    <rect x="538" y="134" width="126" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="601" y="155" text-anchor="middle" dominant-baseline="central">Fairness in pricing</text>
+    <text class="ts" x="601" y="173" text-anchor="middle" dominant-baseline="central">counterfactual audit</text>
+    <text class="ts" x="601" y="189" text-anchor="middle" dominant-baseline="central">path-specific effects</text>
+  </g>
+</a>
+
+<!-- ROW 3 · Policy administration -->
+<!-- col2: Observational Data — exchangeability / selection bias -->
+<a class="cell-link" href="https://tbluemlein.github.io/causalinference/application/observational_data.html#validation-of-exchangeability-assumption">
+  <g class="c-gray">
+    <rect x="270" y="210" width="126" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="333" y="231" text-anchor="middle" dominant-baseline="central">Observational data</text>
+    <text class="ts" x="333" y="249" text-anchor="middle" dominant-baseline="central">exchangeability check</text>
+    <text class="ts" x="333" y="265" text-anchor="middle" dominant-baseline="central">selection bias review</text>
+  </g>
+</a>
+
+<!-- ROW 4 · Claims management -->
+<!-- col2: Claims triage — identification -->
+<a class="cell-link" href="https://tbluemlein.github.io/causalinference/application/claims_triage.html">
+  <g class="c-purple">
+    <rect x="270" y="286" width="126" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="333" y="307" text-anchor="middle" dominant-baseline="central">Claims triage</text>
+    <text class="ts" x="333" y="325" text-anchor="middle" dominant-baseline="central">SUTVA · identification</text>
+    <text class="ts" x="333" y="341" text-anchor="middle" dominant-baseline="central">handler assignment</text>
+  </g>
+</a>
+<!-- col3: Claims triage — inference (CATE / X-learner) -->
+<a class="cell-link" href="https://tbluemlein.github.io/causalinference/application/claims_triage.html">
+  <g class="c-purple">
+    <rect x="404" y="286" width="126" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="467" y="307" text-anchor="middle" dominant-baseline="central">Claims triage</text>
+    <text class="ts" x="467" y="325" text-anchor="middle" dominant-baseline="central">CATE · X/T-learner</text>
+    <text class="ts" x="467" y="341" text-anchor="middle" dominant-baseline="central">combined ratio opt.</text>
+  </g>
+</a>
+
+<!-- ROW 5 · Portfolio & ALM -->
+<!-- col3: Health interventions — inference -->
+<a class="cell-link" href="https://tbluemlein.github.io/causalinference/application/health_interventions.html">
+  <g class="c-coral">
+    <rect x="404" y="362" width="126" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="467" y="383" text-anchor="middle" dominant-baseline="central">Health interventions</text>
+    <text class="ts" x="467" y="401" text-anchor="middle" dominant-baseline="central">ATE · ITT · g-formula</text>
+    <text class="ts" x="467" y="417" text-anchor="middle" dominant-baseline="central">Causal Forests</text>
+  </g>
+</a>
+<!-- col4: Health interventions — validation -->
+<a class="cell-link" href="https://tbluemlein.github.io/causalinference/application/health_interventions.html">
+  <g class="c-coral">
+    <rect x="538" y="362" width="126" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="601" y="383" text-anchor="middle" dominant-baseline="central">Health interventions</text>
+    <text class="ts" x="601" y="401" text-anchor="middle" dominant-baseline="central">E-values · robustness</text>
+    <text class="ts" x="601" y="417" text-anchor="middle" dominant-baseline="central">mortality reduction</text>
+  </g>
+</a>
+
+<!-- ROW 6 · Reporting & regulation -->
+<!-- col3: Fairness in pricing — regulatory reporting -->
+<a class="cell-link" href="https://tbluemlein.github.io/causalinference/application/pricing.html#when-is-risk-classification-discrimination">
+  <g class="c-teal">
+    <rect x="404" y="438" width="126" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="467" y="459" text-anchor="middle" dominant-baseline="central">Fairness in pricing</text>
+    <text class="ts" x="467" y="477" text-anchor="middle" dominant-baseline="central">DFIP · Test-Achats</text>
+    <text class="ts" x="467" y="493" text-anchor="middle" dominant-baseline="central">EU AI Act Annex III</text>
+  </g>
+</a>
+<!-- col4: Fairness in pricing — fairness criteria / impossibility -->
+<a class="cell-link" href="https://tbluemlein.github.io/causalinference/application/pricing.html#why-you-cannot-satisfy-every-fairness-definition-at-once">
+  <g class="c-teal">
+    <rect x="538" y="438" width="126" height="68" rx="6" stroke-width="0.5"/>
+    <text class="th" x="601" y="459" text-anchor="middle" dominant-baseline="central">Fairness in pricing</text>
+    <text class="ts" x="601" y="477" text-anchor="middle" dominant-baseline="central">group fairness criteria</text>
+    <text class="ts" x="601" y="493" text-anchor="middle" dominant-baseline="central">impossibility theorem</text>
+  </g>
+</a>
+
+<!-- ═══ LEGEND DIVIDER ═══ -->
+<line x1="10" y1="518" x2="668" y2="518" stroke="var(--color-border-tertiary)" stroke-width="0.4"/>
+
+<!-- Legend swatches -->
+<rect x="10"  y="526" width="12" height="12" rx="3" class="c-gray"   stroke-width="0.5"/>
+<text class="ts" x="27"  y="532" dominant-baseline="central">Observational data &amp; diagnostics</text>
+<rect x="210" y="526" width="12" height="12" rx="3" class="c-teal"   stroke-width="0.5"/>
+<text class="ts" x="227" y="532" dominant-baseline="central">Fairness in insurance pricing</text>
+<rect x="400" y="526" width="12" height="12" rx="3" class="c-purple" stroke-width="0.5"/>
+<text class="ts" x="417" y="532" dominant-baseline="central">Claims triage (CATE)</text>
+<rect x="540" y="526" width="12" height="12" rx="3" class="c-coral"  stroke-width="0.5"/>
+<text class="ts" x="557" y="532" dominant-baseline="central">Health interventions</text>
+</svg>
+</div>
+
+<footer>
+  <span><span class="swatch" style="background:var(--gray-50);border:1px solid var(--gray-600)"></span>Observational data &amp; diagnostics</span>
+  <span><span class="swatch" style="background:var(--teal-50);border:1px solid var(--teal-600)"></span>Fairness in insurance pricing</span>
+  <span><span class="swatch" style="background:var(--purple-50);border:1px solid var(--purple-600)"></span>Claims triage (CATE)</span>
+  <span><span class="swatch" style="background:var(--coral-50);border:1px solid var(--coral-600)"></span>Health interventions</span>
+</footer>
+
+<script>
+// ── Theme handshake with the embedding Jupyter Book page ───────────────
+(function () {
+  var p = new URLSearchParams(location.search).get('theme');
+  function apply(t) { document.documentElement.setAttribute('data-mode', t); }
+  function systemTheme() {
+    return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  // Read the embedding book's resolved theme directly (same-origin) so the
+  // initial render is correct even if the parent handshake is missed.
+  function parentTheme() {
+    try {
+      var root = window.parent.document.documentElement;
+      var t = root.getAttribute('data-theme');
+      if (t === 'light' || t === 'dark') return t;
+      var m = root.getAttribute('data-mode');
+      if (m === 'light' || m === 'dark') return m;
+    } catch (e) {}
+    return null;
+  }
+  if (p === 'dark' || p === 'light') apply(p);
+  else apply(parentTheme() || systemTheme());
+  if (!p) {
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+      if (!parentTheme()) apply(e.matches ? 'dark' : 'light');
+    });
+  }
+  window.addEventListener('message', function (ev) {
+    var d = ev.data;
+    if (d && d.type === 'set-theme') {
+      if (d.value === 'dark' || d.value === 'light') apply(d.value);
+      else if (d.value === 'auto') apply(parentTheme() || systemTheme());
+    }
+  });
+  // Tell the embedding page we're ready to receive the current theme.
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({ type: 'matrix-ready' }, '*');
+  }
+})();
+
+// ── Report our height so the parent iframe can resize to fit ───────────
+(function () {
+  function postHeight() {
+    try {
+      parent.postMessage({
+        type: 'matrix-height',
+        height: Math.ceil(document.body.getBoundingClientRect().height)
+      }, '*');
+    } catch (e) {}
+  }
+  window.addEventListener('load', postHeight);
+  window.addEventListener('resize', postHeight);
+  if (window.ResizeObserver) new ResizeObserver(postHeight).observe(document.body);
+  setTimeout(postHeight, 100);
+  setTimeout(postHeight, 500);
+})();
+</script>
+
+</body>
+</html>
