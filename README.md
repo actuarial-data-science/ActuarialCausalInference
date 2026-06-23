@@ -46,4 +46,49 @@ The actuary's end-to-end workflow connects the identification theory from {doc}`
 
 ### Actuarial Applications
 
-> TODO: visualization, use cases that are embedded in actuarial workflows
+The application notebooks ground the tutorial theory in concrete actuarial workflows. The matrix below maps each notebook onto two axes: the **insurance value chain** (rows) and the **actuary's causal inference workflow** (columns). Click any cell to open the corresponding notebook section.
+
+```{raw} html
+<iframe id="apps-matrix" src="figure/applications_matrix.html?v=20260623"
+        style="width:100%; border:none; height:760px;"
+        title="Actuarial applications value chain × workflow matrix"></iframe>
+<script>
+(function () {
+  var iframe = document.getElementById('apps-matrix');
+
+  // Resolve the book's current theme: data-mode is auto|light|dark.
+  function currentTheme() {
+    var root = document.documentElement;
+    var theme = root.getAttribute('data-theme');
+    if (theme === 'light' || theme === 'dark') return theme;
+    var mode = root.getAttribute('data-mode') || 'auto';
+    if (mode === 'light' || mode === 'dark') return mode;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function sendTheme() {
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'set-theme', value: currentTheme() }, '*');
+    }
+  }
+
+  window.addEventListener('message', function (e) {
+    if (!e.data) return;
+    if (e.data.type === 'matrix-height') {
+      iframe.style.height = (e.data.height + 20) + 'px';
+    } else if (e.data.type === 'matrix-ready') {
+      sendTheme();
+    }
+  });
+
+  // Re-send whenever the book theme toggle flips data-mode or data-theme.
+  new MutationObserver(sendTheme).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-mode', 'data-theme']
+  });
+  // Re-send when the OS theme changes while the book is in "auto" mode.
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sendTheme);
+
+  iframe.addEventListener('load', sendTheme);
+  sendTheme();
+})();
+</script>
+```
