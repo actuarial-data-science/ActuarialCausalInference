@@ -4,11 +4,22 @@
     .ink-t { fill: #333; }
     .muted { fill: #777; }
     .arrow { fill: #333; }
+    /* Stage chips — SAV brand palette. Light defaults here; the matching dark
+       values live in the prefers-color-scheme block below, which figure-theme.js
+       re-scopes to the book's light/dark toggle when the figure is inlined. */
+    .wf-data  { fill: #eceded; stroke: #8a8b8e; } .wf-data-t  { fill: #42434a; }
+    .wf-iden  { fill: #eef3dd; stroke: #7d9f17; } .wf-iden-t  { fill: #3d4f10; }
+    .wf-valid { fill: #e7ecdd; stroke: #8aa06a; } .wf-valid-t { fill: #3f4e26; }
+    .wf-infer { fill: #f6efd8; stroke: #c9a227; } .wf-infer-t { fill: #6e5713; }
     @media (prefers-color-scheme: dark) {
       .ink-l { stroke: #c9d1d9; }
       .ink-t { fill: #e6edf3; }
       .muted { fill: #9aa4af; }
       .arrow { fill: #c9d1d9; }
+      .wf-data  { fill: #22211d; stroke: #7c7e85; } .wf-data-t  { fill: #c9cdd3; }
+      .wf-iden  { fill: #1f2a10; stroke: #aacb3f; } .wf-iden-t  { fill: #cfe39a; }
+      .wf-valid { fill: #222c16; stroke: #b3c68c; } .wf-valid-t { fill: #d2e0b4; }
+      .wf-infer { fill: #332b12; stroke: #e0c566; } .wf-infer-t { fill: #efd98f; }
     }
   </style>
   <defs>
@@ -18,41 +29,41 @@
   </defs>
 
   <!-- Data input (source) -->
-  <path d="M8,56 L8,94 A42,8 0 0 0 92,94 L92,56 A42,8 0 0 0 8,56 Z" fill="#eceded" stroke="#8a8b8e" stroke-width="2"/>
-  <ellipse cx="50" cy="56" rx="42" ry="8" fill="#eceded" stroke="#8a8b8e" stroke-width="2"/>
-  <text x="50" y="78" text-anchor="middle" font-size="10.5" fill="#42434a" font-weight="bold">Observational</text>
-  <text x="50" y="92" text-anchor="middle" font-size="10.5" fill="#42434a">data</text>
+  <path class="wf-data" d="M8,56 L8,94 A42,8 0 0 0 92,94 L92,56 A42,8 0 0 0 8,56 Z" stroke-width="2"/>
+  <ellipse class="wf-data" cx="50" cy="56" rx="42" ry="8" stroke-width="2"/>
+  <text class="wf-data-t" x="50" y="78" text-anchor="middle" font-size="10.5" font-weight="bold">Observational</text>
+  <text class="wf-data-t" x="50" y="92" text-anchor="middle" font-size="10.5">data</text>
   <text class="muted" x="50" y="122" text-anchor="middle" font-size="11" font-style="italic">data flows in</text>
 
   <!-- Identification: Draw DAG -->
-  <rect x="107" y="45" width="118" height="60" rx="10" fill="#eef3dd" stroke="#7d9f17" stroke-width="2"/>
-  <text x="166" y="70" text-anchor="middle" font-size="12" fill="#3d4f10" font-weight="bold">Draw</text>
-  <text x="166" y="88" text-anchor="middle" font-size="12" fill="#3d4f10">the DAG</text>
+  <rect class="wf-iden" x="107" y="45" width="118" height="60" rx="10" stroke-width="2"/>
+  <text class="wf-iden-t" x="166" y="70" text-anchor="middle" font-size="12" font-weight="bold">Draw</text>
+  <text class="wf-iden-t" x="166" y="88" text-anchor="middle" font-size="12">the DAG</text>
 
   <!-- Identification: Check assumptions -->
-  <rect x="240" y="45" width="118" height="60" rx="10" fill="#eef3dd" stroke="#7d9f17" stroke-width="2"/>
-  <text x="299" y="70" text-anchor="middle" font-size="12" fill="#3d4f10" font-weight="bold">Check</text>
-  <text x="299" y="88" text-anchor="middle" font-size="12" fill="#3d4f10">assumptions</text>
+  <rect class="wf-iden" x="240" y="45" width="118" height="60" rx="10" stroke-width="2"/>
+  <text class="wf-iden-t" x="299" y="70" text-anchor="middle" font-size="12" font-weight="bold">Check</text>
+  <text class="wf-iden-t" x="299" y="88" text-anchor="middle" font-size="12">assumptions</text>
 
   <!-- Validation: Diagnose biases -->
-  <rect x="373" y="45" width="118" height="60" rx="10" fill="#e7ecdd" stroke="#8aa06a" stroke-width="2"/>
-  <text x="432" y="70" text-anchor="middle" font-size="12" fill="#3f4e26" font-weight="bold">Diagnose</text>
-  <text x="432" y="88" text-anchor="middle" font-size="12" fill="#3f4e26">biases</text>
+  <rect class="wf-valid" x="373" y="45" width="118" height="60" rx="10" stroke-width="2"/>
+  <text class="wf-valid-t" x="432" y="70" text-anchor="middle" font-size="12" font-weight="bold">Diagnose</text>
+  <text class="wf-valid-t" x="432" y="88" text-anchor="middle" font-size="12">biases</text>
 
   <!-- Validation: Select de-biasing -->
-  <rect x="506" y="45" width="118" height="60" rx="10" fill="#e7ecdd" stroke="#8aa06a" stroke-width="2"/>
-  <text x="565" y="70" text-anchor="middle" font-size="12" fill="#3f4e26" font-weight="bold">Select</text>
-  <text x="565" y="88" text-anchor="middle" font-size="12" fill="#3f4e26">de-biasing</text>
+  <rect class="wf-valid" x="506" y="45" width="118" height="60" rx="10" stroke-width="2"/>
+  <text class="wf-valid-t" x="565" y="70" text-anchor="middle" font-size="12" font-weight="bold">Select</text>
+  <text class="wf-valid-t" x="565" y="88" text-anchor="middle" font-size="12">de-biasing</text>
 
   <!-- Inference: Estimate -->
-  <rect x="639" y="45" width="118" height="60" rx="10" fill="#f6efd8" stroke="#c9a227" stroke-width="2"/>
-  <text x="698" y="70" text-anchor="middle" font-size="12" fill="#6e5713" font-weight="bold">Estimate</text>
-  <text x="698" y="88" text-anchor="middle" font-size="12" fill="#6e5713">causal effect &#964;&#770;</text>
+  <rect class="wf-infer" x="639" y="45" width="118" height="60" rx="10" stroke-width="2"/>
+  <text class="wf-infer-t" x="698" y="70" text-anchor="middle" font-size="12" font-weight="bold">Estimate</text>
+  <text class="wf-infer-t" x="698" y="88" text-anchor="middle" font-size="12">causal effect &#964;&#770;</text>
 
   <!-- Validation: Sensitivity -->
-  <rect x="772" y="45" width="118" height="60" rx="10" fill="#e7ecdd" stroke="#8aa06a" stroke-width="2"/>
-  <text x="831" y="70" text-anchor="middle" font-size="12" fill="#3f4e26" font-weight="bold">Sensitivity</text>
-  <text x="831" y="88" text-anchor="middle" font-size="12" fill="#3f4e26">analysis</text>
+  <rect class="wf-valid" x="772" y="45" width="118" height="60" rx="10" stroke-width="2"/>
+  <text class="wf-valid-t" x="831" y="70" text-anchor="middle" font-size="12" font-weight="bold">Sensitivity</text>
+  <text class="wf-valid-t" x="831" y="88" text-anchor="middle" font-size="12">analysis</text>
 
   <!-- Arrows -->
   <line class="ink-l" x1="94" y1="75" x2="105" y2="75" stroke-width="2" marker-end="url(#arWf)"/>
