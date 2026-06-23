@@ -16,4 +16,5 @@ sympy
 teachbooks == 0.2.2
 sphinx-inline-tabs
 sphinx-proof
+sphinxcontrib-mermaid
 teachbooks-sphinx-grasple
