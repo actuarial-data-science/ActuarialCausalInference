@@ -46,6 +46,10 @@ SUTVA combines consistency and no interference. The **no interference** assumpti
 
 **Detecting violations:** Interference is suspected when outcomes of untreated units **correlate with the treatment rate in their neighbourhood or group**. In insurance, if offering a discount to some policyholders influences the behaviour of others in the same household or employer group, SUTVA is violated. Diagnostic: compare outcomes of control units across clusters with different treatment intensities — if they differ systematically, interference is present.
 
+```{note}
+SUTVA is often treated as binary — satisfied or violated — but the literature distinguishes **partial interference** ([Hudgens & Halloran, 2008](https://doi.org/10.1198/016214508000000292)), where spillovers operate only within known clusters, from **global interference**, where they may propagate across the entire population. In group health insurance or fleet policies, interference is typically neither absent nor unbounded but **structured by household or employer group membership**: a wellness incentive or safe-driving programme offered to some members of a group may affect the behaviour and outcomes of others in the same group, but not across groups. When this cluster structure is known, spillover effects can be accommodated rather than assumed away. Beyond the cluster models discussed in {ref}`debias`, **spillover-robust estimators** based on the exposure-mapping approach of [Aronow & Samii (2017)](https://doi.org/10.1214/16-AOAS1005) allow consistent estimation of average causal effects under general (partial) interference by modelling each unit's exposure to the treatment of others.
+```
+
 ```{prf:assumption} Positivity
 :label: positivity
 
