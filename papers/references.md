@@ -23,6 +23,7 @@
 * **Chernozhukov, V., Chetverikov, D., Demirer, M., Duflo, E., Hansen, C., Newey, W., & Robins, J. (2018).** *Double/debiased machine learning for treatment and structural parameters.* The Econometrics Journal, 21(1), C1-C68. [DOI: 10.1111/ectj.12097](https://doi.org/10.1111/ectj.12097)
 * **Chipman, H. A., George, E. I., & McCulloch, R. E. (2010).** *BART: Bayesian additive regression trees.* The Annals of Applied Statistics, 4(1), 266-298. [DOI: 10.1214/09-AOAS285](https://doi.org/10.1214/09-AOAS285)
 * **Chouldechova, A. (2017).** *Fair prediction with disparate impact: A study of bias in recidivism prediction instruments.* Big Data, 5(2), 153-163. [DOI: 10.1089/big.2016.0047](https://doi.org/10.1089/big.2016.0047)
+* **Cinelli, C., & Hazlett, C. (2020).** *Making sense of sensitivity: Extending omitted variable bias.* Journal of the Royal Statistical Society: Series B, 82(1), 39-67. [DOI: 10.1111/rssb.12348](https://doi.org/10.1111/rssb.12348)
 * **Crump, R. K., Hotz, V. J., Imbens, G. W., & Mitnik, O. A. (2009).** *Dealing with limited overlap in estimation of average treatment effects.* Biometrika, 96(1), 187-199. [DOI: 10.1093/biomet/asn055](https://doi.org/10.1093/biomet/asn055)
 * **Cunningham, S. (2021).** [*Causal Inference: The Mixtape.*](https://mixtape.scunning.com/) Yale University Press. [DOI: 10.12987/9780300255881](https://doi.org/10.12987/9780300255881)
 * **Dwork, C., Hardt, M., Pitassi, T., Reingold, O., & Zemel, R. (2012).** *Fairness through awareness.* Proceedings of the 3rd Innovations in Theoretical Computer Science Conference (ITCS), 214-226. [arXiv:1104.3913](https://arxiv.org/abs/1104.3913)
@@ -59,6 +60,7 @@
 * **Shalizi, C. R. (2025).** [*Advanced Data Analysis from an Elementary Point of View.*](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf) 
 * **Thistlethwaite, D. L., & Campbell, D. T. (1960).** *Regression-discontinuity analysis: An alternative to the ex post facto experiment.* Journal of Educational Psychology, 51(6), 309-317. [DOI: 10.1037/h0044319](https://doi.org/10.1037/h0044319)
 * **van der Laan, M. J., & Rubin, D. (2006).** *Targeted maximum likelihood learning.* The International Journal of Biostatistics, 2(1), Article 11. [DOI: 10.2202/1557-4679.1043](https://doi.org/10.2202/1557-4679.1043)
+* **VanderWeele, T. J., & Ding, P. (2017).** *Sensitivity analysis in observational research: Introducing the E-value.* Annals of Internal Medicine, 167(4), 268-274. [DOI: 10.7326/M16-2607](https://doi.org/10.7326/M16-2607)
 * **Wager, S., & Athey, S. (2018).** *Estimation and inference of heterogeneous treatment effects using random forests.* Journal of the American Statistical Association, 113(523), 1228-1242. [DOI: 10.1080/01621459.2017.1319839](https://doi.org/10.1080/01621459.2017.1319839)
 * **Wright, S. (1934).** *The method of path coefficients.* The Annals of Mathematical Statistics, 5(3), 161-215. [DOI: 10.1214/aoms/1177732676](https://doi.org/10.1214/aoms/1177732676)
 
