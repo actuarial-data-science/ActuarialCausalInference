@@ -61,9 +61,22 @@ Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the pr
 
 1. Fit initial outcome model $\hat{\mu}^0(t, x) = \mathcal{L}_Y(Y \sim T, X)$ and propensity $\hat{\pi}(x) = \mathcal{L}_T(T \sim X)$
 2. Compute the *clever covariate* $H^{(i)} = \frac{T^{(i)}}{\hat{\pi}(x^{(i)})} - \frac{1 - T^{(i)}}{1 - \hat{\pi}(x^{(i)})}$
-3. **Targeting step:** fit a one-parameter fluctuation $\hat{\epsilon}$ by regressing $Y$ on $H$ with offset $\hat{\mu}^0$, giving the updated model $\hat{\mu}^\star(t, x)$
+3. **Targeting step:** fit a one-parameter *logistic* fluctuation $\hat{\epsilon}$ by regressing $Y$ on $H$ with offset $\text{logit}\,\hat{\mu}^0$, giving the updated model $\hat{\mu}^\star(t, x)$ *(valid for $Y \in [0,1]$; see the note below for continuous outcomes)*
 4. Plug the targeted model into g-computation: $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}^\star(1, x^{(i)}) - \hat{\mu}^\star(0, x^{(i)})\right]$
 5. Return estimated treatment effect $\hat{\tau}$
+```
+
+```{note}
+:class: dropdown
+
+**Outcome type matters — read before applying TMLE to loss data.** The targeting step above uses a **logistic fluctuation** (offset $\text{logit}\,\hat{\mu}^0$, clever covariate $H$), which is only valid when the outcome is **binary or bounded in $[0,1]$**. For unbounded continuous outcomes a different fluctuation family is required — a **Gaussian fluctuation with the identity link** ([van der Laan & Rubin, 2006](https://doi.org/10.2202/1557-4679.1043)) — otherwise the targeting step is misspecified and the resulting $\hat{\tau}$ is invalid.
+
+In non-life actuarial work this is the *usual* case, not an edge case: the primary outcomes — **claim amounts, loss ratios, and claim counts** — are continuous or count-valued and unbounded, not $\{0,1\}$. An actuary who applies the logistic formulation above directly to a loss amount is implementing an incorrect targeting step. Two practical routes:
+
+- **Bounded continuous outcomes** (e.g. loss ratios in $[0,1]$, or any outcome rescaled to $[0,1]$ via $\tilde{Y} = (Y - a)/(b - a)$ and back-transformed): the logistic fluctuation applies directly after rescaling ([Gruber & van der Laan, 2010](https://doi.org/10.2202/1557-4679.1260)).
+- **Unbounded outcomes** (claim severities, aggregate losses): use the Gaussian/identity-link fluctuation, or a count-appropriate family for frequencies.
+
+In practice, prefer a maintained implementation such as the R package [`tmle`](https://CRAN.R-project.org/package=tmle), which selects the correct fluctuation family for binary, bounded-continuous, and continuous outcomes automatically.
 ```
 
 ## Double Machine Learning
