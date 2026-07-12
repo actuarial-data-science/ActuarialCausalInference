@@ -32,11 +32,13 @@ The remainder of this section defines each bias precisely.
 Confounding: the fork variable $F$ influences both treatment $T$ and outcome $Y$, biasing the naive $T$–$Y$ comparison unless adjusted for.
 ```
 
-Confounding violates {prf:ref}`exchangeability`. The naive comparison conflates the causal effect with a baseline difference between groups:
+Confounding violates {prf:ref}`exchangeability`. The naive comparison conflates the causal effect on the treated with a baseline difference between groups:
 
 $$
-\mathbb{E}[Y \mid T{=}1] - \mathbb{E}[Y \mid T{=}0] = \underbrace{\mathbb{E}[Y(1) - Y(0)]}_{\text{ATE}} + \underbrace{\mathbb{E}[Y(0) \mid T{=}1] - \mathbb{E}[Y(0) \mid T{=}0]}_{\text{confounding bias}}
+\mathbb{E}[Y \mid T{=}1] - \mathbb{E}[Y \mid T{=}0] = \underbrace{\mathbb{E}[Y(1) - Y(0) \mid T{=}1]}_{\text{ATT}} + \underbrace{\mathbb{E}[Y(0) \mid T{=}1] - \mathbb{E}[Y(0) \mid T{=}0]}_{\text{confounding bias}}
 $$
+
+The first term is the **average treatment effect on the treated** (ATT), not the unconditional ATE: with the single confounding-bias residual shown, equality with the ATE would additionally require no effect modification by treatment status, $\mathbb{E}[Y(1) - Y(0) \mid T{=}1] = \mathbb{E}[Y(1) - Y(0)]$ ([Angrist & Pischke, 2009, Sec. 3.2](https://doi.org/10.1515/9781400829828)).
 
 In insurance, confounding arises when healthier policyholders self-select into wellness programmes, making the programme *appear* more effective than it is.
 
