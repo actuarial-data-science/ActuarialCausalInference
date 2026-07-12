@@ -80,7 +80,7 @@ When confounding between $T$ and $Y$ is unobserved but an observed mediator $M$ 
 
 ### The Frontdoor Criterion
 
-When all backdoor paths are blocked by **unobserved** confounders, the backdoor criterion cannot be applied. The frontdoor criterion provides an alternative identification strategy through an observed mediator ([Shalizi, 2025, §21.4](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+When backdoor paths run through **unobserved** confounders and therefore cannot be blocked, the backdoor criterion cannot be applied. The frontdoor criterion provides an alternative identification strategy through an observed mediator ([Shalizi, 2025, §21.4](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ```{prf:criterion} Frontdoor Criterion
 :class: dropdown
