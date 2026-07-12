@@ -216,6 +216,8 @@ E = \text{RR}_{\text{obs}} + \sqrt{\text{RR}_{\text{obs}} \times (\text{RR}_{\te
 $$
 
 The E-value represents the **minimum strength of association** (on the risk ratio scale) that an unmeasured confounder $U$ would need to have with *both* the treatment $T$ and the outcome $Y$, conditional on measured covariates, to fully explain away the observed effect.
+
+For a **protective effect** ($\text{RR}_{\text{obs}} < 1$) the radicand $\text{RR}_{\text{obs}}(\text{RR}_{\text{obs}} - 1)$ is negative and the formula is undefined. Following [VanderWeele & Ding (2017)](https://doi.org/10.7326/M16-2607), first replace the risk ratio by its reciprocal $1/\text{RR}_{\text{obs}} > 1$ and then apply the formula. This case is the norm in actuarial work — a wellness programme that lowers claim frequency or a safety feature that reduces loss counts both yield $\text{RR}_{\text{obs}} < 1$.
 ```
 
 A large E-value means the observed association is robust: only a very strong unmeasured confounder could explain it away. A small E-value indicates vulnerability to even moderate unmeasured confounding.
