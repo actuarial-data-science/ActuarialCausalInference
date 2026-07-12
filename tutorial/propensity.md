@@ -13,6 +13,11 @@ $$0 < \pi(x) < 1 \quad \text{for all } x .$$
 
 The range of covariates where this holds — where the propensity score distributions of the treated ($T=1$) and control ($T=0$) groups overlap — is called the region of **common support** (or *overlap*). When $\pi(x)$ approaches $0$ or $1$ for some covariate profile, there are no comparable units in the opposite group: matching finds no partner to pair with, and inverse-probability weights explode. In practice, overlap is diagnosed by inspecting the distribution of the estimated scores $\hat{\pi}(x)$ in each treatment group.
 
+A lack of overlap can stem from two qualitatively different sources, and the distinction dictates the appropriate response ([Hernán & Robins, 2020](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/), Ch. 3; [Crump et al., 2009](https://doi.org/10.1093/biomet/asn055)):
+
+- **Structural zeros** — the covariate profile has *no theoretical chance* of appearing in one arm, e.g. an insurance programme with a hard eligibility rule. The causal effect is *not identified* for those units, and no matching or weighting can recover it; the target population must be redefined to the region where both arms are possible.
+- **Empirical near-violations** — overlap holds in the population, but finite-sample sparsity leaves some regions thinly populated. Overlap weighting, trimming, or restricting to the estimated common-support region ([Crump et al., 2009](https://doi.org/10.1093/biomet/asn055)) stabilise estimation here.
+
 ## Propensity Score Matching
 Matching focuses on creating "apples-to-apples" comparisons by pairing treated units with similar control units. This algorithm typically estimates the Average Treatment Effect on the Treated (ATT).
 
