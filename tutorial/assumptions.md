@@ -82,7 +82,13 @@ $$
 $$
 ```
 
-This implies that conditioning on the observed covariates $X$ is sufficient to remove confounding bias. This is also called *conditional exchangeability*, *conditional ignorability*, or *causal sufficiency* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). This is the strongest and least verifiable of the four assumptions — see the [Assumptions Guide](https://www.uniqcret.com/post/causal-inference-assumptions-guide) for discussion.
+This implies that conditioning on the observed covariates $X$ is sufficient to remove confounding bias. This is also called *conditional exchangeability*, *conditional ignorability*, or *causal sufficiency* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). In case of violation, it often produces severe bias, which is a separate dimension from the **probability** that it is violated in a given study; a mild but plausible violation and a severe but implausible one warrant very different responses.
+
+```{note}
+:class: dropdown
+
+Rather than treating exchangeability as a binary "true or false" property, it is more useful to adopt a **graduated view of assumption strength**. The empirically productive question is not *"does unobserved confounding exist?"* — it almost always does to some degree — but *"how strong would an unmeasured confounder have to be to overturn our conclusion?"* This reframing makes **sensitivity analysis the natural companion to the exchangeability assumption from the moment it is introduced**: tools such as E-values, Rosenbaum bounds, and Manski-style partial-identification bounds operationalise exactly this graduated view. They are developed in {doc}`sensitivity` and {doc}`diagnostics`.
+```
 
 **Detecting violations:** Exchangeability **cannot be directly tested** because it concerns unobserved confounders by definition. However, indirect evidence includes: (1) **sensitivity analysis** — computing E-values or applying the method of [Cinelli & Hazlett (2020)](https://doi.org/10.1111/rssb.12348) to assess how strong an unmeasured confounder would need to be to explain away the effect; (2) **negative control outcomes** — outcomes known to be unaffected by $T$ that should show zero effect if exchangeability holds; (3) **placebo/falsification tests** — applying the estimator to subgroups where no effect is expected. Persistent sensitivity of results to small unmeasured confounders signals concern.
 
