@@ -267,7 +267,7 @@ $$
 |\text{bias}| \leq \sqrt{R^2_{Y \sim U \mid T, X} \cdot R^2_{T \sim U \mid X}} \cdot \frac{\text{SD}(Y_{\text{res}})}{\text{SD}(T_{\text{res}})}
 $$
 
-where $Y_{\text{res}}$ and $T_{\text{res}}$ are residuals from regressions on $X$.
+where $Y_{\text{res}}$ is the residual from regressing $Y$ on **both** $T$ and $X$ (the full outcome-regression residual), and $T_{\text{res}}$ is the residual from regressing $T$ on $X$.
 ```
 
 This framework is particularly intuitive because the required confounding strengths can be **benchmarked against observed covariates**: "the unmeasured confounder would need to be as strong as [observed covariate $X_j$] to reduce the effect to zero."
