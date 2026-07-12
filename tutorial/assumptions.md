@@ -82,7 +82,7 @@ $$
 $$
 ```
 
-This implies that conditioning on the observed covariates $X$ is sufficient to remove confounding bias. This is also called *conditional exchangeability*, *conditional ignorability*, or *causal sufficiency* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). In case of violation, it often produces severe bias, which is a separate dimension from the **probability** that it is violated in a given study; a mild but plausible violation and a severe but implausible one warrant very different responses.
+This implies that conditioning on the observed covariates $X$ is sufficient to remove confounding bias. This is also called *conditional exchangeability* or *conditional ignorability* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). It should not be conflated with *causal sufficiency*, a distinct notion from the constraint-based causal-discovery literature ([Spirtes, Glymour & Scheines, 2000](https://doi.org/10.7551/mitpress/1754.001.0001)): a variable set is causally sufficient if it contains no unmeasured common cause of any two of its members. This is a property of a variable set that licenses discovery algorithms such as PC/FCI — neither necessary nor sufficient for conditional ignorability of a given $T$–$Y$ pair. In case of violation, it often produces severe bias, which is a separate dimension from the **probability** that it is violated in a given study; a mild but plausible violation and a severe but implausible one warrant very different responses.
 
 ```{note}
 :class: dropdown
