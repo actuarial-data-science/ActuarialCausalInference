@@ -59,7 +59,7 @@ The causal question posed is:
 
 Crucially, the intervention used to answer this question is **not** $do(S = s')$ (changing the sensitive attribute), but rather $do(X = x)$ - **fixing the non-protected covariates to their observed value externally**. This cuts the causal edge $S \to X$ in the DAG: in the resulting mutilated graph, $X$ is no longer influenced by $S$, so $S$ and $X$ become statistically independent. The sensitive attribute $S$ remains free to vary according to its population marginal $P(S)$.
 
-Applying the **truncated factorisation formula** to the mutilated graph then yields (Proposition 15 of Lindholm et al.):
+Applying the **truncated factorisation formula** to the mutilated graph then yields ([Proposition 15 of Lindholm et al.](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)):
 
 $$E\bigl[Y \mid do(X{=}x)\bigr] = \int E[Y \mid X{=}x,\, S{=}s] \, \mathrm{d}P(S{=}s) = \mu^{\mathrm{df}}(x),$$
 
