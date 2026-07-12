@@ -98,7 +98,7 @@ The DML estimator of [Chernozhukov et al. (2018)](https://doi.org/10.1111/ectj.1
 	2. Compute residuals $\tilde{Y} = Y - \hat{\mu}(X)$ on $D_{eval}$
 
 3. **Treatment Residualization**
-	1. Train model $\hat{\pi}(X) = \mathcal{L}_T(T \sim X)$ on $D_{train}$ *(Estimate propensity score)*
+	1. Train model $\hat{\pi}(X) = \mathcal{L}_T(T \sim X)$ on $D_{train}$ *(Estimate the treatment conditional mean $\pi(X) = \mathbb{E}[T \mid X]$; for binary $T$ this coincides with the propensity score $\mathbb{P}(T=1 \mid X)$)*
 	2. Compute residuals $\tilde{T} = T - \hat{\pi}(X)$ on $D_{eval}$
 
 4. **Causal Estimation**
