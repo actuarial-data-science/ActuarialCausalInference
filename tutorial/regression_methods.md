@@ -136,7 +136,7 @@ The estimators above target the average treatment effect. *Meta-learners* extend
 When unobserved confounding exists, an instrument $I$ can identify the causal effect if ([Shalizi, 2025, Ch. 23](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)):
 
 1. *Relevance*: $I$ affects $T$
-2. *Exogenous noise*: $I \perp U$ — the instrumental variable is independent of the unobserved confounder
+2. *Exogenous noise*: $I \perp\!\!\!\perp U$ — the instrumental variable is independent of the unobserved confounder
 3. *Exclusion restriction*: $I$ affects $Y$ only through $T$
 
 The modern econometric interpretation of instrumental variables traces to [Imbens & Angrist (1994)](https://doi.org/10.2307/2951620), who show that 2SLS identifies a *local average treatment effect* for compliers, and to the potential-outcomes framework of [Angrist, Imbens & Rubin (1996)](https://doi.org/10.1080/01621459.1996.10476902); [Angrist & Krueger (1991)](https://doi.org/10.2307/2937954) is the canonical applied example, using quarter of birth as an instrument for schooling.

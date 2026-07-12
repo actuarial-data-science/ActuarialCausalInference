@@ -11,7 +11,7 @@ Under the assumptions of ignorability (see below), the observed data represent t
 - Specifically, when treatment assignment is **strongly ignorable** given a set of observed covariates — that is, when the following two conditions hold ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)):
 
 $$
-(Y(1), Y(0)) \perp T \mid X
+(Y(1), Y(0)) \perp\!\!\!\perp T \mid X
 $$
 
 $$
