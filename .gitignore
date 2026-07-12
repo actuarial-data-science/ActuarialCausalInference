@@ -6,3 +6,6 @@ __pycache__/
 *.pyc
 .DS_Store
 .python-version
+
+# Work-in-progress notebook kept locally but excluded from the repo
+application/traffic_study.ipynb
