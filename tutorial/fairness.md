@@ -74,7 +74,7 @@ This resolves the philosophical objection cleanly: **we never intervene on $S$ a
 :label: group-fairness-criteria
 :class: dropdown
 
-The machine learning literature evaluates a predictor against several **group fairness criteria** ([Barocas et al., 2019](https://fairmlbook.org/)). The interactive explainer in {doc}`../application/pricing` lets you toggle between the criteria defined below and watch the consequence of each choice. Each criterion is an independence condition on $\hat{Y}$; what distinguishes them is *which* errors they equalise, and therefore *what they cost* when the groups have genuinely different risk.
+The machine learning literature evaluates a predictor against several **group fairness criteria** ([Barocas et al., 2019](https://fairmlbook.org/)). The interactive explainer in {doc}`../application/pricing` lets you toggle between the criteria defined below and watch the consequence of each choice. Most are *classification-parity* conditions that constrain the decision $\hat{Y}$ (its rate or its errors) across groups; calibration is different — it constrains the outcome given the score, $Y \perp\!\!\!\perp S \mid \hat{\mu}(X)$, fixing the statistical meaning of the score rather than the decision rate. What distinguishes the criteria is *which* errors they equalise, and therefore *what they cost* when the groups have genuinely different risk.
 ```
 
 The **weakest** criterion is {prf:ref}`fairness-unawareness` (group unawareness): $S$ is simply not an input. As the whole of this page argues, proxy discrimination defeats it. The four criteria below are progressively more demanding constraints on the *decisions*, not the inputs.
