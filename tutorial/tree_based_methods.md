@@ -66,7 +66,7 @@ With a causal tree, we estimate heterogeneous treatment effects, differentiating
 ## Causal Forests
 
 (sec:cf)=
-We additionally introduce causal forests that ensure a stronger degree of personalization in treatment effect estimation using adaptive nearest neighbourhood estimation. Similarly as for random forests [(Breiman, 2001)](https://doi.org/10.1023/A:1010933404324), the CATEs in this specific ensemble method of causal forests are estimated by a combination of the estimations of the weak learners, i.e. causal trees that are estimated $B$ times. In addition, principles such as random split selection and recursive binary splitting are the same here as for random forests [(Athey, Tibshirani & Wager, 2019)](https://doi.org/10.1214/18-AOS1709). However, the CATEs are not calculated as simple averages over $B$ causal trees but by a weighted average over the local patient neighbourhood.
+We additionally introduce causal forests that ensure a stronger degree of personalization in treatment effect estimation using adaptive nearest neighbourhood estimation. Similarly as for random forests [(Breiman, 2001)](https://doi.org/10.1023/A:1010933404324), the CATEs in this specific ensemble method of causal forests are estimated by a combination of the estimations of the weak learners, i.e. causal trees that are estimated $B$ times. In addition, principles such as random split selection and recursive binary splitting are the same here as for random forests [(Athey, Tibshirani & Wager, 2019)](https://doi.org/10.1214/18-AOS1709). However, the CATE is not calculated as a simple average over $B$ causal trees; instead, the trees define an adaptive local neighbourhood over which a proximity-weighted regression (R-learner) moment condition is solved.
 
 ```{prf:algorithm} Causal Forest
 :label: alg-causalforest
@@ -89,11 +89,11 @@ We additionally introduce causal forests that ensure a stronger degree of person
 
 	5. Return CATE $\hat{\tau}^{(\ell,b)}(x)$
 2. Calculate weights $\alpha^{(i)}(x)$ *(Forest proximity weights)*
-3. Calculate final CATE $\hat{\tau}(x)$ *(Weighted average)*
+3. Calculate final CATE $\hat{\tau}(x)$ *(Weighted local regression / R-learner moment)*
 4. Return CATE $\hat{\tau}(x)$
 ```
 
-Fitting $B$ causal trees, we repeat the separation step into a construction data set and an estimation data set repeatedly for every causal tree. Hence, every single weak learner is fitted on different subsamples of the observational data set. This ensures *honesty* in the ensemble setting as well, when the individual causal trees are composed to a causal forest. Every causal tree again recursively builds a partition into binary splits of the entire patient population based on the construction set. Then, it estimates the CATEs in the leaves $\ell^{(b)}$ based on the estimation set. After $B$ causal trees have been built, the weights required to compose the weighted average of CATEs are calculated for every observation as
+Fitting $B$ causal trees, we repeat the separation step into a construction data set and an estimation data set repeatedly for every causal tree. Hence, every single weak learner is fitted on different subsamples of the observational data set. This ensures *honesty* in the ensemble setting as well, when the individual causal trees are composed to a causal forest. Every causal tree again recursively builds a partition into binary splits of the entire patient population based on the construction set. Then, it estimates the CATEs in the leaves $\ell^{(b)}$ based on the estimation set. After $B$ causal trees have been built, the forest proximity weights that define each observation's local neighbourhood are calculated for every observation as
 
 \begin{equation}
     \alpha^{(j)}(x)=\frac{1}{B}\sum_{b=1}^{B}\frac{\mathbb{1}\{X^{(j)}\in\ell^{(b)}(x)\}}{\left|\ell^{(b)}(x)\right|}.
@@ -101,7 +101,7 @@ Fitting $B$ causal trees, we repeat the separation step into a construction data
 
 The weights indicate how often another patient $j\not = i$ with covariates $X^{(j)}$ falls in the same leaf as the patient of interest $i$ with covariates $x$ across the trees in the forest. The more often the patients are in the same leaf, the closer they are to each other and the higher is the weight of patient when estimating the treatment effect of the observation with given covariates and outcome.
 
-The causal forest is hence not used to construct the final estimate of CATE as average over all single estimations but rather for adaptive neighbourhood matching of each individual observation. The actual CATE is then calculated locally as a weighted average over its nearest neighbours, i.e. similar patients [(Athey, Tibshirani & Wager, 2019)](https://doi.org/10.1214/18-AOS1709), as
+The causal forest is hence not used to construct the final estimate of CATE as an average over all single estimations but rather for adaptive neighbourhood matching of each individual observation. The actual CATE is then obtained locally as the solution of a proximity-weighted R-learner moment condition over its nearest neighbours, i.e. similar patients [(Athey, Tibshirani & Wager, 2019)](https://doi.org/10.1214/18-AOS1709); [(Nie & Wager, 2021)](https://doi.org/10.1093/biomet/asaa076), as
 
 \begin{equation}
     \hat{\tau}(x)=\frac{\sum_{j=1}^n \alpha^{(j)}(x)(Y^{(j)}-\hat{Y}^{(-j)})(T^{(j)}-\hat{\pi}^{(-j)}(x^{(j)}))}{ \sum \alpha^{(j)}(x)(T^{(j)}-\hat{\pi}^{(-j)}(x^{(j)}))^2}.
