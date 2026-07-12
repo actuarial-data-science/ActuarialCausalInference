@@ -48,6 +48,7 @@
 * **Manski, C. F. (1990).** *Nonparametric bounds on treatment effects.* American Economic Review Papers & Proceedings, 80(2), 319-323. [JSTOR: 2006592](https://www.jstor.org/stable/2006592)
 * **Manski, C. F. (1997).** *Monotone treatment response.* Econometrica, 65(6), 1311-1334. [DOI: 10.2307/2171738](https://doi.org/10.2307/2171738)
 * **Manski, C. F., & Pepper, J. V. (2000).** *Monotone instrumental variables: With an application to the returns to schooling.* Econometrica, 68(4), 997-1010. [DOI: 10.1111/1468-0262.00144](https://doi.org/10.1111/1468-0262.00144)
+* **Meek, C. (1995).** *Causal inference and causal explanation with background knowledge.* In Proceedings of the Eleventh Conference on Uncertainty in Artificial Intelligence (UAI'95), 403-410. [ACM: 2074204](https://dl.acm.org/doi/10.5555/2074158.2074204)
 * **Neyman, J. (Splawa-Neyman). (1923).** *On the application of probability theory to agricultural experiments. Essay on principles. Section 9.* (Translated and edited by D. M. Dabrowska & T. P. Speed, 1990.) Statistical Science, 5(4), 465-472. [DOI: 10.1214/ss/1177012031](https://doi.org/10.1214/ss/1177012031)
 * **Nie, X., & Wager, S. (2021).** *Quasi-oracle estimation of heterogeneous treatment effects.* Biometrika, 108(2), 299-319. [DOI: 10.1093/biomet/asaa076](https://doi.org/10.1093/biomet/asaa076)
 * **Pearl, J. (1995).** *Causal diagrams for empirical research.* Biometrika, 82(4), 669-688. [DOI: 10.1093/biomet/82.4.669](https://doi.org/10.1093/biomet/82.4.669)
