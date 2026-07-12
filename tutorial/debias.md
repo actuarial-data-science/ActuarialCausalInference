@@ -73,7 +73,7 @@ When {prf:ref}`positivity` is violated, propensity score weights $w = 1/\hat{\pi
 
 ### Interference
 
-When {prf:ref}`sutva` is violated because one unit's treatment affects another's outcome, the standard individual-level estimators are biased. In insurance, this arises when offering a group discount changes behaviour across all members of a household or employer group.
+When {prf:ref}`sutva` is violated because one unit's treatment affects another's outcome, the standard individual-level estimators are biased. In insurance, this arises when offering a group discount changes behaviour across all members of a household or employer group. Interference is rarely all-or-nothing: it is often **partial** ([Hudgens & Halloran, 2008](https://doi.org/10.1198/016214508000000292)), with spillovers confined to known clusters such as households or employer groups, rather than propagating globally across the portfolio.
 
 ## How to fix it — The De-biasing Toolkit
 
@@ -85,7 +85,7 @@ The biases above are not merely theoretical concerns — they are practical obst
 | **Reweight** (IPW, IPCW, overlap weighting) | Confounding, selection, positivity | {doc}`propensity` |
 | **Restrict** (trimming, redefine target population) | Positivity violations | {doc}`propensity` |
 | **Model the causal structure** (DAG-guided variable selection) | Collider bias, confounding | {doc}`graphical_models` |
-| **Cluster or network models** | Interference / spillover | — |
+| **Cluster or network models** (incl. exposure-mapping / spillover-robust estimators) | Interference / spillover | — |
 | **Sensitivity analysis** | Unobserved confounding | {doc}`sensitivity` |
 
 ### Adjust
@@ -106,7 +106,7 @@ Use a DAG to distinguish confounders (adjust for them) from colliders (do not co
 
 ### Cluster or network models
 
-When interference is present, assign treatment at the group level and analyse at the cluster level. **Partial interference models** assume spillover occurs only within known clusters (e.g. households, employer groups). **Spatial or network models** explicitly model the dependence structure.
+When interference is present, assign treatment at the group level and analyse at the cluster level. **Partial interference models** assume spillover occurs only within known clusters (e.g. households, employer groups). **Spatial or network models** explicitly model the dependence structure. **Spillover-robust estimators** based on the exposure-mapping approach of [Aronow & Samii (2017)](https://doi.org/10.1214/16-AOAS1005) go further, allowing consistent estimation of average causal effects under general (partial) interference by modelling each unit's exposure to the treatment of others — a natural fit for group health insurance or fleet policies where spillovers are structured by household or employer group membership.
 
 ### Sensitivity analysis
 
