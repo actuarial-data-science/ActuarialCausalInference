@@ -82,7 +82,7 @@ $$
 $$
 ```
 
-This implies that conditioning on the observed covariates $X$ is sufficient to remove confounding bias. This is also called *conditional exchangeability* or *conditional ignorability* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). It should not be conflated with *causal sufficiency*, a distinct notion from the constraint-based causal-discovery literature ([Spirtes, Glymour & Scheines, 2000](https://doi.org/10.7551/mitpress/1754.001.0001)): a variable set is causally sufficient if it contains no unmeasured common cause of any two of its members. This is a property of a variable set that licenses discovery algorithms such as PC/FCI — neither necessary nor sufficient for conditional ignorability of a given $T$–$Y$ pair. In case of violation, it often produces severe bias, which is a separate dimension from the **probability** that it is violated in a given study; a mild but plausible violation and a severe but implausible one warrant very different responses.
+This implies that conditioning on the observed covariates $X$ is sufficient to remove confounding bias. This is also called *conditional exchangeability* or *conditional ignorability* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). In case of violation, it often produces severe bias, which is a separate dimension from the **probability** that it is violated in a given study; a mild but plausible violation and a severe but implausible one warrant very different responses.
 
 ```{note}
 :class: dropdown
@@ -92,10 +92,16 @@ Rather than treating exchangeability as a binary "true or false" property, it is
 
 **Detecting violations:** Exchangeability **cannot be directly tested** because it concerns unobserved confounders by definition. However, indirect evidence includes: (1) **sensitivity analysis** — computing E-values or applying the method of [Cinelli & Hazlett (2020)](https://doi.org/10.1111/rssb.12348) to assess how strong an unmeasured confounder would need to be to explain away the effect; (2) **negative control outcomes** — outcomes known to be unaffected by $T$ that should show zero effect if exchangeability holds; (3) **placebo/falsification tests** — applying the estimator to subgroups where no effect is expected. Persistent sensitivity of results to small unmeasured confounders signals concern.
 
-By exchangeability ({prf:ref}`exchangeability`) and consistency ({prf:ref}`consistency`), the estimation of the average (causal) treatment effect can be done based on observed data:
+By exchangeability ({prf:ref}`exchangeability`) and consistency ({prf:ref}`consistency`), the estimation of the average (causal) treatment effect can be done based on observed data. At the level of a fixed covariate profile $X=x$,
 
 $$
-\mathbb{E}[Y(t) \mid T=t] 
-\overset{\text{exch.}}{=}\mathbb{E}[Y(t) \mid T=t, X=x]
-\overset{\text{cons.}}{=}\mathbb{E}[Y \mid T=t, X=x]
+\mathbb{E}[Y(t) \mid X=x] 
+\overset{\text{exch.}}{=}\mathbb{E}[Y(t) \mid X=x, T=t]
+\overset{\text{cons.}}{=}\mathbb{E}[Y \mid X=x, T=t],
+$$
+
+and marginalising over the covariate distribution (the *g-formula*) yields the average potential outcome:
+
+$$
+\mathbb{E}[Y(t)] = \mathbb{E}_X\big[\, \mathbb{E}[Y \mid X, T=t] \,\big].
 $$
