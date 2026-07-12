@@ -57,7 +57,7 @@ The **assignment mechanism** describes the process by which units come to receiv
 A **confounder** (or fork) $F$ is a variable that causally influences both the treatment assignment $T$ and the outcome $Y$. When confounders are present but not adjusted for, the observed association between $T$ and $Y$ is a mixture of the true causal effect and the spurious association induced by the confounder — this is **confounding bias** ([Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1); [Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)). For a visual tutorial on confounding via Simpson's Paradox, see [this simulation walkthrough](https://www.biostatistics.ca/when-data-lies-simpsons-paradox-a-step-by-step-simulation-code-notebook/).
 
 $$
-\underbrace{\mathbb{E}[Y \mid T=1] - \mathbb{E}[Y \mid T=0]}_{\text{observed difference}} \;=\; \underbrace{\mathbb{E}[Y(1) - Y(0)]}_{\text{causal effect (ATE)}} \;+\; \underbrace{\text{bias}}_{\text{due to confounding}}
+\underbrace{\mathbb{E}[Y \mid T=1] - \mathbb{E}[Y \mid T=0]}_{\text{observed difference}} \;=\; \underbrace{\mathbb{E}[Y(1) - Y(0) \mid T=1]}_{\text{causal effect (ATT)}} \;+\; \underbrace{\text{bias}}_{\text{due to confounding}}
 $$
 
 The goal of causal inference methods (matching, weighting, regression adjustment, etc.) is to eliminate this bias by appropriately adjusting for the confounders.
