@@ -73,7 +73,7 @@ The **"gold standard"** for causal inference is the Randomized Controlled Trial 
 In an RCT, treatment is assigned by chance, so both measured and unmeasured covariates are balanced across the treatment and control arms. This balance is what makes the simple difference in means an unbiased estimate of the causal effect.
 ```
 
-Because randomization makes $T \perp (Y(1), Y(0))$ hold *by design*, the RCT is best understood as the **benchmark that observational methods try to emulate**. When we cannot randomize, the methods in this tutorial — matching, weighting, regression adjustment, and graphical reasoning — all aim to reconstruct, *conditional on covariates*, the covariate balance that randomization would have produced automatically.
+Because randomization makes $T \perp\!\!\!\perp (Y(1), Y(0))$ hold *by design*, the RCT is best understood as the **benchmark that observational methods try to emulate**. When we cannot randomize, the methods in this tutorial — matching, weighting, regression adjustment, and graphical reasoning — all aim to reconstruct, *conditional on covariates*, the covariate balance that randomization would have produced automatically.
 
 ```{note}
 :class: dropdown
