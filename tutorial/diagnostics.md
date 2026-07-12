@@ -162,13 +162,13 @@ In insurance applications, a placebo test might assess whether a health interven
 :label: rosenbaum-gamma
 :class: dropdown
 
-In a matched pair $(i, j)$ with similar observed covariates, the sensitivity parameter $\Gamma \geq 1$ bounds the ratio of treatment assignment odds:
+In a matched pair $(i, j)$ with similar observed covariates ($X_i \approx X_j$), the sensitivity parameter $\Gamma \geq 1$ bounds the ratio of treatment assignment odds, where each unit's assignment probability $\pi = P(T = 1 \mid X, U)$ depends on **both** the observed covariates $X$ and an **unmeasured** confounder $U$:
 
 $$
-\frac{1}{\Gamma} \leq \frac{P(T_i = 1 \mid X_i) / P(T_i = 0 \mid X_i)}{P(T_j = 1 \mid X_j) / P(T_j = 0 \mid X_j)} \leq \Gamma
+\frac{1}{\Gamma} \leq \frac{P(T_i = 1 \mid X_i, U_i) / P(T_i = 0 \mid X_i, U_i)}{P(T_j = 1 \mid X_j, U_j) / P(T_j = 0 \mid X_j, U_j)} \leq \Gamma
 $$
 
-When $\Gamma = 1$, treatment assignment is random within matched pairs (no unmeasured confounding). As $\Gamma$ increases, more confounding is allowed.
+Because matching equalises only the observed covariates, the hidden $U_i \neq U_j$ can still drive the odds apart: matched units share $X$ but not $U$, so this ratio departs from $1$ exactly to the extent that an unmeasured confounder influences treatment. When $\Gamma = 1$, treatment assignment is random within matched pairs (no unmeasured confounding). As $\Gamma$ increases, more confounding is allowed.
 ```
 
 For each value of $\Gamma$, Rosenbaum's method computes **worst-case p-values** and confidence intervals. The analysis reports the **critical $\Gamma$** at which the effect would no longer be statistically significant — a larger critical $\Gamma$ indicates a more robust finding.
