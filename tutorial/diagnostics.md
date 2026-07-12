@@ -260,13 +260,23 @@ When parametric assumptions are undesirable, **partial identification** provides
 :label: manski-bounds
 :class: dropdown
 
-Under no assumptions beyond bounded outcomes ($Y \in [y_{\min}, y_{\max}]$), the ATE is bounded by:
+Under no assumptions beyond bounded outcomes ($Y \in [y_{\min}, y_{\max}]$), the ATE $\tau = \mathbb{E}[Y(1)] - \mathbb{E}[Y(0)]$ is sharply bounded by ([Manski, 1990](https://www.jstor.org/stable/2006592)):
 
 $$
-\mathbb{E}[Y \mid T=1] - y_{\max} \cdot P(T=0) - \mathbb{E}[Y \mid T=0] \cdot P(T=0) \;\leq\; \tau \;\leq\; \mathbb{E}[Y \mid T=1] + y_{\max} \cdot P(T=0) - \mathbb{E}[Y \mid T=0]
+\begin{aligned}
+P(T{=}1)\,\mathbb{E}[Y \mid T{=}1] + P(T{=}0)\,y_{\min} - P(T{=}0)\,\mathbb{E}[Y \mid T{=}0] - P(T{=}1)\,y_{\max} \;&\leq\; \tau \\
+\tau \;&\leq\; P(T{=}1)\,\mathbb{E}[Y \mid T{=}1] + P(T{=}0)\,y_{\max} - P(T{=}0)\,\mathbb{E}[Y \mid T{=}0] - P(T{=}1)\,y_{\min}
+\end{aligned}
 $$
 
-These bounds are **sharp** (cannot be tightened without additional assumptions) but often wide. Adding monotonicity or instrumental variable assumptions narrows them considerably.
+Each bound replaces the two unobserved counterfactual means — $\mathbb{E}[Y(1) \mid T{=}0]$ and $\mathbb{E}[Y(0) \mid T{=}1]$ — with their worst-case values $y_{\min}$ or $y_{\max}$, so the interval always has width $y_{\max} - y_{\min}$ and, by construction, contains zero.
+
+These bounds are **sharp** (cannot be tightened without further assumptions) but often wide. Two sharpening assumptions are especially relevant for insurance:
+
+- **Monotone treatment response** (MTR): $Y(1) \geq Y(0)$ for every unit — plausible for a preventive or safety intervention that can only help — which lifts the lower bound to zero ([Manski, 1997](https://doi.org/10.2307/2171738)).
+- **Monotone treatment selection** (MTS): higher-risk individuals self-select into treatment, so treated units have weakly higher mean potential outcomes — which tightens the bound in the opposite direction ([Manski & Pepper, 2000](https://doi.org/10.1111/1468-0262.00144)).
+
+Imposed together, MTR and MTS narrow the worst-case interval substantially; a valid instrument narrows it further, toward point identification.
 ```
 
 ```{figure} figs/manski_bounds.svg
