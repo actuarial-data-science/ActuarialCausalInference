@@ -156,18 +156,22 @@ Instrumental variable $I$. The instrument induces exogenous variation in the tre
 :label: alg-2sls
 :class: dropdown
 
-**Inputs** Observed instrument $I$, treatment variable $T$, outcome $Y$
+**Inputs** Observed instrument $I$, treatment variable $T$, outcome $Y$, exogenous covariates $X$
 
 **Outputs** Estimated causal effect $\hat{\beta}$ of $T$ on $Y$
 
-1. **Stage 1: Regress $T$ on instrument $I$** *(Isolate exogenous variation)*
-	1. Estimate $\hat{\alpha}$ from $T = \alpha I + \epsilon_1$
-	2. Compute predicted values $\hat{T} = \hat{\alpha} I$ *($\hat{T}$ is now independent of $U$)*
+1. **Stage 1: Regress $T$ on instrument $I$ and covariates $X$** *(Isolate exogenous variation)*
+	1. Estimate $\hat{\alpha}, \hat{\gamma}$ from $T = \alpha I + \gamma X + \epsilon_1$
+	2. Compute predicted values $\hat{T} = \hat{\alpha} I + \hat{\gamma} X$ *($\hat{T}$ is now independent of $U$)*
 
-2. **Stage 2: Regress $Y$ on predicted $\hat{T}$** *(Identify causal mechanism)*
-	1. Estimate $\hat{\beta}$ from $Y = \beta \hat{T} + \epsilon_2$
+2. **Stage 2: Regress $Y$ on predicted $\hat{T}$ and covariates $X$** *(Identify causal mechanism)*
+	1. Estimate $\hat{\beta}, \hat{\delta}$ from $Y = \beta \hat{T} + \delta X + \epsilon_2$
 
 3. Return estimated causal effect $\hat{\beta}$
+```
+
+```{important}
+The **same exogenous covariates $X$ must appear in both stages**. Omitting them produces a biased estimate whenever $X$ is correlated with both the instrument $I$ and the outcome $Y$: the covariates must be *partialled out* of the instrument–treatment relationship for the exclusion restriction and exogeneity conditions to hold conditionally. The bivariate form ($T = \alpha I + \epsilon_1$, $Y = \beta \hat{T} + \epsilon_2$) is valid only under the strong assumption that **no observed covariate affects $Y$** — a condition almost never satisfied in insurance data, where age, tenure, and risk class routinely predict the outcome.
 ```
 
 ## Quasi-Experimental Designs
