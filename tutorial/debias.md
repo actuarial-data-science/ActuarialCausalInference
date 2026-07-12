@@ -69,7 +69,10 @@ Collider bias results from **incorrect adjustment**, not from a violated assumpt
 
 ### Positivity Violations
 
-When {prf:ref}`positivity` is violated, propensity score weights $w = 1/\hat{\pi}(x)$ become extreme, leading to high-variance, unstable estimates. In insurance, positivity fails when certain policyholder profiles are *always* or *never* eligible for a programme — e.g. a discount that is automatically applied above a certain age.
+When {prf:ref}`positivity` is violated, propensity score weights $w = 1/\hat{\pi}(x)$ become extreme, leading to high-variance, unstable estimates. It is essential to distinguish two qualitatively different positivity problems ([Hernán & Robins, 2020](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/), Ch. 3; [Crump et al., 2009](https://doi.org/10.1093/biomet/asn055)):
+
+- **Structural (deterministic) violations** — certain covariate profiles have *zero theoretical probability* of receiving treatment. In insurance this arises from **ineligibility rules**: a discount automatically applied above a certain age, or a programme closed to certain risk classes. Here the causal effect is simply *not identified* for those units, and **no reweighting scheme can repair a structural zero** — the only valid remedy is to **redefine the target population** to the subset where treatment is possible.
+- **Empirical (near-)violations** — the true propensity lies strictly between 0 and 1, but finite-sample sparsity produces estimated scores that cluster near 0 or 1. These are a variance problem, not an identification problem, and can be mitigated by stabilised weights, overlap weighting, or trimming.
 
 ### Interference
 
@@ -98,7 +101,7 @@ Inverse-probability weighting (IPW) creates a pseudo-population in which treatme
 
 ### Restrict
 
-When certain covariate strata have near-deterministic treatment assignment, the estimand itself may need to change. **Trimming** removes units with $\hat{\pi}(x) < \varepsilon$ or $\hat{\pi}(x) > 1 - \varepsilon$ (e.g. $\varepsilon = 0.05$), targeting a *trimmed* population ATE. Alternatively, **redefine the target population** to the overlap population where both treatment and control are plausible.
+When certain covariate strata have near-deterministic treatment assignment, the estimand itself may need to change. **Trimming** removes units with $\hat{\pi}(x) < \varepsilon$ or $\hat{\pi}(x) > 1 - \varepsilon$ (e.g. $\varepsilon = 0.05$), targeting a *trimmed* population ATE ([Crump et al., 2009](https://doi.org/10.1093/biomet/asn055)). Alternatively, **redefine the target population** to the overlap population where both treatment and control are plausible. Redefining the estimand is the *only* valid response to **structural** positivity violations (ineligibility rules), where reweighting cannot help ([Hernán & Robins, 2020](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/), Ch. 3).
 
 ### Model the causal structure
 
