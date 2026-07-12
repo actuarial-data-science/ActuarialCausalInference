@@ -87,6 +87,14 @@ The interactive figure below applies both methods to a single simulated dataset 
 
 The panels let you compare, on the same data, (1) propensity score overlap, (2) the matched pairs formed by PSM, and (3) the inverse-probability-weighted points used by IPTW. The summary cards contrast the naïve difference in means against the PSM estimate of the ATT ($\hat{\tau}_{ATT}$) and the IPTW estimate of the ATE ($\hat{\tau}_{ATE}$), both relative to the true effect.
 
+The two sliders set the green terms below — the **confounding strength** $\beta$ in the treatment-assignment model and the **matching caliper** $\delta$ in the pairing rule:
+
+$$
+\pi(x) = \sigma\bigl(0.3 + \textcolor{#7d9f17}{\beta}\, x_1 - 0.5\, x_2\bigr),
+\qquad
+\text{match } (i, j) \iff \bigl|\hat{\pi}(x_i) - \hat{\pi}(x_j)\bigr| \le \textcolor{#7d9f17}{\delta}
+$$
+
 ```{raw} html
 <iframe id="psm-iptw" src="../figure/psm_iptw_explainer.html?v=20260610d"
         style="width:100%; border:none; height:1500px;"

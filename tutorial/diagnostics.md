@@ -20,6 +20,12 @@ The figure below makes questions 1 and 2 tangible. Imagine our adjusted estimate
 - Press **"as strong as covariate $X$"** to benchmark against a confounder no stronger than one we already observe — if that point sits well inside the green region, even a substantial omitted variable would not overturn the finding.
 - Watch panel 2: the bias **drags the estimate toward zero**, and the verdict flips to *explained away* only once the confounder crosses the red frontier.
 
+The two sliders set the green partial-$R^2$ terms in the omitted-variable bias bound ({prf:ref}`partial-r2`):
+
+$$
+|\text{bias}| \;\le\; \sqrt{\textcolor{#7d9f17}{R^2_{Y \sim U \mid T, X}} \cdot \textcolor{#7d9f17}{R^2_{T \sim U \mid X}}} \;\cdot\; \frac{\text{SD}(Y_{\text{res}})}{\text{SD}(T_{\text{res}})}
+$$
+
 ```{raw} html
 <iframe id="sensitivity" src="../figure/sensitivity_explainer.html?v=20260612d"
         style="width:100%; border:none; height:900px;"
@@ -85,6 +91,14 @@ Additional diagnostics include:
 - **Love plots:** Visual display of SMDs for all covariates, before and after adjustment.
 
 The Love plot below is interactive. Drag the **adjustment-strength** slider to weight the sample toward balance: the causal diagram shows the backdoor path $X \rightarrow T$ closing, and each covariate's SMD migrates from its raw value (open circle) toward zero (filled circle), turning green once it falls within the $|\text{SMD}| < 0.1$ band.
+
+The slider sets the green **adjustment strength** $s$ that shrinks each covariate's standardised mean difference toward zero ($s = 0$ raw, $s = 1$ fully balanced):
+
+$$
+\text{SMD}_j(\textcolor{#7d9f17}{s}) = \text{SMD}_j^{\text{raw}} \, \bigl(1 - \textcolor{#7d9f17}{s}\, e_j\bigr)
+$$
+
+where $e_j \in [0, 1]$ is how effectively the adjustment balances covariate $j$.
 
 ```{raw} html
 <iframe id="loveplot" src="../figure/loveplot_explainer.html?v=20260612a"
@@ -160,6 +174,12 @@ When $\Gamma = 1$, treatment assignment is random within matched pairs (no unmea
 For each value of $\Gamma$, Rosenbaum's method computes **worst-case p-values** and confidence intervals. The analysis reports the **critical $\Gamma$** at which the effect would no longer be statistically significant — a larger critical $\Gamma$ indicates a more robust finding.
 
 Drag the $\alpha$ slider below to set the significance threshold: the red dot tracks where the worst-case $p$-value curve crosses it, and the green band marks the range of hidden bias the conclusion can still absorb.
+
+The slider sets the red **significance level** $\alpha$; the critical sensitivity parameter $\Gamma^{\star}$ is the largest hidden bias the conclusion tolerates before the worst-case $p$-value exceeds it:
+
+$$
+\Gamma^{\star} = \max\bigl\{\, \Gamma \ge 1 : p_{\max}(\Gamma) \le \textcolor{#d62728}{\alpha} \,\bigr\}
+$$
 
 ```{raw} html
 <iframe id="rosenbaum" src="../figure/rosenbaum_explainer.html?v=20260612b"
