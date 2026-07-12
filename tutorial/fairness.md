@@ -23,7 +23,7 @@ The mechanism is the tower property of conditional expectation: $\mu(X) = \int \
 A model satisfies **fairness through unawareness** if it does not use the sensitive attribute $S$ as input: $\hat{\mu}(X) = f(X)$.
 ```
 
-Unawareness is necessary but not sufficient - it does not prevent proxy discrimination.
+Unawareness is not sufficient - it does not prevent proxy discrimination.
 
 ```{prf:definition} Discrimination-Free Pricing
 :label: discrimination-free-pricing
