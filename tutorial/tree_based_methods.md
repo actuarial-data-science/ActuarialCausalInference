@@ -102,7 +102,7 @@ We additionally introduce causal forests that ensure a stronger degree of person
 
 		1. Create partition into two subpopulations
 
-	3. Determine leaves $\mathcal{L}$ based on estimation data *(Stopping criterion applies)*
+	3. Map estimation data into determined tree leaves $\mathcal{L}$ *(Leaves fixed from construction data)*
 	4. For every leaf $\ell \in \mathcal{L}$:
 
 		1. Estimate the CATE $\hat{\tau}^{(\ell,b)}(x)$ on estimation data
