@@ -71,18 +71,34 @@ This states that, for any possible covariate profile, treatment assignment is no
 ```{prf:assumption} Exchangeability (No unobserved confounding)
 :label: exchangeability
 
-$$
-Y(t) \perp\!\!\!\perp T \mid X \quad \text{for all } t
-$$
-
-or equivalently:
+**Full (joint) exchangeability** — the *strong ignorability* condition of [Rosenbaum & Rubin (1983)](https://doi.org/10.1093/biomet/70.1.41):
 
 $$
 (Y(1), Y(0)) \perp\!\!\!\perp T \mid X
 $$
 ```
 
-This implies that conditioning on the observed covariates $X$ is sufficient to remove confounding bias. This is also called *conditional exchangeability* or *conditional ignorability* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). In case of violation, it often produces severe bias, which is a separate dimension from the **probability** that it is violated in a given study; a mild but plausible violation and a severe but implausible one warrant very different responses.
+Conditioning on the observed covariates $X$ is then sufficient to remove confounding bias. This is also called *conditional exchangeability* or *conditional ignorability* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)).
+
+```{note}
+:class: dropdown
+
+**These conditions form a strict hierarchy — they are *not* equivalent.** Three nested versions of exchangeability are commonly written down, in *decreasing* order of strength ([Greenland & Robins, 1986](https://doi.org/10.1093/ije/15.3.413), [2009](https://doi.org/10.1186/1742-5573-6-4)):
+
+1. **Full (joint):** $(Y(1), Y(0)) \perp\!\!\!\perp T \mid X$.
+2. **Marginal (per-treatment):** $Y(t) \perp\!\!\!\perp T \mid X$ for all $t$.
+3. **Mean exchangeability:** $\mathbb{E}[Y(t) \mid X, T=t] = \mathbb{E}[Y(t) \mid X]$ for all $t$.
+
+Joint independence of the *pair* implies each marginal, but the converse fails in general (two variables can each be independent of $T$ yet not *jointly* independent of it); likewise the marginal form implies mean exchangeability but not conversely. The three levels identify different targets:
+
+- **Mean exchangeability (weakest) is all that the ATE requires**, $\mathbb{E}[Y(1)] - \mathbb{E}[Y(0)]$ — and likewise the CATE $\tau(x)$ — because these depend only on the per-arm outcome *means*.
+- **The marginal form** additionally identifies the full marginal outcome *distributions* $P(Y(t) \mid X)$, and hence quantile treatment effects.
+- **The full joint form** is needed only for functionals of the *joint* law of $(Y(1), Y(0))$ — the distribution of individual treatment effects, the treated/untreated outcome correlation, or the proportion who benefit.
+
+They should therefore be ranked **full $\succ$ marginal $\succ$ mean**, and only the level actually required for the target estimand need be invoked. The joint form is stated above because it is the classical strong-ignorability condition; every estimand in this tutorial in fact needs only the weaker mean exchangeability.
+```
+
+In case of violation, exchangeability often produces severe bias, which is a separate dimension from the **probability** that it is violated in a given study; a mild but plausible violation and a severe but implausible one warrant very different responses.
 
 ```{note}
 :class: dropdown
