@@ -5,7 +5,7 @@ The methods in {doc}`propensity` and {doc}`regression_methods` are built to reco
 Conceptually they sit at the intersection of the two earlier toolkits:
 
 - **From propensity score methods.** {prf:ref}`alg-psm` matches treated and control units on the *scalar* propensity score $\hat{\pi}(x)$, while {prf:ref}`alg-psw` reweights them. A causal forest generalises both ideas: instead of matching on a hand-picked distance, it learns an **adaptive neighbourhood** directly in covariate space — two patients are "close" when the trees repeatedly place them in the same leaf. The resulting forest weights $\alpha^{(j)}(x)$ play the role of data-driven matching weights, and overlap remains the binding requirement (a leaf needs both treated and control members to yield a contrast).
-- **From regression methods.** Like the doubly robust and orthogonal estimators ({prf:ref}`alg-aipw`, {prf:ref}`alg-dml`), causal trees and forests *residualise* the outcome and the treatment against out-of-bag nuisance predictions $\hat{Y}^{(-i)}$ and $\hat{\pi}^{(-i)}(x)$. This makes them doubly robust to misspecification and connects them directly to the R-learner of {prf:ref}`alg-rlearner` — a causal forest can be read as a locally-weighted, non-parametric R-learner.
+- **From regression methods.** Like the doubly robust and orthogonal estimators ({prf:ref}`alg-aipw`, {prf:ref}`alg-dml`), causal trees and forests *residualise* the outcome and the treatment against out-of-bag nuisance predictions $\hat{Y}^{(-i)}$ and $\hat{\pi}^{(-i)}(x)$. This makes them **Neyman-orthogonal** — first-order insensitive to errors in the nuisance estimates — and connects them directly to the R-learner of {prf:ref}`alg-rlearner` — a causal forest can be read as a locally-weighted, non-parametric R-learner.
 
 The two algorithms below differ in granularity. A **causal tree** partitions the population into a handful of interpretable subgroups, assigning every member of a leaf the same effect estimate. A **causal forest** averages many such trees to deliver a smooth, individualised estimate $\hat{\tau}(x)$ for each patient.
 
@@ -59,7 +59,27 @@ The underlying assumptions are that in each leaf, the treatment effect is the sa
 
 To ensure unbiased estimates of CATEs, the principle of *honesty* is introduced for causal trees and causal forests [(Athey & Imbens, 2016)](https://doi.org/10.1073/pnas.1510489113). A method is called honest if the entire sample of patients is split into two parts, one for tree construction and one to estimate the treatment effects within the leaves. Hence, model selection is decoupled from model estimation. This addresses the post-selection inference problem and ensures unbiased estimates of CATEs.
 
-The method is regarded doubly robust since we apply inverse propensity score weighting at every step $t$: We combine the outcome model and propensity score model to reduce the sensitivity to misspecifications. Even if only one of the two is well specified, the resulting CATE estimator is more robust. This is necessary in presence of observational data, where the treatment is not assigned randomly.
+The robustness of the method comes not from inverse-propensity weighting but from the way the outcome and treatment are *residualised*. In the split-selection regressions above, the propensity enters only as a **centering** term, through $\big(T^{(i)} - \hat{\pi}^{(-i)}(x^{(i)})\big)$ — Robinson-style local centering, i.e. the R-learner moment condition — and *not* as an inverse-propensity weight $1/\hat{\pi}$; the leaf estimator above is a plain difference in mean outcomes that uses no propensity at all.
+
+The two *nuisance functions* are the outcome regression and the propensity,
+
+$$
+m(x) = \mathbb{E}[Y \mid X = x], \qquad \pi(x) = \mathbb{P}(T = 1 \mid X = x),
+$$
+
+estimated out-of-bag by $\hat{Y}^{(-i)} = \hat{m}^{(-i)}(x^{(i)})$ and $\hat{\pi}^{(-i)}(x^{(i)})$. Their *errors* are simply the deviations of the estimates from these truths,
+
+$$
+\Delta_m(x) = \hat{m}(x) - m(x), \qquad \Delta_\pi(x) = \hat{\pi}(x) - \pi(x).
+$$
+
+Centering both the outcome and the treatment on their out-of-bag predictions makes the effect estimate **Neyman-orthogonal**: the two errors enter the estimate only through their *product*, never on their own. The leading bias is second order,
+
+$$
+\hat{\tau} - \tau = O_p\!\big( \lVert \Delta_m \rVert_2 \, \lVert \Delta_\pi \rVert_2 \big),
+$$
+
+where $\lVert \cdot \rVert_2$ is the $L_2(P)$ norm. A first-order error in *either* nuisance alone is therefore annihilated, and if each converges even slowly — e.g. $\lVert \Delta_m \rVert_2, \lVert \Delta_\pi \rVert_2 = o_p(n^{-1/4})$ — their product is $o_p(n^{-1/2})$, so the CATE estimator stays $\sqrt{n}$-consistent and asymptotically normal ([Robinson, 1988](https://doi.org/10.2307/1912705); [Nie & Wager, 2021](https://doi.org/10.1093/biomet/asaa076)). This orthogonality is what makes the procedure reliable with observational data, where the treatment is not assigned randomly. It is related to — but weaker than — the *double robustness* of AIPW / DR-learner estimators ([Robins, Rotnitzky & Zhao, 1994](https://doi.org/10.1080/01621459.1994.10476818); [Kennedy, 2023](https://doi.org/10.1214/23-EJS2157)), whose consistency survives if *either* the outcome or the propensity model is correct — a guarantee that residual-on-residual centering does not by itself provide.
 
 With a causal tree, we estimate heterogeneous treatment effects, differentiating by subgroups. We additionally introduce causal forests that ensure a stronger degree of personalization in treatment effect estimation using adaptive nearest neighborhood estimation.
 
@@ -111,7 +131,7 @@ The causal forest is hence not used to construct the final estimate of CATE as a
 :width: 95%
 :name: fig-causal-forest
 
-How a causal forest builds an adaptive neighbourhood. Across the $B$ honest trees (left), the query patient $x$ repeatedly lands in a leaf alongside different sets of patients. Tallying how often each patient $j$ shares $x$'s leaf yields the forest weight $\alpha^{(j)}(x)$ (right): patient $j_1$, a leaf-mate in every tree, weighs most, whereas $j_4$ — never co-located — contributes nothing. The result is a *learned* local match in covariate space rather than a match on a single propensity score, with out-of-bag residuals making the final weighted estimate doubly robust.
+How a causal forest builds an adaptive neighbourhood. Across the $B$ honest trees (left), the query patient $x$ repeatedly lands in a leaf alongside different sets of patients. Tallying how often each patient $j$ shares $x$'s leaf yields the forest weight $\alpha^{(j)}(x)$ (right): patient $j_1$, a leaf-mate in every tree, weighs most, whereas $j_4$ — never co-located — contributes nothing. The result is a *learned* local match in covariate space rather than a match on a single propensity score, with out-of-bag residuals making the final weighted estimate Neyman-orthogonal — first-order insensitive to errors in the nuisance estimates.
 ```
 
 To construct the neighbourhood for each single patient $i$, weights are calculated for every other patient $j\not = i$. Note that each observation $j$ is centred by its *own* nuisance values: the query point $x$ enters only through the forest weights $\alpha^{(j)}(x)$, while the residuals $\hat{Y}^{(-j)}$ and $\hat{\pi}^{(-j)}(x^{(j)})$ are evaluated at patient $j$'s own covariates $x^{(j)}$ and calculated out-of-bag, meaning that information about patient $j$ was not used for their estimation. We refer to [Wager & Athey (2018)](https://doi.org/10.1080/01621459.2017.1319839) for more details on the estimation procedure. To assign an observation to a leaf $\ell^{(b)}$ in iteration $b$, the set of covariates can vary across patients to determine the path, as causal forests share the property with random forests to randomly select the set of possible covariates at each split [(Breiman, 2001)](https://doi.org/10.1023/A:1010933404324). Amongst this set, the splitting covariate that maximizes heterogeneity in treatment effects amongst the subgroups, is chosen on a data-driven basis. This allows the path to vary per leaf $\ell$ and per iteration $b$.
