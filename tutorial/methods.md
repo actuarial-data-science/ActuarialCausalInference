@@ -125,7 +125,7 @@ Consider the DAG where $U$ is unobserved:
 $U \rightarrow T, \quad U \rightarrow Y, \quad T \rightarrow M, \quad M \rightarrow Y$
 
 - The backdoor criterion **fails** because we cannot condition on $U$.
-- **Candidate $M = \{M\}$**: All causal paths from $T$ to $Y$ go through $M$ ✓. No backdoor path from $T$ to $M$ (since $U \rightarrow T$ and $U \rightarrow Y$, but no path $T \leftarrow \cdots M$ bypassing the direct edge) ✓. The backdoor path from $M$ to $Y$ through $U$ is $M \leftarrow T \leftarrow U \rightarrow Y$, which is blocked by $T$ ✓. The frontdoor criterion is satisfied.
+- **Candidate $M = \{M\}$**: All causal paths from $T$ to $Y$ go through $M$ ✓. The only backdoor path from $T$ to $M$, namely $T \leftarrow U \rightarrow Y \leftarrow M$, is **blocked by the unconditioned collider at $Y$** (both $U \rightarrow Y$ and $M \rightarrow Y$ are arrows into $Y$; {prf:ref}`collider`) — it is blocked, not absent ✓. The backdoor path from $M$ to $Y$ through $U$ is $M \leftarrow T \leftarrow U \rightarrow Y$, which is blocked by $T$ ✓. The frontdoor criterion is satisfied.
 ```
 
 ```{figure} figs/frontdoor.svg
