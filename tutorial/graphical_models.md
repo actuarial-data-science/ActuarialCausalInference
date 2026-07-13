@@ -183,7 +183,7 @@ Equivalently: if $X \perp\!\!\!\perp Y \mid Z$ in $P$, then $X \perp_{\mathcal{G
 
 Together, the Causal Markov Condition and faithfulness give a one-to-one correspondence between $d$-separation statements and conditional independence relations ([Shalizi, 2025, §22.3](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
-### Example: $d$-Separation in Practice
+### Example 1: $d$-Separation in Practice
 
 Consider the following DAG:
 
@@ -203,7 +203,56 @@ A DAG combining all three path structures: a fork through the confounder $F$, a 
 - **$T$ and $Y$ given $F$**: The backdoor path $T \leftarrow F \rightarrow Y$ is now blocked. The directed path $T \rightarrow M \rightarrow Y$ remains open (chain, $M$ not conditioned on). $T$ and $Y$ are $d$-connected given $F$ — but now the remaining open paths are *causal*.
 - **$T$ and $Y$ given $\{F, C\}$**: Conditioning on the collider $C$ **opens** the path $T \rightarrow C \leftarrow Y$, creating collider bias. This is an **incorrect** adjustment set.
 
+**Correct adjustment set: $\{F\}$.** Conditioning on $F$ blocks the single backdoor path $T \leftarrow F \rightarrow Y$, leaving the causal paths $T \rightarrow Y$ and $T \rightarrow M \rightarrow Y$ open. The mediator $M$ and the collider $C$ must be **left out**: adjusting for $M$ would block the indirect causal effect, and adjusting for $C$ would open the spurious path $T \rightarrow C \leftarrow Y$ ({prf:ref}`backdoor-criterion`).
 ```
 
+### Example 2: A Mediator with Unmeasured Confounding
 
-> TODO: more examples
+The next graph looks deceptively similar but teaches the opposite lesson about mediators. Here the treatment $T$ is **randomised** — no arrow points into it — and it affects the outcome $Y$ both directly ($T \rightarrow Y$) and through a mediator ($T \rightarrow M \rightarrow Y$). Crucially, an **unmeasured** variable $U$ confounds the mediator–outcome relationship: $U \rightarrow M$ and $U \rightarrow Y$.
+
+```{figure} figs/dsep_example2.svg
+:width: 70%
+:name: fig-dsep-example2
+
+A randomised treatment $T$ with a mediator $M$, whose relationship with $Y$ is confounded by an unmeasured variable $U$ (dashed). Because $M$ is a collider on the path $T \rightarrow M \leftarrow U \rightarrow Y$, that path is blocked unless one conditions on $M$.
+```
+
+```{prf:example} Mediator under Randomisation
+:label: dsep-example-mediator
+:class: dropdown
+
+- **Enumerate the paths.** From $T$ to $Y$ there are three: the direct causal edge $T \rightarrow Y$; the indirect causal chain $T \rightarrow M \rightarrow Y$; and $T \rightarrow M \leftarrow U \rightarrow Y$. On the last, $M$ is a **collider**, so the path is *already blocked* when nothing is conditioned on.
+- **No backdoor to close.** Since $T$ is randomised, no arrow enters $T$ and there is **no backdoor path** at all — the treatment is unconfounded by design.
+- **Why not condition on $M$?** Adjusting for the mediator would do double damage: it (i) blocks the indirect causal effect $T \rightarrow M \rightarrow Y$, and (ii) *opens* the collider path $T \rightarrow M \leftarrow U \rightarrow Y$, injecting spurious association through the unmeasured $U$.
+
+**Correct adjustment set: $\emptyset$ (adjust for nothing).** The total effect of $T$ on $Y$ is identified without conditioning on any variable. Recovering the *direct* effect that does **not** operate through $M$ would instead require the mediation formula and the assumption of no unmeasured $M$–$Y$ confounding — which $U$ violates here (see {doc}`debias`).
+```
+
+### Example 3: A Larger Graph
+
+Realistic problems mix several confounders with variables that look tempting but must be excluded. This graph has eight nodes and the following edges: $Z_1 \rightarrow T$ and $Z_1 \rightarrow Y$; $Z_2 \rightarrow T$, $Z_2 \rightarrow Z_3$, and $Z_3 \rightarrow Y$; an instrument $I \rightarrow T$; a mediator $T \rightarrow M \rightarrow Y$ alongside the direct edge $T \rightarrow Y$; and a collider $T \rightarrow K \leftarrow Y$.
+
+```{figure} figs/dsep_example3.svg
+:width: 90%
+:name: fig-dsep-example3
+
+A larger DAG: two confounding routes ($T \leftarrow Z_1 \rightarrow Y$ and $T \leftarrow Z_2 \rightarrow Z_3 \rightarrow Y$), an instrument $I$, a mediator $M$, and a collider $K$. Only the confounding routes must be blocked.
+```
+
+```{prf:example} Reading Off the Adjustment Set
+:label: dsep-example-large
+:class: dropdown
+
+List every **backdoor path** (a path leaving $T$ through an arrow pointing *into* $T$) and decide how to block it:
+
+- $T \leftarrow Z_1 \rightarrow Y$ — an open fork; block it by conditioning on $Z_1$.
+- $T \leftarrow Z_2 \rightarrow Z_3 \rightarrow Y$ — open; block it by conditioning on $Z_2$ **or** on $Z_3$ (either node lies on the path).
+- $T \leftarrow I$ — a dead end: the instrument $I$ reaches $Y$ *only* through $T$, so this path carries no confounding association and needs no adjustment.
+
+Leave the remaining structures untouched:
+
+- $M$ is a **mediator** on the causal path $T \rightarrow M \rightarrow Y$ — conditioning on it would block part of the effect.
+- $K$ is a **collider** ($T \rightarrow K \leftarrow Y$) — conditioning on it would open a spurious path.
+
+**Correct minimal adjustment set: $\{Z_1, Z_2\}$** (equivalently $\{Z_1, Z_3\}$). Either choice blocks both backdoor paths while leaving all causal paths open. The instrument $I$, the mediator $M$, and the collider $K$ are all deliberately excluded ({prf:ref}`backdoor-criterion`). Note that adjusting for the instrument $I$ is not merely unnecessary — it can *amplify* bias from any residual unmeasured confounding, so it is left out on purpose.
+```

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="430" viewBox="0 0 700 430" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .arrow { fill: #333; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="arDsep3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L9,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- edges first; node circles are drawn afterwards on top of the line stubs -->
+  <!-- I -> T -->
+  <line class="ink-l" x1="80" y1="90" x2="212.8" y2="315.7" stroke-width="2" marker-end="url(#arDsep3)"/>
+  <!-- Z1 -> T -->
+  <line class="ink-l" x1="300" y1="60" x2="238.1" y2="312" stroke-width="2" marker-end="url(#arDsep3)"/>
+  <!-- Z1 -> Y -->
+  <line class="ink-l" x1="300" y1="60" x2="592.8" y2="279.6" stroke-width="2" marker-end="url(#arDsep3)"/>
+  <!-- Z2 -> T -->
+  <line class="ink-l" x1="80" y1="230" x2="203" y2="324.3" stroke-width="2" marker-end="url(#arDsep3)"/>
+  <!-- Z2 -> Z3 -->
+  <line class="ink-l" x1="80" y1="230" x2="266.2" y2="213.1" stroke-width="2" marker-end="url(#arDsep3)"/>
+  <!-- Z3 -> Y -->
+  <line class="ink-l" x1="300" y1="210" x2="587.3" y2="290.8" stroke-width="2" marker-end="url(#arDsep3)"/>
+  <!-- T -> M -->
+  <line class="ink-l" x1="230" y1="345" x2="454.7" y2="142.7" stroke-width="2" marker-end="url(#arDsep3)"/>
+  <!-- M -> Y -->
+  <line class="ink-l" x1="480" y1="120" x2="599.1" y2="273.2" stroke-width="2" marker-end="url(#arDsep3)"/>
+  <!-- T -> Y -->
+  <line class="ink-l" x1="230" y1="345" x2="586.2" y2="303.9" stroke-width="2" marker-end="url(#arDsep3)"/>
+  <!-- T -> K -->
+  <line class="ink-l" x1="230" y1="345" x2="396.6" y2="378.3" stroke-width="2" marker-end="url(#arDsep3)"/>
+  <!-- Y -> K -->
+  <line class="ink-l" x1="620" y1="300" x2="461" y2="371.1" stroke-width="2" marker-end="url(#arDsep3)"/>
+
+  <!-- I (Instrument) -->
+  <circle cx="80" cy="90" r="30" fill="#e9f0fb" stroke="#3b6fcc" stroke-width="2"/>
+  <text x="80" y="96" text-anchor="middle" font-size="20" fill="#1f3f7a">I</text>
+  <text class="muted" x="80" y="48" text-anchor="middle" font-size="12">instrument</text>
+
+  <!-- Z1 (Confounder) -->
+  <circle cx="300" cy="60" r="30" fill="#fdecec" stroke="#cc3b3b" stroke-width="2"/>
+  <text x="300" y="66" text-anchor="middle" font-size="18" fill="#8a1f1f">Z&#8321;</text>
+  <text class="muted" x="300" y="20" text-anchor="middle" font-size="12">confounder</text>
+
+  <!-- Z2 (Confounder) -->
+  <circle cx="80" cy="230" r="30" fill="#fdecec" stroke="#cc3b3b" stroke-width="2"/>
+  <text x="80" y="236" text-anchor="middle" font-size="18" fill="#8a1f1f">Z&#8322;</text>
+  <text class="muted" x="80" y="278" text-anchor="middle" font-size="12">confounder</text>
+
+  <!-- Z3 -->
+  <circle cx="300" cy="210" r="30" fill="#fdecec" stroke="#cc3b3b" stroke-width="2"/>
+  <text x="300" y="216" text-anchor="middle" font-size="18" fill="#8a1f1f">Z&#8323;</text>
+
+  <!-- T (Treatment) -->
+  <circle cx="230" cy="345" r="30" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="230" y="351" text-anchor="middle" font-size="20" fill="#136c3a">T</text>
+  <text class="muted" x="230" y="393" text-anchor="middle" font-size="12">treatment</text>
+
+  <!-- M (Mediator) -->
+  <circle cx="480" cy="120" r="30" fill="#fff7e6" stroke="#d9920a" stroke-width="2"/>
+  <text x="480" y="126" text-anchor="middle" font-size="20" fill="#8a5b00">M</text>
+  <text class="muted" x="480" y="78" text-anchor="middle" font-size="12">mediator</text>
+
+  <!-- Y (Outcome) -->
+  <circle cx="620" cy="300" r="30" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <text x="620" y="306" text-anchor="middle" font-size="20" fill="#3a4149">Y</text>
+  <text class="muted" x="620" y="258" text-anchor="middle" font-size="12">outcome</text>
+
+  <!-- K (Collider) -->
+  <circle cx="430" cy="385" r="30" fill="#f3eafa" stroke="#9b59b6" stroke-width="2"/>
+  <text x="430" y="391" text-anchor="middle" font-size="20" fill="#6f3d93">K</text>
+  <text class="muted" x="430" y="425" text-anchor="middle" font-size="12">collider</text>
+</svg>
