@@ -204,6 +204,14 @@ A DAG combining all three path structures: a fork through the confounder $F$, a 
 - **$T$ and $Y$ given $\{F, C\}$**: Conditioning on the collider $C$ **opens** the path $T \rightarrow C \leftarrow Y$, creating collider bias. This is an **incorrect** adjustment set.
 
 **Correct adjustment set: $\{F\}$.** Conditioning on $F$ blocks the single backdoor path $T \leftarrow F \rightarrow Y$, leaving the causal paths $T \rightarrow Y$ and $T \rightarrow M \rightarrow Y$ open. The mediator $M$ and the collider $C$ must be **left out**: adjusting for $M$ would block the indirect causal effect, and adjusting for $C$ would open the spurious path $T \rightarrow C \leftarrow Y$ ({prf:ref}`backdoor-criterion`).
+
+**Identifying independence.** Blocking the backdoor makes the treated and control groups comparable within levels of $F$, i.e. conditional exchangeability holds:
+
+$$
+(Y(1), Y(0)) \perp\!\!\!\perp T \mid F.
+$$
+
+Given $F$, treatment is as good as randomly assigned, so $\mathbb{E}[Y \mid T=t, F]$ estimates a genuine causal contrast rather than a confounded one. This is precisely {prf:ref}`exchangeability`, and it is what licenses the backdoor adjustment formula $\mathbb{E}[Y(t)] = \mathbb{E}_F\big[\mathbb{E}[Y \mid T=t, F]\big]$. Without conditioning on $F$ the open fork $T \leftarrow F \rightarrow Y$ violates this independence, and the raw contrast $\mathbb{E}[Y \mid T=1] - \mathbb{E}[Y \mid T=0]$ conflates the causal effect with confounding.
 ```
 
 ### Example 2: A Mediator with Unmeasured Confounding
@@ -226,6 +234,14 @@ A randomised treatment $T$ with a mediator $M$, whose relationship with $Y$ is c
 - **Why not condition on $M$?** Adjusting for the mediator would do double damage: it (i) blocks the indirect causal effect $T \rightarrow M \rightarrow Y$, and (ii) *opens* the collider path $T \rightarrow M \leftarrow U \rightarrow Y$, injecting spurious association through the unmeasured $U$.
 
 **Correct adjustment set: $\emptyset$ (adjust for nothing).** The total effect of $T$ on $Y$ is identified without conditioning on any variable. Recovering the *direct* effect that does **not** operate through $M$ would instead require the mediation formula and the assumption of no unmeasured $M$–$Y$ confounding — which $U$ violates here (see {doc}`debias`).
+
+**Identifying independence.** Randomisation makes treatment independent of the potential outcomes **unconditionally**:
+
+$$
+(Y(1), Y(0)) \perp\!\!\!\perp T.
+$$
+
+The effect is therefore identified directly, $\mathbb{E}[Y(t)] = \mathbb{E}[Y \mid T=t]$, with no adjustment term. Conditioning on the mediator $M$ would **destroy** this independence by opening the collider path $T \rightarrow M \leftarrow U \rightarrow Y$ — the resulting $\mathbb{E}[Y \mid T=t, M]$ would no longer be exchangeable in $T$, forfeiting the identification that randomisation supplied for free.
 ```
 
 ### Example 3: A Larger Graph
@@ -255,4 +271,12 @@ Leave the remaining structures untouched:
 - $K$ is a **collider** ($T \rightarrow K \leftarrow Y$) — conditioning on it would open a spurious path.
 
 **Correct minimal adjustment set: $\{Z_1, Z_2\}$** (equivalently $\{Z_1, Z_3\}$). Either choice blocks both backdoor paths while leaving all causal paths open. The instrument $I$, the mediator $M$, and the collider $K$ are all deliberately excluded ({prf:ref}`backdoor-criterion`). Note that adjusting for the instrument $I$ is not merely unnecessary — it can *amplify* bias from any residual unmeasured confounding, so it is left out on purpose.
+
+**Identifying independence.** Blocking both backdoor paths yields conditional exchangeability:
+
+$$
+(Y(1), Y(0)) \perp\!\!\!\perp T \mid Z_1, Z_2.
+$$
+
+Given $\{Z_1, Z_2\}$, treatment is as good as randomly assigned, which identifies the effect through the backdoor adjustment formula $\mathbb{E}[Y(t)] = \mathbb{E}_{Z_1, Z_2}\big[\mathbb{E}[Y \mid T=t, Z_1, Z_2]\big]$. Adding $M$ or $K$ to the conditioning set would open a non-causal path and break this independence, while adding $I$ would amplify residual confounding bias — in each case $\mathbb{E}[Y \mid T=t, \cdot]$ would cease to recover a causal contrast.
 ```
