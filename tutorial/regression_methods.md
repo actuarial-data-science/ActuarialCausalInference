@@ -227,13 +227,13 @@ Difference-in-differences. Under parallel trends, the treated group's counterfac
 
 ### Regression Discontinuity
 
-Regression discontinuity (RD) applies when treatment is assigned by a threshold rule on a continuous *running variable* $X$ (e.g. a risk score). The design was first proposed by [Thistlethwaite & Campbell (1960)](https://doi.org/10.1037/h0044319); its modern econometric foundations are due to [Hahn, Todd & van der Klaauw (2001)](https://doi.org/10.1111/1468-0262.00183). Units just below and just above the cutoff $c$ are comparable, so the jump in the outcome at $c$ identifies the local average treatment effect (LATE). [Imbens & Lemieux (2008)](https://doi.org/10.1016/j.jeconom.2007.05.001) provide a practical guide to estimation and bandwidth selection.
+Regression discontinuity (RD) applies when treatment is assigned by a threshold rule on a continuous *running variable* $X$ (e.g. a risk score). The design was first proposed by [Thistlethwaite & Campbell (1960)](https://doi.org/10.1037/h0044319); its modern econometric foundations are due to [Hahn, Todd & van der Klaauw (2001)](https://doi.org/10.1111/1468-0262.00183). Units just below and just above the cutoff $c$ are comparable, so the jump in the outcome at $c$ identifies the **average treatment effect at the cutoff**, $\mathbb{E}[Y(1) - Y(0) \mid X = c]$ — the causal effect *at the discontinuity point* ([Hahn, Todd & van der Klaauw, 2001](https://doi.org/10.1111/1468-0262.00183); [Imbens & Lemieux, 2008](https://doi.org/10.1016/j.jeconom.2007.05.001)). This is a *different* object from the complier LATE of the IV/2SLS design above: in a **sharp** RD every unit switches deterministically from $T=0$ to $T=1$ at $c$, so the estimand conditions on the covariate value $X = c$, not on an unobserved compliance type. [Imbens & Lemieux (2008)](https://doi.org/10.1016/j.jeconom.2007.05.001) provide a practical guide to estimation and bandwidth selection.
 
 ```{figure} figs/rdd_discontinuity.svg
 :width: 80%
 :name: fig-rdd
 
-Regression discontinuity. Treatment switches on at the cutoff $c$; the vertical jump $\tau$ in the fitted outcome at $c$ identifies the local average treatment effect.
+Regression discontinuity. Treatment switches on at the cutoff $c$; the vertical jump $\tau$ in the fitted outcome at $c$ identifies the average treatment effect at the cutoff, $\mathbb{E}[Y(1) - Y(0) \mid X = c]$.
 ```
 
 ```{prf:algorithm} Regression Discontinuity
@@ -242,13 +242,13 @@ Regression discontinuity. Treatment switches on at the cutoff $c$; the vertical 
 
 **Inputs** Running variable $X$, outcome $Y$, cutoff $c$, bandwidth $h$
 
-**Outputs** Estimated LATE $\hat{\tau}$ at the cutoff
+**Outputs** Estimated average treatment effect at the cutoff $\hat{\tau}$
 
 1. Restrict to observations within the bandwidth, $|X - c| \le h$
 2. Fit a local regression just below the cutoff: $\hat{\mu}_-(c) = \lim_{x \uparrow c} \mathbb{E}[Y \mid X = x]$
 3. Fit a local regression just above the cutoff: $\hat{\mu}_+(c) = \lim_{x \downarrow c} \mathbb{E}[Y \mid X = x]$
 4. Estimate the discontinuity: $\hat{\tau} = \hat{\mu}_+(c) - \hat{\mu}_-(c)$
-5. Return estimated LATE $\hat{\tau}$
+5. Return the estimated effect at the cutoff $\hat{\tau}$
 ```
 
 ### Synthetic Control
