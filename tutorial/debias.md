@@ -109,7 +109,7 @@ When certain covariate strata have near-deterministic treatment assignment, the 
 
 ### Model the causal structure
 
-Use a DAG to distinguish confounders (adjust for them) from colliders (do not condition on them) and mediators (condition only if interested in direct effects). The {prf:ref}`backdoor-criterion` and {prf:ref}`frontdoor-criterion` from {doc}`graphical_models` provide algorithmic tools for selecting the correct adjustment set.
+Use a DAG to distinguish confounders (adjust for them) from colliders (do not condition on them) and mediators (condition only if interested in direct effects). The {prf:ref}`backdoor-criterion` from {doc}`graphical_models` provides an algorithmic tool for selecting a valid covariate *adjustment set*. The {prf:ref}`frontdoor-criterion` is **not** an adjustment-set selector but an alternative identification strategy for the case where no admissible adjustment set exists — because every backdoor path runs through an unmeasured confounder — recovering the effect through a mediator rather than by covariate adjustment ([Pearl, 2009](https://doi.org/10.1017/CBO9780511803161), Cor. 3.3.4).
 
 ### Cluster or network models
 
