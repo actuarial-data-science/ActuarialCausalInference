@@ -18,17 +18,18 @@ Our first approach to infer heterogeneous treatment effects is based on causal t
 :label: alg-causaltree
 :class: dropdown
 
-**Inputs** Covariates $X \in \mathcal{X}$, treatment $T \in \{0,1\}$, observed outcome $Y \in \mathcal{Y}$
+**Inputs** Covariates $X \in \mathcal{X}$, treatment $T \in \{0,1\}$, observed outcome $Y \in \mathcal{Y}$, cross-fitted nuisance estimates $\hat{Y}^{(-i)}, \hat{\pi}^{(-i)}$
 
 **Outputs** Estimated CATE $\hat{\tau}^{(\ell)}(x)$
 
-1. Subsample data and split into *construction* and *estimation* sets *(Honesty)*
-2. While partition of construction data is still possible: *(Stopping criterion applies)*
+1. Pre-compute the cross-fitted nuisances $\hat{Y}^{(-i)} = \hat{m}^{(-i)}(x^{(i)})$ and $\hat{\pi}^{(-i)}(x^{(i)})$ by $K$-fold out-of-fold prediction *(needed by the residualised split criterion; supplied out-of-bag by the ensemble in {prf:ref}`alg-causalforest`)*
+2. Subsample data and split into *construction* and *estimation* sets *(Honesty)*
+3. While partition of construction data is still possible: *(Stopping criterion applies)*
 	1. Create partition into two subpopulations maximizing heterogeneity
-3. Map estimation data into determined tree leaves $\mathcal{L}$
-4. For every leaf $\ell \in \mathcal{L}$:
+4. Map estimation data into determined tree leaves $\mathcal{L}$
+5. For every leaf $\ell \in \mathcal{L}$:
 	1. Estimate local CATE $\hat{\tau}^{(\ell)}(x)$ using estimation data
-5. Return CATE $\hat{\tau}^{(\ell)}(x)$
+6. Return CATE $\hat{\tau}^{(\ell)}(x)$
 ```
 
 Similar to CART [(Breiman et al., 1984)](https://doi.org/10.1201/9781315139470), a causal tree partitions the sample into subgroups. It creates a partition of the patient population into subpopulations (i.e., leaves $\ell\in\mathcal{L}$) using recursive binary splitting. In contrast to a decision tree, a causal tree estimates the treatment effect $\hat{\tau}$ directly by modelling the contrast in potential outcomes rather than modelling both potential outcomes and then taking their contrast. 
@@ -41,6 +42,8 @@ For each split, the outcome-covariate pair is determined such that it maximizes 
      \hat{\tau}_L\leftarrow lm\left((Y^{(i)}-\hat{Y}^{(-i)})\sim(T^{(i)}-\hat{\pi}^{(-i)}(x^{(i)})):x^{(i)}\in L\right) \\
      \hat{\tau}_R\leftarrow  lm\left((Y^{(i)}-\hat{Y}^{(-i)})\sim(T^{(i)}-\hat{\pi}^{(-i)}(x^{(i)})):x^{(i)}\in R\right)
 \end{align}
+
+Two points on this split-selection rule. First, the residualised form above — regressing the centred outcome on the centred treatment — is the R-learner / generalised-random-forest generalisation of [Athey, Tibshirani & Wager (2019)](https://doi.org/10.1214/18-AOS1709) and [Nie & Wager (2021)](https://doi.org/10.1093/biomet/asaa076); the *original* causal tree of [Athey & Imbens (2016)](https://doi.org/10.1073/pnas.1510489113) selects splits by a plain within-leaf difference in means and requires no residualisation. Second, the leave-one-out nuisances $\hat{Y}^{(-i)}$ and $\hat{\pi}^{(-i)}(x^{(i)})$ — where the $(-i)$ superscript denotes an estimate that excludes unit $i$ — are *not* produced by a single tree: they must be pre-computed by cross-fitting (Step 1 above). Only in the forest ({prf:ref}`alg-causalforest`) do they arise for free, as out-of-bag by-products of the $B$-tree ensemble (a unit is out-of-bag in every tree that did not subsample it).
 
 The stopping criterion of further partitioning the population into subgroups is usually pre-specified by hyperparameters such as the minimum number of observations per leaf, a threshold for the weighted difference in the resulting treatment effects or a difference in sizes between the resulting nodes in terms of control and treatment group. If one of these minimum requirements is not met due to an additional split, the partitioning process is stopped and the algorithm intermediately returns the partition of $\mathcal{L}$. Given this partition, the estimation step is executed to get CATEs that basically are differences in outcomes for treatment and control observations. In every leaf $\ell$, there are both treated and untreated patients. Hence, the CATE is estimated as
 
