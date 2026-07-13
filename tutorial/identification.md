@@ -10,7 +10,7 @@ This chapter develops the identification toolkit in three steps, using the notat
 
 ## Achieving Identifiability with Graphical Models
 
-**{doc}`graphical_models`** — Directed acyclic graphs (DAGs) as the language for encoding causal assumptions. Covers the three fundamental path structures (chains, forks, colliders), $d$-separation, and the backdoor and frontdoor criteria for selecting a valid adjustment set relative to the treatment $T$ and outcome $Y$.
+**{doc}`graphical_models`** — Directed acyclic graphs (DAGs) as the language for encoding causal assumptions. Covers the three fundamental path structures (chains, forks, colliders), $d$-separation, the backdoor criterion for selecting a valid adjustment set, and the frontdoor criterion as an alternative identification strategy when no adjustment set exists, relative to the treatment $T$ and outcome $Y$.
 
 ## Structural Identification Strategies
 
