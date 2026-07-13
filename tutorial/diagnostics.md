@@ -229,7 +229,7 @@ The **E-value** ([VanderWeele & Ding, 2017](https://doi.org/10.7326/M16-2607)) p
 :label: e-value
 :class: dropdown
 
-The **E-value** for an observed risk ratio $\text{RR}_{\text{obs}}$ is:
+The **E-value** for an observed risk ratio $\text{RR}_{\text{obs}} \ge 1$ is:
 
 $$
 E = \text{RR}_{\text{obs}} + \sqrt{\text{RR}_{\text{obs}} \times (\text{RR}_{\text{obs}} - 1)}
