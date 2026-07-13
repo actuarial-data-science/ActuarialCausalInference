@@ -23,7 +23,7 @@ The figure below makes questions 1 and 2 tangible. Imagine our adjusted estimate
 The two sliders set the green partial-$R^2$ terms in the omitted-variable bias bound ({prf:ref}`partial-r2`):
 
 $$
-|\text{bias}| \;\le\; \sqrt{\textcolor{#7d9f17}{R^2_{Y \sim U \mid T, X}} \cdot \textcolor{#7d9f17}{R^2_{T \sim U \mid X}}} \;\cdot\; \frac{\text{SD}(Y_{\text{res}})}{\text{SD}(T_{\text{res}})}
+|\text{bias}| \;\le\; \sqrt{\frac{\textcolor{#7d9f17}{R^2_{Y \sim U \mid T, X}} \cdot \textcolor{#7d9f17}{R^2_{T \sim U \mid X}}}{1 - \textcolor{#7d9f17}{R^2_{T \sim U \mid X}}}} \;\cdot\; \frac{\text{SD}(Y_{\text{res}})}{\text{SD}(T_{\text{res}})}
 $$
 
 ```{raw} html
@@ -264,10 +264,10 @@ The E-value as a frontier. Each point on the red curve is a *combination* of con
 Let $R^2_{Y \sim U \mid T, X}$ denote the partial $R^2$ of the omitted confounder $U$ with the outcome $Y$ (after adjusting for $T$ and $X$), and $R^2_{T \sim U \mid X}$ the partial $R^2$ with the treatment $T$. The bias in the treatment effect estimate due to omitting $U$ is bounded by:
 
 $$
-|\text{bias}| \leq \sqrt{R^2_{Y \sim U \mid T, X} \cdot R^2_{T \sim U \mid X}} \cdot \frac{\text{SD}(Y_{\text{res}})}{\text{SD}(T_{\text{res}})}
+|\text{bias}| \leq \sqrt{\frac{R^2_{Y \sim U \mid T, X} \cdot R^2_{T \sim U \mid X}}{1 - R^2_{T \sim U \mid X}}} \cdot \frac{\text{SD}(Y_{\text{res}})}{\text{SD}(T_{\text{res}})}
 $$
 
-where $Y_{\text{res}}$ is the residual from regressing $Y$ on **both** $T$ and $X$ (the full outcome-regression residual), and $T_{\text{res}}$ is the residual from regressing $T$ on $X$.
+where $Y_{\text{res}}$ is the residual from regressing $Y$ on **both** $T$ and $X$ (the full outcome-regression residual), and $T_{\text{res}}$ is the residual from regressing $T$ on $X$. The denominator $1 - R^2_{T \sim U \mid X}$ is the amplification factor: as the confounder explains more of the treatment, the same partial $R^2$ with $Y$ translates into a larger bias. Dropping it (using only $\sqrt{R^2_{Y \sim U \mid T, X}\, R^2_{T \sim U \mid X}}$) *understates* the bias and is **not** a valid upper bound — e.g. it underestimates by $\approx 5\%$ at $R^2_{T \sim U \mid X}=0.1$, $\approx 16\%$ at $0.3$, and $\approx 29\%$ at $0.5$.
 ```
 
 This framework is particularly intuitive because the required confounding strengths can be **benchmarked against observed covariates**: "the unmeasured confounder would need to be as strong as [observed covariate $X_j$] to reduce the effect to zero."
