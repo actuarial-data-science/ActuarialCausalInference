@@ -62,7 +62,7 @@ A **chain** is a path of the form $X \rightarrow M \rightarrow Y$. The variable 
 A chain: the mediator $M$ transmits the causal effect of the cause $X$ on the effect $Y$.
 ```
 
-In a chain, $X$ and $Y$ are **marginally dependent** (information flows through $M$), but **conditionally independent given $M$**: once we know $M$, learning $X$ provides no additional information about $Y$.
+In a chain, $X$ and $Y$ are **marginally dependent** (information flows through $M$), but **conditionally independent given $M$**: once we know $M$, learning $X$ provides no additional information about $Y$. (The *dependence* half of each statement below relies on {prf:ref}`faithfulness`, introduced with $d$-separation; see the note after the summary table.)
 
 $$
 X \perp\!\!\!\perp Y \mid M \quad \text{(in a chain)}
@@ -123,6 +123,10 @@ This is the source of **collider bias** (also called **selection bias** or **Ber
 | **Chain** (Mediator) | $X \rightarrow M \rightarrow Y$ | Dependent | Independent |
 | **Fork** (Common Cause) | $X \leftarrow F \rightarrow Y$ | Dependent | Independent |
 | **Collider** (Common Effect) | $X \rightarrow C \leftarrow Y$ | Independent | Dependent |
+
+```{note}
+The **Independent** cells (chain/fork conditional on the middle node, collider marginal) follow from the {prf:ref}`causal-markov` alone: $d$-separation implies conditional independence. The **Dependent** cells (chain/fork marginal, conditioned collider) are the *converse* direction — inferring dependence from $d$-connection — and additionally require {prf:ref}`faithfulness`, introduced below. In a non-faithful distribution they can fail: e.g. in a linear chain $X \rightarrow M \rightarrow Y$ whose direct and indirect contributions cancel exactly, $X$ and $Y$ are marginally *independent* despite the open path.
+```
 
 ## $d$-Separation
 
