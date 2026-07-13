@@ -8,10 +8,10 @@ Under the assumptions of ignorability (see below), the observed data represent t
 
 ## Potential Outcomes Framework
 - [Rubin (1974)](https://doi.org/10.1037/h0037350) extended Neyman's (1923) theory for randomized experiments to observational studies.
-- Specifically, when treatment assignment is **strongly ignorable** given a set of observed covariates — that is, when the following two conditions hold ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)):
+- Specifically, when treatment assignment is **strongly ignorable** given a set of observed covariates - that is, when the following two conditions hold ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)):
 
 $$
-(Y(1), Y(0)) \perp T \mid X
+(Y(1), Y(0)) \perp\!\!\!\perp T \mid X
 $$
 
 $$
@@ -30,9 +30,13 @@ Y(t) = Y \quad \text{when } T = t
 $$
 ```
 
-Links the potential outcomes to the observed outcomes by requiring that the two are equal under the same treatment assignments. This ties the potential outcome $Y(t)$ to the factual outcome $Y$ when the treatment actually received is $T = t$ ([Rubin, 1974](https://doi.org/10.1037/h0037350)).
+The observed outcome $Y$ equals the potential outcome $Y(t)$ whenever the treatment actually received is $T = t$. This assumption is what makes potential outcomes empirically meaningful: without it, $Y(t)$ is a purely abstract quantity with no necessary connection to what is measured in data.
 
-**Detecting violations:** Consistency is violated when the treatment $T$ is **not well-defined** — i.e., it encompasses multiple distinct versions. If "treated" patients received different dosages, formulations, or timing, then $Y(1)$ is ambiguous. In data, look for heterogeneous treatment protocols, poor adherence, or treatment variation within the $T=1$ group. If the effect estimate changes substantially when stratifying by treatment sub-type, consistency may be compromised.
+Consistency has two components. First, **no interference**: unit $i$'s potential outcome $Y_i(t)$ depends only on $i$'s own treatment, not on the treatments assigned to other units. Second, **no multiple versions of treatment**: the label $T = t$ corresponds to a single, well-defined treatment version, so that $Y(t)$ is unambiguous regardless of *how* $t$ was delivered.
+
+**Detecting violations:** Violations arise when the treatment $T$ is not sufficiently well-defined. If units assigned $T = t$ received meaningfully different variants - different doses, formulations, timing, or delivery mechanisms - then $Y(t)$ is not a single quantity but an average over distinct potential outcomes that should not be conflated. Empirically, this manifests as effect heterogeneity within treatment arms that cannot be explained by measured covariates. Stratifying by treatment sub-type and testing whether effect estimates shift substantially is a practical diagnostic. Interference violations are harder to detect but can sometimes be probed by examining whether outcomes of untreated units vary with the treatment density of their neighbours.
+
+([Rubin, 1980](https://doi.org/10.2307/2287653); [Cole & Frangakis, 2009](https://doi.org/10.1097/EDE.0b013e31818ef366); [VanderWeele, 2009](https://doi.org/10.1097/EDE.0b013e3181bd5638))
 
 ```{prf:assumption} Stable Unit Treatment Value Assumption (SUTVA)
 :label: sutva
@@ -44,7 +48,7 @@ $$
 
 SUTVA combines consistency and no interference. The **no interference** assumption states that there is no interference between treatment assignment and outcomes across units. Whether one individual receives treatment (or not) has no effect on the potential outcomes of any other individual. This is encapsulated by the usual statistical 'i.i.d.' assumption, but it can easily be violated in a study of the effect of a vaccine or if a treatment is assigned at a group level ([Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)).
 
-**Detecting violations:** Interference is suspected when outcomes of untreated units **correlate with the treatment rate in their neighbourhood or group**. In insurance, if offering a discount to some policyholders influences the behaviour of others in the same household or employer group, SUTVA is violated. Diagnostic: compare outcomes of control units across clusters with different treatment intensities — if they differ systematically, interference is present.
+**Detecting violations:** Interference is suspected when outcomes of untreated units **correlate with the treatment rate in their neighbourhood or group**. In insurance, if offering a discount to some policyholders influences the behaviour of others in the same household or employer group, SUTVA is violated. Diagnostic: compare outcomes of control units across clusters with different treatment intensities - if they differ systematically, interference is present.
 
 ```{prf:assumption} Positivity
 :label: positivity
@@ -78,9 +82,9 @@ $$
 $$
 ```
 
-This implies that conditioning on the observed covariates $X$ is sufficient to remove confounding bias. This is also called *conditional exchangeability*, *conditional ignorability*, or *causal sufficiency* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). This is the strongest and least verifiable of the four assumptions — see the [Assumptions Guide](https://www.uniqcret.com/post/causal-inference-assumptions-guide) for discussion.
+This implies that conditioning on the observed covariates $X$ is sufficient to remove confounding bias. This is also called *conditional exchangeability*, *conditional ignorability*, or *causal sufficiency* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). This is the strongest and least verifiable of the four assumptions - see the [Assumptions Guide](https://www.uniqcret.com/post/causal-inference-assumptions-guide) for discussion.
 
-**Detecting violations:** Exchangeability **cannot be directly tested** because it concerns unobserved confounders by definition. However, indirect evidence includes: (1) **sensitivity analysis** — computing E-values or applying the method of [Cinelli & Hazlett (2020)](https://doi.org/10.1111/rssb.12348) to assess how strong an unmeasured confounder would need to be to explain away the effect; (2) **negative control outcomes** — outcomes known to be unaffected by $T$ that should show zero effect if exchangeability holds; (3) **placebo/falsification tests** — applying the estimator to subgroups where no effect is expected. Persistent sensitivity of results to small unmeasured confounders signals concern.
+**Detecting violations:** Exchangeability **cannot be directly tested** because it concerns unobserved confounders by definition. However, indirect evidence includes: (1) **sensitivity analysis** - computing E-values or applying the method of [Cinelli & Hazlett (2020)](https://doi.org/10.1111/rssb.12348) to assess how strong an unmeasured confounder would need to be to explain away the effect; (2) **negative control outcomes** - outcomes known to be unaffected by $T$ that should show zero effect if exchangeability holds; (3) **placebo/falsification tests** - applying the estimator to subgroups where no effect is expected. Persistent sensitivity of results to small unmeasured confounders signals concern.
 
 By exchangeability ({prf:ref}`exchangeability`) and consistency ({prf:ref}`consistency`), the estimation of the average (causal) treatment effect can be done based on observed data:
 
