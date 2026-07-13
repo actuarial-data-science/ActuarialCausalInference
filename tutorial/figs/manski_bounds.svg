@@ -47,11 +47,11 @@
   <line x1="437" y1="64" x2="437" y2="82" stroke="#7d9f17" stroke-width="2" opacity="0.55"/>
   <text class="muted" x="446" y="77" font-size="10.5">sign unknown</text>
 
-  <!-- Row 2: bounded outcome + monotonicity (tau in [0.5, 5.5]), mid transparency -->
-  <line x1="300" y1="141" x2="437" y2="141" stroke="#7d9f17" stroke-width="9" opacity="0.6" stroke-linecap="round"/>
-  <line x1="300" y1="132" x2="300" y2="150" stroke="#7d9f17" stroke-width="2" opacity="0.8"/>
+  <!-- Row 2: bounded outcome + monotonicity (lower bound exactly 0, tau in [0, 5.5]), mid transparency -->
+  <line x1="290" y1="141" x2="437" y2="141" stroke="#7d9f17" stroke-width="9" opacity="0.6" stroke-linecap="round"/>
+  <line x1="290" y1="132" x2="290" y2="150" stroke="#7d9f17" stroke-width="2" opacity="0.8"/>
   <line x1="437" y1="132" x2="437" y2="150" stroke="#7d9f17" stroke-width="2" opacity="0.8"/>
-  <text class="muted" x="446" y="145" font-size="10.5">effect now positive</text>
+  <text class="muted" x="446" y="145" font-size="10.5">lower bound now 0</text>
 
   <!-- Row 3: instrument (Manski IV bounds) - narrower, but still an interval -->
   <line x1="327" y1="209" x2="400" y2="209" stroke="#7d9f17" stroke-width="9" stroke-linecap="round"/>
