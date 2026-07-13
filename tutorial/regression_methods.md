@@ -61,9 +61,22 @@ Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the pr
 
 1. Fit initial outcome model $\hat{\mu}^0(t, x) = \mathcal{L}_Y(Y \sim T, X)$ and propensity $\hat{\pi}(x) = \mathcal{L}_T(T \sim X)$
 2. Compute the *clever covariate* $H^{(i)} = \frac{T^{(i)}}{\hat{\pi}(x^{(i)})} - \frac{1 - T^{(i)}}{1 - \hat{\pi}(x^{(i)})}$
-3. **Targeting step:** fit a one-parameter fluctuation $\hat{\epsilon}$ by regressing $Y$ on $H$ with offset $\hat{\mu}^0$, giving the updated model $\hat{\mu}^\star(t, x)$
+3. **Targeting step:** fit a one-parameter *logistic* fluctuation $\hat{\epsilon}$ by regressing $Y$ on $H$ with offset $\text{logit}\,\hat{\mu}^0$, giving the updated model $\hat{\mu}^\star(t, x)$ *(valid for $Y \in [0,1]$; see the note below for continuous outcomes)*
 4. Plug the targeted model into g-computation: $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}^\star(1, x^{(i)}) - \hat{\mu}^\star(0, x^{(i)})\right]$
 5. Return estimated treatment effect $\hat{\tau}$
+```
+
+```{note}
+:class: dropdown
+
+**Outcome type matters — read before applying TMLE to loss data.** The targeting step above uses a **logistic fluctuation** (offset $\text{logit}\,\hat{\mu}^0$, clever covariate $H$), which is only valid when the outcome is **binary or bounded in $[0,1]$**. For unbounded continuous outcomes a different fluctuation family is required — a **Gaussian fluctuation with the identity link** ([van der Laan & Rubin, 2006](https://doi.org/10.2202/1557-4679.1043)) — otherwise the targeting step is misspecified and the resulting $\hat{\tau}$ is invalid.
+
+In non-life actuarial work this is the *usual* case, not an edge case: the primary outcomes — **claim amounts, loss ratios, and claim counts** — are continuous or count-valued and unbounded, not $\{0,1\}$. An actuary who applies the logistic formulation above directly to a loss amount is implementing an incorrect targeting step. Two practical routes:
+
+- **Bounded continuous outcomes** (e.g. loss ratios in $[0,1]$, or any outcome rescaled to $[0,1]$ via $\tilde{Y} = (Y - a)/(b - a)$ and back-transformed): the logistic fluctuation applies directly after rescaling ([Gruber & van der Laan, 2010](https://doi.org/10.2202/1557-4679.1260)).
+- **Unbounded outcomes** (claim severities, aggregate losses): use the Gaussian/identity-link fluctuation, or a count-appropriate family for frequencies.
+
+In practice, prefer a maintained implementation such as the R package [`tmle`](https://CRAN.R-project.org/package=tmle), which selects the correct fluctuation family for binary, bounded-continuous, and continuous outcomes automatically.
 ```
 
 ## Double Machine Learning
@@ -85,7 +98,7 @@ The DML estimator of [Chernozhukov et al. (2018)](https://doi.org/10.1111/ectj.1
 	2. Compute residuals $\tilde{Y} = Y - \hat{\mu}(X)$ on $D_{eval}$
 
 3. **Treatment Residualization**
-	1. Train model $\hat{\pi}(X) = \mathcal{L}_T(T \sim X)$ on $D_{train}$ *(Estimate propensity score)*
+	1. Train model $\hat{\pi}(X) = \mathcal{L}_T(T \sim X)$ on $D_{train}$ *(Estimate the treatment conditional mean $\pi(X) = \mathbb{E}[T \mid X]$; for binary $T$ this coincides with the propensity score $\mathbb{P}(T=1 \mid X)$)*
 	2. Compute residuals $\tilde{T} = T - \hat{\pi}(X)$ on $D_{eval}$
 
 4. **Causal Estimation**
@@ -93,6 +106,14 @@ The DML estimator of [Chernozhukov et al. (2018)](https://doi.org/10.1111/ectj.1
 	2. *Note:* This identifies the effect using only the "exogenous" variation in $T$
 
 5. Return estimated treatment effect $\hat{\tau}$
+```
+
+```{note}
+**What the partially linear model actually targets.** The PLM $Y = \tau T + g(X) + \varepsilon$ treats $\tau$ as a *single constant* — an implicit homogeneous-effects assumption. When the true effect is heterogeneous, $\tau(X)$, Robinson's residual-on-residual regression does *not* return the standard ATE $= \mathbb{E}[\tau(X)]$ but the **propensity-overlap-weighted** average
+$$
+\tau^* = \frac{\mathbb{E}\!\big[\tau(X)\,\pi(X)\,(1-\pi(X))\big]}{\mathbb{E}\!\big[\pi(X)\,(1-\pi(X))\big]},
+$$
+with $\pi(X) = \mathbb{E}[T \mid X]$ the propensity score, which over-weights the region of good overlap ($\pi \approx \tfrac12$) and under-weights the propensity tails. $\tau^*$ equals the ATE only when effects are homogeneous or $\pi(X)$ is constant (an RCT) — neither holds in confounded insurance data. To target $\mathbb{E}[\tau(X)]$ under heterogeneity, use the **interactive model** $Y = \tau(X)T + g(X) + \varepsilon$ with an AIPW/doubly robust score, or average the CATEs from the meta-learners and causal forests below ([Chernozhukov et al., 2018](https://doi.org/10.1111/ectj.12097), Sec. 2 vs. 4). Mixing a PLM-DML "ATE" with averaged causal-forest CATEs can therefore yield inconsistent numbers.
 ```
 
 ## Meta-Learners for Heterogeneous Effects
@@ -136,7 +157,7 @@ The estimators above target the average treatment effect. *Meta-learners* extend
 When unobserved confounding exists, an instrument $I$ can identify the causal effect if ([Shalizi, 2025, Ch. 23](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)):
 
 1. *Relevance*: $I$ affects $T$
-2. *Exogenous noise*: $I \perp U$ — the instrumental variable is independent of the unobserved confounder
+2. *Exogenous noise*: $I \perp\!\!\!\perp U$ — the instrumental variable is independent of the unobserved confounder
 3. *Exclusion restriction*: $I$ affects $Y$ only through $T$
 
 The modern econometric interpretation of instrumental variables traces to [Imbens & Angrist (1994)](https://doi.org/10.2307/2951620), who show that 2SLS identifies a *local average treatment effect* for compliers, and to the potential-outcomes framework of [Angrist, Imbens & Rubin (1996)](https://doi.org/10.1080/01621459.1996.10476902); [Angrist & Krueger (1991)](https://doi.org/10.2307/2937954) is the canonical applied example, using quarter of birth as an instrument for schooling.
@@ -156,18 +177,26 @@ Instrumental variable $I$. The instrument induces exogenous variation in the tre
 :label: alg-2sls
 :class: dropdown
 
-**Inputs** Observed instrument $I$, treatment variable $T$, outcome $Y$
+**Inputs** Observed instrument $I$, treatment variable $T$, outcome $Y$, exogenous covariates $X$
 
 **Outputs** Estimated causal effect $\hat{\beta}$ of $T$ on $Y$
 
-1. **Stage 1: Regress $T$ on instrument $I$** *(Isolate exogenous variation)*
-	1. Estimate $\hat{\alpha}$ from $T = \alpha I + \epsilon_1$
-	2. Compute predicted values $\hat{T} = \hat{\alpha} I$ *($\hat{T}$ is now independent of $U$)*
+1. **Stage 1: Regress $T$ on instrument $I$ and covariates $X$** *(Isolate exogenous variation)*
+	1. Estimate $\hat{\alpha}, \hat{\gamma}$ from $T = \alpha I + \gamma X + \epsilon_1$
+	2. Compute predicted values $\hat{T} = \hat{\alpha} I + \hat{\gamma} X$ *($\hat{T}$ is now independent of $U$)*
 
-2. **Stage 2: Regress $Y$ on predicted $\hat{T}$** *(Identify causal mechanism)*
-	1. Estimate $\hat{\beta}$ from $Y = \beta \hat{T} + \epsilon_2$
+2. **Stage 2: Regress $Y$ on predicted $\hat{T}$ and covariates $X$** *(Identify causal mechanism)*
+	1. Estimate $\hat{\beta}, \hat{\delta}$ from $Y = \beta \hat{T} + \delta X + \epsilon_2$
 
 3. Return estimated causal effect $\hat{\beta}$
+```
+
+```{important}
+The **same exogenous covariates $X$ must appear in both stages**. Omitting them produces a biased estimate whenever $X$ is correlated with both the instrument $I$ and the outcome $Y$: the covariates must be *partialled out* of the instrument–treatment relationship for the exclusion restriction and exogeneity conditions to hold conditionally. The bivariate form ($T = \alpha I + \epsilon_1$, $Y = \beta \hat{T} + \epsilon_2$) is valid only under the strong assumption that **no observed covariate affects $Y$** — a condition almost never satisfied in insurance data, where age, tenure, and risk class routinely predict the outcome.
+```
+
+```{tip}
+For valid inference, obtain 2SLS estimates from a **dedicated IV routine** (`linearmodels.IV2SLS` in Python, `AER::ivreg` in R, or `ivregress` in Stata) rather than by fitting the two OLS stages by hand. The two approaches agree on the point estimate $\hat{\beta}$, but only the IV routine returns correct standard errors. The reason is instructive: valid 2SLS inference computes the error variance from the *structural* residuals $u = Y - \hat{\beta}T$ using the **observed** treatment $T$, whereas a manual second-stage OLS would use the fitted-treatment residuals $\hat{\epsilon} = Y - \hat{\beta}\hat{T}$. Since $\hat{\epsilon} = u + \hat{\beta}(T - \hat{T})$, we have $\mathbb{E}[\hat{\epsilon}^2] = \mathbb{E}[u^2] + \beta^2\,\operatorname{Var}(T - \hat{T}) > \mathbb{E}[u^2]$, so hand-rolled standard errors come out too large — widening confidence intervals and shrinking $t$-statistics. Using the dedicated routine keeps inference well-calibrated, which matters in actuarial screening where an over-conservative test can let a genuinely beneficial intervention slip below the significance threshold (Wooldridge, 2010, *Econometric Analysis of Cross Section and Panel Data*, p. 96).
 ```
 
 ## Quasi-Experimental Designs
@@ -176,7 +205,7 @@ When adjustment for measured covariates is insufficient, *quasi-experimental des
 
 ### Difference-in-Differences
 
-Difference-in-differences (DiD) compares the change in outcomes over time between a treated and a control group. Under the *parallel trends* assumption — that, absent treatment, both groups would have evolved in parallel — the post-period gap beyond the projected control trend identifies the average treatment effect on the treated (ATT). The design dates back to [Ashenfelter & Card (1985)](https://doi.org/10.2307/1924810), and [Card & Krueger (1994)](https://doi.org/10.1257/aer.84.4.772) is its best-known application — the New Jersey minimum-wage study. [Sant'Anna & Zhao (2020)](https://doi.org/10.1016/j.jeconom.2020.06.003) give a doubly robust DiD estimator, while [Callaway & Sant'Anna (2021)](https://doi.org/10.1016/j.jeconom.2020.12.001) and [Goodman-Bacon (2021)](https://doi.org/10.1016/j.jeconom.2021.03.014) extend the design to multiple periods and staggered treatment timing.
+Difference-in-differences (DiD) compares the change in outcomes over time between a treated and a control group. Under the *parallel trends* assumption — that, absent treatment, both groups would have evolved in parallel — the post-period gap beyond the projected control trend identifies the average treatment effect on the treated (ATT). The design dates back to [Ashenfelter & Card (1985)](https://doi.org/10.2307/1924810), and [Card & Krueger (1994)](https://doi.org/10.1257/aer.84.4.772) is its best-known application — the New Jersey minimum-wage study. [Sant'Anna & Zhao (2020)](https://doi.org/10.1016/j.jeconom.2020.06.003) give a doubly robust DiD estimator, and [Callaway & Sant'Anna (2021)](https://doi.org/10.1016/j.jeconom.2020.12.001) extend the design to multiple periods and staggered treatment timing with their group-time ATT estimator. [Goodman-Bacon (2021)](https://doi.org/10.1016/j.jeconom.2021.03.014) is not a new estimator but a *decomposition* result: under staggered timing the canonical two-way fixed-effects (TWFE) OLS regression — the default DiD implementation in most software — equals a weighted average of all possible $2 \times 2$ DiDs, and some of those weights turn **negative** when treatment effects are heterogeneous across cohorts or over time, so the TWFE estimate can be attenuated or even sign-reversed *even when parallel trends holds*. This diagnostic motivates the heterogeneity-robust estimators above.
 
 ```{figure} figs/did_parallel_trends.svg
 :width: 80%
@@ -202,13 +231,13 @@ Difference-in-differences. Under parallel trends, the treated group's counterfac
 
 ### Regression Discontinuity
 
-Regression discontinuity (RD) applies when treatment is assigned by a threshold rule on a continuous *running variable* $X$ (e.g. a risk score). The design was first proposed by [Thistlethwaite & Campbell (1960)](https://doi.org/10.1037/h0044319); its modern econometric foundations are due to [Hahn, Todd & van der Klaauw (2001)](https://doi.org/10.1111/1468-0262.00183). Units just below and just above the cutoff $c$ are comparable, so the jump in the outcome at $c$ identifies the local average treatment effect (LATE). [Imbens & Lemieux (2008)](https://doi.org/10.1016/j.jeconom.2007.05.001) provide a practical guide to estimation and bandwidth selection.
+Regression discontinuity (RD) applies when treatment is assigned by a threshold rule on a continuous *running variable* $X$ (e.g. a risk score). The design was first proposed by [Thistlethwaite & Campbell (1960)](https://doi.org/10.1037/h0044319); its modern econometric foundations are due to [Hahn, Todd & van der Klaauw (2001)](https://doi.org/10.1111/1468-0262.00183). Units just below and just above the cutoff $c$ are comparable, so the jump in the outcome at $c$ identifies the **average treatment effect at the cutoff**, $\mathbb{E}[Y(1) - Y(0) \mid X = c]$ — the causal effect *at the discontinuity point* ([Hahn, Todd & van der Klaauw, 2001](https://doi.org/10.1111/1468-0262.00183); [Imbens & Lemieux, 2008](https://doi.org/10.1016/j.jeconom.2007.05.001)). This is a *different* object from the complier LATE of the IV/2SLS design above: in a **sharp** RD every unit switches deterministically from $T=0$ to $T=1$ at $c$, so the estimand conditions on the covariate value $X = c$, not on an unobserved compliance type. [Imbens & Lemieux (2008)](https://doi.org/10.1016/j.jeconom.2007.05.001) provide a practical guide to estimation and bandwidth selection.
 
 ```{figure} figs/rdd_discontinuity.svg
 :width: 80%
 :name: fig-rdd
 
-Regression discontinuity. Treatment switches on at the cutoff $c$; the vertical jump $\tau$ in the fitted outcome at $c$ identifies the local average treatment effect.
+Regression discontinuity. Treatment switches on at the cutoff $c$; the vertical jump $\tau$ in the fitted outcome at $c$ identifies the average treatment effect at the cutoff, $\mathbb{E}[Y(1) - Y(0) \mid X = c]$.
 ```
 
 ```{prf:algorithm} Regression Discontinuity
@@ -217,13 +246,13 @@ Regression discontinuity. Treatment switches on at the cutoff $c$; the vertical 
 
 **Inputs** Running variable $X$, outcome $Y$, cutoff $c$, bandwidth $h$
 
-**Outputs** Estimated LATE $\hat{\tau}$ at the cutoff
+**Outputs** Estimated average treatment effect at the cutoff $\hat{\tau}$
 
 1. Restrict to observations within the bandwidth, $|X - c| \le h$
 2. Fit a local regression just below the cutoff: $\hat{\mu}_-(c) = \lim_{x \uparrow c} \mathbb{E}[Y \mid X = x]$
 3. Fit a local regression just above the cutoff: $\hat{\mu}_+(c) = \lim_{x \downarrow c} \mathbb{E}[Y \mid X = x]$
 4. Estimate the discontinuity: $\hat{\tau} = \hat{\mu}_+(c) - \hat{\mu}_-(c)$
-5. Return estimated LATE $\hat{\tau}$
+5. Return the estimated effect at the cutoff $\hat{\tau}$
 ```
 
 ### Synthetic Control

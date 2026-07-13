@@ -24,10 +24,16 @@ $$
 Y_i(0) \mid X_i, \theta_0 \sim f_0(Y \mid X_i, \theta_0), \qquad Y_i(1) \mid X_i, \theta_1 \sim f_1(Y \mid X_i, \theta_1)
 $$
 
-with priors $\theta_0 \sim p(\theta_0)$ and $\theta_1 \sim p(\theta_1)$. The individual treatment effect is $\tau_i = Y_i(1) - Y_i(0)$, and the posterior distribution of the ATE is:
+with priors $\theta_0 \sim p(\theta_0)$ and $\theta_1 \sim p(\theta_1)$. The individual treatment effect is $\tau_i = Y_i(1) - Y_i(0)$. For a given parameter draw, the ATE is the functional
 
 $$
-p(\tau \mid D) = \int \left[\mathbb{E}_{\theta_1}[Y(1) \mid X] - \mathbb{E}_{\theta_0}[Y(0) \mid X]\right] \, p(\theta_0, \theta_1 \mid D) \, d\theta_0 \, d\theta_1
+\text{ATE}(\theta_0, \theta_1) = \mathbb{E}_X\!\left[\mathbb{E}_{\theta_1}[Y(1) \mid X] - \mathbb{E}_{\theta_0}[Y(0) \mid X]\right],
+$$
+
+where the outer $\mathbb{E}_X$ averages over the covariate distribution. Its **posterior distribution** is the pushforward of $p(\theta_0, \theta_1 \mid D)$ through this functional — obtained by drawing $(\theta_0, \theta_1) \sim p(\theta_0, \theta_1 \mid D)$ and evaluating $\text{ATE}(\theta_0, \theta_1)$ for each draw. Summarising that distribution by its mean gives the **posterior mean ATE**:
+
+$$
+\mathbb{E}[\text{ATE} \mid D] = \int \mathbb{E}_X\!\left[\mathbb{E}_{\theta_1}[Y(1) \mid X] - \mathbb{E}_{\theta_0}[Y(0) \mid X]\right] p(\theta_0, \theta_1 \mid D) \, d\theta_0 \, d\theta_1
 $$
 ```
 

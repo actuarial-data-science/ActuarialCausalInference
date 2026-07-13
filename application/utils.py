@@ -910,7 +910,23 @@ def plot_rosenbaum(bounds_df, alpha=0.05, title='Rosenbaum Sensitivity Bounds'):
     return fig
 
 def show(fig):
-    """Display a Plotly figure that auto-resizes to the page width."""
-    import plotly.offline
+    """Display a Plotly figure that auto-resizes to the page width.
+
+    Rendered as an inline HTML div WITHOUT bundling MathJax. Plotly's offline
+    embedding (``plotly.offline.iplot``) otherwise injects MathJax v2.7.5 into
+    every figure, which hijacks ``window.MathJax`` and clobbers Jupyter Book's
+    page-level MathJax v3 — leaving all ``$...$`` / ``$$...$$`` equations on the
+    page rendered as their raw delimiters. Our figures use only Unicode in
+    their labels, so no in-figure MathJax is needed.
+    """
+    import plotly.io as pio
+    from IPython.display import HTML, display
     fig.update_layout(autosize=True, width=None)
-    plotly.offline.iplot(fig, config={"responsive": True})
+    html = pio.to_html(
+        fig,
+        include_plotlyjs="cdn",
+        include_mathjax=False,
+        full_html=False,
+        config={"responsive": True},
+    )
+    display(HTML(html))

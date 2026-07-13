@@ -23,7 +23,7 @@ The mechanism is the tower property of conditional expectation: $\mu(X) = \int \
 A model satisfies **fairness through unawareness** if it does not use the sensitive attribute $S$ as input: $\hat{\mu}(X) = f(X)$.
 ```
 
-Unawareness is necessary but not sufficient - it does not prevent proxy discrimination.
+Unawareness is not sufficient - it does not prevent proxy discrimination.
 
 ```{prf:definition} Discrimination-Free Pricing
 :label: discrimination-free-pricing
@@ -42,7 +42,7 @@ i.e., the sensitive attribute $S$ carries no additional information about $Y$ be
 :label: counterfactual-limits
 :class: dropdown
 
-The machine learning literature proposes **counterfactual fairness** ([Kusner et al., 2017](https://arxiv.org/abs/1703.06856)): a predictor is fair if its output would be unchanged had the individual's sensitive attribute been different, all else being equal. This requires computing $\hat{\mu}_{S \leftarrow s'}(X)$ - the prediction under a hypothetical intervention $do(S = s')$ applied directly to the sensitive attribute itself.
+The machine learning literature proposes **counterfactual fairness** ([Kusner et al., 2017](https://arxiv.org/abs/1703.06856)): a predictor is fair if its output would be unchanged had the individual's sensitive attribute been different, with every $S$-descendant regenerated accordingly. Formally ([Kusner et al., 2017](https://arxiv.org/abs/1703.06856), Def. 3) this requires the counterfactual prediction $\hat{\mu}_{S \leftarrow s'}(U)$ — a function of the latent background variables $U$ (the abduction–action–prediction recipe), *not* of the factual features $X$: under the intervention $do(S = s')$ any covariate that descends from $S$ is recomputed from the structural equations rather than held at its observed value.
 
 For immutable characteristics such as gender or ethnicity, this counterfactual is philosophically ill-defined. Because $X$ is partly *constituted* by $S$ through the very causal pathways we are trying to reason about, there is no coherent notion of what the individual's covariates would look like had they been born into a different group. Enforcing counterfactual fairness may therefore erase legitimate causal effects and requires strong, untestable assumptions about the structural equations - assumptions that cannot be verified from observational data alone.
 ```
@@ -74,7 +74,7 @@ This resolves the philosophical objection cleanly: **we never intervene on $S$ a
 :label: group-fairness-criteria
 :class: dropdown
 
-The machine learning literature evaluates a predictor against several **group fairness criteria** ([Barocas et al., 2019](https://fairmlbook.org/)). The interactive explainer in {doc}`../application/pricing` lets you toggle between the criteria defined below and watch the consequence of each choice. Each criterion is an independence condition on $\hat{Y}$; what distinguishes them is *which* errors they equalise, and therefore *what they cost* when the groups have genuinely different risk.
+The machine learning literature evaluates a predictor against several **group fairness criteria** ([Barocas et al., 2019](https://fairmlbook.org/)). The interactive explainer in {doc}`../application/pricing` lets you toggle between the criteria defined below and watch the consequence of each choice. Most are *classification-parity* conditions that constrain the decision $\hat{Y}$ (its rate or its errors) across groups; calibration is different — it constrains the outcome given the score, $Y \perp\!\!\!\perp S \mid \hat{\mu}(X)$, fixing the statistical meaning of the score rather than the decision rate. What distinguishes the criteria is *which* errors they equalise, and therefore *what they cost* when the groups have genuinely different risk.
 ```
 
 The **weakest** criterion is {prf:ref}`fairness-unawareness` (group unawareness): $S$ is simply not an input. As the whole of this page argues, proxy discrimination defeats it. The four criteria below are progressively more demanding constraints on the *decisions*, not the inputs.

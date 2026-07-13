@@ -13,6 +13,11 @@ $$0 < \pi(x) < 1 \quad \text{for all } x .$$
 
 The range of covariates where this holds — where the propensity score distributions of the treated ($T=1$) and control ($T=0$) groups overlap — is called the region of **common support** (or *overlap*). When $\pi(x)$ approaches $0$ or $1$ for some covariate profile, there are no comparable units in the opposite group: matching finds no partner to pair with, and inverse-probability weights explode. In practice, overlap is diagnosed by inspecting the distribution of the estimated scores $\hat{\pi}(x)$ in each treatment group.
 
+A lack of overlap can stem from two qualitatively different sources, and the distinction dictates the appropriate response ([Hernán & Robins, 2020](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/), Ch. 3; [Crump et al., 2009](https://doi.org/10.1093/biomet/asn055)):
+
+- **Structural zeros** — the covariate profile has *no theoretical chance* of appearing in one arm, e.g. an insurance programme with a hard eligibility rule. The causal effect is *not identified* for those units, and no matching or weighting can recover it; the target population must be redefined to the region where both arms are possible.
+- **Empirical near-violations** — overlap holds in the population, but finite-sample sparsity leaves some regions thinly populated. Overlap weighting, trimming, or restricting to the estimated common-support region ([Crump et al., 2009](https://doi.org/10.1093/biomet/asn055)) stabilise estimation here.
+
 ## Propensity Score Matching
 Matching focuses on creating "apples-to-apples" comparisons by pairing treated units with similar control units. This algorithm typically estimates the Average Treatment Effect on the Treated (ATT).
 
@@ -46,7 +51,7 @@ Matching focuses on creating "apples-to-apples" comparisons by pairing treated u
 
 
 ## Inverse Propensity Score Weighting
-Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-population" where the treatment is independent of measured covariates. This approach is often used to estimate the Average Treatment Effect (ATE) for the entire population. {cite:t}`austin2011`
+Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-population" where the treatment is independent of measured covariates. This approach is often used to estimate the Average Treatment Effect (ATE) for the entire population. {cite:t}`austin2011` This independence, however, is achieved *only if the propensity model $\hat{\pi}(x)$ is correctly specified* (and overlap holds): IPW is **singly robust** — consistent if and only if $\hat{\pi}(x)$ is correct. Under a misspecified propensity model (e.g. a logistic fit omitting a relevant covariate or non-linear interaction) the reweighted sample does *not* balance $X$, and the ATE estimate is biased — sometimes severely ([Kang & Schafer, 2007](https://doi.org/10.1214/07-STS227); [Lunceford & Davidian, 2004](https://doi.org/10.1002/sim.1903), Thm. 1). Doubly robust estimators (AIPW) relax this by staying consistent if *either* the propensity or the outcome model is correct.
 
 ```{prf:algorithm} Propensity Score Weighting
 :label: alg-psw
@@ -80,7 +85,15 @@ The interactive figure below applies both methods to a single simulated dataset 
 - **Matching caliper** $\delta$ — widen or tighten the maximum propensity gap allowed within a pair, and see how many treated units get matched versus discarded.
 - **New sample** — redraw the data to see the sampling variability of each estimate.
 
-The panels let you compare, on the same data, (1) propensity score overlap, (2) the matched pairs formed by PSM, and (3) the inverse-probability-weighted points used by IPTW. The summary cards contrast the naïve difference in means against the PSM estimate of the ATT ($\hat{\tau}_{ATT}$) and the IPTW estimate of the ATE ($\hat{\tau}_{ATE}$), both relative to the true effect.
+The panels let you compare, on the same data, (1) propensity score overlap, (2) the matched pairs formed by PSM, and (3) the inverse-probability-weighted points used by IPTW. The summary cards contrast the naïve difference in means against the PSM estimate of the ATT ($\hat{\tau}_{ATT}$) and the IPTW estimate of the ATE ($\hat{\tau}_{ATE}$), each benchmarked against its *own* target — the PSM estimate against the true ATT, the IPTW estimate against the true ATE. Because assignment is positively confounded, the treated are drawn from higher-effect strata, so the true ATT exceeds the true ATE; benchmarking PSM against the ATE would wrongly make it look upward-biased as confounding grows.
+
+The two sliders set the green terms below — the **confounding strength** $\beta$ in the treatment-assignment model and the **matching caliper** $\delta$ in the pairing rule:
+
+$$
+\pi(x) = \sigma\bigl(0.3 + \textcolor{#7d9f17}{\beta}\, x_1 - 0.5\, x_2\bigr),
+\qquad
+\text{match } (i, j) \iff \bigl|\hat{\pi}(x_i) - \hat{\pi}(x_j)\bigr| \le \textcolor{#7d9f17}{\delta}
+$$
 
 ```{raw} html
 <iframe id="psm-iptw" src="../figure/psm_iptw_explainer.html?v=20260610d"

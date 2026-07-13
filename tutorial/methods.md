@@ -80,10 +80,9 @@ When confounding between $T$ and $Y$ is unobserved but an observed mediator $M$ 
 
 ### The Frontdoor Criterion
 
-When all backdoor paths are blocked by **unobserved** confounders, the backdoor criterion cannot be applied. The frontdoor criterion provides an alternative identification strategy through an observed mediator ([Shalizi, 2025, §21.4](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+When backdoor paths run through **unobserved** confounders and therefore cannot be blocked, the backdoor criterion cannot be applied. The frontdoor criterion provides an alternative identification strategy through an observed mediator ([Shalizi, 2025, §21.4](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ```{prf:criterion} Frontdoor Criterion
-
 :class: dropdown
 :label: frontdoor-criterion
 
@@ -126,7 +125,7 @@ Consider the DAG where $U$ is unobserved:
 $U \rightarrow T, \quad U \rightarrow Y, \quad T \rightarrow M, \quad M \rightarrow Y$
 
 - The backdoor criterion **fails** because we cannot condition on $U$.
-- **Candidate $M = \{M\}$**: All causal paths from $T$ to $Y$ go through $M$ ✓. No backdoor path from $T$ to $M$ (since $U \rightarrow T$ and $U \rightarrow Y$, but no path $T \leftarrow \cdots M$ bypassing the direct edge) ✓. The backdoor path from $M$ to $Y$ through $U$ is $M \leftarrow T \leftarrow U \rightarrow Y$, which is blocked by $T$ ✓. The frontdoor criterion is satisfied.
+- **Candidate $M = \{M\}$**: All causal paths from $T$ to $Y$ go through $M$ ✓. The only backdoor path from $T$ to $M$, namely $T \leftarrow U \rightarrow Y \leftarrow M$, is **blocked by the unconditioned collider at $Y$** (both $U \rightarrow Y$ and $M \rightarrow Y$ are arrows into $Y$; {prf:ref}`collider`) — it is blocked, not absent ✓. The backdoor path from $M$ to $Y$ through $U$ is $M \leftarrow T \leftarrow U \rightarrow Y$, which is blocked by $T$ ✓. The frontdoor criterion is satisfied.
 ```
 
 ```{figure} figs/frontdoor.svg
@@ -191,9 +190,11 @@ The **SGS algorithm** (Spirtes, Glymour & Scheines, 1993) is a constraint-based 
 
 **Phase III — Orient Remaining Edges:**
 
-4. Repeatedly apply the following **orientation rules** until no more edges can be oriented:
-	1. **Acyclicity:** If $X \rightarrow Z - Y$ and $X$ and $Y$ are not adjacent, orient as $Z \rightarrow Y$
-	2. **No new v-structures:** If there is a directed path $X \rightarrow \cdots \rightarrow Y$ and an undirected edge $X - Y$, orient as $X \rightarrow Y$
+4. Repeatedly apply **Meek's orientation rules** ([Meek, 1995](https://dl.acm.org/doi/10.5555/2074158.2074204)) until no more edges can be oriented:
+	1. **R1 — No new v-structures:** If $X \rightarrow Z - Y$ and $X$ and $Y$ are not adjacent, orient as $Z \rightarrow Y$ (orienting $Y \rightarrow Z$ would create a new unshielded collider at $Z$)
+	2. **R2 — Acyclicity:** If there is a directed path $X \rightarrow \cdots \rightarrow Y$ and an undirected edge $X - Y$, orient as $X \rightarrow Y$ (orienting $Y \rightarrow X$ would close a directed cycle)
+	3. **R3 — No new v-structures:** If $X - Y$, $X - Z$, $X - W$, $Z \rightarrow Y$, $W \rightarrow Y$, and $Z$ and $W$ are not adjacent, orient as $X \rightarrow Y$
+	4. **R4 — Acyclicity:** If $X - Y$, $X - Z$, $X - W$, $Z \rightarrow W$, $W \rightarrow Y$, and $Z$ and $Y$ are not adjacent, orient as $X \rightarrow Y$
 ```
 
 The SGS algorithm is correct under the assumptions of the Causal Markov Condition ({prf:ref}`causal-markov`) and faithfulness ({prf:ref}`faithfulness`). In practice, the **PC algorithm** (a computationally efficient variant) is more commonly used: it restricts the conditioning sets in Phase I to neighbours of $X$ or $Y$ in the current skeleton, greatly reducing the number of tests ([Shalizi, 2025, §22.4](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
