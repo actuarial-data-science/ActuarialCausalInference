@@ -14,7 +14,7 @@ Estimation tells us *how* to compute this quantity from a finite sample. The cho
 
 ## Treatment Effects
 
-The three fundamental causal estimands are:
+The main causal estimands targeted in this tutorial are:
 
 * **Average Treatment Effect (ATE):** The population-level causal effect:
     $$\tau = \mathbb{E}[Y(1) - Y(0)]$$
@@ -22,6 +22,9 @@ The three fundamental causal estimands are:
     $$\tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X=x]$$
 * **Average Treatment Effect on the Treated (ATT):** The effect for those who actually received treatment:
     $$\text{ATT} = \mathbb{E}[Y(1) - Y(0) \mid T=1]$$
+* **Local Average Treatment Effect (LATE):** The effect among the *compliers* — units whose treatment status responds to an instrument $Z$:
+    $$\text{LATE} = \mathbb{E}[Y(1) - Y(0) \mid \text{complier}]$$
+    Recovered by instrumental-variable methods, it conditions on complier status rather than treatment receipt, so it is a distinct estimand from the ATT ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)).
 
 Different estimation methods target different estimands. The table below maps methods to their primary targets.
 
