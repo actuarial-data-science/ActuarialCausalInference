@@ -108,6 +108,14 @@ The DML estimator of [Chernozhukov et al. (2018)](https://doi.org/10.1111/ectj.1
 5. Return estimated treatment effect $\hat{\tau}$
 ```
 
+```{note}
+**What the partially linear model actually targets.** The PLM $Y = \tau T + g(X) + \varepsilon$ treats $\tau$ as a *single constant* — an implicit homogeneous-effects assumption. When the true effect is heterogeneous, $\tau(X)$, Robinson's residual-on-residual regression does *not* return the standard ATE $= \mathbb{E}[\tau(X)]$ but the **propensity-overlap-weighted** average
+$$
+\tau^* = \frac{\mathbb{E}\!\big[\tau(X)\,\pi(X)\,(1-\pi(X))\big]}{\mathbb{E}\!\big[\pi(X)\,(1-\pi(X))\big]},
+$$
+with $\pi(X) = \mathbb{E}[T \mid X]$ the propensity score, which over-weights the region of good overlap ($\pi \approx \tfrac12$) and under-weights the propensity tails. $\tau^*$ equals the ATE only when effects are homogeneous or $\pi(X)$ is constant (an RCT) — neither holds in confounded insurance data. To target $\mathbb{E}[\tau(X)]$ under heterogeneity, use the **interactive model** $Y = \tau(X)T + g(X) + \varepsilon$ with an AIPW/doubly robust score, or average the CATEs from the meta-learners and causal forests below ([Chernozhukov et al., 2018](https://doi.org/10.1111/ectj.12097), Sec. 2 vs. 4). Mixing a PLM-DML "ATE" with averaged causal-forest CATEs can therefore yield inconsistent numbers.
+```
+
 ## Meta-Learners for Heterogeneous Effects
 
 The estimators above target the average treatment effect. *Meta-learners* extend regression adjustment to the conditional average treatment effect (CATE) $\tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X = x]$ by decomposing the problem into standard regression sub-tasks solved by any base learner. [Künzel et al. (2019)](https://doi.org/10.1073/pnas.1804597116) introduced the S-, T-, and X-learners; the *R-learner* of [Nie & Wager (2021)](https://doi.org/10.1093/biomet/asaa076) is the direct CATE generalization of the DML residualization above, and the *DR-learner* of [Kennedy (2023)](https://doi.org/10.1214/23-EJS2157) regresses the doubly robust AIPW score on covariates. [Semenova & Chernozhukov (2021)](https://doi.org/10.1093/ectj/utaa027) extend DML to estimate CATEs and other causal functions. These estimators bridge directly to the {prf:ref}`alg-causaltree` and {prf:ref}`alg-causalforest` methods that follow.
