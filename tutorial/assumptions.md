@@ -83,7 +83,7 @@ Conditioning on the observed covariates $X$ is then sufficient to remove confoun
 ```{note}
 :class: dropdown
 
-**These conditions form a strict hierarchy — they are *not* equivalent.** Three nested versions of exchangeability are commonly written down, in *decreasing* order of strength ([Greenland & Robins, 1986](https://doi.org/10.1093/ije/15.3.413), [2009](https://doi.org/10.1186/1742-5573-6-4)):
+Three nested versions of exchangeability are commonly written down, in *decreasing* order of strength ([Greenland & Robins, 1986](https://doi.org/10.1093/ije/15.3.413), [2009](https://doi.org/10.1186/1742-5573-6-4)):
 
 1. **Full (joint):** $(Y(1), Y(0)) \perp\!\!\!\perp T \mid X$.
 2. **Marginal (per-treatment):** $Y(t) \perp\!\!\!\perp T \mid X$ for all $t$.
