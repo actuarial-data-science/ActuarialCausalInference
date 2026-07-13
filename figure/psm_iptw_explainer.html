@@ -76,7 +76,8 @@
 </div>
 
 <div class="cards">
-  <div class="card"><div class="k">True effect</div><div class="v" id="mTrue">&mdash;</div></div>
+  <div class="card"><div class="k">True ATT (PSM target)</div><div class="v" id="mTrueAtt">&mdash;</div></div>
+  <div class="card"><div class="k">True ATE (IPTW target)</div><div class="v" id="mTrueAte">&mdash;</div></div>
   <div class="card"><div class="k">Na&iuml;ve difference</div><div class="v" id="mNaive">&mdash;</div></div>
   <div class="card"><div class="k">PSM &middot; ATT</div><div class="v" id="mAtt">&mdash;</div></div>
   <div class="card"><div class="k">IPTW &middot; ATE</div><div class="v" id="mAte">&mdash;</div></div>
@@ -194,7 +195,9 @@
 
     var yT=[],yC=[];for(i=0;i<N;i++){(t[i]?yT:yC).push(y[i]);}
     var naive=mean(yT)-mean(yC);
-    var trueEff=mean(s.eff);
+    var effT=[];for(i=0;i<N;i++){if(t[i])effT.push(s.eff[i]);}
+    var trueAte=mean(s.eff);
+    var trueAtt=effT.length?mean(effT):NaN;
 
     var used=new Array(N).fill(false),pairs=[];
     for(var a=0;a<tr.length;a++){
@@ -212,7 +215,8 @@
     var wyT=[],wT=[],wyC=[],wC=[];for(i=0;i<N;i++){if(t[i]){wT.push(w[i]);wyT.push(y[i]);}else{wC.push(w[i]);wyC.push(y[i]);}}
     var ate=wmean(wyT,wT)-wmean(wyC,wC);
 
-    document.getElementById('mTrue').textContent="+"+fmt(trueEff);
+    document.getElementById('mTrueAtt').textContent=isNaN(trueAtt)?"\u2014":"+"+fmt(trueAtt);
+    document.getElementById('mTrueAte').textContent="+"+fmt(trueAte);
     document.getElementById('mNaive').textContent=fmt(naive);
     document.getElementById('mAtt').textContent=isNaN(att)?"\u2014":fmt(att);
     document.getElementById('mAte').textContent=fmt(ate);
