@@ -59,7 +59,7 @@ The causal question posed is:
 
 Crucially, the intervention used to answer this question is **not** $do(S = s')$ (changing the sensitive attribute), but rather $do(X = x)$ - **fixing the non-protected covariates to their observed value externally**. This cuts the causal edge $S \to X$ in the DAG: in the resulting mutilated graph, $X$ is no longer influenced by $S$, so $S$ and $X$ become statistically independent. The sensitive attribute $S$ remains free to vary according to its population marginal $P(S)$.
 
-Applying the **truncated factorisation formula** to the mutilated graph then yields (Proposition 15 of Lindholm et al.):
+Applying the **truncated factorisation formula** to the mutilated graph then yields ([Proposition 15 of Lindholm et al.](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)):
 
 $$E\bigl[Y \mid do(X{=}x)\bigr] = \int E[Y \mid X{=}x,\, S{=}s] \, \mathrm{d}P(S{=}s) = \mu^{\mathrm{df}}(x),$$
 
@@ -161,23 +161,9 @@ The DAG makes precise why purely statistical constraints fail: not every $S \to 
 - **Separate proxy from legitimate channels.** The proxy path $S \to X_1 \to Y$ is the discriminatory mechanism, whereas $S \to X_2 \to Y$ runs through a bona fide risk factor and is actuarially defensible. Lindholm et al. show that intervening $do(X{=}x)$ - fixing the non-protected covariates externally - severs the $S \to X$ edge, making $S$ independent of $X$ in the mutilated graph. The discrimination-free price is then the expected claim in this post-intervention world, averaged over the marginal $P(S)$, which neutralises the proxy channel without any manipulation of $S$ ([Lindholm et al., 2021](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117), Section 3).
 - **Construct the discrimination-free price.** Operationally, {prf:ref}`discrimination-free-pricing` is obtained by integrating the price over the *marginal* $P(S)$ rather than the conditional $P(S \mid X)$, which severs the $X$–$S$ dependence that the tower property would otherwise exploit ([Lindholm et al., 2021](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)).
 
-**Where the Wasserstein distance fits in.** When the dependence between $X$ and $S$ cannot be fully removed - or when statistical parity is required as a hard constraint - fairness can be enforced *geometrically* via optimal transport.
 
-```{prf:definition} Wasserstein-2 Distance and Barycenter
-:label: wasserstein-barycenter
+```{note} Actuarial takeaway: fairness is a causal question
 :class: dropdown
 
-For two distributions $P, Q$ on $\mathbb{R}$ with finite second moments, the **Wasserstein-2 distance** is the minimal expected squared cost of transporting one onto the other,
-
-$$
-W_2(P, Q) = \left( \inf_{\pi \in \Pi(P, Q)} \int |u - v|^2 \, \mathrm{d}\pi(u, v) \right)^{1/2},
-$$
-
-where $\Pi(P, Q)$ is the set of couplings (joint distributions) with marginals $P$ and $Q$. Given the group-conditional price distributions $P(\hat{\mu} \mid S{=}s)$ with group shares $P(S{=}s)$, their **Wasserstein barycenter** is the distribution that minimises the total squared $W_2$ distance to all of them,
-
-$$
-\bar{P} = \arg\min_{P} \sum_{s} P(S{=}s)\, W_2^2\bigl(P,\; P(\hat{\mu} \mid S{=}s)\bigr).
-$$
+Fairness in insurance is, at its core, a *causal* question rather than a purely statistical one. Fairness through unawareness is insufficient because correlated covariates let the price reconstruct the sensitive attribute through proxy channels; the group-fairness criteria, though valuable as diagnostic checks, are mutually incompatible at unequal base rates and cannot by themselves tell discrimination apart from legitimate risk differentiation. Causal reasoning dissolves this tension by making the underlying DAG explicit: it closes spurious confounding paths, isolates the discriminatory proxy channel from actuarially defensible risk factors, and yields the discrimination-free price by averaging over the marginal $P(S)$ instead of the conditional $P(S \mid X)$. For the actuary this reframes non-discrimination as a modelling discipline that is fully aligned with the profession's mandate: premiums that reflect genuine, causally justified risk while remaining free of illegitimate discrimination — actuarially sound and ethically defensible at once, and a concrete instance of the shift from passive risk measurement to active, responsible risk management that runs through this tutorial.
 ```
-
-The idea is to map each group-conditional price distribution $P(\hat{\mu} \mid S{=}s)$ onto a common target - the **Wasserstein barycenter** $\bar{P}$ ({prf:ref}`wasserstein-barycenter`). Projecting onto this barycenter yields (approximate) demographic parity while distorting the original prices as little as possible, since $W_2$ measures the minimal "cost" of reshaping one distribution into another ([Chzhen et al., 2020](https://arxiv.org/abs/2006.07286); [Plečko & Meinshausen, 2020](https://arxiv.org/abs/1911.06685)). Beyond repair, the Wasserstein distance also serves as a continuous **fairness metric**: $W_2\bigl(P(\hat{\mu}\mid S{=}s),\, P(\hat{\mu}\mid S{=}s')\bigr)$ quantifies how far apart the price distributions of two groups remain, complementing the binary independence tests of the group-fairness criteria above.
