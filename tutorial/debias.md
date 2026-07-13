@@ -52,6 +52,8 @@ In insurance, confounding arises when healthier policyholders self-select into w
 
 Selection bias can occur at study entry (differential enrolment), during follow-up (differential attrition), or through post-treatment conditioning. It violates {prf:ref}`exchangeability` at the population level. In insurance, survivorship bias in long-term policy data is a common example: only policies that were not cancelled are observed.
 
+When selection acts through a variable that is a *common effect* of $T$ and $Y$ (or of their causes) — as in survivorship or filed-claim samples — the underlying mechanism is exactly the **collider-stratification bias** defined next: "selection bias" and "collider bias" are then the *same* structural phenomenon seen from the sampling side versus the adjustment side ([Hernán, Hernández-Díaz & Robins, 2004](https://doi.org/10.1097/01.ede.0000135174.63482.43); [Hernán & Robins, 2020](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/), Ch. 8). What matters for remediation is not the label but *where the collider sits*: it must never be "adjusted for" (that induces the bias), yet when selection is unavoidable an unbiased effect can often be recovered by **reweighting on the inverse probability of selection** (IPCW), provided the selection mechanism is itself modelled.
+
 ### Collider Bias
 
 ```{prf:definition} Collider Bias
@@ -67,7 +69,7 @@ Selection bias can occur at study entry (differential enrolment), during follow-
 Collider bias: $C$ is a common effect of $T$ and $Y$. Conditioning on $C$ opens a non-causal path between treatment and outcome.
 ```
 
-Collider bias results from **incorrect adjustment**, not from a violated assumption per se. In insurance, analysing claims conditional on whether a claim was *filed* can introduce collider bias, since filing depends on both the treatment and the outcome severity. DAG-guided variable selection ({prf:ref}`backdoor-criterion`) is the primary safeguard.
+Collider bias results from **incorrect adjustment**, not from a violated assumption per se. In insurance, analysing claims conditional on whether a claim was *filed* can introduce collider bias, since filing depends on both the treatment and the outcome severity. A collider can be conditioned on in two ways: *explicitly*, by adjusting for a post-treatment common effect, or *implicitly*, by **selecting** the sample on one — the latter is precisely the collider mechanism behind the selection bias above, so the two categories overlap rather than being mutually exclusive ([Hernán, Hernández-Díaz & Robins, 2004](https://doi.org/10.1097/01.ede.0000135174.63482.43)). The remedy differs by route: an *explicitly* adjusted collider is fixed simply by **not conditioning on it** (DAG-guided variable selection, {prf:ref}`backdoor-criterion`), whereas a collider baked into the *sampling* cannot be un-selected and must instead be corrected by **inverse-probability-of-selection weighting** (IPCW). DAG-guided variable selection is the primary safeguard against the first route.
 
 ### Positivity Violations
 
