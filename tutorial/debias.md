@@ -101,7 +101,7 @@ Include confounders $F$ as covariates in the outcome model ([Wooldridge, 2012](h
 
 ### Reweight
 
-Inverse-probability weighting (IPW) creates a pseudo-population in which treatment is independent of confounders. **Inverse-probability-of-censoring weighting** (IPCW) extends this idea to correct for selection bias due to attrition or censoring. **Stabilised weights** $w^{s} = P(T{=}t) / P(T{=}t \mid X)$ reduce variance ([Austin, 2011](https://doi.org/10.1080/00273171.2011.568786)). **Overlap weighting** — with weights proportional to $\pi(x)(1-\pi(x))$ — naturally down-weights units in regions of poor overlap and is particularly useful when positivity is borderline.
+Inverse-probability weighting (IPW) creates a pseudo-population in which treatment is independent of confounders. **Inverse-probability-of-censoring weighting** (IPCW) extends this idea to correct for selection bias due to attrition or censoring. **Stabilised weights** $w^{s} = P(T{=}t) / P(T{=}t \mid X)$ reduce variance ([Austin, 2011](https://doi.org/10.1080/00273171.2011.568786)). **Overlap weighting** — assigning each treated unit weight $1-\pi(x)$ and each control unit weight $\pi(x)$, whose product $\pi(x)(1-\pi(x))$ is the tilting function defining the overlap population ([Li, Morgan & Zaslavsky, 2018](https://doi.org/10.1080/01621459.2016.1260466)) — naturally down-weights units in regions of poor overlap and is particularly useful when positivity is borderline.
 
 ### Restrict
 
