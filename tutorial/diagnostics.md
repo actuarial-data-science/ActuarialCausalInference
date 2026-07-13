@@ -80,7 +80,7 @@ $$
 \text{SMD}_j = \frac{\bar{X}_{j,1} - \bar{X}_{j,0}}{\sqrt{(s_{j,1}^2 + s_{j,0}^2) / 2}}
 $$
 
-where $\bar{X}_{j,t}$ and $s_{j,t}^2$ are the (weighted) mean and variance of $X_j$ in treatment group $t$.
+where $\bar{X}_{j,t}$ is the (weighted) mean of $X_j$ in treatment group $t$ — computed on the weighted/matched sample after adjustment — while the denominator standard deviations $s_{j,t}^2$ are the **unweighted** variances from the full, unadjusted sample and are held **fixed** across the pre- and post-adjustment comparison ([Austin, 2009](https://doi.org/10.1002/sim.3697), p. 3085; [Austin, 2011](https://doi.org/10.1080/00273171.2011.568786)). Re-computing the denominator from the weighted pseudo-population would put the pre- and post-adjustment SMDs on different scales and let extreme weights deflate the variance, making balance look better than it is.
 ```
 
 A common threshold is $|\text{SMD}| < 0.1$ for adequate balance. For propensity-score-based methods, compare SMDs before and after weighting/matching across all covariates. Poor balance signals residual confounding that undermines the analysis.
