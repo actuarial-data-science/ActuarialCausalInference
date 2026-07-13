@@ -54,13 +54,13 @@ The **assignment mechanism** describes the process by which units come to receiv
 
 ### Confounding
 
-A **confounder** (or fork) $F$ is a variable that causally influences both the treatment assignment $T$ and the outcome $Y$. When confounders are present but not adjusted for, the observed association between $T$ and $Y$ is a mixture of the true causal effect and the spurious association induced by the confounder — this is **confounding bias** ([Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1); [Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)). For a visual tutorial on confounding via Simpson's Paradox, see [this simulation walkthrough](https://www.biostatistics.ca/when-data-lies-simpsons-paradox-a-step-by-step-simulation-code-notebook/).
+A **confounder** (or fork) $F$ is a variable that causally influences both the treatment assignment $T$ and the outcome $Y$. When confounders are present but not adjusted for, the observed association between $T$ and $Y$ mixes a causal term with a spurious *baseline* (selection) difference between the two groups — this is **confounding bias** ([Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1); [Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)). As the decomposition below makes precise, without further assumptions the causal term isolated by the naive contrast is the effect *on the treated* (ATT), **not** the unconditional ATE, and the residual equals pure confounding only under effect homogeneity ($\text{ATT} = \text{ATE}$). For a visual tutorial on confounding via Simpson's Paradox, see [this simulation walkthrough](https://www.biostatistics.ca/when-data-lies-simpsons-paradox-a-step-by-step-simulation-code-notebook/).
 
 $$
-\underbrace{\mathbb{E}[Y \mid T=1] - \mathbb{E}[Y \mid T=0]}_{\text{observed difference}} \;=\; \underbrace{\mathbb{E}[Y(1) - Y(0) \mid T=1]}_{\text{causal effect (ATT)}} \;+\; \underbrace{\text{bias}}_{\text{due to confounding}}
+\underbrace{\mathbb{E}[Y \mid T=1] - \mathbb{E}[Y \mid T=0]}_{\text{observed difference}} \;=\; \underbrace{\mathbb{E}[Y(1) - Y(0) \mid T=1]}_{\text{ATT}} \;+\; \underbrace{\mathbb{E}[Y(0) \mid T=1] - \mathbb{E}[Y(0) \mid T=0]}_{\text{baseline (selection) bias}}
 $$
 
-The goal of causal inference methods (matching, weighting, regression adjustment, etc.) is to eliminate this bias by appropriately adjusting for the confounders.
+Attributing the whole residual to confounding while calling the causal term the "ATE" would silently assume no treatment-effect heterogeneity — untenable in insurance, where high-risk self-selectors typically have differential effects ([Angrist & Pischke, 2009, Sec. 3.2](https://doi.org/10.1515/9781400829828)). The goal of causal inference methods (matching, weighting, regression adjustment, etc.) is to eliminate this bias by appropriately adjusting for the confounders.
 
 
 ### Randomized Controlled Trials
