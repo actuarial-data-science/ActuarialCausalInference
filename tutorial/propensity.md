@@ -51,7 +51,7 @@ Matching focuses on creating "apples-to-apples" comparisons by pairing treated u
 
 
 ## Inverse Propensity Score Weighting
-Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-population" where the treatment is independent of measured covariates. This approach is often used to estimate the Average Treatment Effect (ATE) for the entire population. {cite:t}`austin2011`
+Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-population" where the treatment is independent of measured covariates. This approach is often used to estimate the Average Treatment Effect (ATE) for the entire population. {cite:t}`austin2011` This independence, however, is achieved *only if the propensity model $\hat{\pi}(x)$ is correctly specified* (and overlap holds): IPW is **singly robust** — consistent if and only if $\hat{\pi}(x)$ is correct. Under a misspecified propensity model (e.g. a logistic fit omitting a relevant covariate or non-linear interaction) the reweighted sample does *not* balance $X$, and the ATE estimate is biased — sometimes severely ([Kang & Schafer, 2007](https://doi.org/10.1214/07-STS227); [Lunceford & Davidian, 2004](https://doi.org/10.1002/sim.1903), Thm. 1). Doubly robust estimators (AIPW) relax this by staying consistent if *either* the propensity or the outcome model is correct.
 
 ```{prf:algorithm} Propensity Score Weighting
 :label: alg-psw
