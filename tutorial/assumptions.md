@@ -32,8 +32,6 @@ $$
 
 The observed outcome $Y$ equals the potential outcome $Y(t)$ whenever the treatment actually received is $T = t$. This assumption is what makes potential outcomes empirically meaningful: without it, $Y(t)$ is a purely abstract quantity with no necessary connection to what is measured in data.
 
-Consistency has two components. First, **no interference**: unit $i$'s potential outcome $Y_i(t)$ depends only on $i$'s own treatment, not on the treatments assigned to other units. Second, **no multiple versions of treatment**: the label $T = t$ corresponds to a single, well-defined treatment version, so that $Y(t)$ is unambiguous regardless of *how* $t$ was delivered.
-
 **Detecting violations:** Violations arise when the treatment $T$ is not sufficiently well-defined. If units assigned $T = t$ received meaningfully different variants - different doses, formulations, timing, or delivery mechanisms - then $Y(t)$ is not a single quantity but an average over distinct potential outcomes that should not be conflated. Empirically, this manifests as effect heterogeneity within treatment arms that cannot be explained by measured covariates. Stratifying by treatment sub-type and testing whether effect estimates shift substantially is a practical diagnostic. Interference violations are harder to detect but can sometimes be probed by examining whether outcomes of untreated units vary with the treatment density of their neighbours.
 
 ([Rubin, 1980](https://doi.org/10.2307/2287653); [Cole & Frangakis, 2009](https://doi.org/10.1097/EDE.0b013e31818ef366); [VanderWeele, 2009](https://doi.org/10.1097/EDE.0b013e3181bd5638))
