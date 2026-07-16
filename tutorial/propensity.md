@@ -82,7 +82,7 @@ Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-populatio
 	4. Return $\hat{\tau}_{ATE}$
 ```
 
-**Proof**: We want to briefly prove that weighting the observed outcome $Y$ by the inverse of the propensity score $\pi(X)$ for the treated group recovers the true counterfactual mean $\mathbb{E}[Y(1)]$:
+**Proof**: We want to briefly prove that weighting the observed outcomes $Y$ by the inverse of the propensity score $\pi(X)$ for the treated group recovers the true mean $\mathbb{E}[Y(1)]$:
 
 $$
 \mathbb{E}\left[ \frac{T Y}{\pi(X)} \right] = \mathbb{E}[Y(1)]
@@ -92,7 +92,7 @@ We first condition on the baseline covariates $X$, and then take the outer expec
 
 $$
 \mathbb{E}\left[ \frac{T Y}{\pi(X)} \right] = \mathbb{E}\left[ \mathbb{E}\left[ \frac{T Y}{\pi(X)} \;\middle|\; X \right] \right]
-= \mathbb{E}\left[ \mathbb{E}\left[ \frac{T Y}{\pi(X)} \;\middle|\; X \right] \right] = \mathbb{E}\left[ \frac{1}{\pi(X)} \mathbb{E}[T Y \mid X] \right]
+= \mathbb{E}\left[ \frac{1}{\pi(X)} \mathbb{E}[T Y \mid X] \right]
 $$
 
 By consistency, when $T = 1$, the observed outcome $Y$ is identical to $Y(1)$. When $T = 0$, the term $T Y$ is 0. Thus, we can substitute $T Y$ with $T Y(1)$:
@@ -132,15 +132,30 @@ The interactive figure below applies both methods to a single simulated dataset 
 - **Matching caliper** $\delta$ - widen or tighten the maximum propensity gap allowed within a pair, and see how many treated units get matched versus discarded.
 - **New sample** - redraw the data to see the sampling variability of each estimate.
 
-The panels let you compare, on the same data, (1) propensity score overlap, (2) the matched pairs formed by PSM, and (3) the inverse-probability-weighted points used by IPTW. The summary cards contrast the naïve difference in means against the PSM estimate of the ATT ($\hat{\tau}_{ATT}$) and the IPTW estimate of the ATE ($\hat{\tau}_{ATE}$), each benchmarked against its *own* target - the PSM estimate against the true ATT, the IPTW estimate against the true ATE. Because assignment is positively confounded, the treated are drawn from higher-effect strata, so the true ATT exceeds the true ATE; benchmarking PSM against the ATE would wrongly make it look upward-biased as confounding grows.
+The panels let you compare, on the same data, (1) propensity score overlap, (2) the matched pairs formed by Propensity Score Matching (PSM), and (3) the inverse-probability-weighted points used by IPTW. The summary cards contrast the naïve difference in means against the PSM estimate of the ATT ($\hat{\tau}_{ATT}$) and the IPTW estimate of the ATE ($\hat{\tau}_{ATE}$), each benchmarked against its *own* target - the PSM estimate against the true ATT, the IPTW estimate against the true ATE. Because assignment is positively confounded, the treated are drawn from higher-effect strata, so the true ATT exceeds the true ATE; benchmarking PSM against the ATE would wrongly make it look upward-biased as confounding grows.
 
 The two sliders set the green terms below - the **confounding strength** $\beta$ in the treatment-assignment model and the **matching caliper** $\delta$ in the pairing rule:
 
 $$
-\pi(x) = \sigma\bigl(0.3 + \textcolor{#7d9f17}{\beta}\, x_1 - 0.5\, x_2\bigr),
+\pi(x) = \text{logit}\bigl(0.3 + \textcolor{#7d9f17}{\beta}\, x_1 - 0.5\, x_2\bigr),
 \qquad
-\text{match } (i, j) \iff \bigl|\hat{\pi}(x_i) - \hat{\pi}(x_j)\bigr| \le \textcolor{#7d9f17}{\delta}
+\text{match } (i, j) \iff \bigl|\pi(x_i) - \pi(x_j)\bigr| \le \textcolor{#7d9f17}{\delta}
 $$
+
+The complete model is given by:
+
+$$
+X_1 \sim \mathcal{N}(0,1.5^2),\qquad X_2 \sim \text{Uniform}(-1, 1)
+$$
+
+$$
+T \mid X_1, X_2 \sim \text{Bernoulli}(\pi(X)),\qquad \varepsilon \sim \mathcal{N}(0,2.5^2) 
+$$
+
+$$
+Y = 1.5 + 0.8X_1 + 0.6X_2 + (2 + 0.2X_1 - 0.1X_2)T+\varepsilon
+$$
+
 
 ```{raw} html
 <iframe id="psm-iptw" src="../figure/psm_iptw_explainer.html?v=20260610d"

@@ -79,8 +79,8 @@
   <div class="card"><div class="k">True ATT (PSM target)</div><div class="v" id="mTrueAtt">&mdash;</div></div>
   <div class="card"><div class="k">True ATE (IPTW target)</div><div class="v" id="mTrueAte">&mdash;</div></div>
   <div class="card"><div class="k">Na&iuml;ve difference</div><div class="v" id="mNaive">&mdash;</div></div>
-  <div class="card"><div class="k">PSM &middot; ATT</div><div class="v" id="mAtt">&mdash;</div></div>
-  <div class="card"><div class="k">IPTW &middot; ATE</div><div class="v" id="mAte">&mdash;</div></div>
+  <div class="card"><div class="k">PSM &minus; True ATT</div><div class="v" id="mAtt">&mdash;</div></div>
+  <div class="card"><div class="k">IPTW &minus; True ATE</div><div class="v" id="mAte">&mdash;</div></div>
 </div>
 
 <div class="legend">
@@ -150,32 +150,16 @@
 
   function build(beta,seed){
     var r=mulberry32(seed*2654435761>>>0);
-    var x1=[],x2=[],t=[],y=[],eff=[],jit=[];
+    var x1=[],x2=[],t=[],y=[],eff=[],jit=[],ps=[];
     for(var i=0;i<N;i++){
       var a=gauss(r)*1.5, b=r()*2-1;
       x1.push(a); x2.push(b);
-      var ps=sig(0.3+beta*a-0.5*b);
-      var ti=r()<ps?1:0; t.push(ti);
+      var p=sig(0.3+beta*a-0.5*b); ps.push(p);
+      var ti=r()<p?1:0; t.push(ti);
       var e=2.0+0.2*a-0.1*b; eff.push(e);
       y.push(1.5+0.8*a+0.6*b+e*ti+gauss(r)*2.5);
       jit.push((r()-0.5));
     }
-    var m1=mean(x1),s1=Math.sqrt(variance(x1))||1,m2=mean(x2),s2=Math.sqrt(variance(x2))||1;
-    var X=[];for(i=0;i<N;i++)X.push([1,(x1[i]-m1)/s1,(x2[i]-m2)/s2]);
-    var coef=[0,0,0];
-    for(var it=0;it<12;it++){
-      var g=[0,0,0],H=[[1e-6,0,0],[0,1e-6,0],[0,0,1e-6]];
-      for(i=0;i<N;i++){
-        var eta=coef[0]*X[i][0]+coef[1]*X[i][1]+coef[2]*X[i][2];
-        var pr=sig(eta),w=pr*(1-pr);
-        for(var k=0;k<3;k++){g[k]+=X[i][k]*(t[i]-pr);for(var l=0;l<3;l++)H[k][l]+=X[i][k]*X[i][l]*w;}
-      }
-      var Hi=inv3(H),dlt=[0,0,0];
-      for(k=0;k<3;k++)for(l=0;l<3;l++)dlt[k]+=Hi[k][l]*g[l];
-      for(k=0;k<3;k++)coef[k]+=dlt[k];
-    }
-    var ps=[];
-    for(i=0;i<N;i++){var eta2=coef[0]+coef[1]*X[i][1]+coef[2]*X[i][2];ps.push(Math.min(0.9999,Math.max(0.0001,sig(eta2))));}
     return {x1:x1,x2:x2,t:t,y:y,eff:eff,ps:ps,jit:jit};
   }
 
@@ -218,8 +202,8 @@
     document.getElementById('mTrueAtt').textContent=isNaN(trueAtt)?"\u2014":"+"+fmt(trueAtt);
     document.getElementById('mTrueAte').textContent="+"+fmt(trueAte);
     document.getElementById('mNaive').textContent=fmt(naive);
-    document.getElementById('mAtt').textContent=isNaN(att)?"\u2014":fmt(att);
-    document.getElementById('mAte').textContent=fmt(ate);
+    document.getElementById('mAtt').textContent=isNaN(att)||isNaN(trueAtt)?"\u2014":fmt(att-trueAtt);
+    document.getElementById('mAte').textContent=fmt(ate-trueAte);
     document.getElementById('matchInfo').textContent=pairs.length+" of "+tr.length+" treated matched ("+Math.round(matchRate*100)+"%)";
     document.getElementById('weightInfo').textContent="max weight "+fmt(maxW,1)+" \u00b7 "+N+" kept";
 
