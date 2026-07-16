@@ -137,7 +137,7 @@ The panels let you compare, on the same data, (1) propensity score overlap, (2) 
 The two sliders set the green terms below - the **confounding strength** $\beta$ in the treatment-assignment model and the **matching caliper** $\delta$ in the pairing rule:
 
 $$
-\pi(x) = \text{logit}\bigl(0.3 + \textcolor{#7d9f17}{\beta}\, x_1 - 0.5\, x_2\bigr),
+\text{logit}(\pi(x)) = 0.3 + \textcolor{#7d9f17}{\beta}\, x_1 - 0.5\, x_2,
 \qquad
 \text{match } (i, j) \iff \bigl|\pi(x_i) - \pi(x_j)\bigr| \le \textcolor{#7d9f17}{\delta}
 $$
