@@ -43,7 +43,7 @@
   button{font:inherit;font-size:14px;color:var(--txt);background:transparent;border:0.5px solid var(--bd2);border-radius:8px;padding:7px 14px;cursor:pointer;}
   button:hover{background:var(--card);}
   button:active{transform:scale(0.98);}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:1.5rem 0 1.75rem;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:1.5rem 0 1.75rem;}
   .card{background:var(--card);border-radius:8px;padding:0.85rem 1rem;}
   .card .k{font-size:13px;color:var(--txt2);}
   .card .v{font-size:24px;font-weight:500;}
@@ -76,10 +76,10 @@
 </div>
 
 <div class="cards">
-  <div class="card"><div class="k">True ATT (PSM target)</div><div class="v" id="mTrueAtt">&mdash;</div></div>
-  <div class="card"><div class="k">True ATE (IPTW target)</div><div class="v" id="mTrueAte">&mdash;</div></div>
   <div class="card"><div class="k">Na&iuml;ve difference</div><div class="v" id="mNaive">&mdash;</div></div>
+  <div class="card"><div class="k">True ATT</div><div class="v" id="mTrueAtt">&mdash;</div></div>  
   <div class="card"><div class="k">PSM &minus; True ATT</div><div class="v" id="mAtt">&mdash;</div></div>
+  <div class="card"><div class="k">True ATE</div><div class="v" id="mTrueAte">&mdash;</div></div>
   <div class="card"><div class="k">IPTW &minus; True ATE</div><div class="v" id="mAte">&mdash;</div></div>
 </div>
 
