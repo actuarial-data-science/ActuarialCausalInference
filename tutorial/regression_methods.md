@@ -61,7 +61,7 @@ Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the pr
 
 1. Fit initial outcome model $\hat{\mu}^0(t, x) = \mathcal{L}_Y(Y \sim T, X)$ and propensity $\hat{\pi}(x) = \mathcal{L}_T(T \sim X)$
 2. Compute the *clever covariate* $H^{(i)} = \frac{T^{(i)}}{\hat{\pi}(x^{(i)})} - \frac{1 - T^{(i)}}{1 - \hat{\pi}(x^{(i)})}$
-3. **Targeting step:** fit a one-parameter *logistic* fluctuation $\hat{\epsilon}$ by regressing $Y$ on $H$ with offset $\text{logit}\,\hat{\mu}^0$, giving the updated model $\hat{\mu}^\star(t, x)$ *(valid for $Y \in [0,1]$; see the note below for continuous outcomes)*
+3. **Targeting step:** fit a one-parameter *logistic* fluctuation $\hat{\varepsilon}$ by regressing $Y$ on $H$ with offset $\text{logit}\,\hat{\mu}^0$, giving the updated model $\hat{\mu}^\star(t, x)$ *(valid for $Y \in [0,1]$; see the note below for continuous outcomes)*
 4. Plug the targeted model into g-computation: $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}^\star(1, x^{(i)}) - \hat{\mu}^\star(0, x^{(i)})\right]$
 5. Return estimated treatment effect $\hat{\tau}$
 ```
@@ -102,7 +102,7 @@ The DML estimator of [Chernozhukov et al. (2018)](https://doi.org/10.1111/ectj.1
 	2. Compute residuals $\tilde{T} = T - \hat{\pi}(X)$ on $D_{eval}$
 
 4. **Causal Estimation**
-	1. Regress outcome residuals on treatment residuals: $\tilde{Y} = \tau \tilde{T} + \epsilon$
+	1. Regress outcome residuals on treatment residuals: $\tilde{Y} = \tau \tilde{T} + \varepsilon$
 	2. *Note:* This identifies the effect using only the "exogenous" variation in $T$
 
 5. Return estimated treatment effect $\hat{\tau}$
@@ -175,7 +175,7 @@ Instrumental variable $I$. The instrument induces exogenous variation in the tre
 
 ## Two Stage Least Squares Regression
 
-```{prf:algorithm} Two Stage Least Squares
+```{prf:algorithm} Two Stage Least Squares (2SLS)
 :label: alg-2sls
 :class: dropdown
 
@@ -184,21 +184,21 @@ Instrumental variable $I$. The instrument induces exogenous variation in the tre
 **Outputs** Estimated causal effect $\hat{\beta}$ of $T$ on $Y$
 
 1. **Stage 1: Regress $T$ on instrument $I$ and covariates $X$** *(Isolate exogenous variation)*
-	1. Estimate $\hat{\alpha}, \hat{\gamma}$ from $T = \alpha I + \gamma X + \epsilon_1$
+	1. Estimate $\hat{\alpha}, \hat{\gamma}$ from $T = \alpha I + \gamma X + \varepsilon_1$
 	2. Compute predicted values $\hat{T} = \hat{\alpha} I + \hat{\gamma} X$ *($\hat{T}$ is now independent of $U$)*
 
 2. **Stage 2: Regress $Y$ on predicted $\hat{T}$ and covariates $X$** *(Identify causal mechanism)*
-	1. Estimate $\hat{\beta}, \hat{\delta}$ from $Y = \beta \hat{T} + \delta X + \epsilon_2$
+	1. Estimate $\hat{\beta}, \hat{\delta}$ from $Y = \beta \hat{T} + \delta X + \varepsilon_2$
 
 3. Return estimated causal effect $\hat{\beta}$
 ```
 
 ```{important}
-The **same exogenous covariates $X$ must appear in both stages**. Omitting them produces a biased estimate whenever $X$ is correlated with both the instrument $I$ and the outcome $Y$: the covariates must be *partialled out* of the instrument–treatment relationship for the exclusion restriction and exogeneity conditions to hold conditionally. The bivariate form ($T = \alpha I + \epsilon_1$, $Y = \beta \hat{T} + \epsilon_2$) is valid only under the strong assumption that **no observed covariate affects $Y$** - a condition almost never satisfied in insurance data, where age, tenure, and risk class routinely predict the outcome.
+The **same exogenous covariates $X$ must appear in both stages**. Omitting them produces a biased estimate whenever $X$ is correlated with both the instrument $I$ and the outcome $Y$: the covariates must be *partialled out* of the instrument–treatment relationship for the exclusion restriction and exogeneity conditions to hold conditionally. The bivariate form ($T = \alpha I + \varepsilon_1$, $Y = \beta \hat{T} + \varepsilon_2$) is valid only under the strong assumption that **no observed covariate affects $Y$** - a condition almost never satisfied in insurance data.
 ```
 
 ```{tip}
-For valid inference, obtain 2SLS estimates from a **dedicated IV routine** (`linearmodels.IV2SLS` in Python, `AER::ivreg` in R, or `ivregress` in Stata) rather than by fitting the two OLS stages by hand. The two approaches agree on the point estimate $\hat{\beta}$, but only the IV routine returns correct standard errors. The reason is instructive: valid 2SLS inference computes the error variance from the *structural* residuals $u = Y - \hat{\beta}T$ using the **observed** treatment $T$, whereas a manual second-stage OLS would use the fitted-treatment residuals $\hat{\epsilon} = Y - \hat{\beta}\hat{T}$. Since $\hat{\epsilon} = u + \hat{\beta}(T - \hat{T})$, we have $\mathbb{E}[\hat{\epsilon}^2] = \mathbb{E}[u^2] + \beta^2\,\operatorname{Var}(T - \hat{T}) > \mathbb{E}[u^2]$, so hand-rolled standard errors come out too large - widening confidence intervals and shrinking $t$-statistics. Using the dedicated routine keeps inference well-calibrated, which matters in actuarial screening where an over-conservative test can let a genuinely beneficial intervention slip below the significance threshold (Wooldridge, 2010, *Econometric Analysis of Cross Section and Panel Data*, p. 96).
+For valid inference, obtain 2SLS estimates from a **dedicated IV routine** (`linearmodels.IV2SLS` in Python, `AER::ivreg` in R, or `ivregress` in Stata) rather than by fitting the two OLS stages by hand. The two approaches agree on the point estimate $\hat{\beta}$, but only the IV routine returns correct standard errors. The reason is instructive: valid 2SLS inference computes the error variance from the *structural* residuals $u = Y - \hat{\beta}T$ using the **observed** treatment $T$, whereas a manual second-stage OLS would use the fitted-treatment residuals $\hat{\varepsilon} = Y - \hat{\beta}\hat{T}$. Since $\hat{\varepsilon} = u + \hat{\beta}(T - \hat{T})$, we have $\mathbb{E}[\hat{\varepsilon}^2] = \mathbb{E}[u^2] + \beta^2\,\operatorname{Var}(T - \hat{T}) > \mathbb{E}[u^2]$, so hand-rolled standard errors come out too large - widening confidence intervals and shrinking $t$-statistics. Using the dedicated routine keeps inference well-calibrated, which matters in actuarial screening where an over-conservative test can let a genuinely beneficial intervention slip below the significance threshold (Wooldridge, 2010, *Econometric Analysis of Cross Section and Panel Data*, p. 96).
 ```
 
 ## Quasi-Experimental Designs
@@ -279,5 +279,5 @@ Synthetic control. Donor-pool units are weighted so the synthetic control (dashe
 1. Choose non-negative weights $w_1, \ldots, w_J$ (summing to one) minimizing the pre-intervention distance between the treated unit and the weighted donor pool
 2. Construct the synthetic control outcome $\hat{Y}^{\text{synth}}_t = \sum_{j=1}^{J} w_j\, Y^{(j)}_t$ for each period $t$
 3. For each post-intervention period, estimate the effect $\hat{\tau}_t = Y^{\text{treated}}_t - \hat{Y}^{\text{synth}}_t$
-4. Return the estimated effect path $\hat{\tau}_t$
+4. Return the estimated effect $\hat{\tau}_t$
 ```
