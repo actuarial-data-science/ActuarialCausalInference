@@ -1,6 +1,6 @@
 # Regression Methods
 
-Regression-based estimators identify causal effects by explicitly modelling the relationship between covariates $X$, treatment $T$, and outcome $Y$. They span a spectrum: from a single *outcome model* (g-computation), to estimators that combine an outcome model with a *propensity model* for robustness (AIPW, TMLE), to *orthogonal* machine-learning estimators that remain valid under flexible nuisance models (Double Machine Learning and its meta-learner extensions for heterogeneous effects). A second family - *quasi-experimental designs* such as instrumental variables, difference-in-differences, and regression discontinuity - exploits structural sources of exogenous variation rather than adjustment alone. The figure below shows the common causal structure that the adjustment-based estimators target.
+Regression-based estimators identify causal effects by explicitly modelling the relationship between covariates $X$, treatment $T$, and outcome $Y$. They span a spectrum: from a single *outcome model* (G-computation), to estimators that combine an outcome model with a *propensity model* for robustness (AIPW, TMLE), to *orthogonal* machine-learning estimators that remain valid under flexible nuisance models (Double Machine Learning and its meta-learner extensions for heterogeneous effects). A second family - *quasi-experimental designs* such as instrumental variables, difference-in-differences, and regression discontinuity - exploits structural sources of exogenous variation rather than adjustment alone. The figure below shows the common causal structure that the adjustment-based estimators target.
 
 ```{figure} figs/dag_doubly_robust.svg
 :width: 70%
@@ -9,11 +9,11 @@ Regression-based estimators identify causal effects by explicitly modelling the 
 Causal structure underlying adjustment-based regression estimators. The covariates $X$ confound the treatment–outcome relationship through the *propensity model* $\pi(X) = P(T = 1 \mid X)$ and the *outcome model* $\mu(X) = \mathbb{E}[Y \mid T, X]$. Doubly robust estimators combine both to estimate the causal effect $\tau$.
 ```
 
-## Outcome Regression and G-Computation
+## Outcome Regression and G-computation
 
 The simplest regression adjustment fits a single outcome model $\hat{\mu}(t, x) = \mathbb{E}[Y \mid T = t, X = x]$ and contrasts its predictions under treatment and control, averaged over the covariate distribution. This is the *parametric g-formula* of [Robins (1986)](https://doi.org/10.1016/0270-0255(86)90088-6) (see [Hernán & Robins (2020)](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/) for a modern treatment), and it serves as the conceptual baseline on which the doubly robust and orthogonal estimators below build.
 
-```{prf:algorithm} G-Computation (Outcome Regression)
+```{prf:algorithm} G-computation (Outcome Regression)
 :label: alg-gcomp
 :class: dropdown
 
@@ -32,7 +32,7 @@ G-computation is consistent only if the outcome model is correctly specified. Be
 
 ## Doubly Robust Estimation: AIPW and TMLE
 
-Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the propensity model $\hat{\pi}(x)$ so that the estimate is consistent if *either* model is correctly specified - a property that single-model approaches lack. The *Augmented Inverse Propensity Weighting* (AIPW) estimator of [Robins, Rotnitzky & Zhao (1994)](https://doi.org/10.1080/01621459.1994.10476818) augments the g-computation estimate with an inverse-propensity-weighted residual correction; [Bang & Robins (2005)](https://doi.org/10.1111/j.1541-0420.2005.00377.x) developed the framework for causal inference, and [van der Laan & Rubin (2006)](https://doi.org/10.2202/1557-4679.1043) introduced *Targeted Maximum Likelihood Estimation* (TMLE) as a substitution-based alternative with the same robustness guarantee. DML (next section) is essentially AIPW equipped with Neyman-orthogonality and cross-fitting.
+Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the propensity model $\hat{\pi}(x)$ so that the estimate is consistent if *either* model is correctly specified - a property that single-model approaches lack. The *Augmented Inverse Propensity Weighting* (AIPW) estimator of [Robins, Rotnitzky & Zhao (1994)](https://doi.org/10.1080/01621459.1994.10476818) augments the G-computation estimate with an inverse-propensity-weighted residual correction; [Bang & Robins (2005)](https://doi.org/10.1111/j.1541-0420.2005.00377.x) developed the framework for causal inference, and [van der Laan & Rubin (2006)](https://doi.org/10.2202/1557-4679.1043) introduced *Targeted Maximum Likelihood Estimation* (TMLE) as a substitution-based alternative with the same robustness guarantee. DML (next section) is essentially AIPW equipped with Neyman-orthogonality and cross-fitting.
 
 ```{prf:algorithm} Augmented Inverse Propensity Weighting (AIPW)
 :label: alg-aipw
@@ -43,7 +43,7 @@ Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the pr
 **Outputs** Doubly robust ATE estimate $\hat{\tau}$
 
 1. Fit nuisance models (with cross-fitting): outcome $\hat{\mu}(t, x) = \mathcal{L}_Y(Y \sim T, X)$ and propensity $\hat{\pi}(x) = \mathcal{L}_T(T \sim X)$
-2. For every observation $i$, form the doubly robust score *(g-computation plus IPW residual correction)*
+2. For every observation $i$, form the doubly robust score *(G-computation plus IPW residual correction)*
 
 	$$\hat{\psi}^{(i)} = \hat{\mu}(1, x^{(i)}) - \hat{\mu}(0, x^{(i)}) + \frac{T^{(i)}\,(Y^{(i)} - \hat{\mu}(1, x^{(i)}))}{\hat{\pi}(x^{(i)})} - \frac{(1 - T^{(i)})\,(Y^{(i)} - \hat{\mu}(0, x^{(i)}))}{1 - \hat{\pi}(x^{(i)})}$$
 
@@ -62,7 +62,7 @@ Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the pr
 1. Fit initial outcome model $\hat{\mu}^0(t, x) = \mathcal{L}_Y(Y \sim T, X)$ and propensity $\hat{\pi}(x) = \mathcal{L}_T(T \sim X)$
 2. Compute the *clever covariate* $H^{(i)} = \frac{T^{(i)}}{\hat{\pi}(x^{(i)})} - \frac{1 - T^{(i)}}{1 - \hat{\pi}(x^{(i)})}$
 3. **Targeting step:** fit a one-parameter *logistic* fluctuation $\hat{\varepsilon}$ by regressing $Y$ on $H$ with offset $\text{logit}\,\hat{\mu}^0$, giving the updated model $\hat{\mu}^\star(t, x)$ *(valid for $Y \in [0,1]$; see the note below for continuous outcomes)*
-4. Plug the targeted model into g-computation: $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}^\star(1, x^{(i)}) - \hat{\mu}^\star(0, x^{(i)})\right]$
+4. Plug the targeted model into G-computation: $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}^\star(1, x^{(i)}) - \hat{\mu}^\star(0, x^{(i)})\right]$
 5. Return estimated treatment effect $\hat{\tau}$
 ```
 
@@ -120,9 +120,9 @@ In practice, prefer a maintained implementation such as the R package [`tmle`](h
 
 
 
-## Double Machine Learning
+## Double Machine Learning (DML)
 
-The DML estimator of [Chernozhukov et al. (2018)](https://doi.org/10.1111/ectj.12097) makes the doubly robust idea robust to flexible, slowly-converging machine-learning nuisance models. For a binary or continuous treatment it builds on the *partially linear model* $Y = \tau T + g(X) + \varepsilon$, whose residualize-then-regress solution is Robinson's estimator [(Robinson, 1988)](https://doi.org/10.2307/1912705). By *partialling out* the covariate effect from both $Y$ and $T$ before estimating $\tau$, the resulting moment condition is Neyman-orthogonal, so first-stage estimation error has only a second-order effect on $\hat{\tau}$.
+The DML estimator of [Chernozhukov et al. (2018)](https://doi.org/10.1111/ectj.12097) makes the doubly robust idea robust to flexible, slowly-converging machine-learning nuisance models. For a binary or continuous treatment it builds on the *partially linear model* (PLM) $Y = \tau T + g(X) + \varepsilon$, whose residualize-then-regress solution is Robinson's estimator [(Robinson, 1988)](https://doi.org/10.2307/1912705). By *partialling out* the covariate effect from both $Y$ and $T$ before estimating $\tau$, the resulting moment condition is Neyman-orthogonal, so first-stage estimation error has only a second-order effect on $\hat{\tau}$.
 
 ```{prf:algorithm} Double Machine Learning
 :label: alg-dml
@@ -274,7 +274,23 @@ Difference-in-differences. Under parallel trends, the treated group's counterfac
 
 ### Regression Discontinuity
 
-Regression discontinuity (RD) applies when treatment is assigned by a threshold rule on a continuous *running variable* $X$ (e.g. a risk score). The design was first proposed by [Thistlethwaite & Campbell (1960)](https://doi.org/10.1037/h0044319); its modern econometric foundations are due to [Hahn, Todd & van der Klaauw (2001)](https://doi.org/10.1111/1468-0262.00183). Units just below and just above the cutoff $c$ are comparable, so the jump in the outcome at $c$ identifies the **average treatment effect at the cutoff**, $\mathbb{E}[Y(1) - Y(0) \mid X = c]$ - the causal effect *at the discontinuity point* ([Hahn, Todd & van der Klaauw, 2001](https://doi.org/10.1111/1468-0262.00183); [Imbens & Lemieux, 2008](https://doi.org/10.1016/j.jeconom.2007.05.001)). This is a *different* object from the complier LATE of the IV/2SLS design above: in a **sharp** RD every unit switches deterministically from $T=0$ to $T=1$ at $c$, so the estimand conditions on the covariate value $X = c$, not on an unobserved compliance type. [Imbens & Lemieux (2008)](https://doi.org/10.1016/j.jeconom.2007.05.001) provide a practical guide to estimation and bandwidth selection.
+
+
+
+
+Regression discontinuity (RD) applies when treatment is assigned by a threshold rule on a continuous *running variable* $X$ (e.g. a risk score). The design was first proposed by [Thistlethwaite & Campbell (1960)](https://doi.org/10.1037/h0044319); its modern econometric foundations are due to [Hahn, Todd & van der Klaauw (2001)](https://doi.org/10.1111/1468-0262.00183). Units just below and just above the cutoff $c$ are comparable, so the jump in the outcome at $c$ identifies the **average treatment effect at the cutoff**, $\mathbb{E}[Y(1) - Y(0) \mid X = c]$ - the causal effect *at the discontinuity point* ([Hahn, Todd & van der Klaauw, 2001](https://doi.org/10.1111/1468-0262.00183); [Imbens & Lemieux, 2008](https://doi.org/10.1016/j.jeconom.2007.05.001)). 
+This is a *different* object from the **local average treatment effect (LATE)** of the
+IV/2SLS design above. The LATE, formally defined as
+
+$$
+\text{LATE} = \mathbb{E}[Y(1) - Y(0) \mid T(I=1) = 1,\; T(I=0) = 0],
+$$
+
+is the average treatment effect among **compliers** — units whose treatment status
+is switched by the instrument — and is the estimand identified by instrumental
+variables under heterogeneous treatment effects
+([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)).
+In a **sharp** RD every unit switches deterministically from $T=0$ to $T=1$ at $c$, so the estimand conditions on the covariate value $X = c$, not on an unobserved compliance type. [Imbens & Lemieux (2008)](https://doi.org/10.1016/j.jeconom.2007.05.001) provide a practical guide to estimation and bandwidth selection.
 
 ```{figure} figs/rdd_discontinuity.svg
 :width: 80%
