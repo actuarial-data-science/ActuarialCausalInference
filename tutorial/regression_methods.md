@@ -331,7 +331,7 @@ Synthetic control. Donor-pool units are weighted so the synthetic control (dashe
 
 **Inputs** Treated unit, donor pool of $J$ untreated units, pre-intervention outcomes and predictors
 
-**Outputs** Estimated effect path $\hat{\tau}_t$ for post-intervention periods
+**Outputs** Estimated effect $\hat{\tau}_t$ for post-intervention periods
 
 1. Choose non-negative weights $w_1, \ldots, w_J$ (summing to one) minimizing the pre-intervention distance between the treated unit and the weighted donor pool
 2. Construct the synthetic control outcome $\hat{Y}^{\text{synth}}_t = \sum_{j=1}^{J} w_j\, Y^{(j)}_t$ for each period $t$
