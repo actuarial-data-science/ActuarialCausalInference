@@ -69,6 +69,45 @@ Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the pr
 ```{note}
 :class: dropdown
 
+A **doubly robust estimator** $\hat{\tau}$ is consistent for the true ATE $\tau$ if
+*either* $\hat{\mu}$ *or* $\hat{\pi}$ is consistently estimated - that is, if either
+$\hat{\mu}(t, x) \rightarrow \mu(t, x) = \mathbb{E}[Y \mid T=t, X=x]$ or
+$\hat{\pi}(x) \rightarrow \pi(x) = P(T=1 \mid X=x)$ converge in probability as $n \to \infty$. To see
+why, write the doubly robust estimator explicitly as
+
+$$
+\hat{\tau} = \frac{1}{n}\sum_{i=1}^n \Biggl[
+    \underbrace{\hat{\mu}(1, X_i) - \hat{\mu}(0, X_i)}_{\text{plug-in term}}
+    + \underbrace{\frac{T_i\bigl(Y_i - \hat{\mu}(1, X_i)\bigr)}{\hat{\pi}(X_i)}
+    - \frac{(1-T_i)\bigl(Y_i - \hat{\mu}(0, X_i)\bigr)}{1 - \hat{\pi}(X_i)}}_{\text{augmentation term}}
+\Biggr],
+$$
+
+where the plug-in term is the standard G-computation estimator and the augmentation
+term uses inverse-probability weights to correct for bias in the outcome model.
+The bias of $\hat{\tau}$ as an estimator of $\tau$ is proportional to a product
+of errors in the two nuisance functions,
+
+$$
+\operatorname{Bias}(\hat{\tau}) \propto \bigl(\hat{\mu} - \mu\bigr)\bigl(\hat{\pi} - \pi\bigr),
+$$
+
+so if either factor converges to zero the product vanishes and $\hat{\tau}$ is
+consistent, even if the other model remains misspecified. Concretely: if
+$\hat{\mu} \rightarrow \mu$ but $\hat{\pi} \not\rightarrow \pi$, the outcome
+model residuals $Y_i - \hat{\mu}(T_i, X_i)$ already have expectation zero, so the
+augmentation term contributes no bias regardless of how wrong $\hat{\pi}$ is;
+symmetrically, if $\hat{\pi} \rightarrow \pi$ but $\hat{\mu} \not\rightarrow
+\mu$, the inverse-probability weights correctly rebalance the misspecified outcome
+model predictions and the bias cancels. Only when both models are misspecified -
+$\hat{\mu} \not\rightarrow \mu$ and $\hat{\pi} \not\rightarrow \pi$ - does
+the product remain non-zero and the estimator fails to be consistent.
+```
+
+
+```{note}
+:class: dropdown
+
 **Outcome type matters - read before applying TMLE to loss data.** The targeting step above uses a **logistic fluctuation** (offset $\text{logit}\,\hat{\mu}^0$, clever covariate $H$), which is only valid when the outcome is **binary or bounded in $[0,1]$**. For unbounded continuous outcomes a different fluctuation family is required - a **Gaussian fluctuation with the identity link** ([van der Laan & Rubin, 2006](https://doi.org/10.2202/1557-4679.1043)) - otherwise the targeting step is misspecified and the resulting $\hat{\tau}$ is invalid.
 
 In non-life actuarial work this is the *usual* case, not an edge case: the primary outcomes - **claim amounts, loss ratios, and claim counts** - are continuous or count-valued and unbounded, not $\{0,1\}$. An actuary who applies the logistic formulation above directly to a loss amount is implementing an incorrect targeting step. Two practical routes:
@@ -78,6 +117,8 @@ In non-life actuarial work this is the *usual* case, not an edge case: the prima
 
 In practice, prefer a maintained implementation such as the R package [`tmle`](https://CRAN.R-project.org/package=tmle), which selects the correct fluctuation family for binary, bounded-continuous, and continuous outcomes automatically.
 ```
+
+
 
 ## Double Machine Learning
 
