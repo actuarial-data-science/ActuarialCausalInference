@@ -51,20 +51,6 @@ Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the pr
 4. Return estimated treatment effect $\hat{\tau}$ *(consistent if either $\hat{\mu}$ or $\hat{\pi}$ is correct)*
 ```
 
-```{prf:algorithm} Targeted Maximum Likelihood Estimation (TMLE)
-:label: alg-tmle
-:class: dropdown
-
-**Inputs** Data $D = \{X, T, Y\}$, ML learners $\mathcal{L}_Y$ (outcome), $\mathcal{L}_T$ (treatment)
-
-**Outputs** Doubly robust ATE estimate $\hat{\tau}$
-
-1. Fit initial outcome model $\hat{\mu}^0(t, x) = \mathcal{L}_Y(Y \sim T, X)$ and propensity $\hat{\pi}(x) = \mathcal{L}_T(T \sim X)$
-2. Compute the *clever covariate* $H^{(i)} = \frac{T^{(i)}}{\hat{\pi}(x^{(i)})} - \frac{1 - T^{(i)}}{1 - \hat{\pi}(x^{(i)})}$
-3. **Targeting step:** fit a one-parameter *logistic* fluctuation $\hat{\varepsilon}$ by regressing $Y$ on $H$ with offset $\text{logit}\,\hat{\mu}^0$, giving the updated model $\hat{\mu}^\star(t, x)$ *(valid for $Y \in [0,1]$; see the note below for continuous outcomes)*
-4. Plug the targeted model into G-computation: $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}^\star(1, x^{(i)}) - \hat{\mu}^\star(0, x^{(i)})\right]$
-5. Return estimated treatment effect $\hat{\tau}$
-```
 
 ```{note}
 :class: dropdown
@@ -77,9 +63,9 @@ why, write the doubly robust estimator explicitly as
 
 $$
 \hat{\tau} = \frac{1}{n}\sum_{i=1}^n \Biggl[
-    \underbrace{\hat{\mu}(1, X_i) - \hat{\mu}(0, X_i)}_{\text{plug-in term}}
-    + \underbrace{\frac{T_i\bigl(Y_i - \hat{\mu}(1, X_i)\bigr)}{\hat{\pi}(X_i)}
-    - \frac{(1-T_i)\bigl(Y_i - \hat{\mu}(0, X_i)\bigr)}{1 - \hat{\pi}(X_i)}}_{\text{augmentation term}}
+\underbrace{\hat{\mu}(1, x^{(i)}) - \hat{\mu}(0, x^{(i)})}_{\text{plug-in term}} +
+\underbrace{
+\frac{T^{(i)}\,(Y^{(i)} - \hat{\mu}(1, x^{(i)}))}{\hat{\pi}(x^{(i)})} - \frac{(1 - T^{(i)})\,(Y^{(i)} - \hat{\mu}(0, x^{(i)}))}{1 - \hat{\pi}(x^{(i)})}}_{\text{augmentation term}}
 \Biggr],
 $$
 
@@ -103,6 +89,23 @@ model predictions and the bias cancels. Only when both models are misspecified -
 $\hat{\mu} \not\rightarrow \mu$ and $\hat{\pi} \not\rightarrow \pi$ - does
 the product remain non-zero and the estimator fails to be consistent.
 ```
+
+
+```{prf:algorithm} Targeted Maximum Likelihood Estimation (TMLE)
+:label: alg-tmle
+:class: dropdown
+
+**Inputs** Data $D = \{X, T, Y\}$, ML learners $\mathcal{L}_Y$ (outcome), $\mathcal{L}_T$ (treatment)
+
+**Outputs** Doubly robust ATE estimate $\hat{\tau}$
+
+1. Fit initial outcome model $\hat{\mu}^0(t, x) = \mathcal{L}_Y(Y \sim T, X)$ and propensity $\hat{\pi}(x) = \mathcal{L}_T(T \sim X)$
+2. Compute the *clever covariate* $H^{(i)} = \frac{T^{(i)}}{\hat{\pi}(x^{(i)})} - \frac{1 - T^{(i)}}{1 - \hat{\pi}(x^{(i)})}$
+3. **Targeting step:** fit a one-parameter *logistic* fluctuation $\hat{\varepsilon}$ by regressing $Y$ on $H$ with offset $\text{logit}\,\hat{\mu}^0$, giving the updated model $\hat{\mu}^\star(t, x)$ *(valid for $Y \in [0,1]$; see the note below for continuous outcomes)*
+4. Plug the targeted model into G-computation: $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}^\star(1, x^{(i)}) - \hat{\mu}^\star(0, x^{(i)})\right]$
+5. Return estimated treatment effect $\hat{\tau}$
+```
+
 
 
 ```{note}
