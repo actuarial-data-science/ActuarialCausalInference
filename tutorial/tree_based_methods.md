@@ -18,7 +18,7 @@ Our first approach to infer heterogeneous treatment effects is based on causal t
 :label: alg-causaltree
 :class: dropdown
 
-**Inputs** Covariates $X \in \mathcal{X}$, treatment $T \in \{0,1\}$, observed outcome $Y$, cross-fitted nuisance estimates $\hat{Y}^{(-i)}, \hat{\pi}^{(-i)}$
+**Inputs** Covariates $X$, treatment $T \in \{0,1\}$, observed outcome $Y$, cross-fitted nuisance estimates $\hat{Y}^{(-i)}, \hat{\pi}^{(-i)}$
 
 **Outputs** Estimated CATE $\hat{\tau}^{(\ell)}(x)$
 
@@ -58,11 +58,11 @@ The stopping criterion of further partitioning the population into subgroups is 
 Anatomy of a causal tree. Recursive binary splits on the covariates $X$ carve the population into leaves, with each split chosen to maximise the heterogeneity $n_L \cdot n_R \cdot (\hat{\tau}_L - \hat{\tau}_R)^2$ of the resulting effects - not to predict $Y$. Within a leaf the units behave as if randomised, so the CATE is simply the difference in mean outcomes between its treated and control members (an exact, equal-weight match inside the leaf). The leaves estimate visibly different effects ($\hat{\tau}^{(\ell)} \approx +6, +1, -2$), which is exactly the heterogeneity the splits are designed to expose.
 ```
 
-The underlying assumptions are that in each leaf, the treatment effect is the same across all observations in the leaf and the leaves are small enough that the $(Y, T)$ pairs of each observation in a leaf behave as if they have come from a RCT: this requires that $T$ is randomly distributed across the observations in the leaf given the covariates and the potential outcomes $Y(0)$ and $Y(1)$ are each independent of the assigned treatment $T$ within the leaf (conditional ignorability $Y(t) \perp T \mid X$; [Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)).
+The underlying assumptions are that in each leaf, the treatment effect is the same across all observations in the leaf and the leaves are small enough that the $(Y, T)$ pairs of each observation in a leaf behave as if they have come from an RCT: this requires that $T$ is randomly distributed across the observations in the leaf given the covariates and the potential outcomes $Y(0)$ and $Y(1)$ are each independent of the assigned treatment $T$ within the leaf (conditional ignorability $Y(t) \perp T \mid X$; [Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)).
 
 To ensure unbiased estimates of CATEs, the principle of *honesty* is introduced for causal trees and causal forests [(Athey & Imbens, 2016)](https://doi.org/10.1073/pnas.1510489113). A method is called honest if the entire sample of patients is split into two parts, one for tree construction and one to estimate the treatment effects within the leaves. Hence, model selection is decoupled from model estimation. This addresses the post-selection inference problem and ensures unbiased estimates of CATEs.
 
-The robustness of the method comes not from inverse-propensity weighting but from the way the outcome and treatment are *residualised*. In the split-selection regressions above, the propensity enters only as a **centering** term, through $\big(T^{(i)} - \hat{\pi}^{(-i)}(x^{(i)})\big)$ - Robinson-style local centering, i.e. the R-learner moment condition - and *not* as an inverse-propensity weight $1/\hat{\pi}$; the leaf estimator above is a plain difference in mean outcomes that uses no propensity at all.
+The robustness of the method comes not from inverse-propensity weighting but from the way the outcome and treatment are *residualised*. In the split-selection regressions above, the propensity enters only as a **centering** term, through $\big(T^{(i)} - \hat{\pi}^{(-i)}(x^{(i)})\big)$ - Robinson-style local centering, i.e., the R-learner moment condition - and *not* as an inverse-propensity weight $1/\hat{\pi}$; the leaf estimator above is a plain difference in mean outcomes that uses no propensity at all.
 
 The two *nuisance functions* are the outcome regression and the propensity,
 
@@ -95,24 +95,24 @@ We additionally introduce causal forests that ensure a stronger degree of person
 :label: alg-causalforest
 :class: dropdown
 
-**Inputs** Covariates $X \in \mathcal{X}$, treatment $T \in \{0,1\}$, observed outcome $Y \in \mathcal{Y}$
+**Inputs** Covariates $X$, treatment $T \in \{0,1\}$, observed outcome $Y$
 
 **Outputs** Estimated CATE $\hat{\tau}(x)$
 
 1. For every tree $b = 1, \ldots, B$:
-	1. Split data into *construction* and *estimation* sets *(For honesty)*
-	2. While partition of construction data is possible: *(Maximize heterogeneity)*
+	1. Split data into *construction* and *estimation* sets *(for honesty)*
+	2. While partition of construction data is possible: *(maximize heterogeneity)*
 
-		1. Create partition into two subpopulations
+		* Create partition into two subpopulations
 
-	3. Map estimation data into determined tree leaves $\mathcal{L}$ *(Leaves fixed from construction data)*
+	3. Map estimation data into determined tree leaves $\mathcal{L}$ *(leaves fixed from construction data)*
 	4. For every leaf $\ell \in \mathcal{L}$:
 
-		1. Estimate the CATE $\hat{\tau}^{(\ell,b)}(x)$ on estimation data
+		* Estimate the CATE $\hat{\tau}^{(\ell,b)}(x)$ on estimation data
 
 	5. Return CATE $\hat{\tau}^{(\ell,b)}(x)$
-2. Calculate weights $\alpha^{(i)}(x)$ *(Forest proximity weights)*
-3. Calculate final CATE $\hat{\tau}(x)$ *(Weighted local regression / R-learner moment)*
+2. Calculate weights $\alpha^{(i)}(x)$ *(forest proximity weights)*
+3. Calculate final CATE $\hat{\tau}(x)$ *(weighted local regression / R-learner moment)*
 4. Return CATE $\hat{\tau}(x)$
 ```
 
@@ -124,7 +124,7 @@ Fitting $B$ causal trees, we repeat the separation step into a construction data
 
 The weights indicate how often another patient $j\not = i$ with covariates $X^{(j)}$ falls in the same leaf as the patient of interest $i$ with covariates $x$ across the trees in the forest. The more often the patients are in the same leaf, the closer they are to each other and the higher is the weight of patient when estimating the treatment effect of the observation with given covariates and outcome.
 
-The causal forest is hence not used to construct the final estimate of CATE as an average over all single estimations but rather for adaptive neighbourhood matching of each individual observation. The actual CATE is then obtained locally as the solution of a proximity-weighted R-learner moment condition over its nearest neighbours, i.e. similar patients [(Athey, Tibshirani & Wager, 2019)](https://doi.org/10.1214/18-AOS1709); [(Nie & Wager, 2021)](https://doi.org/10.1093/biomet/asaa076), as
+The causal forest is hence not used to construct the final estimate of CATE as an average over all single estimations but rather for adaptive neighbourhood matching of each individual observation. The actual CATE is then obtained locally as the solution of a proximity-weighted R-learner moment condition over its nearest neighbours, i.e., similar patients [(Athey, Tibshirani & Wager, 2019)](https://doi.org/10.1214/18-AOS1709); [(Nie & Wager, 2021)](https://doi.org/10.1093/biomet/asaa076), as
 
 \begin{equation}
     \hat{\tau}(x)=\frac{\sum_{j=1}^n \alpha^{(j)}(x)(Y^{(j)}-\hat{Y}^{(-j)})(T^{(j)}-\hat{\pi}^{(-j)}(x^{(j)}))}{ \sum \alpha^{(j)}(x)(T^{(j)}-\hat{\pi}^{(-j)}(x^{(j)}))^2}.
