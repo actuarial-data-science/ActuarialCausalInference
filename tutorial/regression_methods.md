@@ -245,6 +245,29 @@ The **same exogenous covariates $X$ must appear in both stages**. Omitting them 
 For valid inference, obtain 2SLS estimates from a **dedicated IV routine** (`linearmodels.IV2SLS` in Python, `AER::ivreg` in R, or `ivregress` in Stata) rather than by fitting the two OLS stages by hand. The two approaches agree on the point estimate $\hat{\beta}$, but only the IV routine returns correct standard errors. The reason is instructive: valid 2SLS inference computes the error variance from the *structural* residuals $u = Y - \hat{\beta}T$ using the **observed** treatment $T$, whereas a manual second-stage OLS would use the fitted-treatment residuals $\hat{\varepsilon} = Y - \hat{\beta}\hat{T}$. Since $\hat{\varepsilon} = u + \hat{\beta}(T - \hat{T})$, we have $\mathbb{E}[\hat{\varepsilon}^2] = \mathbb{E}[u^2] + \beta^2\,\operatorname{Var}(T - \hat{T}) > \mathbb{E}[u^2]$, so hand-rolled standard errors come out too large - widening confidence intervals and shrinking $t$-statistics. Using the dedicated routine keeps inference well-calibrated, which matters in actuarial screening where an over-conservative test can let a genuinely beneficial intervention slip below the significance threshold (Wooldridge, 2010, *Econometric Analysis of Cross Section and Panel Data*, p. 96).
 ```
 
+## Mendelian Randomization
+
+Mendelian Randomization (MR) is an application of the instrumental variable principle to genetics and epidemiology. The idea - dating to [Katan (1986)](https://doi.org/10.1016%2Fs0140-6736%2886%2992972-7) and formalized by [Davey Smith & Ebrahim (2003)](https://doi.org/10.1093/ije/dyg070) - exploits the fact that genetic variants are assigned at conception, before any environmental exposure, and therefore satisfy the IV conditions almost by construction:
+
+1. **Relevance**: the variant is associated with the exposure $T$ (e.g. LDL cholesterol level).
+2. **Exogeneity**: Mendelian randomization - the random shuffling of alleles during meiosis - makes the inherited variant independent of most confounders $U$.
+3. **Exclusion restriction**: the variant affects the outcome $Y$ only through the exposure $T$, not through any alternative biological pathway (*no pleiotropy*).
+
+When these conditions hold, the genetic variant $G$ (typically a single-nucleotide polymorphism, SNP) serves as an instrument and 2SLS identifies the causal effect of the exposure on the outcome:
+
+$$
+\hat{\tau}_{\text{MR}} = \frac{\hat{\beta}_{G \to Y}}{\hat{\beta}_{G \to T}}
+= \frac{\text{SNP–outcome association}}{\text{SNP–exposure association}},
+$$
+
+which is the **Wald ratio estimator** - the simplest MR estimate when a single instrument is used. With multiple SNPs the ratio generalises to a 2SLS (or likelihood-based) estimator, and the overidentification can be exploited to test for and correct pleiotropy ([Bowden, Davey Smith & Burgess, 2015](https://doi.org/10.1093/ije/dyv080)).
+
+```{admonition} MR in Actuarial and Health Insurance Contexts
+:class: tip
+
+MR estimates are increasingly available in the public health literature for risk factors relevant to life and health insurers - BMI, blood pressure, lipid levels, smoking behaviour, and many biomarkers. Because a well-conducted MR study targets the *lifetime causal effect* of a modifiable risk factor (rather than an association observed at a single medical exam), the estimates can inform pricing and underwriting in ways that observational risk scores cannot: they are, in principle, robust to reverse causation and the confounding that plagues claims-linked data. The key caveat is the exclusion restriction: many SNPs have pleiotropic effects, so MR estimates should be accompanied by sensitivity analyses such as MR-Egger regression ([Bowden et al., 2015](https://doi.org/10.1093/ije/dyv080)) or weighted median estimators.
+```
+
 ## Quasi-Experimental Designs
 
 When adjustment for measured covariates is insufficient, *quasi-experimental designs* recover causal effects by exploiting structural features of how treatment is assigned - over time, around a threshold, or relative to a comparison unit. These designs are especially relevant for longitudinal data. They form the empirical core of modern applied econometrics; the introductory textbooks of [Angrist & Pischke (2009)](https://doi.org/10.1515/9781400829828), [Angrist & Pischke (2015)](https://press.princeton.edu/books/paperback/9780691152844/mastering-metrics) and [Cunningham (2021)](https://doi.org/10.12987/9780300255881), together with the more statistical treatment of [Imbens & Rubin (2015)](https://doi.org/10.1017/CBO9781139025751), give book-length introductions to the methods below.
@@ -289,8 +312,8 @@ $$
 \text{LATE} = \mathbb{E}[Y(1) - Y(0) \mid T(I=1) = 1,\; T(I=0) = 0],
 $$
 
-is the average treatment effect among **compliers** — units whose treatment status
-is switched by the instrument — and is the estimand identified by instrumental
+is the average treatment effect among **compliers** - units whose treatment status
+is switched by the instrument - and is the estimand identified by instrumental
 variables under heterogeneous treatment effects
 ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)).
 In a **sharp** RD every unit switches deterministically from $T=0$ to $T=1$ at $c$, so the estimand conditions on the covariate value $X = c$, not on an unobserved compliance type. [Imbens & Lemieux (2008)](https://doi.org/10.1016/j.jeconom.2007.05.001) provide a practical guide to estimation and bandwidth selection.
