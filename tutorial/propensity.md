@@ -156,6 +156,17 @@ $$
 Y = 1.5 + 0.8X_1 + 0.6X_2 + (2 + 0.2X_1 - 0.1X_2)T+\varepsilon
 $$
 
+```{admonition} Structural Equation Models
+:class: note
+
+The four equations above are an instance of a **Structural Equation Model (SEM)**.
+Each equation assigns a *cause* to a variable: $X_1$ and $X_2$ are exogenous inputs, $T$ is determined by the covariates through the propensity score, and $Y$ is determined by $T$, the covariates, and noise.
+Crucially, the equation for $Y$ encodes the *causal mechanism* - changing $T$ from 0 to 1 shifts $Y$ by $(2 + 0.2X_1 - 0.1X_2)$, regardless of how $T$ came to take that value.
+This is what Pearl's **do-calculus** notation distinguishes as $\Pr(Y \mid do(T{=}1))$ versus the purely observational $\Pr(Y \mid T{=}1)$.
+
+In an SEM, the **treatment effect heterogeneity** is explicit: the coefficient on $T$ depends on $X_1$ and $X_2$, so the ATT and ATE differ whenever the treated and untreated groups occupy different parts of the covariate space - exactly the situation the confounding-strength slider demonstrates.
+```
+
 
 ```{raw} html
 <iframe id="psm-iptw" src="../figure/psm_iptw_explainer.html?v=20260610d"
