@@ -1,5 +1,5 @@
 
-## Why Causal Inference Resolves the Fairness Problem
+## Causal Inference and Fairness
 
 Beyond causal bias, actuaries face a distinct but related challenge: ensuring that models do not discriminate against protected groups. EU regulation prohibits the use of protected characteristics (e.g. gender, ethnicity) for insurance pricing, but simply dropping the sensitive attribute $S$ does not solve the problem.
 
@@ -146,13 +146,13 @@ i.e. among everyone assigned the same price $\hat{\mu}(X)$, the realised risk is
 These criteria are useful **diagnostic checks** but cannot replace causal reasoning. [Lindholm et al. (2021)](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117) show that even a genuinely discrimination-free model violates them whenever $X$ and $S$ are statistically dependent. Moreover, except in trivial cases, the criteria are mutually incompatible at unequal base rates: no decision can be simultaneously calibrated *and* equalise both error rates ([Kleinberg et al., 2017](https://arxiv.org/abs/1609.05807); [Chouldechova, 2017](https://doi.org/10.1089/big.2016.0047)). Choosing a criterion is therefore a value judgement about *which* fairness to buy and *which* to forgo - not a technical detail the model can settle on its own.
 ```
 
-### How Causal Inference Resolves the Fairness Problem
+### A fairness DAG
 
 ```{figure} figs/fairness_dag.svg
 :width: 85%
 :name: fig-fairness-dag
 
-The fairness DAG: the sensitive attribute $S$ reaches the claim $Y$ via a discriminatory proxy path through $X_1$ and a legitimate path through the risk factor $X_2$, while the confounder $F$ creates a spurious $S$–$Y$ association.
+A fairness DAG: the sensitive attribute $S$ reaches the claim $Y$ via a discriminatory proxy path through $X_1$ and a legitimate path through the risk factor $X_2$, while the confounder $F$ creates a spurious $S$–$Y$ association.
 ```
 
 The DAG makes precise why purely statistical constraints fail: not every $S \to Y$ path is illegitimate. The strength of causal inference is that it lets us reason about *which* paths are admissible instead of imposing a blanket independence requirement. Three steps follow directly from the graph:
