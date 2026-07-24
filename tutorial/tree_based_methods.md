@@ -1,4 +1,4 @@
-# Tree-Based Regresion Methods
+# Tree-Based Regression Methods
 
 The methods in {doc}`propensity` and {doc}`regression_methods` were mostly built to recover a *single* number - the ATE or ATT averaged over the population. Tree-based methods usually target the **conditional average treatment effect** (CATE) $\tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X = x]$, asking *for whom* the treatment works rather than *whether* it works on average. They share the same identification backbone (unconfoundedness and {ref}`overlap`) but let the data, rather than a fixed functional form, discover which covariates drive effect heterogeneity. The tree ensembles underlying these estimators - CART, bagging, and random forests - are covered in the standard machine-learning textbooks of [Hastie, Tibshirani & Friedman (2009)](https://doi.org/10.1007/978-0-387-84858-7) and, at an introductory level, [James et al. (2021)](https://doi.org/10.1007/978-1-0716-1418-1); [Athey & Imbens (2019)](https://doi.org/10.1146/annurev-economics-080217-053433) survey how these methods are adapted for causal estimation.
 

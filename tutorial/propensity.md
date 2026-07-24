@@ -82,7 +82,7 @@ Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-populatio
 	4. Return $\hat{\tau}_{ATE}$
 ```
 
-**Proof**: We want to briefly prove that weighting the observed outcomes $Y$ by the inverse of the propensity score $\pi(X)$ for the treated group recovers the true mean $\mathbb{E}[Y(1)]$:
+**Proof**: We want to briefly prove that weighting the observed outcomes $Y$ by the inverse of the propensity score $\pi(X)$ for the treated group recovers the true (factual) mean $\mathbb{E}[Y(1)]$:
 
 $$
 \mathbb{E}\left[ \frac{T Y}{\pi(X)} \right] = \mathbb{E}[Y(1)]
