@@ -22,8 +22,12 @@ parse:
 use_multitoc_numbering: false
 
 # Notebook execution configuration
+# The build environment (.figvenv) is intentionally lightweight and does not
+# carry the heavy scientific stack (numpy, scikit-learn, econml, shap, ...), so
+# notebooks are NOT re-executed at build time; the committed cell outputs are
+# used as-is. Re-run notebooks locally in a full env before committing.
 execute:
-  execute_notebooks: auto  # Options: 'auto', 'force', 'cache', 'off'
+  execute_notebooks: 'off'  # Options: 'auto', 'force', 'cache', 'off'
   timeout: 120  # Timeout in seconds for each cell execution
   allow_errors: false  # Set to true to allow errors without stopping build
   raise_on_error: false  # Set to true to stop build on errors
