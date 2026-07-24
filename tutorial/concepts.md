@@ -4,14 +4,14 @@
 
 A central lesson of statistics is that **correlation does not imply causation**. Two variables can be strongly associated without one causing the other. Classic examples include the correlation between ice cream sales and drowning rates (both driven by summer weather) or the correlation between the number of firefighters at a fire and the damage caused (both driven by fire severity).
 
-In **actuarial science**, this distinction is especially consequential. Insurance data is inherently observational: policyholders are not randomly assigned to risk factors or interventions. A pricing model may find that policyholders who purchase additional coverage have higher claim rates — but this likely reflects **adverse selection** (high-risk individuals self-selecting into more coverage), not a causal effect of coverage on claims.
+In **actuarial science**, this distinction is especially consequential. Insurance data is inherently observational: policyholders are not randomly assigned to risk factors or interventions. A pricing model may find that policyholders who purchase additional coverage have higher claim rates - but this likely reflects **adverse selection** (high-risk individuals self-selecting into more coverage), not a causal effect of coverage on claims.
 
 Confusing association with causation leads to flawed decisions:
 - **Pricing:** Adjusting premiums based on a spurious predictor introduces cross-subsidisation.
 - **Interventions:** A wellness programme that *appears* to reduce claims may simply attract healthier policyholders (**healthy user bias**).
 - **Reserving:** Trend extrapolations based on confounded associations can systematically over- or under-reserve.
 
-Causal inference provides the tools to move beyond "what predicts $Y$?" to "what happens to $Y$ if we intervene on $T$?" — the question that matters for decision-making ([Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm); [Python Causality Handbook, Ch. 1](https://matheusfacure.github.io/python-causality-handbook/01-Introduction-To-Causality.html)).
+Causal inference provides the tools to move beyond "what predicts $Y$?" to "what happens to $Y$ if we intervene on $T$?" - the question that matters for decision-making ([Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm); [Python Causality Handbook, Ch. 1](https://matheusfacure.github.io/python-causality-handbook/01-Introduction-To-Causality.html)).
 
 ## Two Traditions of Causal Inference
 
@@ -26,10 +26,10 @@ The **structural / graphical tradition** traces back to the path analysis of [Wr
 :width: 95%
 :name: fig-two-traditions
 
-The two pillars of causal inference. The potential-outcomes framework (left) reasons about unit-level counterfactuals and the effect $\tau = Y(1) - Y(0)$; structural causal models (right) reason about the graph of causal mechanisms. The two are formally equivalent and used together throughout this tutorial.
+The two pillars of causal inference. The potential-outcomes framework (left) reasons about unit-level counterfactuals and the treatment effect $\tau = Y(1) - Y(0)$, i.e., the difference in outcomes for a treatment $T=1$ versus no treatment $T=0$; structural causal models (right) reason about the graph of causal mechanisms. The two are formally equivalent and used together throughout this tutorial.
 ```
 
-The two languages are provably equivalent — every DAG implies a set of potential-outcome assumptions and vice versa ([Pearl, 2009](https://doi.org/10.1017/CBO9780511803161)). We use **potential outcomes** to define estimands (Chapter {doc}`assumptions`) and **DAGs** to reason about which variables to adjust for (Chapter {doc}`graphical_models`).
+The two languages are provably equivalent - every DAG implies a set of potential-outcome assumptions and vice versa ([Pearl, 2009](https://doi.org/10.1017/CBO9780511803161)). We use **potential outcomes** to define estimands (Chapter {doc}`assumptions`) and **DAGs** to reason about which variables to adjust for (Chapter {doc}`graphical_models`).
 
 
 ### Treatments
@@ -43,14 +43,17 @@ A treatment must be a **well-defined intervention**: something that could, at le
 
 ### Propensity Score
 The probability of receiving treatment given a set of observed covariates $X$, defined as:
-$$\pi(x) = \mathbb{P}(T=1 \mid X=x)$$
+
+$$
+\pi(x) = \mathbb{P}(T=1 \mid X=x)
+$$
 
 The propensity score was introduced by [Rosenbaum & Rubin (1983)](https://doi.org/10.1093/biomet/70.1.41). For a practical introduction to propensity score methods, see [Austin (2011)](https://doi.org/10.1080/00273171.2011.568786).
 
 
 ### Assignment Mechanism
 
-The **assignment mechanism** describes the process by which units come to receive a particular treatment. In an RCT the mechanism is known and controlled by the experimenter. In observational data, treatment is instead determined by factors such as self-selection, physician decisions, or policy rules — and these factors may themselves be related to the outcome ([Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). Understanding (or modelling) the assignment mechanism is the central challenge of causal inference from observational data, and it is what the identification assumptions (consistency, positivity, exchangeability) are designed to address.
+The **assignment mechanism** describes the process by which units come to receive a particular treatment. In a **randomized controlled trial** (RCT) the mechanism is known and controlled by the experimenter. In observational data, treatment is instead determined by factors such as self-selection, physician decisions, or policy rules - and these factors may themselves be related to the outcome ([Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). Understanding (or modelling) the assignment mechanism is the central challenge of causal inference from observational data, and it is what the identification assumptions (consistency, positivity, exchangeability) are designed to address.
 
 ### Confounding
 
@@ -64,7 +67,7 @@ Attributing the whole residual to confounding while calling the causal term the 
 
 
 ### Randomized Controlled Trials
-The **"gold standard"** for causal inference is the Randomized Controlled Trial (RCT). Randomization in treatment assignment ensures that treatment and control groups are as similar as possible, eliminating confounding and ensuring the treatment $T$ is independent of potential outcomes ([Rubin, 1974](https://doi.org/10.1037/h0037350); [Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)).
+The **"gold standard"** for causal inference is the randomized controlled trial (RCT). Randomization in treatment assignment ensures that treatment and control groups are as similar as possible, eliminating confounding and ensuring the treatment $T$ is independent of potential outcomes ([Rubin, 1974](https://doi.org/10.1037/h0037350); [Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)).
 
 ```{figure} figs/rct_benchmark.svg
 :width: 90%
@@ -73,7 +76,7 @@ The **"gold standard"** for causal inference is the Randomized Controlled Trial 
 In an RCT, treatment is assigned by chance, so both measured and unmeasured covariates are balanced across the treatment and control arms. This balance is what makes the simple difference in means an unbiased estimate of the causal effect.
 ```
 
-Because randomization makes $T \perp\!\!\!\perp (Y(1), Y(0))$ hold *by design*, the RCT is best understood as the **benchmark that observational methods try to emulate**. When we cannot randomize, the methods in this tutorial — matching, weighting, regression adjustment, and graphical reasoning — all aim to reconstruct, *conditional on covariates*, the covariate balance that randomization would have produced automatically.
+Because randomization makes $T \perp\!\!\!\perp (Y(1), Y(0))$ hold *by design*, the RCT is best understood as the **benchmark that observational methods try to emulate**. When we cannot randomize, the methods in this tutorial - matching, weighting, regression adjustment, and graphical reasoning - all aim to reconstruct, *conditional on covariates*, the covariate balance that randomization would have produced automatically.
 
 ```{note}
 :class: dropdown
@@ -84,7 +87,7 @@ RCTs are often infeasible in actuarial settings: we cannot randomly assign polic
 Causal inference from observational data relies on the idea that, under the assumptions of the **Rubin Causal Model** ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)), an observational study can be regarded as a *conditionally randomized experiment*. Under the assumptions of ignorability, the observed data $D$ represent the essential features of a randomized experiment, enabling the identification and consistent estimation of causal effects. 
 
 ## Fundamental Problem of Causal Inference
-Using binary treatments, every unit $i$ has two **potential outcomes** — $Y_i(1)$ under treatment and $Y_i(0)$ under control — but only one can ever be observed. The observed outcome is the **factual**; the outcome under the alternative treatment is the **counterfactual**. Since we cannot reset time to see what would have happened to the same unit under a different treatment, it is impossible to directly calculate individual treatment effects $\tau_i = Y_i(1) - Y_i(0)$. This fundamental identification problem was formalised by [Rubin (1974)](https://doi.org/10.1037/h0037350) and is discussed in detail in [Angrist & Pischke (2015, Ch. 1)](https://doi.org/10.2307/j.ctt5vhbqm).
+Using binary treatments, every unit $i$ has two **potential outcomes** - $Y_i(1)$ under treatment and $Y_i(0)$ under control - but only one can ever be observed. The observed outcome is the **factual**; the outcome under the alternative treatment is the **counterfactual**. Since we cannot reset time to see what would have happened to the same unit under a different treatment, it is impossible to directly calculate individual treatment effects $\tau_i = Y_i(1) - Y_i(0)$. This fundamental identification problem was formalised by [Rubin (1974)](https://doi.org/10.1037/h0037350) and is discussed in detail in [Angrist & Pischke (2015, Ch. 1)](https://doi.org/10.2307/j.ctt5vhbqm).
 
 ```{figure} figs/fundamental_problem.svg
 :width: 80%
@@ -115,7 +118,7 @@ The bridge from a causal estimand to a statistical estimand is built entirely fr
 No statistical procedure can *prove* a causal effect from observational data. Every estimate is conditional on assumptions that come from domain knowledge, not from the data. The role of the analyst is to (1) state these assumptions explicitly, (2) encode them in a DAG or potential-outcomes model, and (3) probe how fragile the conclusions are when the assumptions are relaxed.
 ```
 
-This is why **sensitivity analysis** is not optional but a core part of any credible causal study: rather than asking "is exchangeability true?", we ask "*how strong* would an unmeasured confounder have to be to overturn our conclusion?". These tools — E-values, Rosenbaum bounds, and partial-$R^2$ methods — are developed in {doc}`diagnostics` and {doc}`sensitivity`.
+This is why **sensitivity analysis** is not optional but a core part of any credible causal study: rather than asking "is exchangeability true?", we ask "*how strong* would an unmeasured confounder have to be to overturn our conclusion?". These tools - E-values, Rosenbaum bounds, and partial-$R^2$ methods - are developed in {doc}`diagnostics` and {doc}`sensitivity`.
 
 
 ### Notation

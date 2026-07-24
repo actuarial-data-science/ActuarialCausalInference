@@ -2,13 +2,13 @@
 
 This section is part of {doc}`inference`, which covers the estimation of causal effects from observational data. While the preceding sections focus on frequentist methods (propensity scores, regression, causal trees/forests), here we take a **Bayesian** perspective.
 
-Bayesian methods offer a natural framework for causal inference by treating unknown quantities — potential outcomes, treatment effects, and model parameters — as random variables with prior distributions updated by observed data $D$. This section introduces the key ideas, following [Rubin (1978)](https://doi.org/10.1214/aos/1176344064), [Shalizi (2025, Ch. 21)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf), and the [Causal ML Book](https://www.causalmlbook.com/).
+Bayesian methods offer a natural framework for causal inference by treating unknown quantities - potential outcomes, treatment effects, and model parameters - as random variables with prior distributions updated by observed data $D$. This section introduces the key ideas, following [Rubin (1978)](https://doi.org/10.1214/aos/1176344064), [Shalizi (2025, Ch. 21)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf), and the [Causal ML Book](https://www.causalmlbook.com/).
 
 ## Why Bayesian Causal Inference?
 
 In the potential outcomes framework, the fundamental problem is that we observe only one of $Y(1)$ or $Y(0)$ for each unit. The Bayesian approach treats the **missing potential outcomes as parameters** to be inferred:
 
-- **Prior beliefs** encode what we know before seeing the data — for example, that treatment effects are likely small, or that confounders have plausible distributions.
+- **Prior beliefs** encode what we know before seeing the data - for example, that treatment effects are likely small, or that confounders have plausible distributions.
 - **Posterior inference** yields a full distribution over causal estimands (ATE, CATE), naturally quantifying **uncertainty** in a way that frequentist point estimates and confidence intervals do not.
 - **Model comparison** via Bayes factors or posterior predictive checks helps select among competing causal models.
 
@@ -30,7 +30,7 @@ $$
 \text{ATE}(\theta_0, \theta_1) = \mathbb{E}_X\!\left[\mathbb{E}_{\theta_1}[Y(1) \mid X] - \mathbb{E}_{\theta_0}[Y(0) \mid X]\right],
 $$
 
-where the outer $\mathbb{E}_X$ averages over the covariate distribution. Its **posterior distribution** is the pushforward of $p(\theta_0, \theta_1 \mid D)$ through this functional — obtained by drawing $(\theta_0, \theta_1) \sim p(\theta_0, \theta_1 \mid D)$ and evaluating $\text{ATE}(\theta_0, \theta_1)$ for each draw. Summarising that distribution by its mean gives the **posterior mean ATE**:
+where the outer $\mathbb{E}_X$ averages over the covariate distribution. Its **posterior distribution** is the pushforward of $p(\theta_0, \theta_1 \mid D)$ through this functional - obtained by drawing $(\theta_0, \theta_1) \sim p(\theta_0, \theta_1 \mid D)$ and evaluating $\text{ATE}(\theta_0, \theta_1)$ for each draw. Summarising that distribution by its mean gives the **posterior mean ATE**:
 
 $$
 \mathbb{E}[\text{ATE} \mid D] = \int \mathbb{E}_X\!\left[\mathbb{E}_{\theta_1}[Y(1) \mid X] - \mathbb{E}_{\theta_0}[Y(0) \mid X]\right] p(\theta_0, \theta_1 \mid D) \, d\theta_0 \, d\theta_1
@@ -76,7 +76,7 @@ where $\hat{f}$ is the posterior mean of the sum-of-trees model.
 
 BART's advantages for causal inference include:
 - **Flexible nonparametric modelling** of the outcome surface without specifying functional form.
-- **Automatic uncertainty quantification** through the posterior distribution — credible intervals for $\tau(x)$ come directly from the MCMC output.
+- **Automatic uncertainty quantification** through the posterior distribution - credible intervals for $\tau(x)$ come directly from the MCMC output.
 - **Regularisation** via the tree priors, which favours shallow trees and prevents overfitting.
 
 ### Bayesian Causal Forests (BCF)
@@ -87,7 +87,7 @@ $$
 Y_i = \mu(X_i) + \tau(X_i) \cdot T_i + \varepsilon_i
 $$
 
-where $\mu(X_i)$ captures the baseline outcome (prognostic function) and $\tau(X_i)$ captures the heterogeneous treatment effect. Each is itself a *separate* sum-of-trees ensemble with its own BART prior — the prognostic trees $h_j$ build up $\mu$ and the treatment-effect trees $g_k$ build up $\tau$:
+where $\mu(X_i)$ captures the baseline outcome (prognostic function) and $\tau(X_i)$ captures the heterogeneous treatment effect. Each is itself a *separate* sum-of-trees ensemble with its own BART prior - the prognostic trees $h_j$ build up $\mu$ and the treatment-effect trees $g_k$ build up $\tau$:
 
 $$
 \mu(X_i) = \sum_{j=1}^{m_\mu} h_j(X_i; \mathcal{T}_j^{\mu}, \mathcal{M}_j^{\mu}), \qquad \tau(X_i) = \sum_{k=1}^{m_\tau} g_k(X_i; \mathcal{T}_k^{\tau}, \mathcal{M}_k^{\tau})
@@ -101,7 +101,7 @@ BCF additionally incorporates the estimated propensity score $\hat{\pi}(X_i)$ as
 :width: 95%
 :name: fig-bayesian-bcf
 
-Bayesian Causal Forest decomposition. The outcome is split into a *prognostic* function $\mu(X)$ — the baseline outcome surface — and a *treatment effect* function $\tau(X)$, each modelled by its own independent BART ensemble (a sum of shallow, shrunk trees). Giving $\tau(X)$ a separate prior and scale stops the strong prognostic signal from being shrunk into the effect estimate, the *regularisation-induced confounding* that [Hahn, Murray & Carvalho (2020)](https://doi.org/10.1214/19-BA1195) flag. The estimated propensity score $\hat{\pi}(X)$ enters the prognostic model as an extra covariate to further reduce confounding bias.
+Bayesian Causal Forest decomposition. The outcome is split into a *prognostic* function $\mu(X)$ - the baseline outcome surface - and a *treatment effect* function $\tau(X)$, each modelled by its own independent BART ensemble (a sum of shallow, shrunk trees). Giving $\tau(X)$ a separate prior and scale stops the strong prognostic signal from being shrunk into the effect estimate, the *regularisation-induced confounding* that [Hahn, Murray & Carvalho (2020)](https://doi.org/10.1214/19-BA1195) flag. The estimated propensity score $\hat{\pi}(X)$ enters the prognostic model as an extra covariate to further reduce confounding bias.
 ```
 
 ## Bayesian Propensity Score Methods
@@ -138,7 +138,7 @@ The posterior probability $P(\tau(x) > 0 \mid D)$ is particularly useful for **d
 :width: 80%
 :name: fig-bayesian-posterior
 
-From prior to posterior. A weakly informative *prior* $p(\tau)$ encodes the belief that the effect is plausibly small and centred near zero. After conditioning on the data $D$, the *posterior* $p(\tau \mid D)$ is narrower and shifted, summarising everything we know about the effect. Unlike a frequentist point estimate, it yields the posterior mean $\mathbb{E}[\tau \mid D]$, a 95% *credible* interval (a direct probability statement about $\tau$), and the decision-relevant posterior probability $P(\tau > 0 \mid D)$ — the shaded mass to the right of zero.
+From prior to posterior. A weakly informative *prior* $p(\tau)$ encodes the belief that the effect is plausibly small and centred near zero. After conditioning on the data $D$, the *posterior* $p(\tau \mid D)$ is narrower and shifted, summarising everything we know about the effect. Unlike a frequentist point estimate, it yields the posterior mean $\mathbb{E}[\tau \mid D]$, a 95% *credible* interval (a direct probability statement about $\tau$), and the decision-relevant posterior probability $P(\tau > 0 \mid D)$ - the shaded mass to the right of zero.
 ```
 
 ## Comparison with Frequentist Approaches

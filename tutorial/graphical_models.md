@@ -1,6 +1,6 @@
 # Graphical Causal Models
 
-This chapter introduces **Directed Acyclic Graphs (DAGs)** as the language for encoding causal assumptions. The presentation follows [Shalizi (2025, Chs. 21–22)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf), with additional references to [Pearl (2009)](https://doi.org/10.1017/CBO9780511803161). See also the [Python Causality Handbook (Ch. 4)](https://matheusfacure.github.io/python-causality-handbook/04-Graphical-Models.html) for an applied introduction.
+This chapter introduces **Directed Acyclic Graphs (DAGs)** as the language for encoding causal assumptions. The presentation follows [Shalizi (2025, Chs. 18–22)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf), with additional references to [Pearl (2009)](https://doi.org/10.1017/CBO9780511803161). See also the [Python Causality Handbook (Ch. 4)](https://matheusfacure.github.io/python-causality-handbook/04-Graphical-Models.html) for an applied introduction.
 
 ## Causal Diagrams
 
@@ -17,7 +17,7 @@ A **directed acyclic graph** $\mathcal{G} = (V, E)$ consists of:
 subject to the constraint that there are **no directed cycles**: there is no sequence $V_{i_1} \rightarrow V_{i_2} \rightarrow \cdots \rightarrow V_{i_k} \rightarrow V_{i_1}$.
 ```
 
-The acyclicity constraint reflects the assumption that causes precede their effects — no variable can be its own cause through any chain of intermediate variables ([Shalizi, 2025, §21.1](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+The acyclicity constraint reflects the assumption that causes precede their effects - no variable can be its own cause through any chain of intermediate variables ([Shalizi, 2025, Section 18.2](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ### Graph Terminology
 
@@ -44,7 +44,7 @@ A **path** between two nodes is any sequence of edges connecting them, regardles
 
 ## Three Fundamental Path Structures
 
-Every path through three variables takes one of exactly three forms. Understanding these structures is the key to reasoning about confounding and adjustment ([Shalizi, 2025, §21.2](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+Every path through three variables takes one of exactly three forms. Understanding these structures is the key to reasoning about confounding and adjustment ([Shalizi, 2025, Section 18.3](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ### Chains (Mediation)
 
@@ -52,7 +52,7 @@ Every path through three variables takes one of exactly three forms. Understandi
 :label: chain
 :class: dropdown
 
-A **chain** is a path of the form $X \rightarrow M \rightarrow Y$. The variable $M$ is called a **mediator** — it transmits the causal effect of $X$ on $Y$.
+A **chain** is a path of the form $X \rightarrow M \rightarrow Y$. The variable $M$ is called a **mediator** - it transmits the causal effect of $X$ on $Y$.
 ```
 
 ```{figure} figs/chain.svg
@@ -108,13 +108,13 @@ A **collider** on a path is a node $C$ where two arrowheads meet: $X \rightarrow
 A collider: $C$ is a common effect of $X$ and $Y$. Conditioning on $C$ opens a spurious path between them.
 ```
 
-Colliders behave **opposite** to chains and forks. In a collider structure, $X$ and $Y$ are **marginally independent** — there is no open path connecting them. However, **conditioning on the collider $C$ (or any descendant of $C$) opens the path** and induces a spurious association:
+Colliders behave **opposite** to chains and forks. In a collider structure, $X$ and $Y$ are **marginally independent** - there is no open path connecting them. However, **conditioning on the collider $C$ (or any descendant of $C$) opens the path** and induces a spurious association:
 
 $$
 X \perp\!\!\!\perp Y \quad \text{but} \quad X \not\!\perp\!\!\!\perp Y \mid C \quad \text{(collider)}
 $$
 
-This is the source of **collider bias** (also called **selection bias** or **Berkson's paradox**). Adjusting for a collider — or for a descendant of a collider — creates a spurious association where none existed ([Shalizi, 2025, §21.2](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+This is the source of **collider bias** (also called **selection bias** or **Berkson's paradox**). Adjusting for a collider - or for a descendant of a collider - creates a spurious association where none existed ([Shalizi, 2025, Section 18.3](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ### Summary of Path Structures
 
@@ -138,7 +138,7 @@ The three path structures above give rise to a general graphical criterion for r
 
 A path $p$ between nodes $X$ and $Y$ in a DAG is **blocked** by a set of nodes $Z$ if and only if $p$ contains a node $W$ such that either:
 
-1. $W$ is a **non-collider** on $p$ (i.e. $W$ is in a chain or fork) **and** $W \in Z$ (we condition on it), or
+1. $W$ is a **chain** or a **fork** on $p$, **and** $W \in Z$ (we condition on it), or
 2. $W$ is a **collider** on $p$ **and** neither $W$ nor any descendant of $W$ is in $Z$.
 ```
 
@@ -151,7 +151,7 @@ Two nodes $X$ and $Y$ are **$d$-separated** by a set $Z$ in a DAG $\mathcal{G}$,
 If $X$ and $Y$ are not $d$-separated by $Z$, they are **$d$-connected** given $Z$.
 ```
 
-$d$-separation is the graphical analogue of conditional independence. It provides a purely mechanical procedure: to check whether $X \perp\!\!\!\perp Y \mid Z$, enumerate all paths between $X$ and $Y$ and verify that each one is blocked ([Shalizi, 2025, §21.2](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+$d$-separation is the graphical analogue of conditional independence. It provides a purely mechanical procedure: to check whether $X \perp\!\!\!\perp Y \mid Z$, enumerate all paths between $X$ and $Y$ and verify that each one is blocked ([Shalizi, 2025, Section 18.3](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ### Conditional Independence
 
@@ -170,7 +170,7 @@ $$
 Equivalently: if $X \perp_{\mathcal{G}} Y \mid Z$ ($d$-separation), then $X \perp\!\!\!\perp Y \mid Z$ (conditional independence in $P$).
 ```
 
-The Causal Markov Condition ensures that $d$-separation implies conditional independence. The converse — that every conditional independence in the data corresponds to a $d$-separation in the graph — requires an additional assumption.
+The Causal Markov Condition ensures that $d$-separation implies conditional independence. The converse - that every conditional independence in the data corresponds to a $d$-separation in the graph - requires an additional assumption.
 
 ```{prf:assumption} Faithfulness
 :label: faithfulness
@@ -181,7 +181,7 @@ A distribution $P$ is **faithful** to a DAG $\mathcal{G}$ if the *only* conditio
 Equivalently: if $X \perp\!\!\!\perp Y \mid Z$ in $P$, then $X \perp_{\mathcal{G}} Y \mid Z$.
 ```
 
-Together, the Causal Markov Condition and faithfulness give a one-to-one correspondence between $d$-separation statements and conditional independence relations ([Shalizi, 2025, §22.3](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+Together, the Causal Markov Condition and faithfulness give a one-to-one correspondence between $d$-separation statements and conditional independence relations ([Shalizi, 2025, Section 19.3](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ### Example 1: $d$-Separation in Practice
 
@@ -199,8 +199,8 @@ A DAG combining all three path structures: a fork through the confounder $F$, a 
 :label: dsep-example
 :class: dropdown
 
-- **$T$ and $Y$ given $\emptyset$**: The path $T \leftarrow F \rightarrow Y$ is open (fork, $F$ not conditioned on). $T$ and $Y$ are $d$-connected — **not** independent.
-- **$T$ and $Y$ given $F$**: The backdoor path $T \leftarrow F \rightarrow Y$ is now blocked. The directed path $T \rightarrow M \rightarrow Y$ remains open (chain, $M$ not conditioned on). $T$ and $Y$ are $d$-connected given $F$ — but now the remaining open paths are *causal*.
+- **$T$ and $Y$ given $\emptyset$**: The path $T \leftarrow F \rightarrow Y$ is open (fork, $F$ not conditioned on). $T$ and $Y$ are $d$-connected - **not** independent.
+- **$T$ and $Y$ given $F$**: The backdoor path $T \leftarrow F \rightarrow Y$ is now blocked. The directed path $T \rightarrow M \rightarrow Y$ remains open (chain, $M$ not conditioned on). $T$ and $Y$ are $d$-connected given $F$ - but now the remaining open paths are *causal*.
 - **$T$ and $Y$ given $\{F, C\}$**: Conditioning on the collider $C$ **opens** the path $T \rightarrow C \leftarrow Y$, creating collider bias. This is an **incorrect** adjustment set.
 
 **Correct adjustment set: $\{F\}$.** Conditioning on $F$ blocks the single backdoor path $T \leftarrow F \rightarrow Y$, leaving the causal paths $T \rightarrow Y$ and $T \rightarrow M \rightarrow Y$ open. The mediator $M$ and the collider $C$ must be **left out**: adjusting for $M$ would block the indirect causal effect, and adjusting for $C$ would open the spurious path $T \rightarrow C \leftarrow Y$ ({prf:ref}`backdoor-criterion`).

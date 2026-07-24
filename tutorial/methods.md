@@ -2,7 +2,7 @@
 
 The previous sections established *when* a causal effect can be recovered from observational data: the core assumptions ({doc}`assumptions`) and the graphical criteria for selecting a valid adjustment set ({doc}`graphical_models`). The central question in observational causal inference is: *which variables should we condition on to identify the causal effect of $T$ on $Y$?* 
 
-This section organises the main **identification strategies** — the structural arguments that re-express a causal estimand purely in terms of the observed data distribution, *before* any particular estimator is chosen. 
+This section organises the main **identification strategies** - the structural arguments that re-express a causal estimand purely in terms of the observed data distribution, *before* any particular estimator is chosen. 
 
 Each strategy trades on a different identifying assumption. The choice is dictated by the causal structure encoded in the DAG: which variables are observed, where the confounding enters, and whether a suitable instrument or mediator is available.
 
@@ -16,7 +16,7 @@ Each strategy trades on a different identifying assumption. The choice is dictat
 
 ## Back-door Adjustment
 
-When the observed covariates $X$ satisfy the {prf:ref}`backdoor-criterion`, the causal effect is identified by the adjustment formula
+When the observed covariates $X$ satisfy the Backdoor Criterion ({prf:ref}`backdoor-criterion`), the causal effect is identified by the adjustment formula
 
 $$
 P(Y \mid \text{do}(T=t)) = \sum_{x} P(Y \mid T=t, X=x)\, P(X=x).
@@ -24,7 +24,7 @@ $$
 
 This is the workhorse identification strategy and underpins propensity-score and regression-based estimators in {doc}`inference`.
 
-The following criteria provide graphical answers ([Shalizi, 2025, §21.3–21.4](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+The following criteria provide graphical answers ([Shalizi, 2025, Section 21.1-21.2](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ### The Backdoor Criterion
 
@@ -56,7 +56,7 @@ The adjustment formula converts the interventional distribution $P(Y \mid \text{
 
 1. **Check descendant condition:** For each $z_i \in Z$:
 	1. If $z_i \in \text{Descendants}(T)$ in $\mathcal{G}$, return `False`
-2. **Enumerate backdoor paths:** Find all paths between $T$ and $Y$ that have an arrow into $T$ (i.e. paths of the form $T \leftarrow \cdots\, Y$ or $T \leftarrow \cdots \rightarrow Y$)
+2. **Enumerate backdoor paths:** Find all (undirected) paths between $T$ and $Y$ that have an arrow into $T$ (i.e. paths of the form $T \leftarrow \cdots\ \leftarrow Y$ or $T \leftarrow \cdots \rightarrow Y$)
 3. **Check blocking:** For each backdoor path $p$:
 	1. If $p$ is not blocked by $Z$ (applying the $d$-separation rules from {prf:ref}`blocked-path`), return `False`
 4. Return `True`
@@ -76,15 +76,15 @@ $F \rightarrow T, \quad F \rightarrow Y, \quad T \rightarrow Y$
 
 ## Front-door Adjustment
 
-When confounding between $T$ and $Y$ is unobserved but an observed mediator $M$ intercepts every directed path from $T$ to $Y$, the {prf:ref}`frontdoor-criterion` identifies the effect through a two-stage decomposition that avoids conditioning on the unobserved confounder.
+When confounding between $T$ and $Y$ is unobserved but an observed mediator $M$ intercepts every directed path from $T$ to $Y$, the Frontdoor Criterion ({prf:ref}`frontdoor-criterion`) identifies the effect through a two-stage decomposition that avoids conditioning on the unobserved confounder.
 
 ### The Frontdoor Criterion
 
-When backdoor paths run through **unobserved** confounders and therefore cannot be blocked, the backdoor criterion cannot be applied. The frontdoor criterion provides an alternative identification strategy through an observed mediator ([Shalizi, 2025, §21.4](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+When backdoor paths run through **unobserved** confounders and therefore cannot be blocked, the backdoor criterion cannot be applied. The frontdoor criterion provides an alternative identification strategy through an observed mediator ([Shalizi, 2025, Section 21.1](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ```{prf:criterion} Frontdoor Criterion
-:class: dropdown
 :label: frontdoor-criterion
+:class: dropdown
 
 A set of variables $M$ satisfies the **frontdoor criterion** relative to $(T, Y)$ in a DAG $\mathcal{G}$ if:
 
@@ -125,7 +125,7 @@ Consider the DAG where $U$ is unobserved:
 $U \rightarrow T, \quad U \rightarrow Y, \quad T \rightarrow M, \quad M \rightarrow Y$
 
 - The backdoor criterion **fails** because we cannot condition on $U$.
-- **Candidate $M = \{M\}$**: All causal paths from $T$ to $Y$ go through $M$ ✓. The only backdoor path from $T$ to $M$, namely $T \leftarrow U \rightarrow Y \leftarrow M$, is **blocked by the unconditioned collider at $Y$** (both $U \rightarrow Y$ and $M \rightarrow Y$ are arrows into $Y$; {prf:ref}`collider`) — it is blocked, not absent ✓. The backdoor path from $M$ to $Y$ through $U$ is $M \leftarrow T \leftarrow U \rightarrow Y$, which is blocked by $T$ ✓. The frontdoor criterion is satisfied.
+- **Candidate $M = \{M\}$**: All causal paths from $T$ to $Y$ go through $M$ ✓. The only backdoor path from $T$ to $M$, namely $T \leftarrow U \rightarrow Y \leftarrow M$, is **blocked by the unconditioned collider at $Y$** (both $U \rightarrow Y$ and $M \rightarrow Y$ are arrows into $Y$; {prf:ref}`collider`) - it is blocked, not absent ✓. The backdoor path from $M$ to $Y$ through $U$ is $M \leftarrow T \leftarrow U \rightarrow Y$, which is blocked by $T$ ✓. The frontdoor criterion is satisfied.
 ```
 
 ```{figure} figs/frontdoor.svg
@@ -160,11 +160,11 @@ Given observational data, can we *learn* the DAG rather than assuming it? **Caus
 Two DAGs are **Markov equivalent** if they encode exactly the same set of $d$-separation (conditional independence) statements. DAGs in the same equivalence class share the same **skeleton** (undirected edges) and the same set of **v-structures** (collider patterns $X \rightarrow C \leftarrow Y$ where $X$ and $Y$ are not adjacent).
 ```
 
-Observational data alone can only identify the DAG up to its Markov equivalence class. Orienting all edges requires either interventional data or additional assumptions ([Shalizi, 2025, §22.3](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+Observational data alone can only identify the DAG up to its Markov equivalence class. Orienting all edges requires either interventional data or additional assumptions ([Shalizi, 2025, Section 22.3](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ### The SGS Algorithm
 
-The **SGS algorithm** (Spirtes, Glymour & Scheines, 1993) is a constraint-based procedure that recovers the Markov equivalence class from conditional independence tests. The following pseudo-code is adapted from [Shalizi (2025, §22.7)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf).
+The **SGS algorithm** (Spirtes, Glymour & Scheines, 1993) is a constraint-based procedure that recovers the Markov equivalence class from conditional independence tests. The following pseudo-code is adapted from [Shalizi (2025, Section 22.7)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf).
 
 ```{prf:algorithm} SGS Algorithm
 :label: sgs-algorithm
@@ -174,7 +174,7 @@ The **SGS algorithm** (Spirtes, Glymour & Scheines, 1993) is a constraint-based 
 
 **Output:** Partially directed graph (CPDAG) representing the Markov equivalence class
 
-**Phase I — Skeleton Recovery:**
+**Phase I - Skeleton Recovery:**
 
 1. Start with the **complete undirected graph** on $V$
 2. For each pair of nodes $(X, Y)$ with $X \neq Y$:
@@ -183,21 +183,21 @@ The **SGS algorithm** (Spirtes, Glymour & Scheines, 1993) is a constraint-based 
 		2. If independent: **remove** the edge $X - Y$ and record $S$ as the **separating set** $\text{Sep}(X,Y) \leftarrow S$
 		3. Break (move to next pair)
 
-**Phase II — Orient V-Structures:**
+**Phase II - Orient V-Structures:**
 
-3. For each **unshielded triple** $(X, Z, Y)$ — where $X - Z$ and $Z - Y$ but $X$ and $Y$ are **not** adjacent:
+3. For each **unshielded triple** $(X, Z, Y)$ - where $X - Z$ and $Z - Y$ but $X$ and $Y$ are **not** adjacent:
 	1. If $Z \notin \text{Sep}(X, Y)$: orient as $X \rightarrow Z \leftarrow Y$ (v-structure / collider)
 
-**Phase III — Orient Remaining Edges:**
+**Phase III - Orient Remaining Edges:**
 
 4. Repeatedly apply **Meek's orientation rules** ([Meek, 1995](https://dl.acm.org/doi/10.5555/2074158.2074204)) until no more edges can be oriented:
-	1. **R1 — No new v-structures:** If $X \rightarrow Z - Y$ and $X$ and $Y$ are not adjacent, orient as $Z \rightarrow Y$ (orienting $Y \rightarrow Z$ would create a new unshielded collider at $Z$)
-	2. **R2 — Acyclicity:** If there is a directed path $X \rightarrow \cdots \rightarrow Y$ and an undirected edge $X - Y$, orient as $X \rightarrow Y$ (orienting $Y \rightarrow X$ would close a directed cycle)
-	3. **R3 — No new v-structures:** If $X - Y$, $X - Z$, $X - W$, $Z \rightarrow Y$, $W \rightarrow Y$, and $Z$ and $W$ are not adjacent, orient as $X \rightarrow Y$
-	4. **R4 — Acyclicity:** If $X - Y$, $X - Z$, $X - W$, $Z \rightarrow W$, $W \rightarrow Y$, and $Z$ and $Y$ are not adjacent, orient as $X \rightarrow Y$
+	1. **R1 - No new v-structures:** If $X \rightarrow Z - Y$ and $X$ and $Y$ are not adjacent, orient as $Z \rightarrow Y$ (orienting $Y \rightarrow Z$ would create a new unshielded collider at $Z$)
+	2. **R2 - Acyclicity:** If there is a directed path $X \rightarrow \cdots \rightarrow Y$ and an undirected edge $X - Y$, orient as $X \rightarrow Y$ (orienting $Y \rightarrow X$ would close a directed cycle)
+	3. **R3 - No new v-structures:** If $X - Y$, $X - Z$, $X - W$, $Z \rightarrow Y$, $W \rightarrow Y$, and $Z$ and $W$ are not adjacent, orient as $X \rightarrow Y$
+	4. **R4 - Acyclicity:** If $X - Y$, $X - Z$, $X - W$, $Z \rightarrow W$, $W \rightarrow Y$, and $Z$ and $Y$ are not adjacent, orient as $X \rightarrow Y$
 ```
 
-The SGS algorithm is correct under the assumptions of the Causal Markov Condition ({prf:ref}`causal-markov`) and faithfulness ({prf:ref}`faithfulness`). In practice, the **PC algorithm** (a computationally efficient variant) is more commonly used: it restricts the conditioning sets in Phase I to neighbours of $X$ or $Y$ in the current skeleton, greatly reducing the number of tests ([Shalizi, 2025, §22.4](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+The SGS algorithm is correct under the assumptions of the Causal Markov Condition ({prf:ref}`causal-markov`) and faithfulness ({prf:ref}`faithfulness`). In practice, the **PC algorithm** (a computationally efficient variant) is more commonly used: it restricts the conditioning sets in Phase I to neighbours of $X$ or $Y$ in the current skeleton, greatly reducing the number of tests ([Shalizi, 2025, Section 22.4](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ```{prf:remark}
 :label: discovery-limitations
@@ -212,9 +212,9 @@ Causal discovery from observational data has fundamental limitations:
 
 ## Instrumental Variables
 
-When no admissible adjustment set exists, an **instrument** $Z$ — a source of exogenous variation in $T$ that affects $Y$ only through $T$ — can identify a local causal effect. The instrumental-variable estimator and its two-stage least-squares implementation are developed in {doc}`regression_methods`.
+When no admissible adjustment set exists, an **instrument** $Z$ - a source of exogenous variation in $T$ that affects $Y$ only through $T$ - can identify a local causal effect. The instrumental-variable estimator and its two-stage least-squares implementation are developed in {doc}`regression_methods`.
 
 ```{note}
 :class: dropdown
-This section frames identification only. *How* to estimate each identified quantity from a finite sample — with propensity scores, regression, machine-learning, tree-based, or Bayesian methods — is the subject of {doc}`inference`, and the robustness of the underlying assumptions is examined in {doc}`sensitivity`.
+This section frames identification only. *How* to estimate each identified quantity from a finite sample - with propensity scores, regression, machine-learning, tree-based, or Bayesian methods - is the subject of {doc}`inference`, and the robustness of the underlying assumptions is examined in {doc}`sensitivity`.
 ```
