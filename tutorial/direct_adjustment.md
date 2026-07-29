@@ -114,7 +114,8 @@ Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-populatio
 	4. Return $\hat{\tau}_{ATE}$
 ```
 
-**Proof**: We want to briefly prove that weighting the observed outcomes $Y$ by the inverse of the propensity score $\pi(X)$ for the treated group recovers the true (factual) mean $\mathbb{E}[Y(1)]$:
+```{prf:proof}
+We want to briefly prove that weighting the observed outcomes $Y$ by the inverse of the propensity score $\pi(X)$ for the treated group recovers the true (factual) mean $\mathbb{E}[Y(1)]$.
 
 $$
 \mathbb{E}\left[ \frac{T Y}{\pi(X)} \right] = \mathbb{E}[Y(1)]
@@ -156,6 +157,7 @@ Using the Law of Iterated Expectations again, the inner expectation collapses, l
 $$
 \mathbb{E}\big[\mathbb{E}[Y(1) \mid X]\big] = \mathbb{E}[Y(1)]
 $$
+```
 
 ## Interactive Comparison: Matching vs. Weighting
 The interactive figure below applies both methods to a single simulated dataset with covariates $X$, treatment $T$, and outcome $Y$, where the true treatment effect is known. Use it to build intuition for how the two estimators behave:
@@ -267,43 +269,129 @@ Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the pr
 4. Return estimated treatment effect $\hat{\tau}$ *(consistent if either $\hat{\mu}$ or $\hat{\pi}$ is correct)*
 ```
 
+### Neyman Orthogonality of the AIPW Score
 
-```{note}
-:class: dropdown
-
-A **doubly robust estimator** $\hat{\tau}$ is consistent for the true ATE $\tau$ if
-*either* $\hat{\mu}$ *or* $\hat{\pi}$ is consistently estimated - that is, if either
-$\hat{\mu}(t, x) \rightarrow \mu(t, x) = \mathbb{E}[Y \mid T=t, X=x]$ or
-$\hat{\pi}(x) \rightarrow \pi(x) = P(T=1 \mid X=x)$ converge in probability as $n \to \infty$. To see
-why, write the doubly robust estimator explicitly as
+The AIPW estimator averages the doubly robust scores $\hat{\psi}^{(i)}$ defined in
+Step 2 of {prf:ref}`alg-aipw`. In expectation, the score is a moment condition
+$\mathbb{E}[\psi(\theta_0, \eta_0)] = 0$, where
 
 $$
-\hat{\tau} = \frac{1}{n}\sum_{i=1}^n \Biggl[
-\underbrace{\hat{\mu}(1, x^{(i)}) - \hat{\mu}(0, x^{(i)})}_{\text{plug-in term}} +
-\underbrace{
-\frac{T^{(i)}\,(Y^{(i)} - \hat{\mu}(1, x^{(i)}))}{\hat{\pi}(x^{(i)})} - \frac{(1 - T^{(i)})\,(Y^{(i)} - \hat{\mu}(0, x^{(i)}))}{1 - \hat{\pi}(x^{(i)})}}_{\text{augmentation term}}
-\Biggr],
+\psi(\theta, \eta) = \underbrace{\mu(1,X) - \mu(0,X)}_{\text{plug-in term}}
++ \underbrace{\frac{T(Y - \mu(1,X))}{\pi(X)}
+- \frac{(1-T)(Y - \mu(0,X))}{1-\pi(X)}}_{\text{augmentation term}} - \theta
 $$
 
-where the plug-in term is the standard G-computation estimator and the augmentation
-term uses inverse-probability weights to correct for bias in the outcome model.
-The bias of $\hat{\tau}$ as an estimator of $\tau$ is proportional to a product
-of errors in the two nuisance functions,
+with nuisance parameter $\eta = (\mu, \pi)$, where
+$\mu(t,x) = \mathbb{E}[Y \mid T=t, X=x]$ and $\pi(x) = P(T=1 \mid X=x)$.
+The score is **Neyman orthogonal** at $(\theta_0, \eta_0)$ if the
+derivative of the expected score with respect to $\eta$, evaluated at the truth,
+vanishes in every direction:
 
 $$
-\operatorname{Bias}(\hat{\tau}) \propto \bigl(\hat{\mu} - \mu\bigr)\bigl(\hat{\pi} - \pi\bigr),
+\partial_\eta\,\mathbb{E}\!\left[\psi(\theta_0,\,\eta_0)\right][\eta - \eta_0] = 0
+\qquad \text{for all } \eta.
 $$
 
-so if either factor converges to zero the product vanishes and $\hat{\tau}$ is
-consistent, even if the other model remains misspecified. Concretely: if
-$\hat{\mu} \rightarrow \mu$ but $\hat{\pi} \not\rightarrow \pi$, the outcome
-model residuals $Y_i - \hat{\mu}(T_i, X_i)$ already have expectation zero, so the
-augmentation term contributes no bias regardless of how wrong $\hat{\pi}$ is;
-symmetrically, if $\hat{\pi} \rightarrow \pi$ but $\hat{\mu} \not\rightarrow
-\mu$, the inverse-probability weights correctly rebalance the misspecified outcome
-model predictions and the bias cancels. Only when both models are misspecified -
-$\hat{\mu} \not\rightarrow \mu$ and $\hat{\pi} \not\rightarrow \pi$ - does
-the product remain non-zero and the estimator fails to be consistent.
+Since $\eta = (\mu, \pi)$, we verify this separately for each component.
+
+```{prf:proof}
+We show that both $\partial_\mu\,\mathbb{E}[\psi][\delta_\mu] = 0$ and
+$\partial_\pi\,\mathbb{E}[\psi][\delta_\pi] = 0$ at the truth $\eta_0 = (\mu, \pi)$,
+for arbitrary directions $\delta_\mu = \tilde{\mu} - \mu$ and
+$\delta_\pi = \tilde{\pi} - \pi$.
+
+**Part 1: Derivative with respect to $\mu$.**
+
+The derivative of $\mathbb{E}[\psi]$ in direction $\delta_\mu$ is:
+
+$$
+\partial_\mu\,\mathbb{E}[\psi][\delta_\mu]
+= \mathbb{E}\!\left[
+    \delta_\mu(1,X) - \delta_\mu(0,X)
+    - \frac{T\,\delta_\mu(1,X)}{\pi(X)}
+    + \frac{(1-T)\,\delta_\mu(0,X)}{1 - \pi(X)}
+\right]
+$$
+
+Apply the law of iterated expectations, conditioning on $X$:
+
+$$
+= \mathbb{E}_X\!\left[
+    \delta_\mu(1,X)\left(1 - \frac{\mathbb{E}[T \mid X]}{\pi(X)}\right)
+    - \delta_\mu(0,X)\left(1 - \frac{\mathbb{E}[1-T \mid X]}{1-\pi(X)}\right)
+\right]
+$$
+
+Since $\mathbb{E}[T \mid X] = \pi(X)$ and $\mathbb{E}[1-T \mid X] = 1-\pi(X)$
+both fractions equal one, so:
+
+$$
+= \mathbb{E}_X\!\left[
+    \delta_\mu(1,X)\cdot 0 - \delta_\mu(0,X) \cdot 0
+\right] = 0.
+$$
+
+**Part 2: Derivative with respect to $\pi$.**
+
+The derivative of $\mathbb{E}[\psi]$ in direction $\delta_\pi$ is obtained
+by replacing $\pi$ with $\pi + t\,\delta_\pi$ and differentiating at $t=0$,
+using $\frac{d}{dt}\frac{1}{\pi + t\delta_\pi}\big|_{t=0} = -\frac{\delta_\pi}{\pi^2}$:
+
+$$
+\partial_\pi\,\mathbb{E}[\psi][\delta_\pi]
+= -\mathbb{E}\!\left[
+    \frac{T\,(Y - \mu(1,X))\,\delta_\pi(X)}{\pi(X)^2}
+\right]
++ \mathbb{E}\!\left[
+    \frac{(1-T)\,(Y - \mu(0,X))\,\delta_\pi(X)}{(1-\pi(X))^2}
+\right]
+$$
+
+Apply iterated expectations to the first term, conditioning on $X$:
+
+$$
+\mathbb{E}\!\left[\frac{T\,(Y-\mu(1,X))\,\delta_\pi(X)}{\pi(X)^2}\right]
+= \mathbb{E}_X\!\left[\frac{\delta_\pi(X)}{\pi(X)^2}
+\cdot\mathbb{E}[T\,(Y - \mu(1,X)) \mid X]\right]
+$$
+
+Under exchangeability, $\mathbb{E}[TY \mid X] = \pi(X)\mu(1,X)$ and
+$\mathbb{E}[T \mid X] = \pi(X)$, so:
+
+$$
+\mathbb{E}[T\,(Y - \mu(1,X)) \mid X]
+= \pi(X)\mu(1,X) - \mu(1,X)\,\pi(X) = 0
+$$
+
+and the first term vanishes. By the identical argument applied to $T=0$, using
+$\mathbb{E}[(1-T)Y \mid X] = (1-\pi(X))\,\mu(0,X)$ and
+$\mathbb{E}[1-T \mid X] = 1-\pi(X)$:
+
+$$
+\mathbb{E}[(1-T)(Y - \mu(0,X)) \mid X]
+= (1-\pi(X))\,\mu(0,X) - \mu(0,X)\,(1-\pi(X)) = 0
+$$
+
+and the second term also vanishes:
+
+$$
+\partial_\pi\,\mathbb{E}[\psi][\delta_\pi] = 0.
+$$
+
+**Conclusion.**
+
+Since both partial derivatives vanish at the truth for all directions
+$\delta_\mu$ and $\delta_\pi$, the AIPW score is Neyman orthogonal. Consequently,
+the bias of $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\hat{\psi}^{(i)}$ satisfies
+
+$$
+\operatorname{Bias}(\hat{\tau})
+\propto (\hat{\mu} - \mu)(\hat{\pi} - \pi),
+$$
+
+vanishing whenever either $\hat{\mu} \rightarrow \mu$ or
+$\hat{\pi} \rightarrow \pi$ in probability, which is the double robustness stated in
+Step 4 of {prf:ref}`alg-aipw`.
 ```
 
 
@@ -321,7 +409,6 @@ the product remain non-zero and the estimator fails to be consistent.
 4. Plug the targeted model into G-computation: $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}^\star(1, x^{(i)}) - \hat{\mu}^\star(0, x^{(i)})\right]$
 5. Return estimated treatment effect $\hat{\tau}$
 ```
-
 
 
 ```{note}
