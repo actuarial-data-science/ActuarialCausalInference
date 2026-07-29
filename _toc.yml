@@ -18,9 +18,10 @@ parts:
           - file: tutorial/methods.md
       - file: tutorial/inference.md
         sections: 
-          - file: tutorial/propensity.md
-          - file: tutorial/regression_methods.md
-          - file: tutorial/tree_based_methods.md
+          - file: tutorial/direct_adjustment.md
+          - file: tutorial/heterogeneous_effects.md
+          - file: tutorial/instrumental_variables.md
+          - file: tutorial/quasi_experimental.md
           - file: tutorial/bayesian.md
       - file: tutorial/sensitivity.md
         sections:

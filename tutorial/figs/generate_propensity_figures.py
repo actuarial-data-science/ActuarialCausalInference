@@ -1,7 +1,7 @@
 """Generate static figures illustrating Propensity Score Matching (PSM) and
 Inverse Probability of Treatment Weighting (IPTW / IPW).
 
-The figures are embedded in ``tutorial/propensity.md`` via MyST ``{figure}``
+The figures are embedded in ``tutorial/direct_adjustment.md`` via MyST ``{figure}``
 directives. Re-run this script to regenerate them::
 
     python tutorial/figs/generate_propensity_figures.py

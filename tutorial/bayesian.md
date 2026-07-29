@@ -49,6 +49,23 @@ $$
 \tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X = x, D]
 $$
 
+## Bayesian Propensity Score Methods
+
+The propensity score $\pi(x) = P(T=1 \mid X=x)$ can also be estimated within a Bayesian framework, yielding a posterior distribution over the propensity scores and propagating this uncertainty into the causal estimate.
+
+```{prf:definition} Bayesian Propensity Score
+:label: bayesian-propensity
+:class: dropdown
+
+Given a model $T_i \mid X_i, \alpha \sim \text{Bernoulli}(\pi(X_i; \alpha))$ with prior $\alpha \sim p(\alpha)$, the Bayesian propensity score is the posterior predictive:
+
+$$
+\hat{\pi}(x \mid D) = \int \pi(x; \alpha) \, p(\alpha \mid D) \, d\alpha
+$$
+
+Treatment effect estimates using this posterior propensity score account for **propensity model uncertainty**, unlike plug-in frequentist approaches.
+```
+
 ## Bayesian Additive Regression Trees (BART)
 
 **BART** ([Chipman, George & McCulloch, 2010](https://doi.org/10.1214/09-AOAS285)) is a sum-of-trees regression model; its use for causal inference was introduced by [Hill (2011)](https://doi.org/10.1198/jcgs.2010.08162), and it is now the most widely used Bayesian method for heterogeneous treatment effect estimation. It models the outcome as a sum of regression trees with Bayesian priors on tree structure and leaf parameters.
@@ -79,7 +96,7 @@ BART's advantages for causal inference include:
 - **Automatic uncertainty quantification** through the posterior distribution - credible intervals for $\tau(x)$ come directly from the MCMC output.
 - **Regularisation** via the tree priors, which favours shallow trees and prevents overfitting.
 
-### Bayesian Causal Forests (BCF)
+## Bayesian Causal Forests (BCF)
 
 [Hahn, Murray & Carvalho (2020)](https://doi.org/10.1214/19-BA1195) extend BART specifically for causal inference by separating the prognostic and treatment effect components:
 
@@ -102,23 +119,6 @@ BCF additionally incorporates the estimated propensity score $\hat{\pi}(X_i)$ as
 :name: fig-bayesian-bcf
 
 Bayesian Causal Forest decomposition. The outcome is split into a *prognostic* function $\mu(X)$ - the baseline outcome surface - and a *treatment effect* function $\tau(X)$, each modelled by its own independent BART ensemble (a sum of shallow, shrunk trees). Giving $\tau(X)$ a separate prior and scale stops the strong prognostic signal from being shrunk into the effect estimate, the *regularisation-induced confounding* that [Hahn, Murray & Carvalho (2020)](https://doi.org/10.1214/19-BA1195) flag. The estimated propensity score $\hat{\pi}(X)$ enters the prognostic model as an extra covariate to further reduce confounding bias.
-```
-
-## Bayesian Propensity Score Methods
-
-The propensity score $\pi(x) = P(T=1 \mid X=x)$ can also be estimated within a Bayesian framework, yielding a posterior distribution over the propensity scores and propagating this uncertainty into the causal estimate.
-
-```{prf:definition} Bayesian Propensity Score
-:label: bayesian-propensity
-:class: dropdown
-
-Given a model $T_i \mid X_i, \alpha \sim \text{Bernoulli}(\pi(X_i; \alpha))$ with prior $\alpha \sim p(\alpha)$, the Bayesian propensity score is the posterior predictive:
-
-$$
-\hat{\pi}(x \mid D) = \int \pi(x; \alpha) \, p(\alpha \mid D) \, d\alpha
-$$
-
-Treatment effect estimates using this posterior propensity score account for **propensity model uncertainty**, unlike plug-in frequentist approaches.
 ```
 
 ## Posterior Inference for Treatment Effects

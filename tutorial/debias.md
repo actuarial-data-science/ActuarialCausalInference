@@ -88,9 +88,9 @@ The biases above are not merely theoretical concerns - they are practical obstac
 
 | Strategy | Addresses | Covered in |
 |---|---|---|
-| **Adjust** (regression, propensity scores, doubly robust) | Confounding, selection | {doc}`propensity`, {doc}`regression_methods` |
-| **Reweight** (IPW, IPCW, overlap weighting) | Confounding, selection, positivity | {doc}`propensity` |
-| **Restrict** (trimming, redefine target population) | Positivity violations | {doc}`propensity` |
+| **Adjust** (regression, propensity scores, doubly robust) | Confounding, selection | {doc}`direct_adjustment` |
+| **Reweight** (IPW, IPCW, overlap weighting) | Confounding, selection, positivity | {doc}`direct_adjustment` |
+| **Restrict** (trimming, redefine target population) | Positivity violations | {doc}`direct_adjustment` |
 | **Model the causal structure** (DAG-guided variable selection) | Collider bias, confounding | {doc}`graphical_models` |
 | **Cluster or network models** (incl. exposure-mapping / spillover-robust estimators) | Interference / spillover | - |
 | **Sensitivity analysis** | Unobserved confounding | {doc}`sensitivity` |

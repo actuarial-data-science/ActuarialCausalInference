@@ -1,11 +1,49 @@
-# Tree-Based Regression Methods
+# Heterogeneous Treatment Effects
 
-The methods in {doc}`propensity` and {doc}`regression_methods` were mostly built to recover a *single* number - the ATE or ATT averaged over the population. Tree-based methods usually target the **conditional average treatment effect** (CATE) $\tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X = x]$, asking *for whom* the treatment works rather than *whether* it works on average. They share the same identification backbone (unconfoundedness and {ref}`overlap`) but let the data, rather than a fixed functional form, discover which covariates drive effect heterogeneity. The tree ensembles underlying these estimators - CART, bagging, and random forests - are covered in the standard machine-learning textbooks of [Hastie, Tibshirani & Friedman (2009)](https://doi.org/10.1007/978-0-387-84858-7) and, at an introductory level, [James et al. (2021)](https://doi.org/10.1007/978-1-0716-1418-1); [Athey & Imbens (2019)](https://doi.org/10.1146/annurev-economics-080217-053433) survey how these methods are adapted for causal estimation.
+*Estimating $\tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X = x]$.*
 
-Conceptually they sit at the intersection of the two earlier toolkits:
+The estimators in {doc}`direct_adjustment` target a *single* number - the ATE or ATT averaged over the population. **Heterogeneous treatment effect** methods instead target the **conditional average treatment effect** (CATE) $\tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X = x]$, asking *for whom* the treatment works rather than *whether* it works on average. They share the same identification backbone (unconfoundedness and {ref}`overlap`) but let the data, rather than a fixed functional form, discover which covariates drive effect heterogeneity. Two families are covered here: *meta-learners*, which decompose CATE estimation into standard regression sub-tasks, and *causal trees and forests*, which adaptively partition the covariate space. The tree ensembles underlying the latter - CART, bagging, and random forests - are covered in the standard machine-learning textbooks of [Hastie, Tibshirani & Friedman (2009)](https://doi.org/10.1007/978-0-387-84858-7) and, at an introductory level, [James et al. (2021)](https://doi.org/10.1007/978-1-0716-1418-1); [Athey & Imbens (2019)](https://doi.org/10.1146/annurev-economics-080217-053433) survey how these methods are adapted for causal estimation.
 
-- **From propensity score methods.** {prf:ref}`alg-psm` matches treated and control units on the *scalar* propensity score $\hat{\pi}(x)$, while {prf:ref}`alg-psw` reweights them. A causal forest generalises both ideas: instead of matching on a hand-picked distance, it learns an **adaptive neighbourhood** directly in covariate space - two patients are "close" when the trees repeatedly place them in the same leaf. The resulting forest weights $\alpha^{(j)}(x)$ play the role of data-driven matching weights, and overlap remains the binding requirement (a leaf needs both treated and control members to yield a contrast).
-- **From regression methods.** Like the doubly robust and orthogonal estimators ({prf:ref}`alg-aipw`, {prf:ref}`alg-dml`), causal trees and forests *residualise* the outcome and the treatment against out-of-bag nuisance predictions $\hat{Y}^{(-i)}$ and $\hat{\pi}^{(-i)}(x)$. This makes them **Neyman-orthogonal** - first-order insensitive to errors in the nuisance estimates - and connects them directly to the R-learner of {prf:ref}`alg-rlearner` - a causal forest can be read as a locally-weighted, non-parametric R-learner.
+## Meta-Learners for Heterogeneous Effects
+
+*Meta-learners* extend regression adjustment to the conditional average treatment effect (CATE) $\tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X = x]$ by decomposing the problem into standard regression sub-tasks solved by any base learner. [Künzel et al. (2019)](https://doi.org/10.1073/pnas.1804597116) introduced the S-, T-, and X-learners; the *R-learner* of [Nie & Wager (2021)](https://doi.org/10.1093/biomet/asaa076) is the direct CATE generalization of the DML residualization ({prf:ref}`alg-dml`), and the *DR-learner* of [Kennedy (2023)](https://doi.org/10.1214/23-EJS2157) regresses the doubly robust AIPW score on covariates. [Semenova & Chernozhukov (2021)](https://doi.org/10.1093/ectj/utaa027) extend DML to estimate CATEs and other causal functions. These estimators bridge directly to the {prf:ref}`alg-causaltree` and {prf:ref}`alg-causalforest` methods that follow.
+
+```{prf:algorithm} Meta-Learners (S-, T-, X-Learner)
+:label: alg-metalearners
+:class: dropdown
+
+**Inputs** Data $D = \{X, T, Y\}$, base learner $\mathcal{L}$
+
+**Outputs** Estimated CATE $\hat{\tau}(x)$
+
+1. **S-learner** *(single model)*: fit $\hat{\mu}(t, x) = \mathcal{L}(Y \sim T, X)$; return $\hat{\tau}(x) = \hat{\mu}(1, x) - \hat{\mu}(0, x)$
+2. **T-learner** *(two models)*: fit $\hat{\mu}_1(x)$ on treated and $\hat{\mu}_0(x)$ on control; return $\hat{\tau}(x) = \hat{\mu}_1(x) - \hat{\mu}_0(x)$
+3. **X-learner** *(cross fitting on imputed effects)*:
+	1. Impute effects $\tilde{D}^{(i)}_1 = Y^{(i)} - \hat{\mu}_0(x^{(i)})$ for treated, $\tilde{D}^{(i)}_0 = \hat{\mu}_1(x^{(i)}) - Y^{(i)}$ for control
+	2. Regress $\hat{\tau}_1(x) = \mathcal{L}(\tilde{D}_1 \sim X)$ and $\hat{\tau}_0(x) = \mathcal{L}(\tilde{D}_0 \sim X)$
+	3. Combine with propensity weight: $\hat{\tau}(x) = \hat{\pi}(x)\,\hat{\tau}_0(x) + (1 - \hat{\pi}(x))\,\hat{\tau}_1(x)$
+4. Return CATE $\hat{\tau}(x)$
+```
+
+```{prf:algorithm} R-Learner (and DR-Learner)
+:label: alg-rlearner
+:class: dropdown
+
+**Inputs** Data $D = \{X, T, Y\}$, ML learners for nuisances and a CATE learner $\mathcal{L}_\tau$
+
+**Outputs** Estimated CATE $\hat{\tau}(x)$
+
+1. With cross-fitting, estimate nuisances $\hat{\pi}(x) = \mathbb{E}[T \mid X]$ and $\hat{\mu}(x) = \mathbb{E}[Y \mid X]$
+2. Form residuals $\tilde{Y} = Y - \hat{\mu}(X)$ and $\tilde{T} = T - \hat{\pi}(X)$ *(as in {prf:ref}`alg-dml`)*
+3. **R-learner:** minimize the weighted loss $\hat{\tau} = \arg\min_{\tau} \sum_i \left(\tilde{Y}^{(i)} - \tau(x^{(i)})\,\tilde{T}^{(i)}\right)^2$
+4. **DR-learner (alternative):** regress the AIPW score $\hat{\psi}^{(i)}$ from {prf:ref}`alg-aipw` on covariates, $\hat{\tau}(x) = \mathcal{L}_\tau(\hat{\psi} \sim X)$
+5. Return CATE $\hat{\tau}(x)$
+```
+
+Tree-based methods take a complementary route: rather than fitting a global functional form, they let the data partition the covariate space to discover *where* effects differ. Conceptually they sit at the intersection of the two earlier toolkits:
+
+- **From propensity score methods.** {prf:ref}`alg-psm` matches treated and control units on the *scalar* propensity score $\hat{\pi}(x)$, while {prf:ref}`alg-psw` reweights them (both in {doc}`direct_adjustment`). A causal forest generalises both ideas: instead of matching on a hand-picked distance, it learns an **adaptive neighbourhood** directly in covariate space - two patients are "close" when the trees repeatedly place them in the same leaf. The resulting forest weights $\alpha^{(j)}(x)$ play the role of data-driven matching weights, and overlap remains the binding requirement (a leaf needs both treated and control members to yield a contrast).
+- **From the meta-learners above.** Like the doubly robust and orthogonal estimators ({prf:ref}`alg-aipw`, {prf:ref}`alg-dml`), causal trees and forests *residualise* the outcome and the treatment against out-of-bag nuisance predictions $\hat{Y}^{(-i)}$ and $\hat{\pi}^{(-i)}(x)$. This makes them **Neyman-orthogonal** - first-order insensitive to errors in the nuisance estimates - and connects them directly to the R-learner of {prf:ref}`alg-rlearner` - a causal forest can be read as a locally-weighted, non-parametric R-learner.
 
 The two algorithms below differ in granularity. A **causal tree** partitions the population into a handful of interpretable subgroups, assigning every member of a leaf the same effect estimate. A **causal forest** averages many such trees to deliver a smooth, individualised estimate $\hat{\tau}(x)$ for each patient.
 
