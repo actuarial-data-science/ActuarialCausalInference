@@ -25,9 +25,10 @@ The tutorial guides the reader from foundational concepts, identification and in
 - {doc}`tutorial/methods` - Identification strategies: back-door adjustment, front-door adjustment, and instrumental variables.
 
 **Stage 3 - {doc}`tutorial/inference`:** Covers *how* to estimate causal effects once identification is established. Methods range from classical propensity score approaches to modern machine learning estimators.
-- {doc}`tutorial/propensity` - Propensity score matching and inverse probability weighting.
-- {doc}`tutorial/regression_methods` - Regression adjustment, doubly robust and orthogonal ML estimators, and quasi-experimental designs.
-- {doc}`tutorial/tree_based_methods` - Causal trees and forests for heterogeneous and individualised treatment effect estimation.
+- {doc}`tutorial/direct_adjustment` - G-computation, propensity score matching, inverse probability weighting, and the doubly robust estimators AIPW, TMLE and DML.
+- {doc}`tutorial/heterogeneous_effects` - Meta-learners and causal trees and forests for heterogeneous and individualised treatment effect estimation.
+- {doc}`tutorial/instrumental_variables` - Instrumental variables, two-stage least squares, and Mendelian randomization for unmeasured confounding.
+- {doc}`tutorial/quasi_experimental` - Difference-in-differences, regression discontinuity, and synthetic control.
 - {doc}`tutorial/bayesian` - Bayesian causal inference with BART and Bayesian Causal Forests.
 
 **Stage 4 - {doc}`tutorial/sensitivity`:** Validates causal conclusions by assessing their robustness to untestable assumptions and ensuring the resulting model is fair.

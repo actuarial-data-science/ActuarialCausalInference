@@ -10,9 +10,9 @@ Each strategy trades on a different identifying assumption. The choice is dictat
 
 | Strategy | Identifying assumption | Handles | Estimation (see {doc}`inference`) |
 |---|---|---|---|
-| **Back-door adjustment** | All confounders of $(T, Y)$ are observed | Measured confounding | {doc}`propensity`, {doc}`regression_methods` |
-| **Front-door adjustment** | An observed mediator intercepts all $T \rightarrow Y$ paths | Unmeasured confounding of $(T, Y)$ | {doc}`regression_methods` |
-| **Instrumental variables** | An instrument affects $Y$ only through $T$ | Unmeasured confounding | {doc}`regression_methods` |
+| **Back-door adjustment** | All confounders of $(T, Y)$ are observed | Measured confounding | {doc}`direct_adjustment` |
+| **Front-door adjustment** | An observed mediator intercepts all $T \rightarrow Y$ paths | Unmeasured confounding of $(T, Y)$ | {doc}`direct_adjustment` |
+| **Instrumental variables** | An instrument affects $Y$ only through $T$ | Unmeasured confounding | {doc}`instrumental_variables` |
 
 ## Back-door Adjustment
 
@@ -212,7 +212,7 @@ Causal discovery from observational data has fundamental limitations:
 
 ## Instrumental Variables
 
-When no admissible adjustment set exists, an **instrument** $Z$ - a source of exogenous variation in $T$ that affects $Y$ only through $T$ - can identify a local causal effect. The instrumental-variable estimator and its two-stage least-squares implementation are developed in {doc}`regression_methods`.
+When no admissible adjustment set exists, an **instrument** $Z$ - a source of exogenous variation in $T$ that affects $Y$ only through $T$ - can identify a local causal effect. The instrumental-variable estimator and its two-stage least-squares implementation are developed in {doc}`instrumental_variables`.
 
 ```{note}
 :class: dropdown

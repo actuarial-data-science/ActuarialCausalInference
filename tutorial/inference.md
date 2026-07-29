@@ -30,32 +30,38 @@ Different estimation methods target different estimands. The table below maps me
 
 ## Estimation Methods Overview
 
-| Method | Primary Estimand | Key Idea | Section |
+| Method | Primary Estimand | Key Idea | Chapter |
 |--------|-----------------|----------|---------|
-| **Propensity Score Matching** | ATT | Pair treated/control units with similar $\pi(x)$ | {doc}`propensity` |
-| **Inverse Probability Weighting** | ATE | Re-weight sample to remove confounding | {doc}`propensity` |
-| **Double Machine Learning** | ATE | Residualise both $Y$ and $T$ on $X$ to isolate causal variation | {doc}`regression_methods` |
-| **Instrumental Variables / 2SLS** | LATE | Use exogenous variation from an instrument | {doc}`regression_methods` |
-| **Causal Trees** | CATE | Recursive partitioning to maximise treatment effect heterogeneity | {doc}`tree_based_methods` |
-| **Causal Forests** | CATE | Ensemble of causal trees with adaptive neighbourhood weighting | {doc}`tree_based_methods` |
+| **G-computation** | ATE | Model the outcome $\mathbb{E}[Y \mid T, X]$ and contrast predictions | {doc}`direct_adjustment` |
+| **Propensity Score Matching** | ATT | Pair treated/control units with similar $\pi(x)$ | {doc}`direct_adjustment` |
+| **Inverse Probability Weighting** | ATE | Re-weight sample to remove confounding | {doc}`direct_adjustment` |
+| **AIPW / TMLE / DML** | ATE | Combine outcome and propensity models for robustness | {doc}`direct_adjustment` |
+| **Meta-Learners (S/T/X, R/DR)** | CATE | Decompose CATE estimation into regression sub-tasks | {doc}`heterogeneous_effects` |
+| **Causal Trees / Forests** | CATE | Partition covariate space to expose effect heterogeneity | {doc}`heterogeneous_effects` |
+| **Instrumental Variables / 2SLS** | LATE | Use exogenous variation from an instrument | {doc}`instrumental_variables` |
+| **Quasi-Experimental (DiD, RD, SC)** | ATT | Exploit natural experiments and institutional variation | {doc}`quasi_experimental` |
 | **Bayesian (BART / BCF)** | CATE | Posterior distributions over treatment effects via sum-of-trees priors | {doc}`bayesian` |
 
 ## Chapter Contents
 
-This chapter covers the following estimation approaches:
+This chapter covers the following estimation approaches, grouped by the strategy they use to recover a causal effect:
 
-### Propensity Score Methods
+### Direct Adjustment
 
-**{doc}`propensity`** — Methods that use the estimated propensity score $\pi(x) = P(T=1 \mid X=x)$ to balance treated and control groups. Covers propensity score matching (targeting ATT) and inverse probability weighting (targeting ATE).
+**{doc}`direct_adjustment`** — Estimating $\mathbb{E}[Y(t)]$ by modelling the outcome, the treatment, or both. Covers outcome regression / g-computation, propensity score matching (ATT) and inverse probability weighting (ATE), the doubly robust estimators AIPW and TMLE, and Double Machine Learning (DML).
 
-### Regression Methods
+### Heterogeneous Treatment Effects
 
-**{doc}`regression_methods`** — Regression-based approaches including outcome regression / g-computation, doubly robust estimators (AIPW, TMLE), Double Machine Learning (DML) and meta-learners for heterogeneous effects, plus quasi-experimental designs (IV / 2SLS, difference-in-differences, regression discontinuity, synthetic control).
+**{doc}`heterogeneous_effects`** — Estimating the conditional average treatment effect $\tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X = x]$. Covers the S-, T-, and X-learners, the R- and DR-learners, and causal trees and forests, which partition the covariate space to discover for *whom* a treatment works ([Athey & Imbens, 2016](https://doi.org/10.1073/pnas.1510489113); [Wager & Athey, 2018](https://doi.org/10.1080/01621459.2017.1319839)).
 
-### Tree-Based Methods
+### Instrumental Variables
 
-**{doc}`tree_based_methods`** — Causal trees partition the covariate space to discover subpopulations with heterogeneous treatment effects (CATEs) using honest splitting ([Athey & Imbens, 2016](https://doi.org/10.1073/pnas.1510489113)), and causal forests extend them to an ensemble that estimates individualised effects via adaptive nearest-neighbour weighting ([Wager & Athey, 2018](https://doi.org/10.1080/01621459.2017.1319839); [Athey, Tibshirani & Wager, 2019](https://doi.org/10.1214/18-AOS1709)).
+**{doc}`instrumental_variables`** — Identification and estimation under unmeasured confounding via an instrument. Covers the instrumental-variable estimand, its two-stage least-squares (2SLS) implementation, and Mendelian randomization.
 
-### Bayesian Approaches
+### Quasi-Experimental Designs
 
-**{doc}`bayesian`** — Bayesian causal inference treats missing potential outcomes as parameters with prior distributions, yielding full posterior distributions over treatment effects. Covers BART, Bayesian Causal Forests (BCF), and Bayesian propensity scores.
+**{doc}`quasi_experimental`** — Exploiting natural experiments and institutional variation. Covers difference-in-differences, regression discontinuity, and synthetic control.
+
+### Bayesian Causal Inference
+
+**{doc}`bayesian`** — Bayesian analogues of the methods above. Treats missing potential outcomes as parameters with prior distributions, yielding full posterior distributions over treatment effects; covers the Bayesian potential outcomes model, Bayesian propensity scores, BART, and Bayesian Causal Forests (BCF).
