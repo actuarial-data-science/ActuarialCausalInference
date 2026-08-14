@@ -20,11 +20,7 @@ The figure below makes questions 1 and 2 tangible. Imagine our adjusted estimate
 - Press **"as strong as covariate $X$"** to benchmark against a confounder no stronger than one we already observe - if that point sits well inside the green region, even a substantial omitted variable would not overturn the finding.
 - Watch panel 2: the bias **drags the estimate toward zero**, and the verdict flips to *explained away* only once the confounder crosses the red frontier.
 
-The two sliders set the green partial-$R^2$ terms in the omitted-variable bias bound ({prf:ref}`partial-r2`):
-
-$$
-|\text{bias}| \;\le\; \sqrt{\frac{\textcolor{#7d9f17}{R^2_{Y \sim U \mid T, X}} \cdot \textcolor{#7d9f17}{R^2_{T \sim U \mid X}}}{1 - \textcolor{#7d9f17}{R^2_{T \sim U \mid X}}}} \;\cdot\; \frac{\text{SD}(Y_{\text{res}})}{\text{SD}(T_{\text{res}})}
-$$
+The two sliders set the partial-$R^2$ terms in the omitted-variable bias bound (formally defined in {prf:ref}`partial-r2`): one for how much of the residual variation in $T$ the confounder explains, and one for how much of the residual variation in $Y$ it explains.
 
 ```{raw} html
 <iframe id="sensitivity" src="../figure/sensitivity_explainer.html?v=20260612d"
@@ -152,7 +148,7 @@ Common designs:
 - **Negative control treatment:** Estimate the effect of a "treatment" $\tilde{T}$ that cannot plausibly affect $Y$. A non-zero estimate again signals confounding.
 - **Pre-treatment outcome test:** If pre-treatment outcome data exists, test whether the "treatment" predicts the outcome *before* it was administered. A significant effect indicates confounding.
 
-In insurance applications, a placebo test might assess whether a health intervention $T$ "affects" a car insurance claim outcome - an effect here would indicate systematic differences between groups unrelated to the intervention.
+In insurance applications, a natural pre-treatment outcome test arises when evaluating a telematics-based safe-driving discount on subsequent accident frequency: test whether enrolment in the scheme "predicts" accident frequency in the year *before* enrolment. Enrolment cannot causally affect past accidents, so any significant association reveals that safer drivers self-selected into the programme - a confounding structure that must be addressed before interpreting post-enrolment differences causally.
 
 ## Rosenbaum Bounds
 
@@ -229,6 +225,14 @@ The **E-value** ([VanderWeele & Ding, 2017](https://doi.org/10.7326/M16-2607)) p
 :label: e-value
 :class: dropdown
 
+The E-value is defined for a **binary outcome** $Y \in \{0, 1\}$. The **observed risk ratio** is the ratio of the probability of the outcome under treatment to the probability under control, conditional on observed covariates $X$:
+
+$$
+\text{RR}_{\text{obs}} = \frac{P(Y = 1 \mid T = 1, X)}{P(Y = 1 \mid T = 0, X)}
+$$
+
+For continuous or count outcomes, $\text{RR}_{\text{obs}}$ is not directly defined; see the note below on converting to an approximate risk ratio scale before applying the formula.
+
 The **E-value** for an observed risk ratio $\text{RR}_{\text{obs}} \ge 1$ is:
 
 $$
@@ -272,7 +276,7 @@ where $Y_{\text{res}}$ is the residual from regressing $Y$ on **both** $T$ and $
 
 This framework is particularly intuitive because the required confounding strengths can be **benchmarked against observed covariates**: "the unmeasured confounder would need to be as strong as [observed covariate $X_j$] to reduce the effect to zero."
 
-**Two robustness values.** [Cinelli & Hazlett (2020, Sec. 4.3)](https://doi.org/10.1111/rssb.12348) define two thresholds along the diagonal $c_t = c_y$. The **robustness value for the point estimate**, $RV_{q=1}$, is the partial $R^2$ (with *both* $T$ and $Y$) at which the estimate is driven exactly to zero. The **robustness value for statistical significance**, $RV_{q=1,\alpha}$, is the (typically smaller) threshold at which the $(1-\alpha)$ confidence interval first reaches zero - beyond which the effect is no longer significant at level $\alpha$. Because a significant finding has a confidence interval strictly bounded away from zero, $RV_{q=1,\alpha} < RV_{q=1}$ whenever the estimate is significant, and the gap can be substantial. For an actuarial decision - whether to set a pricing adjustment or launch a triage protocol - the binding question is usually robustness of *significance* rather than of the point estimate, so $RV_{q=1,\alpha}$ is the more relevant number. Both are reported by default: by `sensemakr`, and by the DML robustness-value output in the claims-triage case study (which prints $RV$ alongside the smaller $RV_\alpha$).
+**Two robustness values.** [Cinelli & Hazlett (2020, Sec. 4.3)](https://doi.org/10.1111/rssb.12348) define two thresholds along the **equal-strength diagonal** - the locus where the confounder's partial $R^2$ with $T$ equals its partial $R^2$ with $Y$. The **robustness value for the point estimate**, $RV_{q=1}$, is the partial $R^2$ (with *both* $T$ and $Y$) at which the estimate is driven exactly to zero. The **robustness value for statistical significance**, $RV_{q=1,\alpha}$, is the (typically smaller) threshold at which the $(1-\alpha)$ confidence interval first reaches zero - beyond which the effect is no longer significant at level $\alpha$. Because a significant finding has a confidence interval strictly bounded away from zero, $RV_{q=1,\alpha} < RV_{q=1}$ whenever the estimate is significant, and the gap can be substantial. For an actuarial decision - whether to set a pricing adjustment or launch a triage protocol - the binding question is usually robustness of *significance* rather than of the point estimate, so $RV_{q=1,\alpha}$ is the more relevant number. Both are reported by default: by `sensemakr`, and by the DML robustness-value output in the claims-triage case study (which prints $RV$ alongside the smaller $RV_\alpha$).
 
 The `sensemakr` R package implements this approach and produces **contour plots** showing how the estimated effect changes across a grid of $(R^2_{Y \sim U \mid T, X}, R^2_{T \sim U \mid X})$ values. The interactive map at the [top of this section](#interactive-how-much-confounding-would-it-take) is exactly such a contour: the red frontier is the locus where the bias reaches the observed estimate, and the orange diamond is the "as strong as covariate $X$" benchmark. The further the benchmark sits inside the green (effect-survives) region, the more comfortably the conclusion withstands an omitted variable of comparable strength.
 
@@ -287,10 +291,10 @@ When parametric assumptions are undesirable, **partial identification** provides
 Under no assumptions beyond bounded outcomes ($Y \in [y_{\min}, y_{\max}]$), the ATE $\tau = \mathbb{E}[Y(1)] - \mathbb{E}[Y(0)]$ is sharply bounded by ([Manski, 1990](https://www.jstor.org/stable/2006592)):
 
 $$
-\begin{aligned}
-P(T{=}1)\,\mathbb{E}[Y \mid T{=}1] + P(T{=}0)\,y_{\min} - P(T{=}0)\,\mathbb{E}[Y \mid T{=}0] - P(T{=}1)\,y_{\max} \;&\leq\; \tau \\
-\tau \;&\leq\; P(T{=}1)\,\mathbb{E}[Y \mid T{=}1] + P(T{=}0)\,y_{\max} - P(T{=}0)\,\mathbb{E}[Y \mid T{=}0] - P(T{=}1)\,y_{\min}
-\end{aligned}
+\tau \geq P(T{=}1)\,\mathbb{E}[Y \mid T{=}1] + P(T{=}0)\,y_{\min} - P(T{=}0)\,\mathbb{E}[Y \mid T{=}0] - P(T{=}1)\,y_{\max}, \text{and}$$
+
+$$
+\tau \leq P(T{=}1)\,\mathbb{E}[Y \mid T{=}1] + P(T{=}0)\,y_{\max} - P(T{=}0)\,\mathbb{E}[Y \mid T{=}0] - P(T{=}1)\,y_{\min}
 $$
 
 Each bound replaces the two unobserved counterfactual means - $\mathbb{E}[Y(1) \mid T{=}0]$ and $\mathbb{E}[Y(0) \mid T{=}1]$ - with their worst-case values $y_{\min}$ or $y_{\max}$, so the interval always has width $y_{\max} - y_{\min}$ and, by construction, contains zero.
