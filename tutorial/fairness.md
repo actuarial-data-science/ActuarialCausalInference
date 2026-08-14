@@ -3,6 +3,22 @@
 
 Beyond causal bias, actuaries face a distinct but related challenge: ensuring that models do not discriminate against protected groups. EU regulation prohibits the use of protected characteristics (e.g. gender, ethnicity) for insurance pricing, but simply dropping the sensitive attribute $S$ does not solve the problem.
 
+### When is risk classification *discrimination*?
+
+A premium is a price for expected risk. Charging a 70-year-old more than a 30-year-old for life cover is differentiation that virtually everyone accepts, because age is a genuine, causal driver of mortality. Charging a woman more than an otherwise-identical man for the *same* cover — purely because of her sex — is differentiation that most legal systems now **prohibit**. The difference is not statistical strength (sex can be a very strong predictor); it is a societal judgement that some characteristics must not be priced on, even when they are predictive.
+
+This judgement is encoded in regulation:
+
+- **EU — sex.** The Gender Directive (2004/113/EC), as interpreted by the Court of Justice in the *Test-Achats* ruling ([C-236/09](https://curia.europa.eu/juris/liste.jsf?num=C-236/09), effective 21 December 2012), requires **unisex pricing**: sex may not be used as a rating factor that produces differences in individual premiums or benefits.
+- **EU — AI systems.** Under the EU AI Act ([Regulation (EU) 2024/1689](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)), AI systems used for **risk assessment and pricing in life and health insurance** are classified as *high-risk*, triggering obligations on data governance, transparency and bias monitoring.
+- **Switzerland.** Switzerland is outside the EU, and sex-differentiated tariffs have historically been permitted in private insurance; supervision focuses on actuarial justification and the revised Federal Act on Data Protection (nFADP, in force 2023). The direction of travel — scrutiny of proxy discrimination in algorithmic pricing — nonetheless mirrors the EU debate.
+
+```{warning}
+Regulation in this area moves quickly and differs by line of business and jurisdiction. The specifics above are orientation, not legal advice — **verify the current rules** for your market and product before relying on them.
+```
+
+The actuarial problem this creates is precise: we must build a price that is **predictive of risk** yet **free of (direct and indirect) dependence on the protected attribute** $S$. Deleting $S$ is necessary but, as we now show, far from sufficient.
+
 ### Proxy Discrimination
 
 ```{prf:definition} Proxy Discrimination
