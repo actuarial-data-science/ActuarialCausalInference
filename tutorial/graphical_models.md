@@ -125,7 +125,7 @@ This is the source of **collider bias** (also called **selection bias** or **Ber
 | **Collider** (Common Effect) | $X \rightarrow C \leftarrow Y$ | Independent | Dependent |
 
 ```{note}
-The **Independent** cells (chain/fork conditional on the middle node, collider marginal) follow from the {prf:ref}`causal-markov` alone: $d$-separation implies conditional independence. The **Dependent** cells (chain/fork marginal, conditioned collider) are the *converse* direction — inferring dependence from $d$-connection — and additionally require {prf:ref}`faithfulness`, introduced below. In a non-faithful distribution they can fail: e.g. in a linear chain $X \rightarrow M \rightarrow Y$ whose direct and indirect contributions cancel exactly, $X$ and $Y$ are marginally *independent* despite the open path.
+The **Independent** cells (chain/fork conditional on the middle node, collider marginal) follow from the {prf:ref}`causal-markov` alone: $d$-separation implies conditional independence. The **Dependent** cells (chain/fork marginal, conditioned collider) are the *converse* direction - inferring dependence from $d$-connection - and additionally require {prf:ref}`faithfulness`, introduced below. In a non-faithful distribution they can fail: e.g. in a linear chain $X \rightarrow M \rightarrow Y$ whose direct and indirect contributions cancel exactly, $X$ and $Y$ are marginally *independent* despite the open path.
 ```
 
 ## $d$-Separation
@@ -216,7 +216,7 @@ Given $F$, treatment is as good as randomly assigned, so $\mathbb{E}[Y \mid T=t,
 
 ### Example 2: A Mediator with Unmeasured Confounding
 
-The next graph looks deceptively similar but teaches the opposite lesson about mediators. Here the treatment $T$ is **randomised** — no arrow points into it — and it affects the outcome $Y$ both directly ($T \rightarrow Y$) and through a mediator ($T \rightarrow M \rightarrow Y$). Crucially, an **unmeasured** variable $U$ confounds the mediator–outcome relationship: $U \rightarrow M$ and $U \rightarrow Y$.
+The next graph looks deceptively similar but teaches the opposite lesson about mediators. Here the treatment $T$ is **randomised** - no arrow points into it - and it affects the outcome $Y$ both directly ($T \rightarrow Y$) and through a mediator ($T \rightarrow M \rightarrow Y$). Crucially, an **unmeasured** variable $U$ confounds the mediator–outcome relationship: $U \rightarrow M$ and $U \rightarrow Y$.
 
 ```{figure} figs/dsep_example2.svg
 :width: 70%
@@ -230,10 +230,10 @@ A randomised treatment $T$ with a mediator $M$, whose relationship with $Y$ is c
 :class: dropdown
 
 - **Enumerate the paths.** From $T$ to $Y$ there are three: the direct causal edge $T \rightarrow Y$; the indirect causal chain $T \rightarrow M \rightarrow Y$; and $T \rightarrow M \leftarrow U \rightarrow Y$. On the last, $M$ is a **collider**, so the path is *already blocked* when nothing is conditioned on.
-- **No backdoor to close.** Since $T$ is randomised, no arrow enters $T$ and there is **no backdoor path** at all — the treatment is unconfounded by design.
+- **No backdoor to close.** Since $T$ is randomised, no arrow enters $T$ and there is **no backdoor path** at all - the treatment is unconfounded by design.
 - **Why not condition on $M$?** Adjusting for the mediator would do double damage: it (i) blocks the indirect causal effect $T \rightarrow M \rightarrow Y$, and (ii) *opens* the collider path $T \rightarrow M \leftarrow U \rightarrow Y$, injecting spurious association through the unmeasured $U$.
 
-**Correct adjustment set: $\emptyset$ (adjust for nothing).** The total effect of $T$ on $Y$ is identified without conditioning on any variable. Recovering the *direct* effect that does **not** operate through $M$ would instead require the mediation formula and the assumption of no unmeasured $M$–$Y$ confounding — which $U$ violates here (see {doc}`debias`).
+**Correct adjustment set: $\emptyset$ (adjust for nothing).** The total effect of $T$ on $Y$ is identified without conditioning on any variable. Recovering the *direct* effect that does **not** operate through $M$ would instead require the mediation formula and the assumption of no unmeasured $M$–$Y$ confounding - which $U$ violates here (see {doc}`debias`).
 
 **Identifying independence.** Randomisation makes treatment independent of the potential outcomes **unconditionally**:
 
@@ -241,7 +241,7 @@ $$
 (Y(1), Y(0)) \perp\!\!\!\perp T.
 $$
 
-The effect is therefore identified directly, $\mathbb{E}[Y(t)] = \mathbb{E}[Y \mid T=t]$, with no adjustment term. Conditioning on the mediator $M$ would **destroy** this independence by opening the collider path $T \rightarrow M \leftarrow U \rightarrow Y$ — the resulting $\mathbb{E}[Y \mid T=t, M]$ would no longer be exchangeable in $T$, forfeiting the identification that randomisation supplied for free.
+The effect is therefore identified directly, $\mathbb{E}[Y(t)] = \mathbb{E}[Y \mid T=t]$, with no adjustment term. Conditioning on the mediator $M$ would **destroy** this independence by opening the collider path $T \rightarrow M \leftarrow U \rightarrow Y$ - the resulting $\mathbb{E}[Y \mid T=t, M]$ would no longer be exchangeable in $T$, forfeiting the identification that randomisation supplied for free.
 ```
 
 ### Example 3: A Larger Graph
@@ -261,16 +261,16 @@ A larger DAG: two confounding routes ($T \leftarrow Z_1 \rightarrow Y$ and $T \l
 
 List every **backdoor path** (a path leaving $T$ through an arrow pointing *into* $T$) and decide how to block it:
 
-- $T \leftarrow Z_1 \rightarrow Y$ — an open fork; block it by conditioning on $Z_1$.
-- $T \leftarrow Z_2 \rightarrow Z_3 \rightarrow Y$ — open; block it by conditioning on $Z_2$ **or** on $Z_3$ (either node lies on the path).
-- $T \leftarrow I$ — a dead end: the instrument $I$ reaches $Y$ *only* through $T$, so this path carries no confounding association and needs no adjustment.
+- $T \leftarrow Z_1 \rightarrow Y$ - an open fork; block it by conditioning on $Z_1$.
+- $T \leftarrow Z_2 \rightarrow Z_3 \rightarrow Y$ - open; block it by conditioning on $Z_2$ **or** on $Z_3$ (either node lies on the path).
+- $T \leftarrow I$ - a dead end: the instrument $I$ reaches $Y$ *only* through $T$, so this path carries no confounding association and needs no adjustment.
 
 Leave the remaining structures untouched:
 
-- $M$ is a **mediator** on the causal path $T \rightarrow M \rightarrow Y$ — conditioning on it would block part of the effect.
-- $K$ is a **collider** ($T \rightarrow K \leftarrow Y$) — conditioning on it would open a spurious path.
+- $M$ is a **mediator** on the causal path $T \rightarrow M \rightarrow Y$ - conditioning on it would block part of the effect.
+- $K$ is a **collider** ($T \rightarrow K \leftarrow Y$) - conditioning on it would open a spurious path.
 
-**Correct minimal adjustment set: $\{Z_1, Z_2\}$** (equivalently $\{Z_1, Z_3\}$). Either choice blocks both backdoor paths while leaving all causal paths open. The instrument $I$, the mediator $M$, and the collider $K$ are all deliberately excluded ({prf:ref}`backdoor-criterion`). Note that adjusting for the instrument $I$ is not merely unnecessary — it can *amplify* bias from any residual unmeasured confounding, so it is left out on purpose.
+**Correct minimal adjustment set: $\{Z_1, Z_2\}$** (equivalently $\{Z_1, Z_3\}$). Either choice blocks both backdoor paths while leaving all causal paths open. The instrument $I$, the mediator $M$, and the collider $K$ are all deliberately excluded ({prf:ref}`backdoor-criterion`). Note that adjusting for the instrument $I$ is not merely unnecessary - it can *amplify* bias from any residual unmeasured confounding, so it is left out on purpose.
 
 **Identifying independence.** Blocking both backdoor paths yields conditional exchangeability:
 
@@ -278,5 +278,5 @@ $$
 (Y(1), Y(0)) \perp\!\!\!\perp T \mid Z_1, Z_2.
 $$
 
-Given $\{Z_1, Z_2\}$, treatment is as good as randomly assigned, which identifies the effect through the backdoor adjustment formula $\mathbb{E}[Y(t)] = \mathbb{E}_{Z_1, Z_2}\big[\mathbb{E}[Y \mid T=t, Z_1, Z_2]\big]$. Adding $M$ or $K$ to the conditioning set would open a non-causal path and break this independence, while adding $I$ would amplify residual confounding bias — in each case $\mathbb{E}[Y \mid T=t, \cdot]$ would cease to recover a causal contrast.
+Given $\{Z_1, Z_2\}$, treatment is as good as randomly assigned, which identifies the effect through the backdoor adjustment formula $\mathbb{E}[Y(t)] = \mathbb{E}_{Z_1, Z_2}\big[\mathbb{E}[Y \mid T=t, Z_1, Z_2]\big]$. Adding $M$ or $K$ to the conditioning set would open a non-causal path and break this independence, while adding $I$ would amplify residual confounding bias - in each case $\mathbb{E}[Y \mid T=t, \cdot]$ would cease to recover a causal contrast.
 ```
