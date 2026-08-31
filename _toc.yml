@@ -33,7 +33,6 @@ parts:
     chapters:
 #      - file: application/case_study.ipynb
       - file: application/observational_data.ipynb
-      - file: application/pricing.ipynb
       - file: application/claims_triage.ipynb
 #      - file: application/traffic_study.ipynb
       - file: application/health_interventions.ipynb
