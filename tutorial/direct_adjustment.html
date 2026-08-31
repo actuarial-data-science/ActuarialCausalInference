@@ -1,0 +1,1060 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Direct Adjustment &#8212; Actuarial Causal Inference Tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../_static/dark_mode_widget.css?v=7446dea4" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebe-button-patch.css?v=e3482d12" />
+    <link rel="stylesheet" type="text/css" href="../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/figure-theme.css?v=61ffb31e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script src="../_static/sphinx-thebe-i18n.js?v=ea266e56"></script>
+    <script defer="defer" src="../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../_static/sphinx-thebe-lite.js?v=93e2d225"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial/direct_adjustment';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/figure-theme.js?v=29b104fa"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Heterogeneous Treatment Effects" href="heterogeneous_effects.html" />
+    <link rel="prev" title="Causal Inference" href="inference.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Actuarial Causal Inference Tutorial - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Actuarial Causal Inference Tutorial - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Actuarial Causal Inference Tutorial
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts of Causal Inference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="identification.html">Identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="assumptions.html">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graphical_models.html">Graphical Causal Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html">Identification Strategies</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="inference.html">Causal Inference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Direct Adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="heterogeneous_effects.html">Heterogeneous Treatment Effects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="instrumental_variables.html">Instrumental Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quasi_experimental.html">Quasi-Experimental Designs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bayesian.html">Bayesian Causal Inference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="sensitivity.html">Validation and Sensitivity Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="diagnostics.html">Diagnostics and Sensitivity Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="debias.html">Biases and De-Biasing Toolkit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fairness.html">Causal Inference and Fairness</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Actuarial Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../application/observational_data.html">Observational Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/claims_triage.html">Explainable Motor Claims Triage with CATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/health_interventions.html">Synthetic Health Dataset for Causal Inference Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../papers/references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorial/direct_adjustment.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Direct Adjustment</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outcome-regression-and-g-computation">Outcome Regression and G-computation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propensity-score-definition">Propensity Score Definition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overlap-common-support">Overlap (Common Support)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propensity-score-matching">Propensity Score Matching</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-propensity-score-weighting">Inverse Propensity Score Weighting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-comparison-matching-vs-weighting">Interactive Comparison: Matching vs. Weighting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#doubly-robust-estimation-aipw-and-tmle">Doubly Robust Estimation: AIPW and TMLE</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neyman-orthogonality-of-the-aipw-score">Neyman Orthogonality of the AIPW Score</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#double-machine-learning-dml">Double Machine Learning (DML)</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="direct-adjustment">
+<h1>Direct Adjustment<a class="headerlink" href="#direct-adjustment" title="Link to this heading">#</a></h1>
+<p><em>Estimating <span class="math notranslate nohighlight">\(\mathbb{E}[Y(t)]\)</span> by modelling the outcome, the treatment, or both.</em></p>
+<p>Direct-adjustment estimators recover the average treatment effect by explicitly modelling the relationship between covariates <span class="math notranslate nohighlight">\(X\)</span>, treatment <span class="math notranslate nohighlight">\(T\)</span>, and outcome <span class="math notranslate nohighlight">\(Y\)</span>. They span a spectrum: from a single <em>outcome model</em> (G-computation), through <em>propensity-score</em> methods that model treatment assignment (matching and inverse-probability weighting), to estimators that combine an outcome model with a propensity model for robustness (AIPW, TMLE), and <em>orthogonal</em> machine-learning estimators that remain valid under flexible nuisance models (Double Machine Learning). All share the same identification backbone - unconfoundedness given <span class="math notranslate nohighlight">\(X\)</span> and <a class="reference internal" href="#overlap"><span class="std std-ref">Overlap (Common Support)</span></a> - and target <span class="math notranslate nohighlight">\(\mathbb{E}[Y(t)]\)</span> by adjustment alone. The figure below shows the common causal structure these estimators exploit.</p>
+<figure class="align-default" id="fig-dr-dag">
+<a class="reference internal image-reference" href="../_images/dag_doubly_robust.svg"><img alt="../_images/dag_doubly_robust.svg" src="../_images/dag_doubly_robust.svg" style="width: 70%;" />
+</a>
+<figcaption>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Causal structure underlying adjustment-based regression estimators. The covariates <span class="math notranslate nohighlight">\(X\)</span> confound the treatment–outcome relationship through the <em>propensity model</em> <span class="math notranslate nohighlight">\(\pi(X) = P(T = 1 \mid X)\)</span> and the <em>outcome model</em> <span class="math notranslate nohighlight">\(\mu(X) = \mathbb{E}[Y \mid T, X]\)</span>. Doubly robust estimators combine both to estimate the causal effect <span class="math notranslate nohighlight">\(\tau\)</span>.</span><a class="headerlink" href="#fig-dr-dag" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="outcome-regression-and-g-computation">
+<h2>Outcome Regression and G-computation<a class="headerlink" href="#outcome-regression-and-g-computation" title="Link to this heading">#</a></h2>
+<p>The simplest regression adjustment fits a single outcome model <span class="math notranslate nohighlight">\(\hat{\mu}(t, x) = \mathbb{E}[Y \mid T = t, X = x]\)</span> and contrasts its predictions under treatment and control, averaged over the covariate distribution. This is the <em>parametric g-formula</em> of <a class="reference external" href="https://doi.org/10.1016/0270-0255(86)90088-6">Robins (1986)</a> (see <a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Hernán &amp; Robins (2020)</a> for a modern treatment), and it serves as the conceptual baseline on which the doubly robust and orthogonal estimators below build.</p>
+<div class="proof algorithm dropdown admonition" id="alg-gcomp">
+<p class="admonition-title"><span class="caption-number">Algorithm 4 </span> (G-computation (Outcome Regression))</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D = \{X, T, Y\}\)</span>, ML learner <span class="math notranslate nohighlight">\(\mathcal{L}_Y\)</span> (for outcome)</p>
+<p><strong>Outputs</strong> Estimated ATE <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p>
+<ol class="arabic simple">
+<li><p>Fit outcome model <span class="math notranslate nohighlight">\(\hat{\mu}(t, x) = \mathcal{L}_Y(Y \sim T, X)\)</span> on <span class="math notranslate nohighlight">\(D\)</span></p></li>
+<li><p>For every observation <span class="math notranslate nohighlight">\(i\)</span>:</p>
+<ol class="arabic simple">
+<li><p>Predict counterfactual outcomes <span class="math notranslate nohighlight">\(\hat{\mu}(1, x^{(i)})\)</span> and <span class="math notranslate nohighlight">\(\hat{\mu}(0, x^{(i)})\)</span></p></li>
+</ol>
+</li>
+<li><p>Average the contrast: <span class="math notranslate nohighlight">\(\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}(1, x^{(i)}) - \hat{\mu}(0, x^{(i)})\right]\)</span></p></li>
+<li><p>Return estimated treatment effect <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p></li>
+</ol>
+</section>
+</div><p>G-computation is consistent only if the outcome model is correctly specified. Because a misspecified <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> propagates directly into the estimate, it motivates the <em>doubly robust</em> estimators that add a second line of defence through the propensity score.</p>
+</section>
+<section id="propensity-score-definition">
+<h2>Propensity Score Definition<a class="headerlink" href="#propensity-score-definition" title="Link to this heading">#</a></h2>
+<p>The probability of receiving treatment <span class="math notranslate nohighlight">\(T\)</span> given a set of observed covariates <span class="math notranslate nohighlight">\(X\)</span>, defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\pi(x) = P(T = 1 \mid X = x)
+\]</div>
+<p>It reduces high-dimensional control variables into a single score in order to achieve covariate balance.</p>
+<section id="overlap-common-support">
+<span id="overlap"></span><h3>Overlap (Common Support)<a class="headerlink" href="#overlap-common-support" title="Link to this heading">#</a></h3>
+<p>Propensity score methods are only valid where treated and control units are actually <em>comparable</em>. This requirement is the empirical counterpart of the <a class="reference internal" href="assumptions.html#positivity">Assumption 3</a>: For every covariate profile <span class="math notranslate nohighlight">\(x\)</span>, both treatment arms must have a positive (non-zero) probability of being observed,</p>
+<div class="math notranslate nohighlight">
+\[0 &lt; \pi(x) &lt; 1 \quad \text{for all } x .\]</div>
+<p>The range of covariates where this holds - where the propensity score distributions of the treated (<span class="math notranslate nohighlight">\(T=1\)</span>) and control (<span class="math notranslate nohighlight">\(T=0\)</span>) groups overlap - is called the region of <strong>common support</strong> (or <em>overlap</em>). When <span class="math notranslate nohighlight">\(\pi(x)\)</span> approaches <span class="math notranslate nohighlight">\(0\)</span> or <span class="math notranslate nohighlight">\(1\)</span> for some covariate profile, there are no comparable units in the opposite group: matching finds no partner to pair with, and inverse-probability weights explode. In practice, overlap is diagnosed by inspecting the distribution of the estimated scores <span class="math notranslate nohighlight">\(\hat{\pi}(x)\)</span> in each treatment group.</p>
+<p>A lack of overlap can stem from two qualitatively different sources, and the distinction dictates the appropriate response (<a class="reference external" href="https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/">Hernán &amp; Robins, 2020</a>, Ch. 3; <a class="reference external" href="https://doi.org/10.1093/biomet/asn055">Crump et al., 2009</a>):</p>
+<ul class="simple">
+<li><p><strong>Structural zeros</strong> - the covariate profile has <em>no theoretical chance</em> of appearing in one arm, e.g. an insurance programme with a hard eligibility rule. The causal effect is <em>not identified</em> for those units, and no matching or weighting can recover it; the target population must be redefined to the region where both arms are possible.</p></li>
+<li><p><strong>Empirical near-violations</strong> - overlap holds in the population, but finite-sample sparsity leaves some regions thinly populated. Overlap weighting, trimming, or restricting to the estimated common-support region (<a class="reference external" href="https://doi.org/10.1093/biomet/asn055">Crump et al., 2009</a>) stabilise estimation here.</p></li>
+</ul>
+</section>
+</section>
+<section id="propensity-score-matching">
+<h2>Propensity Score Matching<a class="headerlink" href="#propensity-score-matching" title="Link to this heading">#</a></h2>
+<p>Matching focuses on creating “apples-to-apples” comparisons by pairing treated units with similar control units. This algorithm typically estimates the Average Treatment Effect on the Treated (ATT).</p>
+<div class="proof algorithm dropdown admonition" id="alg-psm">
+<p class="admonition-title"><span class="caption-number">Algorithm 5 </span> (Propensity Score Matching)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D\)</span> with covariates <span class="math notranslate nohighlight">\(X\)</span>, treatment <span class="math notranslate nohighlight">\(T\)</span>, and outcome <span class="math notranslate nohighlight">\(Y\)</span>; Caliper <span class="math notranslate nohighlight">\(\delta\)</span></p>
+<p><strong>Outputs</strong> Estimated ATT <span class="math notranslate nohighlight">\(\hat{\tau}_{ATT}\)</span></p>
+<ol class="arabic simple">
+<li><p><strong>Estimate Propensity Scores</strong></p>
+<ol class="arabic simple">
+<li><p>Train model <span class="math notranslate nohighlight">\(P(T = 1 \mid X)\)</span> (e.g., Logistic Regression) on <span class="math notranslate nohighlight">\(D\)</span></p></li>
+<li><p>Compute <span class="math notranslate nohighlight">\(\hat{\pi}(x_i)\)</span> for all individuals <span class="math notranslate nohighlight">\(i\)</span> <em>(Probability of treatment)</em></p></li>
+</ol>
+</li>
+<li><p><strong>Match Units</strong></p>
+<ol class="arabic simple">
+<li><p>Split <span class="math notranslate nohighlight">\(D\)</span> into Treated group <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> and Control group <span class="math notranslate nohighlight">\(\mathcal{T}_0\)</span></p></li>
+<li><p>Initialize empty matched set <span class="math notranslate nohighlight">\(\mathcal{M} = \emptyset\)</span></p></li>
+<li><p>For each unit <span class="math notranslate nohighlight">\(i \in \mathcal{T}\)</span>:</p>
+<ol class="arabic simple">
+<li><p>Find unit <span class="math notranslate nohighlight">\(j \in \mathcal{T}_0\)</span> that minimizes <span class="math notranslate nohighlight">\(|\hat{\pi}(x_i) - \hat{\pi}(x_j)|\)</span></p></li>
+<li><p>If <span class="math notranslate nohighlight">\(|\hat{\pi}(x_i) - \hat{\pi}(x_j)| \leq \delta\)</span>: <em>(Apply caliper distance)</em></p>
+<ol class="arabic simple">
+<li><p>Add pair <span class="math notranslate nohighlight">\((i, j)\)</span> to <span class="math notranslate nohighlight">\(\mathcal{M}\)</span></p></li>
+<li><p><em>Optional:</em> Remove <span class="math notranslate nohighlight">\(j\)</span> from <span class="math notranslate nohighlight">\(\mathcal{T}_0\)</span> <em>(Matching without replacement)</em></p></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong>Estimate Effect</strong></p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{\tau}_{ATT} = \frac{1}{|\mathcal{M}|} \sum_{(i,j) \in \mathcal{M}} (Y_i - Y_j)\)</span></p></li>
+<li><p>Return <span class="math notranslate nohighlight">\(\hat{\tau}_{ATT}\)</span></p></li>
+</ol>
+</li>
+</ol>
+</section>
+</div></section>
+<section id="inverse-propensity-score-weighting">
+<h2>Inverse Propensity Score Weighting<a class="headerlink" href="#inverse-propensity-score-weighting" title="Link to this heading">#</a></h2>
+<p>Weighting uses Inverse Probability Weighting (IPW) to create a “pseudo-population” where the treatment is independent of measured covariates. This approach is often used to estimate the Average Treatment Effect (ATE) for the entire population.  This independence, however, is achieved <em>only if the propensity model <span class="math notranslate nohighlight">\(\hat{\pi}(x)\)</span> is correctly specified</em> (and overlap holds): IPW is <strong>singly robust</strong> - consistent if and only if <span class="math notranslate nohighlight">\(\hat{\pi}(x)\)</span> is correct. Under a misspecified propensity model (e.g. a logistic fit omitting a relevant covariate or non-linear interaction) the reweighted sample does <em>not</em> balance <span class="math notranslate nohighlight">\(X\)</span>, and the ATE estimate is biased - sometimes severely (<a class="reference external" href="https://doi.org/10.1214/07-STS227">Kang &amp; Schafer, 2007</a>; <a class="reference external" href="https://doi.org/10.1002/sim.1903">Lunceford &amp; Davidian, 2004</a>, Thm. 1). Doubly robust estimators (AIPW) relax this by staying consistent if <em>either</em> the propensity or the outcome model is correct.</p>
+<div class="proof algorithm dropdown admonition" id="alg-psw">
+<p class="admonition-title"><span class="caption-number">Algorithm 6 </span> (Propensity Score Weighting)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D\)</span> with covariates <span class="math notranslate nohighlight">\(X\)</span>, treatment <span class="math notranslate nohighlight">\(T\)</span>, and outcome <span class="math notranslate nohighlight">\(Y\)</span></p>
+<p><strong>Outputs</strong> Estimated ATE <span class="math notranslate nohighlight">\(\hat{\tau}_{ATE}\)</span></p>
+<ol class="arabic simple">
+<li><p><strong>Estimate Propensity Scores</strong></p>
+<ol class="arabic simple">
+<li><p>Train model <span class="math notranslate nohighlight">\(P(T = 1 \mid X)\)</span> to obtain <span class="math notranslate nohighlight">\(\hat{\pi}(x_i)\)</span></p></li>
+<li><p><em>Optional:</em> Clip scores (e.g., <span class="math notranslate nohighlight">\([0.05, 0.95]\)</span>) to avoid extreme weights</p></li>
+</ol>
+</li>
+<li><p><strong>Calculate IPW Weights</strong></p>
+<ol class="arabic simple">
+<li><p>For each unit <span class="math notranslate nohighlight">\(i\)</span> in <span class="math notranslate nohighlight">\(D\)</span>:</p>
+<ol class="arabic simple">
+<li><p>If <span class="math notranslate nohighlight">\(T_i = 1\)</span>: <span class="math notranslate nohighlight">\(w_i = \frac{1}{\hat{\pi}(x_i)}\)</span> <em>(Weight for Treated)</em></p></li>
+<li><p>Else: <span class="math notranslate nohighlight">\(w_i = \frac{1}{1 - \hat{\pi}(x_i)}\)</span> <em>(Weight for Control)</em></p></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong>Estimate Effect</strong></p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{Y}_1 = \frac{\sum T_i Y_i w_i}{\sum T_i w_i}\)</span> <em>(Weighted mean for Treated)</em></p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{Y}_0 = \frac{\sum (1-T_i) Y_i w_i}{\sum (1-T_i) w_i}\)</span> <em>(Weighted mean for Control)</em></p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\tau}_{ATE} = \hat{Y}_1 - \hat{Y}_0\)</span></p></li>
+<li><p>Return <span class="math notranslate nohighlight">\(\hat{\tau}_{ATE}\)</span></p></li>
+</ol>
+</li>
+</ol>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. We want to briefly prove that weighting the observed outcomes <span class="math notranslate nohighlight">\(Y\)</span> by the inverse of the propensity score <span class="math notranslate nohighlight">\(\pi(X)\)</span> for the treated group recovers the true (factual) mean <span class="math notranslate nohighlight">\(\mathbb{E}[Y(1)]\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}\left[ \frac{T Y}{\pi(X)} \right] = \mathbb{E}[Y(1)]
+\]</div>
+<p>We first condition on the baseline covariates <span class="math notranslate nohighlight">\(X\)</span>, and then take the outer expectation over the distribution of <span class="math notranslate nohighlight">\(X\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}\left[ \frac{T Y}{\pi(X)} \right] = \mathbb{E}\left[ \mathbb{E}\left[ \frac{T Y}{\pi(X)} \;\middle|\; X \right] \right]
+= \mathbb{E}\left[ \frac{1}{\pi(X)} \mathbb{E}[T Y \mid X] \right]
+\]</div>
+<p>By consistency, when <span class="math notranslate nohighlight">\(T = 1\)</span>, the observed outcome <span class="math notranslate nohighlight">\(Y\)</span> is identical to <span class="math notranslate nohighlight">\(Y(1)\)</span>. When <span class="math notranslate nohighlight">\(T = 0\)</span>, the term <span class="math notranslate nohighlight">\(T Y\)</span> is 0. Thus, we can substitute <span class="math notranslate nohighlight">\(T Y\)</span> with <span class="math notranslate nohighlight">\(T Y(1)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}\left[ \frac{1}{\pi(X)} \mathbb{E}[T Y \mid X] \right] = \mathbb{E}\left[ \frac{1}{\pi(X)} \mathbb{E}[T Y(1) \mid X] \right]
+\]</div>
+<p>Because treatment assignment <span class="math notranslate nohighlight">\(T\)</span> is independent of the potential outcome <span class="math notranslate nohighlight">\(Y(1)\)</span> once we condition on <span class="math notranslate nohighlight">\(X\)</span>, the joint expectation factors into the product of their individual conditional expectations:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}\left[ \frac{1}{\pi(X)} \mathbb{E}[T Y(1) \mid X] \right] = \mathbb{E}\left[ \frac{1}{\pi(X)} \mathbb{E}[T \mid X] \mathbb{E}[Y(1) \mid X] \right]
+\]</div>
+<p>By definition, the conditional expectation of a binary indicator variable <span class="math notranslate nohighlight">\(T\)</span> given <span class="math notranslate nohighlight">\(X\)</span> is its probability of occurring, which is the propensity score <span class="math notranslate nohighlight">\(\pi(X)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[T \mid X] = P(T = 1 \mid X) = \pi(X)
+\]</div>
+<p>Substituting <span class="math notranslate nohighlight">\(\pi(X)\)</span> back into our equation:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}\left[ \frac{1}{\pi(X)} \pi(X) \mathbb{E}[Y(1) \mid X] \right] = \mathbb{E}\big[\mathbb{E}[Y(1) \mid X]\big]
+\]</div>
+<p>Using the Law of Iterated Expectations again, the inner expectation collapses, leaving the marginal expectation:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}\big[\mathbb{E}[Y(1) \mid X]\big] = \mathbb{E}[Y(1)]
+\]</div>
+</div>
+</section>
+<section id="interactive-comparison-matching-vs-weighting">
+<h2>Interactive Comparison: Matching vs. Weighting<a class="headerlink" href="#interactive-comparison-matching-vs-weighting" title="Link to this heading">#</a></h2>
+<p>The interactive figure below applies both methods to a single simulated dataset with covariates <span class="math notranslate nohighlight">\(X\)</span>, treatment <span class="math notranslate nohighlight">\(T\)</span>, and outcome <span class="math notranslate nohighlight">\(Y\)</span>, where the true treatment effect is known. Use it to build intuition for how the two estimators behave:</p>
+<ul class="simple">
+<li><p><strong>Confounding strength</strong> - increase it to make the treated and control groups less alike. Watch the propensity score distributions pull apart and the region of <a class="reference internal" href="#overlap"><span class="std std-ref">Overlap (Common Support)</span></a> shrink.</p></li>
+<li><p><strong>Matching caliper</strong> <span class="math notranslate nohighlight">\(\delta\)</span> - widen or tighten the maximum propensity gap allowed within a pair, and see how many treated units get matched versus discarded.</p></li>
+<li><p><strong>New sample</strong> - redraw the data to see the sampling variability of each estimate.</p></li>
+</ul>
+<p>The panels let you compare, on the same data, (1) propensity score overlap, (2) the matched pairs formed by Propensity Score Matching (PSM), and (3) the inverse-probability-weighted points used by IPTW. The summary cards contrast the naïve difference in means against the PSM estimate of the ATT (<span class="math notranslate nohighlight">\(\hat{\tau}_{ATT}\)</span>) and the IPTW estimate of the ATE (<span class="math notranslate nohighlight">\(\hat{\tau}_{ATE}\)</span>), each benchmarked against its <em>own</em> target - the PSM estimate against the true ATT, the IPTW estimate against the true ATE. Because assignment is positively confounded, the treated are drawn from higher-effect strata, so the true ATT exceeds the true ATE; benchmarking PSM against the ATE would wrongly make it look upward-biased as confounding grows.</p>
+<p>The two sliders set the green terms below - the <strong>confounding strength</strong> <span class="math notranslate nohighlight">\(\beta\)</span> in the treatment-assignment model and the <strong>matching caliper</strong> <span class="math notranslate nohighlight">\(\delta\)</span> in the pairing rule:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{logit}(\pi(x)) = 0.3 + \textcolor{#7d9f17}{\beta}\, x_1 - 0.5\, x_2,
+\qquad
+\text{match } (i, j) \iff \bigl|\pi(x_i) - \pi(x_j)\bigr| \le \textcolor{#7d9f17}{\delta}
+\]</div>
+<p>The complete model is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+X_1 \sim \mathcal{N}(0,1.5^2),\qquad X_2 \sim \text{Uniform}(-1, 1)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+T \mid X_1, X_2 \sim \text{Bernoulli}(\pi(X)),\qquad \varepsilon \sim \mathcal{N}(0,2.5^2) 
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+Y = 1.5 + 0.8X_1 + 0.6X_2 + (2 + 0.2X_1 - 0.1X_2)T+\varepsilon
+\]</div>
+<div class="note admonition">
+<p class="admonition-title">Structural Equation Models</p>
+<p>The four equations above are an instance of a <strong>Structural Equation Model (SEM)</strong>.
+Each equation assigns a <em>cause</em> to a variable: <span class="math notranslate nohighlight">\(X_1\)</span> and <span class="math notranslate nohighlight">\(X_2\)</span> are exogenous inputs, <span class="math notranslate nohighlight">\(T\)</span> is determined by the covariates through the propensity score, and <span class="math notranslate nohighlight">\(Y\)</span> is determined by <span class="math notranslate nohighlight">\(T\)</span>, the covariates, and noise.
+Crucially, the equation for <span class="math notranslate nohighlight">\(Y\)</span> encodes the <em>causal mechanism</em> - changing <span class="math notranslate nohighlight">\(T\)</span> from 0 to 1 shifts <span class="math notranslate nohighlight">\(Y\)</span> by <span class="math notranslate nohighlight">\((2 + 0.2X_1 - 0.1X_2)\)</span>, regardless of how <span class="math notranslate nohighlight">\(T\)</span> came to take that value.
+This is what Pearl’s <strong>do-calculus</strong> notation distinguishes as <span class="math notranslate nohighlight">\(\Pr(Y \mid do(T{=}1))\)</span> versus the purely observational <span class="math notranslate nohighlight">\(\Pr(Y \mid T{=}1)\)</span>.</p>
+<p>In an SEM, the <strong>treatment effect heterogeneity</strong> is explicit: the coefficient on <span class="math notranslate nohighlight">\(T\)</span> depends on <span class="math notranslate nohighlight">\(X_1\)</span> and <span class="math notranslate nohighlight">\(X_2\)</span>, so the ATT and ATE differ whenever the treated and untreated groups occupy different parts of the covariate space - exactly the situation the confounding-strength slider demonstrates.</p>
+</div>
+<iframe id="psm-iptw" src="../figure/psm_iptw_explainer.html?v=20260610d"
+        style="width:100%; border:none; height:1500px;"
+        title="PSM vs IPTW interactive explainer"></iframe>
+<script>
+(function () {
+  var iframe = document.getElementById('psm-iptw');
+
+  // Resolve the book's current theme: data-mode is auto|light|dark.
+  function currentTheme() {
+    var root = document.documentElement;
+    // data-theme holds the *resolved* light|dark value (preferred).
+    var theme = root.getAttribute('data-theme');
+    if (theme === 'light' || theme === 'dark') return theme;
+    var mode = root.getAttribute('data-mode') || 'auto';
+    if (mode === 'light' || mode === 'dark') return mode;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function sendTheme() {
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'set-theme', value: currentTheme() }, '*');
+    }
+  }
+
+  window.addEventListener('message', function (e) {
+    if (!e.data) return;
+    if (e.data.type === 'psm-iptw-height') {
+      iframe.style.height = (e.data.height + 20) + 'px';
+    } else if (e.data.type === 'psm-iptw-ready') {
+      sendTheme();
+    }
+  });
+
+  // Re-send whenever the book theme toggle flips data-mode or data-theme.
+  new MutationObserver(sendTheme).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-mode', 'data-theme']
+  });
+  // Re-send when the OS theme changes while the book is in "auto" mode.
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sendTheme);
+
+  iframe.addEventListener('load', sendTheme);
+  sendTheme();
+})();
+</script></section>
+<section id="doubly-robust-estimation-aipw-and-tmle">
+<h2>Doubly Robust Estimation: AIPW and TMLE<a class="headerlink" href="#doubly-robust-estimation-aipw-and-tmle" title="Link to this heading">#</a></h2>
+<p>Doubly robust estimators combine the outcome model <span class="math notranslate nohighlight">\(\hat{\mu}(t, x)\)</span> with the propensity model <span class="math notranslate nohighlight">\(\hat{\pi}(x)\)</span> so that the estimate is consistent if <em>either</em> model is correctly specified - a property that single-model approaches lack. The <em>Augmented Inverse Propensity Weighting</em> (AIPW) estimator of <a class="reference external" href="https://doi.org/10.1080/01621459.1994.10476818">Robins, Rotnitzky &amp; Zhao (1994)</a> augments the G-computation estimate with an inverse-propensity-weighted residual correction; <a class="reference external" href="https://doi.org/10.1111/j.1541-0420.2005.00377.x">Bang &amp; Robins (2005)</a> developed the framework for causal inference, and <a class="reference external" href="https://doi.org/10.2202/1557-4679.1043">van der Laan &amp; Rubin (2006)</a> introduced <em>Targeted Maximum Likelihood Estimation</em> (TMLE) as a substitution-based alternative with the same robustness guarantee. DML (next section) is essentially AIPW equipped with Neyman-orthogonality and cross-fitting.</p>
+<div class="proof algorithm dropdown admonition" id="alg-aipw">
+<p class="admonition-title"><span class="caption-number">Algorithm 7 </span> (Augmented Inverse Propensity Weighting (AIPW))</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D = \{X, T, Y\}\)</span>, ML learners <span class="math notranslate nohighlight">\(\mathcal{L}_Y\)</span> (outcome), <span class="math notranslate nohighlight">\(\mathcal{L}_T\)</span> (treatment)</p>
+<p><strong>Outputs</strong> Doubly robust ATE estimate <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p>
+<ol class="arabic">
+<li><p>Fit nuisance models (with cross-fitting): outcome <span class="math notranslate nohighlight">\(\hat{\mu}(t, x) = \mathcal{L}_Y(Y \sim T, X)\)</span> and propensity <span class="math notranslate nohighlight">\(\hat{\pi}(x) = \mathcal{L}_T(T \sim X)\)</span></p></li>
+<li><p>For every observation <span class="math notranslate nohighlight">\(i\)</span>, form the doubly robust score <em>(G-computation plus IPW residual correction)</em></p>
+<div class="math notranslate nohighlight">
+\[\hat{\psi}^{(i)} = \hat{\mu}(1, x^{(i)}) - \hat{\mu}(0, x^{(i)}) + \frac{T^{(i)}\,(Y^{(i)} - \hat{\mu}(1, x^{(i)}))}{\hat{\pi}(x^{(i)})} - \frac{(1 - T^{(i)})\,(Y^{(i)} - \hat{\mu}(0, x^{(i)}))}{1 - \hat{\pi}(x^{(i)})}\]</div>
+</li>
+<li><p>Average the scores: <span class="math notranslate nohighlight">\(\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\hat{\psi}^{(i)}\)</span></p></li>
+<li><p>Return estimated treatment effect <span class="math notranslate nohighlight">\(\hat{\tau}\)</span> <em>(consistent if either <span class="math notranslate nohighlight">\(\hat{\mu}\)</span> or <span class="math notranslate nohighlight">\(\hat{\pi}\)</span> is correct)</em></p></li>
+</ol>
+</section>
+</div><section id="neyman-orthogonality-of-the-aipw-score">
+<h3>Neyman Orthogonality of the AIPW Score<a class="headerlink" href="#neyman-orthogonality-of-the-aipw-score" title="Link to this heading">#</a></h3>
+<p>The AIPW estimator averages the doubly robust scores <span class="math notranslate nohighlight">\(\hat{\psi}^{(i)}\)</span> defined in
+Step 2 of <a class="reference internal" href="#alg-aipw">Algorithm 7</a>. In expectation, the score is a moment condition
+<span class="math notranslate nohighlight">\(\mathbb{E}[\psi(\theta_0, \eta_0)] = 0\)</span>, where</p>
+<div class="math notranslate nohighlight">
+\[
+\psi(\theta, \eta) = \underbrace{\mu(1,X) - \mu(0,X)}_{\text{plug-in term}}
++ \underbrace{\frac{T(Y - \mu(1,X))}{\pi(X)}
+- \frac{(1-T)(Y - \mu(0,X))}{1-\pi(X)}}_{\text{augmentation term}} - \theta
+\]</div>
+<p>with nuisance parameter <span class="math notranslate nohighlight">\(\eta = (\mu, \pi)\)</span>, where
+<span class="math notranslate nohighlight">\(\mu(t,x) = \mathbb{E}[Y \mid T=t, X=x]\)</span> and <span class="math notranslate nohighlight">\(\pi(x) = P(T=1 \mid X=x)\)</span>.
+The score is <strong>Neyman orthogonal</strong> at <span class="math notranslate nohighlight">\((\theta_0, \eta_0)\)</span> if the
+derivative of the expected score with respect to <span class="math notranslate nohighlight">\(\eta\)</span>, evaluated at the truth,
+vanishes in every direction:</p>
+<div class="math notranslate nohighlight">
+\[
+\partial_\eta\,\mathbb{E}\!\left[\psi(\theta_0,\,\eta_0)\right][\eta - \eta_0] = 0
+\qquad \text{for all } \eta.
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\eta = (\mu, \pi)\)</span>, we verify this separately for each component.</p>
+<div class="proof admonition" id="proof">
+<p>Proof. We show that both <span class="math notranslate nohighlight">\(\partial_\mu\,\mathbb{E}[\psi][\delta_\mu] = 0\)</span> and
+<span class="math notranslate nohighlight">\(\partial_\pi\,\mathbb{E}[\psi][\delta_\pi] = 0\)</span> at the truth <span class="math notranslate nohighlight">\(\eta_0 = (\mu, \pi)\)</span>,
+for arbitrary directions <span class="math notranslate nohighlight">\(\delta_\mu = \tilde{\mu} - \mu\)</span> and
+<span class="math notranslate nohighlight">\(\delta_\pi = \tilde{\pi} - \pi\)</span>.</p>
+<p><strong>Part 1: Derivative with respect to <span class="math notranslate nohighlight">\(\mu\)</span>.</strong></p>
+<p>The derivative of <span class="math notranslate nohighlight">\(\mathbb{E}[\psi]\)</span> in direction <span class="math notranslate nohighlight">\(\delta_\mu\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+\partial_\mu\,\mathbb{E}[\psi][\delta_\mu]
+= \mathbb{E}\!\left[
+    \delta_\mu(1,X) - \delta_\mu(0,X)
+    - \frac{T\,\delta_\mu(1,X)}{\pi(X)}
+    + \frac{(1-T)\,\delta_\mu(0,X)}{1 - \pi(X)}
+\right]
+\]</div>
+<p>Apply the law of iterated expectations, conditioning on <span class="math notranslate nohighlight">\(X\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+= \mathbb{E}_X\!\left[
+    \delta_\mu(1,X)\left(1 - \frac{\mathbb{E}[T \mid X]}{\pi(X)}\right)
+    - \delta_\mu(0,X)\left(1 - \frac{\mathbb{E}[1-T \mid X]}{1-\pi(X)}\right)
+\right]
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\mathbb{E}[T \mid X] = \pi(X)\)</span> and <span class="math notranslate nohighlight">\(\mathbb{E}[1-T \mid X] = 1-\pi(X)\)</span>
+both fractions equal one, so:</p>
+<div class="math notranslate nohighlight">
+\[
+= \mathbb{E}_X\!\left[
+    \delta_\mu(1,X)\cdot 0 - \delta_\mu(0,X) \cdot 0
+\right] = 0.
+\]</div>
+<p><strong>Part 2: Derivative with respect to <span class="math notranslate nohighlight">\(\pi\)</span>.</strong></p>
+<p>The derivative of <span class="math notranslate nohighlight">\(\mathbb{E}[\psi]\)</span> in direction <span class="math notranslate nohighlight">\(\delta_\pi\)</span> is obtained
+by replacing <span class="math notranslate nohighlight">\(\pi\)</span> with <span class="math notranslate nohighlight">\(\pi + t\,\delta_\pi\)</span> and differentiating at <span class="math notranslate nohighlight">\(t=0\)</span>,
+using <span class="math notranslate nohighlight">\(\frac{d}{dt}\frac{1}{\pi + t\delta_\pi}\big|_{t=0} = -\frac{\delta_\pi}{\pi^2}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\partial_\pi\,\mathbb{E}[\psi][\delta_\pi]
+= -\mathbb{E}\!\left[
+    \frac{T\,(Y - \mu(1,X))\,\delta_\pi(X)}{\pi(X)^2}
+\right]
++ \mathbb{E}\!\left[
+    \frac{(1-T)\,(Y - \mu(0,X))\,\delta_\pi(X)}{(1-\pi(X))^2}
+\right]
+\]</div>
+<p>Apply iterated expectations to the first term, conditioning on <span class="math notranslate nohighlight">\(X\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}\!\left[\frac{T\,(Y-\mu(1,X))\,\delta_\pi(X)}{\pi(X)^2}\right]
+= \mathbb{E}_X\!\left[\frac{\delta_\pi(X)}{\pi(X)^2}
+\cdot\mathbb{E}[T\,(Y - \mu(1,X)) \mid X]\right]
+\]</div>
+<p>Under exchangeability, <span class="math notranslate nohighlight">\(\mathbb{E}[TY \mid X] = \pi(X)\mu(1,X)\)</span> and
+<span class="math notranslate nohighlight">\(\mathbb{E}[T \mid X] = \pi(X)\)</span>, so:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[T\,(Y - \mu(1,X)) \mid X]
+= \pi(X)\mu(1,X) - \mu(1,X)\,\pi(X) = 0
+\]</div>
+<p>and the first term vanishes. By the identical argument applied to <span class="math notranslate nohighlight">\(T=0\)</span>, using
+<span class="math notranslate nohighlight">\(\mathbb{E}[(1-T)Y \mid X] = (1-\pi(X))\,\mu(0,X)\)</span> and
+<span class="math notranslate nohighlight">\(\mathbb{E}[1-T \mid X] = 1-\pi(X)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[(1-T)(Y - \mu(0,X)) \mid X]
+= (1-\pi(X))\,\mu(0,X) - \mu(0,X)\,(1-\pi(X)) = 0
+\]</div>
+<p>and the second term also vanishes:</p>
+<div class="math notranslate nohighlight">
+\[
+\partial_\pi\,\mathbb{E}[\psi][\delta_\pi] = 0.
+\]</div>
+<p><strong>Conclusion.</strong></p>
+<p>Since both partial derivatives vanish at the truth for all directions
+<span class="math notranslate nohighlight">\(\delta_\mu\)</span> and <span class="math notranslate nohighlight">\(\delta_\pi\)</span>, the AIPW score is Neyman orthogonal. Consequently,
+the bias of <span class="math notranslate nohighlight">\(\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\hat{\psi}^{(i)}\)</span> satisfies</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{Bias}(\hat{\tau})
+\propto (\hat{\mu} - \mu)(\hat{\pi} - \pi),
+\]</div>
+<p>vanishing whenever either <span class="math notranslate nohighlight">\(\hat{\mu} \rightarrow \mu\)</span> or
+<span class="math notranslate nohighlight">\(\hat{\pi} \rightarrow \pi\)</span> in probability, which is the double robustness stated in
+Step 4 of <a class="reference internal" href="#alg-aipw">Algorithm 7</a>.</p>
+</div>
+<div class="proof algorithm dropdown admonition" id="alg-tmle">
+<p class="admonition-title"><span class="caption-number">Algorithm 8 </span> (Targeted Maximum Likelihood Estimation (TMLE))</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D = \{X, T, Y\}\)</span>, ML learners <span class="math notranslate nohighlight">\(\mathcal{L}_Y\)</span> (outcome), <span class="math notranslate nohighlight">\(\mathcal{L}_T\)</span> (treatment)</p>
+<p><strong>Outputs</strong> Doubly robust ATE estimate <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p>
+<ol class="arabic simple">
+<li><p>Fit initial outcome model <span class="math notranslate nohighlight">\(\hat{\mu}^0(t, x) = \mathcal{L}_Y(Y \sim T, X)\)</span> and propensity <span class="math notranslate nohighlight">\(\hat{\pi}(x) = \mathcal{L}_T(T \sim X)\)</span></p></li>
+<li><p>Compute the <em>clever covariate</em> <span class="math notranslate nohighlight">\(H^{(i)} = \frac{T^{(i)}}{\hat{\pi}(x^{(i)})} - \frac{1 - T^{(i)}}{1 - \hat{\pi}(x^{(i)})}\)</span></p></li>
+<li><p><strong>Targeting step:</strong> fit a one-parameter <em>logistic</em> fluctuation <span class="math notranslate nohighlight">\(\hat{\varepsilon}\)</span> by regressing <span class="math notranslate nohighlight">\(Y\)</span> on <span class="math notranslate nohighlight">\(H\)</span> with offset <span class="math notranslate nohighlight">\(\text{logit}\,\hat{\mu}^0\)</span>, giving the updated model <span class="math notranslate nohighlight">\(\hat{\mu}^\star(t, x)\)</span> <em>(valid for <span class="math notranslate nohighlight">\(Y \in [0,1]\)</span>; see the note below for continuous outcomes)</em></p></li>
+<li><p>Plug the targeted model into G-computation: <span class="math notranslate nohighlight">\(\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\left[\hat{\mu}^\star(1, x^{(i)}) - \hat{\mu}^\star(0, x^{(i)})\right]\)</span></p></li>
+<li><p>Return estimated treatment effect <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p></li>
+</ol>
+</section>
+</div><div class="dropdown admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Outcome type matters - read before applying TMLE to loss data.</strong> The targeting step above uses a <strong>logistic fluctuation</strong> (offset <span class="math notranslate nohighlight">\(\text{logit}\,\hat{\mu}^0\)</span>, clever covariate <span class="math notranslate nohighlight">\(H\)</span>), which is only valid when the outcome is <strong>binary or bounded in <span class="math notranslate nohighlight">\([0,1]\)</span></strong>. For unbounded continuous outcomes a different fluctuation family is required - a <strong>Gaussian fluctuation with the identity link</strong> (<a class="reference external" href="https://doi.org/10.2202/1557-4679.1043">van der Laan &amp; Rubin, 2006</a>) - otherwise the targeting step is misspecified and the resulting <span class="math notranslate nohighlight">\(\hat{\tau}\)</span> is invalid.</p>
+<p>In non-life actuarial work this is the <em>usual</em> case, not an edge case: the primary outcomes - <strong>claim amounts, loss ratios, and claim counts</strong> - are continuous or count-valued and unbounded, not <span class="math notranslate nohighlight">\(\{0,1\}\)</span>. An actuary who applies the logistic formulation above directly to a loss amount is implementing an incorrect targeting step. Two practical routes:</p>
+<ul class="simple">
+<li><p><strong>Bounded continuous outcomes</strong> (e.g. loss ratios in <span class="math notranslate nohighlight">\([0,1]\)</span>, or any outcome rescaled to <span class="math notranslate nohighlight">\([0,1]\)</span> via <span class="math notranslate nohighlight">\(\tilde{Y} = (Y - a)/(b - a)\)</span> and back-transformed): the logistic fluctuation applies directly after rescaling (<a class="reference external" href="https://doi.org/10.2202/1557-4679.1260">Gruber &amp; van der Laan, 2010</a>).</p></li>
+<li><p><strong>Unbounded outcomes</strong> (claim severities, aggregate losses): use the Gaussian/identity-link fluctuation, or a count-appropriate family for frequencies.</p></li>
+</ul>
+<p>In practice, prefer a maintained implementation such as the R package <a class="reference external" href="https://CRAN.R-project.org/package=tmle"><code class="docutils literal notranslate"><span class="pre">tmle</span></code></a>, which selects the correct fluctuation family for binary, bounded-continuous, and continuous outcomes automatically.</p>
+</div>
+</section>
+</section>
+<section id="double-machine-learning-dml">
+<h2>Double Machine Learning (DML)<a class="headerlink" href="#double-machine-learning-dml" title="Link to this heading">#</a></h2>
+<p>The DML estimator of <a class="reference external" href="https://doi.org/10.1111/ectj.12097">Chernozhukov et al. (2018)</a> makes the doubly robust idea robust to flexible, slowly-converging machine-learning nuisance models. For a binary or continuous treatment it builds on the <em>partially linear model</em> (PLM) <span class="math notranslate nohighlight">\(Y = \tau T + g(X) + \varepsilon\)</span>, whose residualize-then-regress solution is Robinson’s estimator <a class="reference external" href="https://doi.org/10.2307/1912705">(Robinson, 1988)</a>. By <em>partialling out</em> the covariate effect from both <span class="math notranslate nohighlight">\(Y\)</span> and <span class="math notranslate nohighlight">\(T\)</span> before estimating <span class="math notranslate nohighlight">\(\tau\)</span>, the resulting moment condition is Neyman-orthogonal, so first-stage estimation error has only a second-order effect on <span class="math notranslate nohighlight">\(\hat{\tau}\)</span>.</p>
+<div class="proof algorithm dropdown admonition" id="alg-dml">
+<p class="admonition-title"><span class="caption-number">Algorithm 9 </span> (Double Machine Learning)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> Data <span class="math notranslate nohighlight">\(D = \{X, T, Y\}\)</span>, ML learners <span class="math notranslate nohighlight">\(\mathcal{L}_Y\)</span> (for outcome), <span class="math notranslate nohighlight">\(\mathcal{L}_T\)</span> (for treatment)</p>
+<p><strong>Outputs</strong> Estimated causal effect <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p>
+<ol class="arabic simple">
+<li><p>Split data <span class="math notranslate nohighlight">\(D\)</span> into two disjoint sets: <span class="math notranslate nohighlight">\(D_{train}\)</span> and <span class="math notranslate nohighlight">\(D_{eval}\)</span> <em>(Cross-fitting/Honesty)</em></p></li>
+<li><p><strong>Outcome Residualization</strong></p>
+<ol class="arabic simple">
+<li><p>Train model <span class="math notranslate nohighlight">\(\hat{\mu}(X) = \mathcal{L}_Y(Y \sim X)\)</span> on <span class="math notranslate nohighlight">\(D_{train}\)</span> <em>(Predict <span class="math notranslate nohighlight">\(Y\)</span> using covariates only)</em></p></li>
+<li><p>Compute residuals <span class="math notranslate nohighlight">\(\tilde{Y} = Y - \hat{\mu}(X)\)</span> on <span class="math notranslate nohighlight">\(D_{eval}\)</span></p></li>
+</ol>
+</li>
+<li><p><strong>Treatment Residualization</strong></p>
+<ol class="arabic simple">
+<li><p>Train model <span class="math notranslate nohighlight">\(\hat{\pi}(X) = \mathcal{L}_T(T \sim X)\)</span> on <span class="math notranslate nohighlight">\(D_{train}\)</span> <em>(Estimate the treatment conditional mean <span class="math notranslate nohighlight">\(\pi(X) = \mathbb{E}[T \mid X]\)</span>; for binary <span class="math notranslate nohighlight">\(T\)</span> this coincides with the propensity score <span class="math notranslate nohighlight">\(\mathbb{P}(T=1 \mid X)\)</span>)</em></p></li>
+<li><p>Compute residuals <span class="math notranslate nohighlight">\(\tilde{T} = T - \hat{\pi}(X)\)</span> on <span class="math notranslate nohighlight">\(D_{eval}\)</span></p></li>
+</ol>
+</li>
+<li><p><strong>Causal Estimation</strong></p>
+<ol class="arabic simple">
+<li><p>Regress outcome residuals on treatment residuals: <span class="math notranslate nohighlight">\(\tilde{Y} = \tau \tilde{T} + \varepsilon\)</span></p></li>
+<li><p><em>Note:</em> This identifies the effect using only the “exogenous” variation in <span class="math notranslate nohighlight">\(T\)</span></p></li>
+</ol>
+</li>
+<li><p>Return estimated treatment effect <span class="math notranslate nohighlight">\(\hat{\tau}\)</span></p></li>
+</ol>
+</section>
+</div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>What the partially linear model actually targets.</strong> The PLM <span class="math notranslate nohighlight">\(Y = \tau T + g(X) + \varepsilon\)</span> treats <span class="math notranslate nohighlight">\(\tau\)</span> as a <em>single constant</em> - an implicit homogeneous-effects assumption. When the true effect is heterogeneous, <span class="math notranslate nohighlight">\(\tau(X)\)</span>, Robinson’s residual-on-residual regression does <em>not</em> return the standard ATE <span class="math notranslate nohighlight">\(= \mathbb{E}[\tau(X)]\)</span> but the <strong>propensity-overlap-weighted</strong> average</p>
+<div class="math notranslate nohighlight">
+\[
+\tau^* = \frac{\mathbb{E}\!\big[\tau(X)\,\pi(X)\,(1-\pi(X))\big]}{\mathbb{E}\!\big[\pi(X)\,(1-\pi(X))\big]},
+\]</div>
+<p>with <span class="math notranslate nohighlight">\(\pi(X) = \mathbb{E}[T \mid X]\)</span> the propensity score, which over-weights the region of good overlap (<span class="math notranslate nohighlight">\(\pi \approx \tfrac12\)</span>) and under-weights the propensity tails. <span class="math notranslate nohighlight">\(\tau^*\)</span> equals the ATE only when effects are homogeneous or <span class="math notranslate nohighlight">\(\pi(X)\)</span> is constant (an RCT) - neither holds in confounded insurance data. To target <span class="math notranslate nohighlight">\(\mathbb{E}[\tau(X)]\)</span> under heterogeneity, use the <strong>interactive model</strong> <span class="math notranslate nohighlight">\(Y = \tau(X)T + g(X) + \varepsilon\)</span> with an AIPW/doubly robust score, or average the CATEs from the meta-learners and causal forests in <a class="reference internal" href="heterogeneous_effects.html"><span class="doc">Heterogeneous Treatment Effects</span></a> (<a class="reference external" href="https://doi.org/10.1111/ectj.12097">Chernozhukov et al., 2018</a>, Sec. 2 vs. 4). Mixing a PLM-DML “ATE” with averaged causal-forest CATEs can therefore yield inconsistent numbers.</p>
+</div>
+</section>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="inference.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Causal Inference</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="heterogeneous_effects.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Heterogeneous Treatment Effects</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outcome-regression-and-g-computation">Outcome Regression and G-computation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propensity-score-definition">Propensity Score Definition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overlap-common-support">Overlap (Common Support)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propensity-score-matching">Propensity Score Matching</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-propensity-score-weighting">Inverse Propensity Score Weighting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-comparison-matching-vs-weighting">Interactive Comparison: Matching vs. Weighting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#doubly-robust-estimation-aipw-and-tmle">Doubly Robust Estimation: AIPW and TMLE</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neyman-orthogonality-of-the-aipw-score">Neyman Orthogonality of the AIPW Score</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#double-machine-learning-dml">Double Machine Learning (DML)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theresa Blümlein, Patrick Cheridito, and Daniel Meier
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

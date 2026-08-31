@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="280" viewBox="0 0 560 280" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .arrow { fill: #333; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="arIV" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L9,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- Instrument I -->
+  <circle cx="80" cy="170" r="32" fill="#fff7e6" stroke="#d9920a" stroke-width="2"/>
+  <text x="80" y="176" text-anchor="middle" font-size="20" fill="#8a5b00">I</text>
+  <text class="muted" x="80" y="226" text-anchor="middle" font-size="12">instrument</text>
+
+  <!-- Treatment T -->
+  <circle cx="250" cy="170" r="32" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="250" y="176" text-anchor="middle" font-size="20" fill="#136c3a">T</text>
+  <text class="muted" x="250" y="226" text-anchor="middle" font-size="12">treatment</text>
+
+  <!-- Outcome Y -->
+  <circle cx="430" cy="170" r="32" fill="#fdecec" stroke="#cc3b3b" stroke-width="2"/>
+  <text x="430" y="176" text-anchor="middle" font-size="20" fill="#8a1f1f">Y</text>
+  <text class="muted" x="430" y="226" text-anchor="middle" font-size="12">outcome</text>
+
+  <!-- Unobserved confounder U (dashed) -->
+  <circle cx="340" cy="55" r="30" fill="#f2f2f2" stroke="#777" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="340" y="61" text-anchor="middle" font-size="18" fill="#555">U</text>
+  <text class="muted" x="340" y="20" text-anchor="middle" font-size="12">unobserved confounder</text>
+
+  <!-- I -> T (relevance) -->
+  <line class="ink-l" x1="112" y1="170" x2="216" y2="170" stroke-width="2" marker-end="url(#arIV)"/>
+  <text x="164" y="158" text-anchor="middle" font-size="11" fill="#2bb673" font-style="italic">relevance</text>
+
+  <!-- T -> Y (causal effect) -->
+  <line class="ink-l" x1="282" y1="170" x2="396" y2="170" stroke-width="2" marker-end="url(#arIV)"/>
+  <text class="ink-t" x="339" y="158" text-anchor="middle" font-size="14" font-style="italic">&#946;</text>
+
+  <!-- U -> T -->
+  <line class="muted-l" x1="318" y1="80" x2="268" y2="144" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arIV)"/>
+  <!-- U -> Y -->
+  <line class="muted-l" x1="362" y1="80" x2="412" y2="144" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arIV)"/>
+
+  <!-- exclusion note -->
+  <text class="muted" x="80" y="250" text-anchor="middle" font-size="11">I &#8869; U,  I affects Y only through T</text>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="340" viewBox="0 0 560 340" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ax { stroke: #333; }
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .arrow { fill: #555; }
+    @media (prefers-color-scheme: dark) {
+      .ax { stroke: #c9d1d9; }
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L8,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- Axes -->
+  <line class="ax" x1="70" y1="280" x2="520" y2="280" stroke-width="1.5"/>
+  <line class="ax" x1="70" y1="40" x2="70" y2="280" stroke-width="1.5"/>
+  <text class="ink-t" x="295" y="320" text-anchor="middle" font-size="14">time</text>
+  <text class="ink-t" x="28" y="160" text-anchor="middle" font-size="14" transform="rotate(-90 28 160)">outcome E[Y]</text>
+
+  <!-- Intervention line -->
+  <line class="ink-l" x1="295" y1="40" x2="295" y2="280" stroke-width="1.2" stroke-dasharray="5,4" opacity="0.7"/>
+  <text class="muted" x="295" y="34" text-anchor="middle" font-size="12">intervention</text>
+  <text class="muted" x="180" y="60" text-anchor="middle" font-size="12">pre-period</text>
+  <text class="muted" x="410" y="60" text-anchor="middle" font-size="12">post-period</text>
+
+  <!-- Control group line (parallel, lower) -->
+  <line x1="100" y1="230" x2="490" y2="170" stroke="#1f9d55" stroke-width="2.5"/>
+  <circle cx="100" cy="230" r="4" fill="#1f9d55"/>
+  <circle cx="490" cy="170" r="4" fill="#1f9d55"/>
+  <text x="500" y="172" font-size="13" fill="#2bb673">control</text>
+
+  <!-- Treated pre-period -->
+  <line x1="100" y1="170" x2="295" y2="140" stroke="#cc3b3b" stroke-width="2.5"/>
+  <circle cx="100" cy="170" r="4" fill="#cc3b3b"/>
+  <!-- Treated post-period (jump up due to treatment) -->
+  <line x1="295" y1="140" x2="490" y2="80" stroke="#cc3b3b" stroke-width="2.5"/>
+  <circle cx="490" cy="80" r="4" fill="#cc3b3b"/>
+  <text x="500" y="82" font-size="13" fill="#e06363">treated</text>
+
+  <!-- Counterfactual (parallel trend) dashed -->
+  <line x1="295" y1="140" x2="490" y2="110" stroke="#cc3b3b" stroke-width="2" stroke-dasharray="6,4" opacity="0.7"/>
+  <circle cx="490" cy="110" r="4" fill="none" stroke="#cc3b3b" stroke-width="1.5"/>
+  <text x="372" y="132" font-size="11" fill="#e06363" opacity="0.9" font-style="italic">counterfactual</text>
+
+  <!-- Treatment effect bracket -->
+  <line class="ink-l" x1="510" y1="80" x2="510" y2="110" stroke-width="1.5" marker-end="url(#ar)" marker-start="url(#ar)"/>
+  <text class="ink-t" x="525" y="98" font-size="14" font-style="italic">&#964;</text>
+  <text class="muted" x="525" y="114" font-size="10">ATT</text>
+</svg>

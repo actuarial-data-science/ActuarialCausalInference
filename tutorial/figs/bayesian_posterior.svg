@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="360" viewBox="0 0 560 360" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ax { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .prior { stroke: #777; }
+    .post  { stroke: #378ADD; }
+    .ci    { stroke: #378ADD; }
+    .mean  { stroke: #7d9f17; }
+    @media (prefers-color-scheme: dark) {
+      .ax { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .prior { stroke: #9aa4af; }
+    }
+  </style>
+
+  <text class="ink-t" x="280" y="24" text-anchor="middle" font-size="15" font-weight="bold">Prior beliefs updated by data give a posterior over the effect</text>
+
+  <!-- Shaded P(tau > 0 | D) region under the posterior -->
+  <path d="M206.7,300 L206.7,251.3 L226.3,209 L245.8,167.6 L265.4,150 L285,167.6 L304.6,209 L324.2,251.3 L343.8,279.7 L363.3,293.4 L383,298.3 L402.5,299.7 Z"
+        fill="#7d9f17" opacity="0.16"/>
+
+  <!-- Axis -->
+  <line class="ax" x1="50" y1="300" x2="520" y2="300" stroke-width="1.5"/>
+  <g font-size="11" class="muted" text-anchor="middle">
+    <text x="50"  y="318">&#8722;4</text>
+    <text x="128.3" y="318">&#8722;2</text>
+    <text x="206.7" y="318">0</text>
+    <text x="285"   y="318">2</text>
+    <text x="363.3" y="318">4</text>
+    <text x="441.7" y="318">6</text>
+    <text x="520"   y="318">8</text>
+  </g>
+  <text class="ink-t" x="285" y="342" text-anchor="middle" font-size="13">treatment effect &#964; = ATE (or CATE)</text>
+
+  <!-- tau = 0 reference -->
+  <line class="muted-l" x1="206.7" y1="92" x2="206.7" y2="300" stroke-width="1" stroke-dasharray="4,4" opacity="0.8"/>
+  <text class="muted" x="200" y="104" text-anchor="end" font-size="11">&#964; = 0</text>
+
+  <!-- Prior: weakly informative, wide -->
+  <path class="prior" fill="none" stroke-width="2" stroke-dasharray="6,4"
+        d="M50,280.5 L89.2,265.9 L128.3,249.2 L167.5,235.4 L206.7,230 L245.8,235.4 L285,249.2 L324.2,265.9 L363.3,280.5 L402.5,290.5 L441.7,296.1 L480.8,298.6 L520,299.6"/>
+  <text class="muted" x="96" y="240" font-size="12" font-style="italic">prior p(&#964;)</text>
+
+  <!-- Posterior: narrow, shifted -->
+  <path class="post" fill="none" stroke-width="2.6"
+        d="M128.3,299.7 L147.9,298.3 L167.5,293.4 L187.1,279.7 L206.7,251.3 L226.3,209 L245.8,167.6 L265.4,150 L285,167.6 L304.6,209 L324.2,251.3 L343.8,279.7 L363.3,293.4 L383,298.3 L402.5,299.7"/>
+  <text x="300" y="150" font-size="13" font-weight="bold" fill="#378ADD">posterior p(&#964; | D)</text>
+
+  <!-- Posterior mean -->
+  <line class="mean" x1="265.4" y1="150" x2="265.4" y2="300" stroke-width="1.4" stroke-dasharray="3,3"/>
+  <circle cx="265.4" cy="150" r="5" fill="#7d9f17" stroke="#ffffff" stroke-width="1.4"/>
+  <text x="265.4" y="138" text-anchor="middle" font-size="11" font-weight="bold" fill="#7d9f17">E[&#964; | D] &#8776; 1.5</text>
+
+  <!-- 95% credible interval bracket -->
+  <g class="ci">
+    <line x1="188.6" y1="278" x2="342.2" y2="278" stroke-width="2.4"/>
+    <line x1="188.6" y1="272" x2="188.6" y2="284" stroke-width="2.4"/>
+    <line x1="342.2" y1="272" x2="342.2" y2="284" stroke-width="2.4"/>
+  </g>
+  <text x="265.4" y="296" text-anchor="middle" font-size="11" fill="#378ADD">95% credible interval</text>
+
+  <!-- P(tau>0) annotation -->
+  <text x="430" y="200" text-anchor="middle" font-size="12" font-weight="bold" fill="#7d9f17">P(&#964; &gt; 0 | D)</text>
+  <text x="430" y="216" text-anchor="middle" font-size="12" fill="#7d9f17">&#8776; 0.93</text>
+</svg>

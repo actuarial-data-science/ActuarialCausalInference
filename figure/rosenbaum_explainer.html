@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rosenbaum bounds — interactive explainer</title>
+<style>
+  :root{
+    --txt:#2c2c2a; --txt2:#5f5e5a; --txt3:#8a897f;
+    --card:#e8eae6; --bd:rgba(0,0,0,0.14); --bd2:rgba(0,0,0,0.28);
+    --accent:#d62728; --track:rgba(0,0,0,0.12);
+    --safe:#7d9f17; --danger:#d62728;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --txt:#e6e6e3; --txt2:#aeaca4; --txt3:#86857d;
+      --card:rgba(255,255,255,0.06); --bd:rgba(255,255,255,0.16); --bd2:rgba(255,255,255,0.30);
+      --accent:#ef5552; --track:rgba(255,255,255,0.16);
+      --safe:#aacb3f; --danger:#ef5552;
+    }
+  }
+  html[data-mode="light"]{
+    --txt:#2c2c2a; --txt2:#5f5e5a; --txt3:#8a897f;
+    --card:#e8eae6; --bd:rgba(0,0,0,0.14); --bd2:rgba(0,0,0,0.28);
+    --accent:#d62728; --track:rgba(0,0,0,0.12);
+    --safe:#7d9f17; --danger:#d62728;
+  }
+  html[data-mode="dark"]{
+    --txt:#e6e6e3; --txt2:#aeaca4; --txt3:#86857d;
+    --card:rgba(255,255,255,0.06); --bd:rgba(255,255,255,0.16); --bd2:rgba(255,255,255,0.30);
+    --accent:#ef5552; --track:rgba(255,255,255,0.16);
+    --safe:#aacb3f; --danger:#ef5552;
+  }
+  html,body{background:transparent; margin:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--txt); font-size:15px; line-height:1.6; padding:8px 2px 16px;
+  }
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+  .ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-bottom:1.25rem;}
+  .lblrow{display:flex;justify-content:space-between;font-size:13px;color:var(--txt2);margin-bottom:5px;}
+  .lblrow b{color:var(--txt);font-weight:500;}
+  .hint{font-size:12px;color:var(--txt3);margin-top:3px;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:var(--track);outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 1px var(--accent);}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 1px var(--accent);}
+  button{font:inherit;font-size:14px;color:var(--txt);background:transparent;border:0.5px solid var(--bd2);border-radius:8px;padding:7px 14px;cursor:pointer;}
+  button:hover{background:var(--card);}
+  button:active{transform:scale(0.98);}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:1.5rem 0 1.75rem;}
+  .card{background:var(--card);border-radius:8px;padding:0.85rem 1rem;}
+  .card .k{font-size:13px;color:var(--txt2);}
+  .card .v{font-size:24px;font-weight:500;}
+  .legend{display:flex;flex-wrap:wrap;align-items:center;gap:16px;font-size:12px;color:var(--txt2);margin-bottom:6px;}
+  .legend span{display:flex;align-items:center;gap:5px;}
+  .legend svg{display:inline-block;vertical-align:middle;}
+  .sw{width:11px;height:11px;border-radius:3px;display:inline-block;}
+  .panlbl{font-size:13px;color:var(--txt2);margin:0 0 4px;display:flex;justify-content:space-between;gap:12px;}
+  .panlbl em{font-style:normal;color:var(--txt3);}
+  .pan{margin-bottom:1.25rem;}
+</style>
+</head>
+<body>
+<h2 class="sr-only">Interactive Rosenbaum bounds. A slider sets the significance level alpha; the panel shows the worst-case p-value curve, the alpha threshold, the still-significant region and the critical sensitivity parameter Gamma star at which the conclusion would lose significance.</h2>
+
+<div class="ctrls">
+  <div>
+    <div class="lblrow"><span>Significance level &alpha;</span><b id="aOut">0.050</b></div>
+    <input id="alpha" type="range" min="0.01" max="0.15" step="0.005" value="0.05" />
+    <div class="hint">drag to move the threshold; the red dot tracks where the worst-case <i>p</i>-value meets it</div>
+  </div>
+</div>
+
+<div style="margin-bottom:0.5rem;">
+  <button id="resetBtn" type="button">&#8635;&nbsp; Reset to &alpha; = 0.05</button>
+</div>
+
+<div class="cards">
+  <div class="card"><div class="k">Significance level &alpha;</div><div class="v" id="mAlpha">&mdash;</div></div>
+  <div class="card"><div class="k">Critical &Gamma;&#42;</div><div class="v" id="mGamma">&mdash;</div></div>
+  <div class="card"><div class="k">Tolerable hidden bias</div><div class="v" id="mVerdict" style="font-size:18px;">&mdash;</div></div>
+</div>
+
+<div class="legend">
+  <span><span class="sw" style="background:#7d9f17;opacity:0.32;"></span>still significant (<i>p</i> &lt; &alpha;)</span>
+  <span><svg width="22" height="12" viewBox="0 0 22 12" aria-hidden="true"><line x1="0" y1="6" x2="22" y2="6" stroke="#d62728" stroke-width="1.6" stroke-dasharray="5,3"/></svg>&alpha; threshold</span>
+  <span><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="#d62728"/></svg>critical &Gamma;&#42;</span>
+</div>
+
+<div class="panlbl"><span>Worst-case <i>p</i>-value as the allowed hidden bias &Gamma; grows</span><em id="panInfo"></em></div>
+<div class="pan" id="pCurve"></div>
+
+<script>
+(function(){
+  var p=new URLSearchParams(location.search).get('theme');
+  function apply(t){document.documentElement.setAttribute('data-mode',t);}
+  function systemTheme(){return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  function parentTheme(){
+    try{
+      var root=window.parent.document.documentElement;
+      var t=root.getAttribute('data-theme');
+      if(t==='light'||t==='dark')return t;
+      var m=root.getAttribute('data-mode');
+      if(m==='light'||m==='dark')return m;
+    }catch(e){}
+    return null;
+  }
+  if(p==='dark'||p==='light')apply(p);
+  else apply(parentTheme()||systemTheme());
+  if(!p){matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){if(!parentTheme())apply(e.matches?'dark':'light');});}
+  window.addEventListener('message',function(ev){
+    var d=ev.data;
+    if(d&&d.type==='set-theme'){
+      if(d.value==='dark'||d.value==='light')apply(d.value);
+      else if(d.value==='auto')apply(parentTheme()||systemTheme());
+    }
+  });
+  if(window.parent&&window.parent!==window){window.parent.postMessage({type:'rosen-ready'},'*');}
+})();
+
+(function(){
+  // --- Worst-case p-value model (stylised, monotone in Gamma) --------------
+  // p(Gamma) = P0 + A*(Gamma-1)^B, calibrated so that p(1)=0.004, p(2)=0.05,
+  // p(3)=0.20. Inverting gives the critical Gamma at any alpha.
+  var P0=0.004, A=0.046, B=2.09;
+  var GMIN=1, GMAX=3, PMAX=0.20;
+
+  function pOf(g){return P0 + A*Math.pow(Math.max(0,g-1),B);}
+  function gStar(alpha){
+    if(alpha<=P0) return GMIN;
+    var g=1+Math.pow((alpha-P0)/A, 1/B);
+    return Math.min(GMAX, Math.max(GMIN, g));
+  }
+
+  var aEl=document.getElementById('alpha');
+
+  function postHeight(){try{parent.postMessage({type:'rosen-height',height:Math.ceil(document.body.getBoundingClientRect().height)},'*');}catch(e){}}
+
+  function render(){
+    var alpha=parseFloat(aEl.value);
+    document.getElementById('aOut').textContent=alpha.toFixed(3);
+
+    var gs=gStar(alpha);
+    document.getElementById('mAlpha').textContent=alpha.toFixed(3);
+    document.getElementById('mGamma').textContent=gs.toFixed(2);
+    var verdict=gs>=GMAX ? 'beyond '+GMAX.toFixed(1)+'\u00d7 odds'
+                          : 'up to \u0393\u002a '+gs.toFixed(2)+'\u00d7 odds';
+    document.getElementById('mVerdict').textContent=verdict;
+    document.getElementById('mVerdict').style.color='var(--safe)';
+    document.getElementById('panInfo').textContent=
+      'significant while \u0393 < '+gs.toFixed(2);
+
+    // --- geometry (matches the static figure layout) ---
+    var W=560,H=360,Xa=70,Xb=510,Yb=300,Yt=54;
+    function X(g){return Xa+(Xb-Xa)*((g-GMIN)/(GMAX-GMIN));}
+    function Y(pv){return Yb-(Yb-Yt)*(pv/PMAX);}
+
+    var xStar=X(gs), yAlpha=Y(alpha);
+
+    var svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Rosenbaum worst-case p-value curve against the sensitivity parameter Gamma, with an adjustable alpha threshold, the still-significant region and the critical Gamma star.">';
+
+    svg+='<text x="280" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="var(--txt)">Rosenbaum bounds: when does significance break?</text>';
+
+    // still-significant region: Gamma in [1, Gamma*], p in [0, alpha]
+    svg+='<rect x="'+Xa+'" y="'+yAlpha.toFixed(1)+'" width="'+(xStar-Xa).toFixed(1)+'" height="'+(Yb-yAlpha).toFixed(1)+'" fill="#7d9f17" opacity="0.16"/>';
+    svg+='<text x="'+(Xa+10)+'" y="'+(Yb-12)+'" font-size="11" fill="var(--safe)" font-weight="bold">still significant</text>';
+
+    // axes
+    svg+='<line x1="'+Xa+'" y1="'+Yb+'" x2="'+Xb+'" y2="'+Yb+'" stroke="var(--bd2)" stroke-width="1.5"/>';
+    svg+='<line x1="'+Xa+'" y1="'+Yt+'" x2="'+Xa+'" y2="'+Yb+'" stroke="var(--bd2)" stroke-width="1.5"/>';
+
+    // x ticks (Gamma)
+    [1,1.5,2,2.5,3].forEach(function(g){
+      svg+='<text x="'+X(g).toFixed(1)+'" y="'+(Yb+18)+'" font-size="11" text-anchor="middle" fill="var(--txt3)">'+g.toFixed(1)+'</text>';
+    });
+    // y ticks (p)
+    [0,0.05,0.10,0.15,0.20].forEach(function(pv){
+      svg+='<text x="'+(Xa-8)+'" y="'+(Y(pv)+4).toFixed(1)+'" font-size="11" text-anchor="end" fill="var(--txt3)">'+pv.toFixed(2)+'</text>';
+    });
+
+    svg+='<text x="295" y="344" text-anchor="middle" font-size="13" fill="var(--txt)">sensitivity parameter \u0393 (allowed hidden bias)</text>';
+    svg+='<text x="24" y="177" text-anchor="middle" font-size="13" fill="var(--txt)" transform="rotate(-90 24 177)">worst-case p-value</text>';
+
+    // alpha threshold (horizontal dashed, draggable)
+    svg+='<line x1="'+Xa+'" y1="'+yAlpha.toFixed(1)+'" x2="'+Xb+'" y2="'+yAlpha.toFixed(1)+'" stroke="var(--danger)" stroke-width="1.6" stroke-dasharray="6,4"/>';
+    svg+='<text x="'+Xb+'" y="'+(yAlpha-6).toFixed(1)+'" font-size="11" fill="var(--danger)" text-anchor="end" font-weight="bold">\u03b1 = '+alpha.toFixed(3)+'</text>';
+
+    // worst-case p-value curve
+    var pts=[];
+    for(var i=0;i<=120;i++){
+      var g=GMIN+(GMAX-GMIN)*i/120;
+      var pv=Math.min(PMAX,pOf(g));
+      pts.push(X(g).toFixed(1)+','+Y(pv).toFixed(1));
+    }
+    svg+='<path d="M'+pts.join(' L')+'" fill="none" stroke="var(--safe)" stroke-width="2.8"/>';
+
+    // critical Gamma* : vertical guide + dot at the crossing
+    svg+='<line x1="'+xStar.toFixed(1)+'" y1="'+yAlpha.toFixed(1)+'" x2="'+xStar.toFixed(1)+'" y2="'+Yb+'" stroke="var(--danger)" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.85"/>';
+    svg+='<circle cx="'+xStar.toFixed(1)+'" cy="'+yAlpha.toFixed(1)+'" r="6" fill="var(--danger)" stroke="#fff" stroke-width="1.6"/>';
+    // Gamma* label + sublabel, kept inside the plot (flip to the left for large Gamma*)
+    var lblAnchor = xStar>Xb-90 ? 'end' : 'start';
+    var lblDx = xStar>Xb-90 ? -10 : 10;
+    svg+='<text x="'+(xStar+lblDx).toFixed(1)+'" y="'+(yAlpha-28).toFixed(1)+'" font-size="13" font-weight="bold" fill="var(--safe)" text-anchor="'+lblAnchor+'">\u0393&#42; \u2248 '+gs.toFixed(2)+'</text>';
+    svg+='<text x="'+(xStar+lblDx).toFixed(1)+'" y="'+(yAlpha-12).toFixed(1)+'" font-size="11" fill="var(--safe)" text-anchor="'+lblAnchor+'">survives until here</text>';
+
+    svg+='</svg>';
+    document.getElementById('pCurve').innerHTML=svg;
+
+    postHeight();
+  }
+
+  aEl.addEventListener('input',render);
+  document.getElementById('resetBtn').addEventListener('click',function(){
+    aEl.value=0.05;render();
+  });
+  window.addEventListener('resize',postHeight);
+  window.addEventListener('load',postHeight);
+  render();
+})();
+</script>
+</body>
+</html>

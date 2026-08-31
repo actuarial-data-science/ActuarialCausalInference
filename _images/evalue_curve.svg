@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="372" viewBox="0 0 560 372" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ax { stroke: #333; }
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .arrow { fill: #555; }
+    @media (prefers-color-scheme: dark) {
+      .ax { stroke: #c9d1d9; }
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="evar" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L8,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <text class="ink-t" x="280" y="24" text-anchor="middle" font-size="15" font-weight="bold">How strong must a hidden confounder be to explain away the effect?</text>
+
+  <!-- Shaded "explain-away" region: upper-right of the frontier -->
+  <path d="M202,52 C232,120 270,168 282,186 C334,206 422,222 510,231 L510,52 Z"
+        fill="#d62728" opacity="0.10"/>
+
+  <!-- Axes -->
+  <line class="ax" x1="70" y1="310" x2="520" y2="310" stroke-width="1.5"/>
+  <line class="ax" x1="70" y1="52" x2="70" y2="310" stroke-width="1.5"/>
+
+  <!-- Axis ticks (risk-ratio scale 1..6) -->
+  <g font-size="11" class="muted" text-anchor="middle">
+    <text x="70"  y="328">1</text>
+    <text x="158" y="328">2</text>
+    <text x="246" y="328">3</text>
+    <text x="334" y="328">4</text>
+    <text x="422" y="328">5</text>
+    <text x="510" y="328">6</text>
+  </g>
+  <g font-size="11" class="muted" text-anchor="end">
+    <text x="62" y="314">1</text>
+    <text x="62" y="262">2</text>
+    <text x="62" y="210">3</text>
+    <text x="62" y="158">4</text>
+    <text x="62" y="106">5</text>
+    <text x="62" y="56">6</text>
+  </g>
+
+  <text class="ink-t" x="295" y="352" text-anchor="middle" font-size="13">association of U with treatment T&#160;&#160;(risk ratio)</text>
+  <text class="ink-t" x="26" y="181" text-anchor="middle" font-size="13" transform="rotate(-90 26 181)">association of U with outcome Y&#160;&#160;(risk ratio)</text>
+
+  <!-- Diagonal (equal associations) -->
+  <line class="muted-l" x1="70" y1="310" x2="510" y2="52" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.8"/>
+  <text class="muted" x="430" y="92" font-size="11" font-style="italic" text-anchor="middle" transform="rotate(-30.4 430 92)">equal strength</text>
+
+  <!-- Explain-away frontier (bias factor = observed RR) -->
+  <path d="M202,52 C232,120 270,168 282,186 C334,206 422,222 510,231"
+        fill="none" stroke="#d62728" stroke-width="2.6"/>
+  <text x="356" y="248" font-size="12" fill="#d62728" font-weight="bold">effect fully explained away</text>
+
+  <!-- E-value point on the diagonal -->
+  <circle cx="282" cy="186" r="6" fill="#7d9f17" stroke="#ffffff" stroke-width="1.6"/>
+  <line class="muted-l" x1="282" y1="186" x2="282" y2="310" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+  <line class="muted-l" x1="282" y1="186" x2="70" y2="186" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+  <text x="300" y="278" font-size="13" font-weight="bold" fill="#7d9f17">E-value &#8776; 3.4</text>
+
+  <!-- Observed-effect anchor at (1,1) -->
+  <circle cx="70" cy="310" r="4" fill="#378ADD"/>
+  <text x="120" y="300" font-size="11" fill="#378ADD">no confounding</text>
+</svg>

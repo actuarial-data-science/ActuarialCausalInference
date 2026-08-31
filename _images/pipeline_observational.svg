@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 800" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    /* Connectors / arrows */
+    .conn { stroke: #555; }
+    .conn-mk { fill: #555; }
+    /* Validate group container */
+    .grp { fill: #fafafa; stroke: #bbbbbb; }
+    .grp-t { fill: #444; }
+    /* Blue (data / encode DAG) */
+    .blue-b { fill: #e8f0fe; stroke: #1a73e8; }
+    .blue-t { fill: #0b3d91; }
+    /* Cyan (assumption checks) */
+    .cyan-b { fill: #e0f7fa; stroke: #00acc1; }
+    .cyan-t { fill: #006064; }
+    .cyan-s { fill: #00474f; }
+    /* Amber (decision diamond) */
+    .amber-b { fill: #fff3e0; stroke: #fb8c00; }
+    .amber-t { fill: #7a3d00; }
+    /* Red (remedy) */
+    .red-b { fill: #fdecea; stroke: #e53935; }
+    .red-t { fill: #8e1d18; }
+    /* Purple (re-estimate) */
+    .purple-b { fill: #ede7f6; stroke: #5e35b1; }
+    .purple-t { fill: #311b6b; }
+    /* Green (report) */
+    .green-b { fill: #e8f5e9; stroke: #43a047; }
+    .green-b2 { fill: #e8f5e9; stroke: #2e7d32; }
+    .green-t { fill: #1b5e20; }
+    /* Decision labels */
+    .yes-t { fill: #c62828; }
+    .no-t { fill: #2e7d32; }
+
+    @media (prefers-color-scheme: dark) {
+      .conn { stroke: #9aa4af; }
+      .conn-mk { fill: #9aa4af; }
+      .grp { fill: #161b22; stroke: #5c6370; }
+      .grp-t { fill: #c9d1d9; }
+      .blue-b { fill: #16263d; stroke: #5a9bf0; }
+      .blue-t { fill: #bcd6ff; }
+      .cyan-b { fill: #0e2b30; stroke: #3fc4d8; }
+      .cyan-t { fill: #9fe6f0; }
+      .cyan-s { fill: #7fd4e0; }
+      .amber-b { fill: #33240c; stroke: #f0a945; }
+      .amber-t { fill: #ffd9a0; }
+      .red-b { fill: #3a1715; stroke: #f06a66; }
+      .red-t { fill: #ffb3ae; }
+      .purple-b { fill: #211a36; stroke: #9b7ad6; }
+      .purple-t { fill: #d2c2f0; }
+      .green-b { fill: #122a18; stroke: #5cc46a; }
+      .green-b2 { fill: #122a18; stroke: #5cc46a; }
+      .green-t { fill: #a6e6b0; }
+      .yes-t { fill: #f06a66; }
+      .no-t { fill: #5cc46a; }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="conn-mk" d="M0,0 L8,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- ===================== Boxes ===================== -->
+  <!-- A: data -->
+  <rect class="blue-b" x="310" y="30" width="300" height="52" rx="8" stroke-width="1.6"/>
+  <text class="blue-t" x="460" y="61" text-anchor="middle" font-size="14">Observational data  (X · T · Y)</text>
+
+  <!-- B: encode DAG -->
+  <rect class="blue-b" x="280" y="124" width="360" height="52" rx="8" stroke-width="1.6"/>
+  <text class="blue-t" x="460" y="155" text-anchor="middle" font-size="14">1 · Encode assumptions in a causal DAG</text>
+
+  <!-- Group: validate -->
+  <rect class="grp" x="40" y="212" width="840" height="140" rx="10" stroke-width="1.4" stroke-dasharray="6 4"/>
+  <text class="grp-t" x="460" y="236" text-anchor="middle" font-size="14" font-weight="bold">2 · Validate the four identification assumptions</text>
+
+  <!-- C1 -->
+  <rect class="cyan-b" x="60" y="254" width="170" height="80" rx="8" stroke-width="1.6"/>
+  <text class="cyan-t" x="145" y="290" text-anchor="middle" font-size="13" font-weight="bold">Consistency</text>
+  <text class="cyan-s" x="145" y="310" text-anchor="middle" font-size="11">effect by sub-type</text>
+
+  <!-- C2 -->
+  <rect class="cyan-b" x="270" y="254" width="170" height="80" rx="8" stroke-width="1.6"/>
+  <text class="cyan-t" x="355" y="290" text-anchor="middle" font-size="13" font-weight="bold">SUTVA</text>
+  <text class="cyan-s" x="355" y="310" text-anchor="middle" font-size="11">spillover check</text>
+
+  <!-- C3 -->
+  <rect class="cyan-b" x="480" y="254" width="170" height="80" rx="8" stroke-width="1.6"/>
+  <text class="cyan-t" x="565" y="290" text-anchor="middle" font-size="13" font-weight="bold">Positivity</text>
+  <text class="cyan-s" x="565" y="310" text-anchor="middle" font-size="11">propensity overlap</text>
+
+  <!-- C4 -->
+  <rect class="cyan-b" x="690" y="254" width="170" height="80" rx="8" stroke-width="1.6"/>
+  <text class="cyan-t" x="775" y="290" text-anchor="middle" font-size="13" font-weight="bold">Exchangeability</text>
+  <text class="cyan-s" x="775" y="310" text-anchor="middle" font-size="11">balance + sensitivity</text>
+
+  <!-- D: decision diamond -->
+  <polygon class="amber-b" points="460,378 590,430 460,482 330,430" stroke-width="1.6"/>
+  <text class="amber-t" x="460" y="426" text-anchor="middle" font-size="13" font-weight="bold">3 · Any assumption</text>
+  <text class="amber-t" x="460" y="443" text-anchor="middle" font-size="13" font-weight="bold">violated?</text>
+
+  <!-- F: remedy -->
+  <rect class="red-b" x="40" y="540" width="300" height="56" rx="8" stroke-width="1.6"/>
+  <text class="red-t" x="190" y="564" text-anchor="middle" font-size="12.5" font-weight="bold">Apply remedy</text>
+  <text class="red-t" x="190" y="582" text-anchor="middle" font-size="11">redefine · cluster · trim · reweight · IV</text>
+
+  <!-- G: re-estimate -->
+  <rect class="purple-b" x="40" y="630" width="300" height="56" rx="8" stroke-width="1.6"/>
+  <text class="purple-t" x="190" y="654" text-anchor="middle" font-size="12.5" font-weight="bold">Re-estimate &amp; quantify robustness</text>
+  <text class="purple-t" x="190" y="672" text-anchor="middle" font-size="11">E-value · Γ · partial R²</text>
+
+  <!-- E: report estimate -->
+  <rect class="green-b" x="570" y="630" width="260" height="56" rx="8" stroke-width="1.6"/>
+  <text class="green-t" x="700" y="654" text-anchor="middle" font-size="12.5" font-weight="bold">Report adjusted</text>
+  <text class="green-t" x="700" y="672" text-anchor="middle" font-size="12.5" font-weight="bold">effect estimate</text>
+
+  <!-- H: transparent report -->
+  <rect class="green-b2" x="250" y="720" width="420" height="56" rx="8" stroke-width="1.8"/>
+  <text class="green-t" x="460" y="744" text-anchor="middle" font-size="13" font-weight="bold">Transparent report</text>
+  <text class="green-t" x="460" y="762" text-anchor="middle" font-size="11">estimate + diagnostics + sensitivity bounds</text>
+
+  <!-- ===================== Arrows ===================== -->
+  <line class="conn" x1="460" y1="82"  x2="460" y2="121" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line class="conn" x1="460" y1="176" x2="460" y2="209" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <line class="conn" x1="460" y1="352" x2="460" y2="375" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- D -> F (Yes) -->
+  <polyline class="conn" points="460,482 460,512 190,512 190,537" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="yes-t" x="300" y="505" text-anchor="middle" font-size="12" font-weight="bold">Yes</text>
+
+  <!-- D -> E (No) -->
+  <polyline class="conn" points="590,430 700,430 700,627" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text class="no-t" x="648" y="422" text-anchor="middle" font-size="12" font-weight="bold">No</text>
+
+  <!-- F -> G -->
+  <line class="conn" x1="190" y1="596" x2="190" y2="627" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- G -> E -->
+  <line class="conn" x1="340" y1="658" x2="567" y2="658" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- E -> H -->
+  <polyline class="conn" points="700,686 700,704 460,704 460,717" fill="none" stroke-width="1.6" marker-end="url(#arrow)"/>
+</svg>
