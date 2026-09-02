@@ -458,7 +458,7 @@ The DML estimator of [Chernozhukov et al. (2018)](https://doi.org/10.1111/ectj.1
 ```{note}
 **What the partially linear model actually targets.** The PLM $Y = \tau T + g(X) + \varepsilon$ treats $\tau$ as a *single constant* - an implicit homogeneous-effects assumption. When the true effect is heterogeneous, $\tau(X)$, Robinson's residual-on-residual regression does *not* return the standard ATE $= \mathbb{E}[\tau(X)]$ but the **propensity-overlap-weighted** average
 
-$$
+$$\color{orange}
 \tau^* = \frac{\mathbb{E}\!\big[\tau(X)\,\pi(X)\,(1-\pi(X))\big]}{\mathbb{E}\!\big[\pi(X)\,(1-\pi(X))\big]},
 $$
 
