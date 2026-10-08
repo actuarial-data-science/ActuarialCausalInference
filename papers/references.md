@@ -101,7 +101,7 @@
 * **Verma, T., & Pearl, J. (1990).** *Equivalence and synthesis of causal models.* In Proceedings of the Sixth Conference on Uncertainty in Artificial Intelligence (UAI'90), 220-227. [arXiv:1304.1108](https://arxiv.org/abs/1304.1108)
 * **Wager, S., & Athey, S. (2018).** *Estimation and inference of heterogeneous treatment effects using random forests.* Journal of the American Statistical Association, 113(523), 1228-1242. [DOI: 10.1080/01621459.2017.1319839](https://doi.org/10.1080/01621459.2017.1319839)
 * **Wooldridge, J. M. (2010).** *Econometric Analysis of Cross Section and Panel Data* (2nd ed.). MIT Press.
-* **Wooldridge, J. M. (2012).** *Introductory Econometrics: A Modern Approach* (5th ed.). Cengage Learning. [DOI: 10.1016/C2011-0-05506-1](https://doi.org/10.1016/C2011-0-05506-1)
+* **Wooldridge, J. M. (2012).** *Introductory Econometrics: A Modern Approach* (5th ed.). Cengage Learning.
 * **Wright, S. (1934).** *The method of path coefficients.* The Annals of Mathematical Statistics, 5(3), 161-215. [DOI: 10.1214/aoms/1177732676](https://doi.org/10.1214/aoms/1177732676)
 * **Yadlowsky, S., Fleming, S., Shah, N., Brunskill, E., & Wager, S. (2021).** *Evaluating treatment prioritization rules via rank-weighted average treatment effects.* [arXiv:2111.07966](https://arxiv.org/abs/2111.07966)
 

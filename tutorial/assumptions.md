@@ -79,7 +79,7 @@ $$
 $$
 ```
 
-Conditioning on the observed covariates $X$ is then sufficient to remove confounding bias. This is also called *conditional exchangeability* or *conditional ignorability* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)).
+Conditioning on the observed covariates $X$ is then sufficient to remove confounding bias. This is also called *conditional exchangeability* or *conditional ignorability* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); Wooldridge, 2012).
 
 ```{note}
 :class: dropdown
