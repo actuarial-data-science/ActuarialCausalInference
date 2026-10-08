@@ -101,7 +101,6 @@
 - [Python Causality Handbook](https://matheusfacure.github.io/python-causality-handbook/)
 - [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html)
 - [Tutorial on Causal Inference](https://bookdown.org/mike/data_analysis/sec-causal-inference.html)
-- [Causal Assumptions](https://www.uniqcret.com/post/causal-inference-assumptions-guide)
 - [QuantCo Blog Article: MetaLearners for CATE Estimation](https://tech.quantco.com/blog/metalearners)
 - [Causality Handbook](https://matheusfacure.github.io/python-causality-handbook/02-Randomised-Experiments.html)
 - [Google PAIR: *Measuring Fairness* explorable (2020)](https://pair.withgoogle.com/explorables/measuring-fairness/)

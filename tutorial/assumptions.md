@@ -18,7 +18,7 @@ $$
 0 < P(T = 1 \mid X) < 1,
 $$
 
-then conditioning on $X$ renders the treatment assignment mechanism analogous to that of a randomized controlled trial. More explanation in the [Assumptions Guide](https://www.uniqcret.com/post/causal-inference-assumptions-guide) and in [Neal (2020)](https://www.bradyneal.com/Introduction_to_Causal_Inference-Aug27_2020-Neal.pdf). See also [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html) for a formal treatment.
+then conditioning on $X$ renders the treatment assignment mechanism analogous to that of a randomized controlled trial. More explanation in [Hernán & Robins (2020, Chs. 2-3)](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/) and in [Neal (2020)](https://www.bradyneal.com/Introduction_to_Causal_Inference-Aug27_2020-Neal.pdf). See also [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html) for a formal treatment.
 
 ### Assumptions
 
