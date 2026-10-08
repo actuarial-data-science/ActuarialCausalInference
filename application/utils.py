@@ -706,7 +706,15 @@ def overlap_weighted_ate(df, treatment, outcome, ps):
 
 
 def calculate_smd_weighted(df, covariates, treatment, weights):
-    """Standardised mean differences after applying weights (for balance checks)."""
+    """Standardised mean differences after applying weights (for balance checks).
+
+    The group means in the numerator are *weighted* (computed on the weighted
+    pseudo-population), but the denominator uses the **unweighted** group
+    variances from the full, unadjusted sample, held fixed - the convention of
+    {prf:ref}`smd` (Austin, 2009). Re-deriving the denominator from the weighted
+    sample would let extreme weights deflate the variance and make balance look
+    better than it is.
+    """
     t = df[treatment].astype(int).values
     w = np.asarray(weights, dtype=float)
     out = {}
@@ -716,8 +724,9 @@ def calculate_smd_weighted(df, covariates, treatment, weights):
         xt, xc = x[t == 1], x[t == 0]
         mt = np.average(xt, weights=wt)
         mc = np.average(xc, weights=wc)
-        vt = np.average((xt - mt) ** 2, weights=wt)
-        vc = np.average((xc - mc) ** 2, weights=wc)
+        # Denominator: unweighted variances from the full, unadjusted sample, fixed.
+        vt = xt.var(ddof=1)
+        vc = xc.var(ddof=1)
         pooled = np.sqrt((vt + vc) / 2)
         out[cov] = (mt - mc) / pooled if pooled > 0 else 0.0
     return pd.Series(out)
