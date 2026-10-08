@@ -12,6 +12,10 @@ In the potential outcomes framework, the fundamental problem is that we observe 
 - **Posterior inference** yields a full distribution over causal estimands (ATE, CATE), naturally quantifying **uncertainty** in a way that frequentist point estimates and confidence intervals do not.
 - **Model comparison** via Bayes factors or posterior predictive checks helps select among competing *outcome models* - functional forms, link functions, priors. It cannot, however, adjudicate between competing *causal structures*: Markov-equivalent DAGs induce the same likelihood, and the identifying assumptions (exchangeability, positivity) remain as untestable here as in the frequentist setting.
 
+```{important}
+**A prior is not a substitute for identification.** Bayesian causal inference rests on the *same* identifying assumptions as its frequentist counterpart - exchangeability (no unmeasured confounding) and positivity. The posterior quantifies uncertainty *given* those assumptions; it cannot repair their failure. If a confounder $U$ is omitted, the likelihood is misspecified and the posterior for the ATE will be confidently centred on the wrong value - narrow credible intervals then give a false sense of security. The Bayesian response is an explicit **sensitivity analysis**: place a prior on the strength of the unmeasured confounder and integrate over it, so the posterior widens to reflect the resulting non-identification ([McCandless, Gustafson & Levy, 2007](https://doi.org/10.1002/sim.2711)). This is the Bayesian analogue of the E-value and Rosenbaum bounds developed in {doc}`diagnostics`.
+```
+
 ## Bayesian Potential Outcomes Model
 
 ```{prf:definition} Bayesian Causal Model
@@ -137,6 +141,12 @@ Bayesian causal inference outputs a **posterior distribution** over the estimand
 | $P(\tau > 0 \mid D)$ | Posterior probability that treatment is beneficial |
 
 The posterior probability $P(\tau(x) > 0 \mid D)$ is particularly useful for **decision-making**: it directly quantifies the probability that the treatment is beneficial for a given subgroup, which is more interpretable for actuarial applications than a p-value.
+
+```{admonition} Actuarial example: deciding on a care-management rollout
+:class: tip
+
+Suppose a health insurer pilots a care-management programme and models its effect on next-year claim cost with BCF. For a candidate policyholder segment $x$ the output is not a single number but a posterior $p(\tau(x) \mid D)$. Two summaries drive the decision: the posterior mean saving $\mathbb{E}[\tau(x) \mid D]$ feeds the expected-cost calculation, while $P(\tau(x) < 0 \mid D)$ - the posterior probability that the programme actually lowers cost - is the natural input to a rollout rule ("enrol the segment only if we are at least 90% sure the effect is beneficial *and* the expected saving exceeds the programme cost"). A weakly informative prior that shrinks $\tau$ towards zero guards against over-enthusiastic rollout on thin data - precisely the small segments where a frequentist point estimate would be noisiest. The same posterior supports a loss-function view: choose the action minimising posterior expected cost rather than acting on a point estimate.
+```
 
 ```{figure} figs/bayesian_posterior.svg
 :width: 80%
