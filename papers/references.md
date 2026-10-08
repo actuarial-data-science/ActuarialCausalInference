@@ -25,6 +25,7 @@
 * **Callaway, B., & Sant'Anna, P. H. C. (2021).** *Difference-in-differences with multiple time periods.* Journal of Econometrics, 225(2), 200-230. [DOI: 10.1016/j.jeconom.2020.12.001](https://doi.org/10.1016/j.jeconom.2020.12.001)
 * **Card, D., & Krueger, A. B. (1994).** *Minimum wages and employment: A case study of the fast-food industry in New Jersey and Pennsylvania.* American Economic Review, 84(4), 772-793. [DOI: 10.1257/aer.84.4.772](https://doi.org/10.1257/aer.84.4.772)
 * **Chernozhukov, V., Chetverikov, D., Demirer, M., Duflo, E., Hansen, C., Newey, W., & Robins, J. (2018).** *Double/debiased machine learning for treatment and structural parameters.* The Econometrics Journal, 21(1), C1-C68. [DOI: 10.1111/ectj.12097](https://doi.org/10.1111/ectj.12097)
+* **Chernozhukov, V., Demirer, M., Duflo, E., & Fernández-Val, I. (2017).** *Generic machine learning inference on heterogeneous treatment effects in randomized experiments, with an application to immunization in India.* (Fisher-Schultz Lecture.) [arXiv:1712.04802](https://arxiv.org/abs/1712.04802)
 * **Chipman, H. A., George, E. I., & McCulloch, R. E. (2010).** *BART: Bayesian additive regression trees.* The Annals of Applied Statistics, 4(1), 266-298. [DOI: 10.1214/09-AOAS285](https://doi.org/10.1214/09-AOAS285)
 * **Chouldechova, A. (2017).** *Fair prediction with disparate impact: A study of bias in recidivism prediction instruments.* Big Data, 5(2), 153-163. [DOI: 10.1089/big.2016.0047](https://doi.org/10.1089/big.2016.0047)
 * **Cinelli, C., & Hazlett, C. (2020).** *Making sense of sensitivity: Extending omitted variable bias.* Journal of the Royal Statistical Society: Series B, 82(1), 39-67. [DOI: 10.1111/rssb.12348](https://doi.org/10.1111/rssb.12348)
@@ -101,6 +102,7 @@
 * **Wooldridge, J. M. (2010).** *Econometric Analysis of Cross Section and Panel Data* (2nd ed.). MIT Press.
 * **Wooldridge, J. M. (2012).** *Introductory Econometrics: A Modern Approach* (5th ed.). Cengage Learning. [DOI: 10.1016/C2011-0-05506-1](https://doi.org/10.1016/C2011-0-05506-1)
 * **Wright, S. (1934).** *The method of path coefficients.* The Annals of Mathematical Statistics, 5(3), 161-215. [DOI: 10.1214/aoms/1177732676](https://doi.org/10.1214/aoms/1177732676)
+* **Yadlowsky, S., Fleming, S., Shah, N., Brunskill, E., & Wager, S. (2021).** *Evaluating treatment prioritization rules via rank-weighted average treatment effects.* [arXiv:2111.07966](https://arxiv.org/abs/2111.07966)
 
 ## Useful Links
 ### Theory
