@@ -212,7 +212,7 @@ Causal discovery from observational data has fundamental limitations:
 
 ## Instrumental Variables
 
-When no admissible adjustment set exists, an **instrument** $Z$ - a source of exogenous variation in $T$ that affects $Y$ only through $T$ - can identify a local causal effect. The instrumental-variable estimator and its two-stage least-squares implementation are developed in {doc}`instrumental_variables`.
+When no admissible adjustment set exists, an **instrument** $I$ - a source of exogenous variation in $T$ that affects $Y$ only through $T$ - can identify a local causal effect. The instrumental-variable estimator and its two-stage least-squares implementation are developed in {doc}`instrumental_variables`.
 
 ```{note}
 :class: dropdown

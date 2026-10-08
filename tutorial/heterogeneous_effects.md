@@ -33,8 +33,8 @@ The estimators in {doc}`direct_adjustment` target a *single* number - the ATE or
 
 **Outputs** Estimated CATE $\hat{\tau}(x)$
 
-1. With cross-fitting, estimate nuisances $\hat{\pi}(x) = \mathbb{E}[T \mid X]$ and $\hat{\mu}(x) = \mathbb{E}[Y \mid X]$
-2. Form residuals $\tilde{Y} = Y - \hat{\mu}(X)$ and $\tilde{T} = T - \hat{\pi}(X)$ *(as in {prf:ref}`alg-dml`)*
+1. With cross-fitting, estimate nuisances $\hat{\pi}(x) = \mathbb{E}[T \mid X]$ and $\hat{m}(x) = \mathbb{E}[Y \mid X]$
+2. Form residuals $\tilde{Y} = Y - \hat{m}(X)$ and $\tilde{T} = T - \hat{\pi}(X)$ *(as in {prf:ref}`alg-dml`)*
 3. **R-learner:** minimize the weighted loss $\hat{\tau} = \arg\min_{\tau} \sum_i \left(\tilde{Y}^{(i)} - \tau(x^{(i)})\,\tilde{T}^{(i)}\right)^2$
 4. **DR-learner (alternative):** regress the AIPW score $\hat{\psi}^{(i)}$ from {prf:ref}`alg-aipw` on covariates, $\hat{\tau}(x) = \mathcal{L}_\tau(\hat{\psi} \sim X)$
 5. Return CATE $\hat{\tau}(x)$

@@ -246,13 +246,13 @@ The effect is therefore identified directly, $\mathbb{E}[Y(t)] = \mathbb{E}[Y \m
 
 ### Example 3: A Larger Graph
 
-Realistic problems mix several confounders with variables that look tempting but must be excluded. This graph has eight nodes and the following edges: $Z_1 \rightarrow T$ and $Z_1 \rightarrow Y$; $Z_2 \rightarrow T$, $Z_2 \rightarrow Z_3$, and $Z_3 \rightarrow Y$; an instrument $I \rightarrow T$; a mediator $T \rightarrow M \rightarrow Y$ alongside the direct edge $T \rightarrow Y$; and a collider $T \rightarrow K \leftarrow Y$.
+Realistic problems mix several confounders with variables that look tempting but must be excluded. This graph has eight nodes and the following edges: $Z_1 \rightarrow T$ and $Z_1 \rightarrow Y$; $Z_2 \rightarrow T$, $Z_2 \rightarrow Z_3$, and $Z_3 \rightarrow Y$; an instrument $I \rightarrow T$; a mediator $T \rightarrow M \rightarrow Y$ alongside the direct edge $T \rightarrow Y$; and a collider $T \rightarrow C \leftarrow Y$.
 
 ```{figure} figs/dsep_example3.svg
 :width: 90%
 :name: fig-dsep-example3
 
-A larger DAG: two confounding routes ($T \leftarrow Z_1 \rightarrow Y$ and $T \leftarrow Z_2 \rightarrow Z_3 \rightarrow Y$), an instrument $I$, a mediator $M$, and a collider $K$. Only the confounding routes must be blocked.
+A larger DAG: two confounding routes ($T \leftarrow Z_1 \rightarrow Y$ and $T \leftarrow Z_2 \rightarrow Z_3 \rightarrow Y$), an instrument $I$, a mediator $M$, and a collider $C$. Only the confounding routes must be blocked.
 ```
 
 ```{prf:example} Reading Off the Adjustment Set
@@ -268,9 +268,9 @@ List every **backdoor path** (a path leaving $T$ through an arrow pointing *into
 Leave the remaining structures untouched:
 
 - $M$ is a **mediator** on the causal path $T \rightarrow M \rightarrow Y$ - conditioning on it would block part of the effect.
-- $K$ is a **collider** ($T \rightarrow K \leftarrow Y$) - conditioning on it would open a spurious path.
+- $C$ is a **collider** ($T \rightarrow C \leftarrow Y$) - conditioning on it would open a spurious path.
 
-**Correct minimal adjustment set: $\{Z_1, Z_2\}$** (equivalently $\{Z_1, Z_3\}$). Either choice blocks both backdoor paths while leaving all causal paths open. The instrument $I$, the mediator $M$, and the collider $K$ are all deliberately excluded ({prf:ref}`backdoor-criterion`). Note that adjusting for the instrument $I$ is not merely unnecessary - it can *amplify* bias from any residual unmeasured confounding, so it is left out on purpose.
+**Correct minimal adjustment set: $\{Z_1, Z_2\}$** (equivalently $\{Z_1, Z_3\}$). Either choice blocks both backdoor paths while leaving all causal paths open. The instrument $I$, the mediator $M$, and the collider $C$ are all deliberately excluded ({prf:ref}`backdoor-criterion`). Note that adjusting for the instrument $I$ is not merely unnecessary - it can *amplify* bias from any residual unmeasured confounding, so it is left out on purpose.
 
 **Identifying independence.** Blocking both backdoor paths yields conditional exchangeability:
 
@@ -278,5 +278,5 @@ $$
 (Y(1), Y(0)) \perp\!\!\!\perp T \mid Z_1, Z_2.
 $$
 
-Given $\{Z_1, Z_2\}$, treatment is as good as randomly assigned, which identifies the effect through the backdoor adjustment formula $\mathbb{E}[Y(t)] = \mathbb{E}_{Z_1, Z_2}\big[\mathbb{E}[Y \mid T=t, Z_1, Z_2]\big]$. Adding $M$ or $K$ to the conditioning set would open a non-causal path and break this independence, while adding $I$ would amplify residual confounding bias - in each case $\mathbb{E}[Y \mid T=t, \cdot]$ would cease to recover a causal contrast.
+Given $\{Z_1, Z_2\}$, treatment is as good as randomly assigned, which identifies the effect through the backdoor adjustment formula $\mathbb{E}[Y(t)] = \mathbb{E}_{Z_1, Z_2}\big[\mathbb{E}[Y \mid T=t, Z_1, Z_2]\big]$. Adding $M$ or $C$ to the conditioning set would open a non-causal path and break this independence, while adding $I$ would amplify residual confounding bias - in each case $\mathbb{E}[Y \mid T=t, \cdot]$ would cease to recover a causal contrast.
 ```

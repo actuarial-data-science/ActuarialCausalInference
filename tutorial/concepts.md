@@ -135,6 +135,8 @@ Throughout this tutorial we adopt the following conventions. Let $D = \{(X_i, T_
 | $M$ | Mediator (variable on the causal path from $T$ to $Y$) |
 | $S$ | Sensitive attribute (protected characteristic, e.g. gender, ethnicity) |
 | $U$ | Unmeasured / unobserved confounder |
-| $D$ | Observed dataset: $D = \{(X_i, T_i, Y_i)\}_{i=1}^{n}$ |
+| $I$ | Instrument (source of exogenous variation in $T$ that affects $Y$ only through $T$) |
 | $\pi(x)$ | Propensity score: $\pi(x) = \mathbb{P}(T=1 \mid X=x)$ |
+| $\mu(t,x)$ | Outcome model: $\mu(t,x) = \mathbb{E}[Y \mid T=t, X=x]$ |
+| $m(x)$ | Marginal outcome regression: $m(x) = \mathbb{E}[Y \mid X=x]$ |
 

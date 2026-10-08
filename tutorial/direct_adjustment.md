@@ -8,7 +8,7 @@ Direct-adjustment estimators recover the average treatment effect by explicitly 
 :width: 70%
 :name: fig-dr-dag
 
-Causal structure underlying adjustment-based regression estimators. The covariates $X$ confound the treatment–outcome relationship through the *propensity model* $\pi(X) = P(T = 1 \mid X)$ and the *outcome model* $\mu(X) = \mathbb{E}[Y \mid T, X]$. Doubly robust estimators combine both to estimate the causal effect $\tau$.
+Causal structure underlying adjustment-based regression estimators. The covariates $X$ confound the treatment–outcome relationship through the *propensity model* $\pi(X) = P(T = 1 \mid X)$ and the *outcome model* $\mu(t,x) = \mathbb{E}[Y \mid T=t, X=x]$. Doubly robust estimators combine both to estimate the causal effect $\tau$.
 ```
 
 ## Outcome Regression and G-computation
@@ -443,8 +443,8 @@ The DML estimator of [Chernozhukov et al. (2018)](https://doi.org/10.1111/ectj.1
 1. Split data $D$ into two disjoint folds $D_A$ and $D_B$ *(Sample splitting)*
 
 2. **Outcome Residualization**
-	1. Train model $\hat{\mu}(X) = \mathcal{L}_Y(Y \sim X)$ on $D_A$ *(Predict $Y$ using covariates only)*
-	2. Compute residuals $\tilde{Y} = Y - \hat{\mu}(X)$ on $D_B$
+	1. Train model $\hat{m}(X) = \mathcal{L}_Y(Y \sim X)$ on $D_A$ *(Predict $Y$ using covariates only)*
+	2. Compute residuals $\tilde{Y} = Y - \hat{m}(X)$ on $D_B$
 
 3. **Treatment Residualization**
 	1. Train model $\hat{\pi}(X) = \mathcal{L}_T(T \sim X)$ on $D_A$ *(Estimate the treatment conditional mean $\pi(X) = \mathbb{E}[T \mid X]$; for binary $T$ this coincides with the propensity score $\mathbb{P}(T=1 \mid X)$)*

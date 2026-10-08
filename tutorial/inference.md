@@ -28,9 +28,9 @@ The main causal estimands targeted in this tutorial are:
 
     $$\text{ATT} = \mathbb{E}[Y(1) - Y(0) \mid T=1]$$
 
-* **Local Average Treatment Effect (LATE):** The effect among the *compliers* - units whose treatment status responds to an instrument $Z$:
+* **Local Average Treatment Effect (LATE):** The effect among the *compliers* - units whose treatment status responds to an instrument $I$:
 
-    $$\text{LATE} = \mathbb{E}[Y(1) - Y(0) \mid T(Z=1)=1, T(Z=0)=0]$$
+    $$\text{LATE} = \mathbb{E}[Y(1) - Y(0) \mid T(I=1)=1, T(I=0)=0]$$
     
     Recovered by instrumental-variable methods, it conditions on complier status rather than treatment receipt, so it is a distinct estimand from the ATT ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)).
 

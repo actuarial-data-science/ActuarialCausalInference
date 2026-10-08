@@ -77,8 +77,8 @@
   <text x="620" y="306" text-anchor="middle" font-size="20" fill="#3a4149">Y</text>
   <text class="muted" x="620" y="258" text-anchor="middle" font-size="12">outcome</text>
 
-  <!-- K (Collider) -->
+  <!-- C (Collider) -->
   <circle cx="430" cy="385" r="30" fill="#f3eafa" stroke="#9b59b6" stroke-width="2"/>
-  <text x="430" y="391" text-anchor="middle" font-size="20" fill="#6f3d93">K</text>
+  <text x="430" y="391" text-anchor="middle" font-size="20" fill="#6f3d93">C</text>
   <text class="muted" x="430" y="425" text-anchor="middle" font-size="12">collider</text>
 </svg>
