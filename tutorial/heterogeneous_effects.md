@@ -43,14 +43,14 @@ The estimators in {doc}`direct_adjustment` target a *single* number - the ATE or
 Tree-based methods take a complementary route: rather than fitting a global functional form, they let the data partition the covariate space to discover *where* effects differ. Conceptually they sit at the intersection of the two earlier toolkits:
 
 - **From propensity score methods.** {prf:ref}`alg-psm` matches treated and control units on the *scalar* propensity score $\hat{\pi}(x)$, while {prf:ref}`alg-psw` reweights them (both in {doc}`direct_adjustment`). A causal forest generalises both ideas: instead of matching on a hand-picked distance, it learns an **adaptive neighbourhood** directly in covariate space - two patients are "close" when the trees repeatedly place them in the same leaf. The resulting forest weights $\alpha^{(j)}(x)$ play the role of data-driven matching weights, and overlap remains the binding requirement (a leaf needs both treated and control members to yield a contrast).
-- **From the meta-learners above.** Like the doubly robust and orthogonal estimators ({prf:ref}`alg-aipw`, {prf:ref}`alg-dml`), causal trees and forests *residualise* the outcome and the treatment against out-of-bag nuisance predictions $\hat{Y}^{(-i)}$ and $\hat{\pi}^{(-i)}(x)$. This makes them **Neyman-orthogonal** - first-order insensitive to errors in the nuisance estimates - and connects them directly to the R-learner of {prf:ref}`alg-rlearner` - a causal forest can be read as a locally-weighted, non-parametric R-learner.
+- **From the meta-learners above.** Like the doubly robust and orthogonal estimators ({prf:ref}`alg-aipw`, {prf:ref}`alg-dml`), the **generalized-random-forest (GRF)** causal trees and forests presented here *residualise* the outcome and the treatment against out-of-bag nuisance predictions $\hat{Y}^{(-i)}$ and $\hat{\pi}^{(-i)}(x)$. This makes them **Neyman-orthogonal** - first-order insensitive to errors in the nuisance estimates - and connects them directly to the R-learner of {prf:ref}`alg-rlearner` - a causal forest can be read as a locally-weighted, non-parametric R-learner. (The *original* causal tree of [Athey & Imbens (2016)](https://doi.org/10.1073/pnas.1510489113) instead splits on a plain within-leaf difference in means and uses no residualisation; we present the GRF-style version throughout because it is what the forest below is built from.)
 
 The two algorithms below differ in granularity. A **causal tree** partitions the population into a handful of interpretable subgroups, assigning every member of a leaf the same effect estimate. A **causal forest** averages many such trees to deliver a smooth, individualised estimate $\hat{\tau}(x)$ for each patient.
 
 (sec:ct)=
 ## Causal Trees
 
-Our first approach to infer heterogeneous treatment effects is based on causal trees. In contrast to modelling the effect of the treatment on the potential outcome effect linearly, we rely on the idea of [Athey & Imbens (2016)](https://doi.org/10.1073/pnas.1510489113). {prf:ref}`alg-causaltree` shows their procedure according to which a causal tree estimates heterogeneous treatment effects from covariates $X$ and an observed outcome $Y$.
+Our first approach to infer heterogeneous treatment effects is based on causal trees. Rather than imposing a parametric form on $\tau(x)$, we build on the honest-tree idea of [Athey & Imbens (2016)](https://doi.org/10.1073/pnas.1510489113). {prf:ref}`alg-causaltree` states the **GRF-style honest causal tree**, which generalises their original difference-in-means procedure with Robinson-style local centering (the residualised split criterion of [Athey, Tibshirani & Wager, 2019](https://doi.org/10.1214/18-AOS1709)); it estimates heterogeneous treatment effects from covariates $X$ and an observed outcome $Y$.
 
 ```{prf:algorithm} Causal Tree
 :label: alg-causaltree
@@ -114,13 +114,13 @@ $$
 \Delta_m(x) = \hat{m}(x) - m(x), \qquad \Delta_\pi(x) = \hat{\pi}(x) - \pi(x).
 $$
 
-Centering both the outcome and the treatment on their out-of-bag predictions makes the effect estimate **Neyman-orthogonal**: the two errors enter the estimate only through their *product*, never on their own. The leading bias is second order,
+Centering both the outcome and the treatment on their out-of-bag predictions makes the effect estimate **Neyman-orthogonal**: the two errors enter the estimate only through their *product*, never on their own, so the **nuisance-induced bias** is second order,
 
 $$
-\hat{\tau} - \tau = O_p\!\big( \lVert \Delta_m \rVert_2 \, \lVert \Delta_\pi \rVert_2 \big),
+\text{bias}(\hat{\tau}) = O_p\!\big( \lVert \Delta_m \rVert_2 \, \lVert \Delta_\pi \rVert_2 \big),
 $$
 
-where $\lVert \cdot \rVert_2$ is the $L_2(P)$ norm. A first-order error in *either* nuisance alone is therefore annihilated, and if each converges even slowly - e.g. $\lVert \Delta_m \rVert_2, \lVert \Delta_\pi \rVert_2 = o_p(n^{-1/4})$ - their product is $o_p(n^{-1/2})$, so the CATE estimator stays $\sqrt{n}$-consistent and asymptotically normal ([Robinson, 1988](https://doi.org/10.2307/1912705); [Nie & Wager, 2021](https://doi.org/10.1093/biomet/asaa076)). This orthogonality is what makes the procedure reliable with observational data, where the treatment is not assigned randomly. It is related to - but weaker than - the *double robustness* of AIPW / DR-learner estimators ([Robins, Rotnitzky & Zhao, 1994](https://doi.org/10.1080/01621459.1994.10476818); [Kennedy, 2023](https://doi.org/10.1214/23-EJS2157)), whose consistency survives if *either* the outcome or the propensity model is correct - a guarantee that residual-on-residual centering does not by itself provide.
+where $\lVert \cdot \rVert_2$ is the $L_2(P)$ norm; the total error $\hat{\tau} - \tau$ additionally contains the estimator's own sampling term. A first-order error in *either* nuisance alone is therefore annihilated, and if each converges even slowly - e.g. $\lVert \Delta_m \rVert_2, \lVert \Delta_\pi \rVert_2 = o_p(n^{-1/4})$ - their product is $o_p(n^{-1/2})$, so the nuisance error is asymptotically negligible relative to that sampling term. For a **parametric** target - the constant $\tau$ of the partially linear model, or an *average* of the CATE - this delivers $\sqrt{n}$-consistency and asymptotic normality ([Robinson, 1988](https://doi.org/10.2307/1912705); [Nie & Wager, 2021](https://doi.org/10.1093/biomet/asaa076)). A **nonparametric** CATE $\tau(x)$ estimated pointwise by a forest is *not* $\sqrt{n}$-consistent: it converges at a slower rate $\sigma_n(x) \gg n^{-1/2}$, while remaining asymptotically normal with valid pointwise confidence intervals ([Wager & Athey, 2018](https://doi.org/10.1080/01621459.2017.1319839), Thm. 3.1; [Athey, Tibshirani & Wager, 2019](https://doi.org/10.1214/18-AOS1709)). This orthogonality is what makes the procedure reliable with observational data, where the treatment is not assigned randomly. It is related to - but weaker than - the *double robustness* of AIPW / DR-learner estimators ([Robins, Rotnitzky & Zhao, 1994](https://doi.org/10.1080/01621459.1994.10476818); [Kennedy, 2023](https://doi.org/10.1214/23-EJS2157)), whose consistency survives if *either* the outcome or the propensity model is correct - a guarantee that residual-on-residual centering does not by itself provide.
 
 With a causal tree, we estimate heterogeneous treatment effects, differentiating by subgroups. We additionally introduce causal forests that ensure a stronger degree of personalization in treatment effect estimation using adaptive nearest neighborhood estimation.
 
@@ -138,19 +138,15 @@ We additionally introduce causal forests that ensure a stronger degree of person
 **Outputs** Estimated CATE $\hat{\tau}(x)$
 
 1. For every tree $b = 1, \ldots, B$:
-	1. Split data into *construction* and *estimation* sets *(for honesty)*
+	1. Draw a random subsample of the data and split it into *construction* and *estimation* sets *(subsampling + honesty)*
 	2. While partition of construction data is possible: *(maximize heterogeneity)*
 
 		* Create partition into two subpopulations
 
-	3. Map estimation data into determined tree leaves $\mathcal{L}$ *(leaves fixed from construction data)*
-	4. For every leaf $\ell \in \mathcal{L}$:
-
-		* Estimate the CATE $\hat{\tau}^{(\ell,b)}(x)$ on estimation data
-
-	5. Return CATE $\hat{\tau}^{(\ell,b)}(x)$
-2. Calculate weights $\alpha^{(i)}(x)$ *(forest proximity weights)*
-3. Calculate final CATE $\hat{\tau}(x)$ *(weighted local regression / R-learner moment)*
+	3. Map estimation data into the determined tree leaves $\mathcal{L}$ *(leaves fixed from construction data)* and record each unit's leaf membership $\ell^{(b)}(x)$
+	4. *(Diagnostics only)* For every leaf $\ell \in \mathcal{L}$, estimate the local CATE $\hat{\tau}^{(\ell,b)}(x)$ on the estimation data - not used by the final forest estimate below
+2. From the recorded leaf memberships, calculate the forest proximity weights $\alpha^{(j)}(x)$
+3. Calculate the final CATE $\hat{\tau}(x)$ by solving the proximity-weighted R-learner moment *(weighted local regression)*
 4. Return CATE $\hat{\tau}(x)$
 ```
 
