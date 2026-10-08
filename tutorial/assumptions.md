@@ -1,13 +1,13 @@
 # Assumptions
 
-## From Observational Data to Conditionally Randomized Experiments
+## From Observational Data to Conditionally Randomised Experiments
 
-Causal inference from observational data relies on the idea that, under the assumptions of the **Rubin Causal Model** ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)), an observational study can be regarded as a *conditionally randomized experiment*. 
+Causal inference from observational data relies on the idea that, under the assumptions of the **Rubin Causal Model** ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)), an observational study can be regarded as a *conditionally randomised experiment*. 
 
-Under the assumptions of ignorability (see below), the observed data represent the essential features of a randomized experiment, enabling the identification and consistent estimation of causal effects within the **potential outcomes framework**.
+Under the assumptions of ignorability (see below), the observed data represent the essential features of a randomised experiment, enabling the identification and consistent estimation of causal effects within the **potential outcomes framework**.
 
 ## Potential Outcomes Framework
-- [Rubin (1974)](https://doi.org/10.1037/h0037350) extended Neyman's (1923) theory for randomized experiments to observational studies.
+- [Rubin (1974)](https://doi.org/10.1037/h0037350) extended Neyman's (1923) theory for randomised experiments to observational studies.
 - Specifically, when treatment assignment is **strongly ignorable** given a set of observed covariates - that is, when the following two conditions hold ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)):
 
 $$
@@ -18,7 +18,7 @@ $$
 0 < P(T = 1 \mid X) < 1,
 $$
 
-then conditioning on $X$ renders the treatment assignment mechanism analogous to that of a randomized controlled trial. More explanation in [Hernán & Robins (2020, Chs. 2-3)](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/) and in [Neal (2020)](https://www.bradyneal.com/Introduction_to_Causal_Inference-Aug27_2020-Neal.pdf). See also [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html) for a formal treatment.
+then conditioning on $X$ renders the treatment assignment mechanism analogous to that of a randomised controlled trial. More explanation in [Hernán & Robins (2020, Chs. 2-3)](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/) and in [Neal (2020)](https://www.bradyneal.com/Introduction_to_Causal_Inference-Aug27_2020-Neal.pdf). See also [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html) for a formal treatment.
 
 ### Assumptions
 

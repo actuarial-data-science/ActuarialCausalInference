@@ -6,7 +6,7 @@ This chapter develops the identification toolkit in three steps, using the notat
 
 ## Assumptions for Achieving Identifiability
 
-**{doc}`assumptions`** - The four core assumptions - consistency, SUTVA, positivity, and exchangeability - that allow a causal estimand to be equated with a statistical one. These conditions formalise *when* an observational study can be treated as a conditionally randomized experiment, and how to detect violations of each in practice.
+**{doc}`assumptions`** - The four core assumptions - consistency, SUTVA, positivity, and exchangeability - that allow a causal estimand to be equated with a statistical one. These conditions formalise *when* an observational study can be treated as a conditionally randomised experiment, and how to detect violations of each in practice.
 
 ## Achieving Identifiability with Graphical Models
 

@@ -78,7 +78,7 @@ Matching focuses on creating "apples-to-apples" comparisons by pairing treated u
 	2. Initialize empty matched set $\mathcal{M} = \emptyset$
 	3. For each unit $i \in \mathcal{T}$:
 
-		1. Find unit $j \in \mathcal{T}_0$ that minimizes $|\hat{\pi}(x_i) - \hat{\pi}(x_j)|$
+		1. Find unit $j \in \mathcal{T}_0$ that minimises $|\hat{\pi}(x_i) - \hat{\pi}(x_j)|$
 		2. If $|\hat{\pi}(x_i) - \hat{\pi}(x_j)| \leq \delta$: *(Apply caliper distance)*
 
 			1. Add pair $(i, j)$ to $\mathcal{M}$

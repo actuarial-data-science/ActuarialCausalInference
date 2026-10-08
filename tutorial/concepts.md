@@ -17,7 +17,7 @@ Causal inference provides the tools to move beyond "what predicts $Y$?" to "what
 
 Modern causal inference grew out of two complementary traditions, and this tutorial draws on both.
 
-The **potential-outcomes (or counterfactual) tradition** originates with [Neyman (1923)](https://doi.org/10.1214/ss/1177012031), who introduced potential outcomes for randomized experiments, and was extended to observational studies by [Rubin (1974)](https://doi.org/10.1037/h0037350). The potential outcomes framework posits that for every unit $i$, there exist two potential outcomes: $Y_i(1)$, the outcome that *would* be observed if unit $i$ received treatment ($T=1$), and $Y_i(0)$, the outcome that *would* be observed under control ($T=0$). Only one of these is ever realised - the one corresponding to the treatment actually received - making the other a **counterfactual**. Causal effects are defined as contrasts between these potential outcomes (e.g. $\tau_i = Y_i(1) - Y_i(0)$), and causal inference is framed as a **missing-data problem**.
+The **potential-outcomes (or counterfactual) tradition** originates with [Neyman (1923)](https://doi.org/10.1214/ss/1177012031), who introduced potential outcomes for randomised experiments, and was extended to observational studies by [Rubin (1974)](https://doi.org/10.1037/h0037350). The potential outcomes framework posits that for every unit $i$, there exist two potential outcomes: $Y_i(1)$, the outcome that *would* be observed if unit $i$ received treatment ($T=1$), and $Y_i(0)$, the outcome that *would* be observed under control ($T=0$). Only one of these is ever realised - the one corresponding to the treatment actually received - making the other a **counterfactual**. Causal effects are defined as contrasts between these potential outcomes (e.g. $\tau_i = Y_i(1) - Y_i(0)$), and causal inference is framed as a **missing-data problem**.
 
 
 The **structural / graphical tradition** traces back to the path analysis of [Wright (1934)](https://doi.org/10.1214/aoms/1177732676) and was formalised by [Pearl (1995)](https://doi.org/10.1093/biomet/82.4.669), [2009](https://doi.org/10.1017/CBO9780511803161). It encodes causal assumptions in **directed acyclic graphs (DAGs)** and structural equations, making questions of confounding, adjustment, and identification graphically explicit.
@@ -53,7 +53,7 @@ The propensity score was introduced by [Rosenbaum & Rubin (1983)](https://doi.or
 
 ### Assignment Mechanism
 
-The **assignment mechanism** describes the process by which units come to receive a particular treatment. In a **randomized controlled trial** (RCT) the mechanism is known and controlled by the experimenter. In observational data, treatment is instead determined by factors such as self-selection, physician decisions, or policy rules - and these factors may themselves be related to the outcome ([Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). Understanding (or modelling) the assignment mechanism is the central challenge of causal inference from observational data, and it is what the identification assumptions (consistency, positivity, exchangeability) are designed to address.
+The **assignment mechanism** describes the process by which units come to receive a particular treatment. In a **randomised controlled trial** (RCT) the mechanism is known and controlled by the experimenter. In observational data, treatment is instead determined by factors such as self-selection, physician decisions, or policy rules - and these factors may themselves be related to the outcome ([Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). Understanding (or modelling) the assignment mechanism is the central challenge of causal inference from observational data, and it is what the identification assumptions (consistency, positivity, exchangeability) are designed to address.
 
 ### Confounding
 
@@ -66,8 +66,8 @@ $$
 Attributing the whole residual to confounding while calling the causal term the "ATE" would silently assume no treatment-effect heterogeneity - untenable in insurance, where high-risk self-selectors typically have differential effects ([Angrist & Pischke, 2009, Sec. 3.2](https://doi.org/10.1515/9781400829828)). The goal of causal inference methods (matching, weighting, regression adjustment, etc.) is to eliminate this bias by appropriately adjusting for the confounders.
 
 
-### Randomized Controlled Trials
-The **"gold standard"** for causal inference is the randomized controlled trial (RCT). Randomization in treatment assignment ensures that treatment and control groups are as similar as possible, eliminating confounding and ensuring the treatment $T$ is independent of potential outcomes ([Rubin, 1974](https://doi.org/10.1037/h0037350); [Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)).
+### Randomised Controlled Trials
+The **"gold standard"** for causal inference is the randomised controlled trial (RCT). Randomisation in treatment assignment ensures that treatment and control groups are as similar as possible, eliminating confounding and ensuring the treatment $T$ is independent of potential outcomes ([Rubin, 1974](https://doi.org/10.1037/h0037350); [Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)).
 
 ```{figure} figs/rct_benchmark.svg
 :width: 90%
@@ -76,7 +76,7 @@ The **"gold standard"** for causal inference is the randomized controlled trial 
 In an RCT, treatment is assigned by chance, so both measured and unmeasured covariates are balanced across the treatment and control arms. This balance is what makes the simple difference in means an unbiased estimate of the causal effect.
 ```
 
-Because randomization makes $T \perp\!\!\!\perp (Y(1), Y(0))$ hold *by design*, the RCT is best understood as the **benchmark that observational methods try to emulate**. When we cannot randomize, the methods in this tutorial - matching, weighting, regression adjustment, and graphical reasoning - all aim to reconstruct, *conditional on covariates*, the covariate balance that randomization would have produced automatically.
+Because randomisation makes $T \perp\!\!\!\perp (Y(1), Y(0))$ hold *by design*, the RCT is best understood as the **benchmark that observational methods try to emulate**. When we cannot randomise, the methods in this tutorial - matching, weighting, regression adjustment, and graphical reasoning - all aim to reconstruct, *conditional on covariates*, the covariate balance that randomisation would have produced automatically.
 
 ```{note}
 :class: dropdown
@@ -84,7 +84,7 @@ RCTs are often infeasible in actuarial settings: we cannot randomly assign polic
 ```
 
 ### Observational Data
-Causal inference from observational data relies on the idea that, under the assumptions of the **Rubin Causal Model** ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)), an observational study can be regarded as a *conditionally randomized experiment*. Under the assumptions of ignorability, the observed data $D$ represent the essential features of a randomized experiment, enabling the identification and consistent estimation of causal effects. 
+Causal inference from observational data relies on the idea that, under the assumptions of the **Rubin Causal Model** ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)), an observational study can be regarded as a *conditionally randomised experiment*. Under the assumptions of ignorability, the observed data $D$ represent the essential features of a randomised experiment, enabling the identification and consistent estimation of causal effects. 
 
 ## Fundamental Problem of Causal Inference
 Using binary treatments, every unit $i$ has two **potential outcomes** - $Y_i(1)$ under treatment and $Y_i(0)$ under control - but only one can ever be observed. The observed outcome is the **factual**; the outcome under the alternative treatment is the **counterfactual**. Since we cannot reset time to see what would have happened to the same unit under a different treatment, it is impossible to directly calculate individual treatment effects $\tau_i = Y_i(1) - Y_i(0)$. This fundamental identification problem - the **Fundamental Problem of Causal Inference** - was named and formalised by [Holland (1986)](https://doi.org/10.1080/01621459.1986.10478354), building on the potential-outcomes framework of [Rubin (1974)](https://doi.org/10.1037/h0037350), and is discussed in detail in [Angrist & Pischke (2015, Ch. 1)](https://doi.org/10.2307/j.ctt5vhbqm).

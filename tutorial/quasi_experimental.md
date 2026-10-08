@@ -82,7 +82,7 @@ Many insurance rules are sharp functions of a continuous variable: a telematics 
 
 ## Synthetic Control
 
-When only a single (or a few) treated unit is observed over time, the synthetic control method - introduced by [Abadie & Gardeazabal (2003)](https://doi.org/10.1257/000282803321455188) and formalized by [Abadie, Diamond & Hainmueller (2010)](https://doi.org/10.1198/jasa.2009.ap08746) - constructs a counterfactual as a weighted combination of untreated *donor* units chosen to match the treated unit's pre-intervention trajectory. The post-intervention gap between the treated unit and its synthetic counterpart estimates the effect. Inference typically relies on **placebo (permutation) tests**: the intervention is reassigned in turn to each donor unit, and the treated unit's post-intervention gap is judged against the resulting distribution of placebo gaps ([Abadie, Diamond & Hainmueller, 2010](https://doi.org/10.1198/jasa.2009.ap08746)).
+When only a single (or a few) treated unit is observed over time, the synthetic control method - introduced by [Abadie & Gardeazabal (2003)](https://doi.org/10.1257/000282803321455188) and formalised by [Abadie, Diamond & Hainmueller (2010)](https://doi.org/10.1198/jasa.2009.ap08746) - constructs a counterfactual as a weighted combination of untreated *donor* units chosen to match the treated unit's pre-intervention trajectory. The post-intervention gap between the treated unit and its synthetic counterpart estimates the effect. Inference typically relies on **placebo (permutation) tests**: the intervention is reassigned in turn to each donor unit, and the treated unit's post-intervention gap is judged against the resulting distribution of placebo gaps ([Abadie, Diamond & Hainmueller, 2010](https://doi.org/10.1198/jasa.2009.ap08746)).
 
 ```{figure} figs/synthetic_control.svg
 :width: 80%
@@ -99,7 +99,7 @@ Synthetic control. Donor-pool units are weighted so the synthetic control (dashe
 
 **Outputs** Estimated effect $\hat{\tau}_t$ for post-intervention periods
 
-1. Choose non-negative weights $w_1, \ldots, w_J$ (summing to one) minimizing the pre-intervention distance between the treated unit and the weighted donor pool
+1. Choose non-negative weights $w_1, \ldots, w_J$ (summing to one) minimising the pre-intervention distance between the treated unit and the weighted donor pool
 2. Construct the synthetic control outcome $\hat{Y}^{\text{synth}}_t = \sum_{j=1}^{J} w_j\, Y^{(j)}_t$ for each period $t$
 3. For each post-intervention period, estimate the effect $\hat{\tau}_t = Y^{\text{treated}}_t - \hat{Y}^{\text{synth}}_t$
 4. Return the estimated effect $\hat{\tau}_t$
