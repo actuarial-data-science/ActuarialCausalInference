@@ -1,4 +1,4 @@
-# Causal Inference
+# Estimation of Causal Effects
 
 With the identification assumptions ({prf:ref}`consistency`, {prf:ref}`sutva`, {prf:ref}`positivity`, {prf:ref}`exchangeability`) established and the correct adjustment set identified via graphical models ({prf:ref}`backdoor-criterion`), we can now turn to **estimation**: computing causal effects from observed data $D = \{(X_i, T_i, Y_i)\}_{i=1}^{n}$.
 
@@ -32,7 +32,7 @@ The main causal estimands targeted in this tutorial are:
 
     $$\text{LATE} = \mathbb{E}[Y(1) - Y(0) \mid T(I=1)=1, T(I=0)=0]$$
     
-    Recovered by instrumental-variable methods, it conditions on complier status rather than treatment receipt, so it is a distinct estimand from the ATT ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)).
+    Recovered by instrumental-variable methods, it conditions on complier status rather than treatment receipt, so it is a distinct estimand from the ATT, and is identified only under **monotonicity** (no defiers; see {doc}`instrumental_variables`) ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)).
 
 Different estimation methods target different estimands. The table below maps methods to their primary targets.
 
@@ -48,7 +48,7 @@ Different estimation methods target different estimands. The table below maps me
 | **Causal Trees / Forests** | CATE | Partition covariate space to expose effect heterogeneity | {doc}`heterogeneous_effects` |
 | **Instrumental Variables / 2SLS** | LATE | Use exogenous variation from an instrument | {doc}`instrumental_variables` |
 | **Quasi-Experimental (DiD, RD, SC)** | ATT (DiD, SC) / effect at cutoff (RD) | Exploit natural experiments and institutional variation | {doc}`quasi_experimental` |
-| **Bayesian (BART / BCF)** | CATE | Posterior distributions over treatment effects via sum-of-trees priors | {doc}`bayesian` |
+| **Bayesian (BART / BCF)** | ATE, CATE | Posterior distributions over treatment effects via sum-of-trees priors | {doc}`bayesian` |
 
 ## Uncertainty Quantification
 

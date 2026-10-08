@@ -32,7 +32,7 @@ $$
 
 The observed outcome $Y$ equals the potential outcome $Y(t)$ whenever the treatment actually received is $T = t$. This assumption is what makes potential outcomes empirically meaningful: without it, $Y(t)$ is a purely abstract quantity with no necessary connection to what is measured in data.
 
-**Detecting violations:** Violations arise when the treatment $T$ is not sufficiently well-defined. If units assigned $T = t$ received meaningfully different variants - different doses, formulations, timing, or delivery mechanisms - then $Y(t)$ is not a single quantity but an average over distinct potential outcomes that should not be conflated. Empirically, this manifests as effect heterogeneity within treatment arms that cannot be explained by measured covariates. Stratifying by treatment sub-type and testing whether effect estimates shift substantially is a practical diagnostic. Interference violations are harder to detect but can sometimes be probed by examining whether outcomes of untreated units vary with the treatment density of their neighbours.
+**Detecting violations:** Violations arise when the treatment $T$ is not sufficiently well-defined. If units assigned $T = t$ received meaningfully different variants - different doses, formulations, timing, or delivery mechanisms - then $Y(t)$ is not a single quantity but an average over distinct potential outcomes that should not be conflated. Empirically, this manifests as effect heterogeneity within treatment arms that cannot be explained by measured covariates. Stratifying by treatment sub-type and testing whether effect estimates shift substantially is a practical diagnostic.
 
 ([Rubin, 1980](https://doi.org/10.2307/2287653); [Cole & Frangakis, 2009](https://doi.org/10.1097/EDE.0b013e31818ef366); [VanderWeele, 2009](https://doi.org/10.1097/EDE.0b013e3181bd5638))
 
@@ -110,7 +110,7 @@ Rather than treating exchangeability as a binary "true or false" property, it is
 
 **Detecting violations:** Exchangeability **cannot be directly tested** because it concerns unobserved confounders by definition. However, indirect evidence includes: (1) **sensitivity analysis** - computing E-values or applying the method of [Cinelli & Hazlett (2020)](https://doi.org/10.1111/rssb.12348) to assess how strong an unmeasured confounder would need to be to explain away the effect; (2) **negative control outcomes** - outcomes known to be unaffected by $T$ that should show zero effect if exchangeability holds; (3) **placebo/falsification tests** - applying the estimator to subgroups where no effect is expected. Persistent sensitivity of results to small unmeasured confounders signals concern.
 
-By exchangeability ({prf:ref}`exchangeability`) and consistency ({prf:ref}`consistency`), the estimation of the average (causal) treatment effect can be done based on observed data. At the level of a fixed covariate profile $X=x$,
+By exchangeability ({prf:ref}`exchangeability`), consistency ({prf:ref}`consistency`), and positivity ({prf:ref}`positivity`), the estimation of the average (causal) treatment effect can be done based on observed data; positivity guarantees that the conditional mean $\mathbb{E}[Y \mid X=x, T=t]$ is well-defined ($P(T=t \mid X=x) > 0$) over the covariate region we marginalise across, and only **mean** exchangeability (the weakest form above) is actually required. At the level of a fixed covariate profile $X=x$,
 
 $$
 \mathbb{E}[Y(t) \mid X=x] 

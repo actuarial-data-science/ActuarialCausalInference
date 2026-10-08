@@ -87,7 +87,7 @@ Matching focuses on creating "apples-to-apples" comparisons by pairing treated u
 
 
 ## Inverse Propensity Score Weighting
-Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-population" where the treatment is independent of measured covariates. This approach is often used to estimate the Average Treatment Effect (ATE) for the entire population ([Austin, 2011](https://doi.org/10.1080/00273171.2011.568786)). This independence, however, is achieved *only if the propensity model $\hat{\pi}(x)$ is correctly specified* (and overlap holds): IPW is **singly robust** - consistent if and only if $\hat{\pi}(x)$ is correct. Under a misspecified propensity model (e.g. a logistic fit omitting a relevant covariate or non-linear interaction) the reweighted sample does *not* balance $X$, and the ATE estimate is biased - sometimes severely ([Kang & Schafer, 2007](https://doi.org/10.1214/07-STS227); [Lunceford & Davidian, 2004](https://doi.org/10.1002/sim.1903), Thm. 1). Doubly robust estimators (AIPW) relax this by staying consistent if *either* the propensity or the outcome model is correct.
+Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-population" where the treatment is independent of measured covariates. This approach is often used to estimate the Average Treatment Effect (ATE) for the entire population ([Austin, 2011](https://doi.org/10.1080/00273171.2011.568786)). This independence, however, is achieved *only if the propensity model $\hat{\pi}(x)$ is correctly specified* (and overlap holds): IPW is **singly robust** - consistent only if $\hat{\pi}(x)$ is correct. Under a misspecified propensity model (e.g. a logistic fit omitting a relevant covariate or non-linear interaction) the reweighted sample does *not* balance $X$, and the ATE estimate is biased - sometimes severely ([Kang & Schafer, 2007](https://doi.org/10.1214/07-STS227); [Lunceford & Davidian, 2004](https://doi.org/10.1002/sim.1903), Thm. 1). Doubly robust estimators (AIPW) relax this by staying consistent if *either* the propensity or the outcome model is correct.
 
 ```{prf:algorithm} Propensity Score Weighting
 :label: alg-psw
@@ -115,7 +115,7 @@ Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-populatio
 ```
 
 ```{prf:proof}
-We want to briefly prove that weighting the observed outcomes $Y$ by the inverse of the propensity score $\pi(X)$ for the treated group recovers the true (factual) mean $\mathbb{E}[Y(1)]$.
+We want to briefly prove that - under consistency, exchangeability, and positivity ($\pi(X) > 0$, so the weights $1/\pi(X)$ are well-defined) - weighting the observed outcomes $Y$ by the inverse of the propensity score $\pi(X)$ for the treated group recovers the mean *potential* outcome $\mathbb{E}[Y(1)]$.
 
 $$
 \mathbb{E}\left[ \frac{T Y}{\pi(X)} \right] = \mathbb{E}[Y(1)]
@@ -355,7 +355,7 @@ $$
 \cdot\mathbb{E}[T\,(Y - \mu(1,X)) \mid X]\right]
 $$
 
-Under exchangeability, $\mathbb{E}[TY \mid X] = \pi(X)\mu(1,X)$ and
+By definition of $\mu$, $\mathbb{E}[TY \mid X] = \pi(X)\mu(1,X)$ and
 $\mathbb{E}[T \mid X] = \pi(X)$, so:
 
 $$

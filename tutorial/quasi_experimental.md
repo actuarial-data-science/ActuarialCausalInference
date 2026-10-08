@@ -44,7 +44,7 @@ is the average treatment effect among **compliers** - units whose treatment stat
 is switched by the instrument - and is the estimand identified by instrumental
 variables under heterogeneous treatment effects
 ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)).
-In a **sharp** RD every unit switches deterministically from $T=0$ to $T=1$ at $c$, so the estimand conditions on the covariate value $X = c$, not on an unobserved compliance type. [Imbens & Lemieux (2008)](https://doi.org/10.1016/j.jeconom.2007.05.001) provide a practical guide to estimation and bandwidth selection.
+In a **sharp** RD every unit switches deterministically from $T=0$ to $T=1$ at $c$, so the estimand conditions on the covariate value $X = c$, not on an unobserved compliance type. In a **fuzzy** RD, by contrast, the treatment probability jumps by less than one at the cutoff, and the discontinuity then identifies a *LATE at the cutoff* among compliers ([Hahn, Todd & van der Klaauw, 2001](https://doi.org/10.1111/1468-0262.00183)). [Imbens & Lemieux (2008)](https://doi.org/10.1016/j.jeconom.2007.05.001) provide a practical guide to estimation and bandwidth selection.
 
 ```{figure} figs/rdd_discontinuity.svg
 :width: 80%
@@ -70,7 +70,7 @@ Regression discontinuity. Treatment switches on at the cutoff $c$; the vertical 
 
 ## Synthetic Control
 
-When only a single (or a few) treated unit is observed over time, the synthetic control method - introduced by [Abadie & Gardeazabal (2003)](https://doi.org/10.1257/000282803321455188) and formalized by [Abadie, Diamond & Hainmueller (2010)](https://doi.org/10.1198/jasa.2009.ap08746) - constructs a counterfactual as a weighted combination of untreated *donor* units chosen to match the treated unit's pre-intervention trajectory. The post-intervention gap between the treated unit and its synthetic counterpart estimates the effect.
+When only a single (or a few) treated unit is observed over time, the synthetic control method - introduced by [Abadie & Gardeazabal (2003)](https://doi.org/10.1257/000282803321455188) and formalized by [Abadie, Diamond & Hainmueller (2010)](https://doi.org/10.1198/jasa.2009.ap08746) - constructs a counterfactual as a weighted combination of untreated *donor* units chosen to match the treated unit's pre-intervention trajectory. The post-intervention gap between the treated unit and its synthetic counterpart estimates the effect. Inference typically relies on **placebo (permutation) tests**: the intervention is reassigned in turn to each donor unit, and the treated unit's post-intervention gap is judged against the resulting distribution of placebo gaps ([Abadie, Diamond & Hainmueller, 2010](https://doi.org/10.1198/jasa.2009.ap08746)).
 
 ```{figure} figs/synthetic_control.svg
 :width: 80%
