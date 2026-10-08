@@ -39,17 +39,7 @@ An insurer that overhauls the bonus-malus scale (or raises the base deductible) 
 ## Regression Discontinuity
 
 Regression discontinuity (RD) applies when treatment is assigned by a threshold rule on a continuous *running variable* $X$ (e.g. a risk score). The design was first proposed by [Thistlethwaite & Campbell (1960)](https://doi.org/10.1037/h0044319); its modern econometric foundations are due to [Hahn, Todd & van der Klaauw (2001)](https://doi.org/10.1111/1468-0262.00183). Units just below and just above the cutoff $c$ are comparable, so the jump in the outcome at $c$ identifies the **average treatment effect at the cutoff**, $\mathbb{E}[Y(1) - Y(0) \mid X = c]$ - the causal effect *at the discontinuity point* ([Hahn, Todd & van der Klaauw, 2001](https://doi.org/10.1111/1468-0262.00183); [Imbens & Lemieux, 2008](https://doi.org/10.1016/j.jeconom.2007.05.001)). 
-This is a *different* object from the **local average treatment effect (LATE)** of the
-IV/2SLS design ({doc}`instrumental_variables`). The LATE, formally defined as
-
-$$
-\text{LATE} = \mathbb{E}[Y(1) - Y(0) \mid T(I=1) = 1,\; T(I=0) = 0],
-$$
-
-is the average treatment effect among **compliers** - units whose treatment status
-is switched by the instrument - and is the estimand identified by instrumental
-variables under heterogeneous treatment effects
-([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)).
+This is a *different* object from the **local average treatment effect (LATE)** identified by the IV/2SLS design - the effect among **compliers**, the units whose treatment status is switched by the instrument ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)). The LATE estimand is defined in {doc}`inference` and developed in {doc}`instrumental_variables`.
 In a **sharp** RD every unit switches deterministically from $T=0$ to $T=1$ at $c$, so the estimand conditions on the covariate value $X = c$, not on an unobserved compliance type. In a **fuzzy** RD, by contrast, the treatment probability jumps by less than one at the cutoff, and the discontinuity then identifies a *LATE at the cutoff* among compliers ([Hahn, Todd & van der Klaauw, 2001](https://doi.org/10.1111/1468-0262.00183)). [Imbens & Lemieux (2008)](https://doi.org/10.1016/j.jeconom.2007.05.001) provide a practical guide to estimation and bandwidth selection.
 
 ```{figure} figs/rdd_discontinuity.svg

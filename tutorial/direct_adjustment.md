@@ -37,13 +37,7 @@ The simplest regression adjustment fits a single outcome model $\hat{\mu}(t, x) 
 G-computation is consistent only if the outcome model is correctly specified. Because a misspecified $\hat{\mu}$ propagates directly into the estimate, it motivates the *doubly robust* estimators that add a second line of defence through the propensity score.
 
 ## Propensity Score Definition
-The probability of receiving treatment $T$ given a set of observed covariates $X$, defined as:
-
-$$
-\pi(x) = P(T = 1 \mid X = x)
-$$
-
-It reduces high-dimensional control variables into a single score in order to achieve covariate balance.
+The **propensity score** $\pi(x) = P(T = 1 \mid X = x)$ - the probability of receiving treatment given the observed covariates $X$, introduced by [Rosenbaum & Rubin (1983)](https://doi.org/10.1093/biomet/70.1.41) and defined in {doc}`concepts` - reduces high-dimensional control variables into a single score in order to achieve covariate balance.
 
 (overlap)=
 ### Overlap (Common Support)
