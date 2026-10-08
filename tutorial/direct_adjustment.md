@@ -11,6 +11,10 @@ Direct-adjustment estimators recover the average treatment effect by explicitly 
 Causal structure underlying adjustment-based regression estimators. The covariates $X$ confound the treatment–outcome relationship through the *propensity model* $\pi(X) = P(T = 1 \mid X)$ and the *outcome model* $\mu(t,x) = \mathbb{E}[Y \mid T=t, X=x]$. Doubly robust estimators combine both to estimate the causal effect $\tau$.
 ```
 
+```{note}
+The algorithms below return *point* estimates $\hat{\tau}$. For the accompanying **standard errors and confidence intervals** - influence-function variance for AIPW/TMLE/DML, the bootstrap for matching, and the sandwich/weighted variance for IPW - see the *Uncertainty Quantification* section of {doc}`inference`.
+```
+
 ## Outcome Regression and G-computation
 
 The simplest regression adjustment fits a single outcome model $\hat{\mu}(t, x) = \mathbb{E}[Y \mid T = t, X = x]$ and contrasts its predictions under treatment and control, averaged over the covariate distribution. This is the *parametric g-formula* of [Robins (1986)](https://doi.org/10.1016/0270-0255(86)90088-6) (see [Hernán & Robins (2020)](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/) for a modern treatment), and it serves as the conceptual baseline on which the doubly robust and orthogonal estimators below build.
