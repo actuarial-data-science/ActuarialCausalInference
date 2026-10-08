@@ -24,7 +24,7 @@ $$
 
 This is the workhorse identification strategy and underpins propensity-score and regression-based estimators in {doc}`inference`.
 
-The back-door criterion below gives the graphical test for when a candidate adjustment set $Z$ closes all back-door paths ([Shalizi, 2025, Section 21.1-21.2](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+The back-door criterion below gives the graphical test for when a candidate adjustment set $Z$ closes all back-door paths ([Shalizi, 2025, Ch. 20](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ### The Backdoor Criterion
 
@@ -80,7 +80,7 @@ When confounding between $T$ and $Y$ is unobserved but an observed mediator $M$ 
 
 ### The Frontdoor Criterion
 
-When backdoor paths run through **unobserved** confounders and therefore cannot be blocked, the backdoor criterion cannot be applied. The frontdoor criterion provides an alternative identification strategy through an observed mediator ([Shalizi, 2025, Section 21.1](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+When backdoor paths run through **unobserved** confounders and therefore cannot be blocked, the backdoor criterion cannot be applied. The frontdoor criterion provides an alternative identification strategy through an observed mediator ([Shalizi, 2025, Ch. 20](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ```{prf:criterion} Frontdoor Criterion
 :label: frontdoor-criterion

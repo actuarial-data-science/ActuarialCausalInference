@@ -14,7 +14,7 @@ The methods in {doc}`direct_adjustment` and {doc}`heterogeneous_effects` assume 
 Instrumental variable $I$. The instrument induces exogenous variation in the treatment $T$ while being independent of the unobserved confounder $U$ and affecting the outcome $Y$ only through $T$.
 ```
 
-When unobserved confounding exists (see {numref}`fig-IV`), an instrument $I$ can identify the causal effect if ([Shalizi, 2025, Ch. 23](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)):
+When unobserved confounding exists (see {numref}`fig-IV`), an instrument $I$ can identify the causal effect if ([Shalizi, 2025, Ch. 20](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)):
 
 1. *Relevance*: $I$ affects $T$
 2. *Exogenous noise*: $I \perp\!\!\!\perp U$ - the instrumental variable is independent of the unobserved confounder

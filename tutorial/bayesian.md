@@ -2,7 +2,7 @@
 
 This section is part of {doc}`inference`, which covers the estimation of causal effects from observational data. While the preceding sections focus on frequentist methods (propensity scores, regression, causal trees/forests), here we take a **Bayesian** perspective.
 
-Bayesian methods offer a natural framework for causal inference by treating unknown quantities - potential outcomes, treatment effects, and model parameters - as random variables with prior distributions updated by observed data $D$. This section introduces the key ideas, following [Rubin (1978)](https://doi.org/10.1214/aos/1176344064), [Shalizi (2025, Ch. 21)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf), and the [Causal ML Book](https://www.causalmlbook.com/).
+Bayesian methods offer a natural framework for causal inference by treating unknown quantities - potential outcomes, treatment effects, and model parameters - as random variables with prior distributions updated by observed data $D$. This section introduces the key ideas, following [Rubin (1978)](https://doi.org/10.1214/aos/1176344064), [Imbens & Rubin (2015)](https://doi.org/10.1017/CBO9781139025751), and the [Causal ML Book](https://www.causalmlbook.com/).
 
 ## Why Bayesian Causal Inference?
 

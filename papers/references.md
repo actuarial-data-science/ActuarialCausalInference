@@ -65,7 +65,7 @@
 * **Rubin, D. B. (1978).** *Bayesian inference for causal effects: The role of randomization.* The Annals of Statistics, 6(1), 34-58. [DOI: 10.1214/aos/1176344064](https://doi.org/10.1214/aos/1176344064)
 * **Sant'Anna, P. H. C., & Zhao, J. (2020).** *Doubly robust difference-in-differences estimators.* Journal of Econometrics, 219(1), 101-122. [DOI: 10.1016/j.jeconom.2020.06.003](https://doi.org/10.1016/j.jeconom.2020.06.003)
 * **Semenova, V., & Chernozhukov, V. (2021).** *Debiased machine learning of conditional average treatment effects and other causal functions.* The Econometrics Journal, 24(2), 264-289. [DOI: 10.1093/ectj/utaa027](https://doi.org/10.1093/ectj/utaa027)
-* **Shalizi, C. R. (2025).** [*Advanced Data Analysis from an Elementary Point of View.*](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf) 
+* **Shalizi, C. R. (2025).** [*Advanced Data Analysis from an Elementary Point of View.*](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf) (Draft of 8 February 2025; chapter and section numbers refer to this version.)
 * **Thistlethwaite, D. L., & Campbell, D. T. (1960).** *Regression-discontinuity analysis: An alternative to the ex post facto experiment.* Journal of Educational Psychology, 51(6), 309-317. [DOI: 10.1037/h0044319](https://doi.org/10.1037/h0044319)
 * **van der Laan, M. J., & Rubin, D. (2006).** *Targeted maximum likelihood learning.* The International Journal of Biostatistics, 2(1), Article 11. [DOI: 10.2202/1557-4679.1043](https://doi.org/10.2202/1557-4679.1043)
 * **VanderWeele, T. J., & Ding, P. (2017).** *Sensitivity analysis in observational research: Introducing the E-value.* Annals of Internal Medicine, 167(4), 268-274. [DOI: 10.7326/M16-2607](https://doi.org/10.7326/M16-2607)
