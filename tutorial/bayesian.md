@@ -10,7 +10,7 @@ In the potential outcomes framework, the fundamental problem is that we observe 
 
 - **Prior beliefs** encode what we know before seeing the data - for example, that treatment effects are likely small, or that confounders have plausible distributions.
 - **Posterior inference** yields a full distribution over causal estimands (ATE, CATE), naturally quantifying **uncertainty** in a way that frequentist point estimates and confidence intervals do not.
-- **Model comparison** via Bayes factors or posterior predictive checks helps select among competing causal models.
+- **Model comparison** via Bayes factors or posterior predictive checks helps select among competing *outcome models* - functional forms, link functions, priors. It cannot, however, adjudicate between competing *causal structures*: Markov-equivalent DAGs induce the same likelihood, and the identifying assumptions (exchangeability, positivity) remain as untestable here as in the frequentist setting.
 
 ## Bayesian Potential Outcomes Model
 
@@ -63,7 +63,11 @@ $$
 \hat{\pi}(x \mid D) = \int \pi(x; \alpha) \, p(\alpha \mid D) \, d\alpha
 $$
 
-Treatment effect estimates using this posterior propensity score account for **propensity model uncertainty**, unlike plug-in frequentist approaches.
+Treatment effect estimates built on this posterior propensity score can propagate **propensity-model uncertainty** into the final interval, rather than conditioning on a single plug-in estimate.
+```
+
+```{warning}
+Fully Bayesian propensity-score analysis is subtler than it looks. In a joint model of $(T, Y)$ the propensity score does **not** enter the outcome likelihood (Robins & Ritov, 1997; Rubin, 1985), so fitting a single joint posterior lets the outcome model *feed back* into the propensity model and distort it ([Zigler et al., 2013](https://doi.org/10.1111/j.1541-0420.2012.01830.x)). The standard remedy is to **cut the feedback** - estimate the propensity posterior from the treatment model alone and then propagate it into the outcome stage (a two-step or "cut" posterior) - so that propagating propensity-model uncertainty does not come at the price of a contaminated propensity score.
 ```
 
 ## Bayesian Additive Regression Trees (BART)
@@ -110,15 +114,15 @@ $$
 \mu(X_i) = \sum_{j=1}^{m_\mu} h_j(X_i; \mathcal{T}_j^{\mu}, \mathcal{M}_j^{\mu}), \qquad \tau(X_i) = \sum_{k=1}^{m_\tau} g_k(X_i; \mathcal{T}_k^{\tau}, \mathcal{M}_k^{\tau})
 $$
 
-These are exactly the trees $h_j$ and $g_k$ labelled in the figure below: the two ensembles never share trees, and only $\tau$ is multiplied by the treatment $T_i$. This separation improves treatment effect estimation by preventing the prognostic signal from contaminating the treatment effect estimate, a phenomenon called **regularisation-induced confounding**.
+These are exactly the trees $h_j$ and $g_k$ labelled in the figure below: the two ensembles never share trees, and only $\tau$ is multiplied by the treatment $T_i$. This separation lets the treatment effect $\tau$ be regularised **independently** of the prognostic function - it can be shrunk towards homogeneity without the strong prognostic signal forcing it to be wiggly, and vice versa.
 
-BCF additionally incorporates the estimated propensity score $\hat{\pi}(X_i)$ as a covariate in the prognostic model to reduce confounding bias.
+To counter **regularisation-induced confounding** - the bias that arises when shrinkage of the prognostic function $\mu$ distorts $\tau$ under *targeted selection* (treatment assignment correlated with the prognostic score) - BCF additionally incorporates the estimated propensity score $\hat{\pi}(X_i)$ as a covariate in the prognostic model ([Hahn, Murray & Carvalho, 2020](https://doi.org/10.1214/19-BA1195)).
 
 ```{figure} figs/bayesian_bcf.svg
 :width: 95%
 :name: fig-bayesian-bcf
 
-Bayesian Causal Forest decomposition. The outcome is split into a *prognostic* function $\mu(X)$ - the baseline outcome surface - and a *treatment effect* function $\tau(X)$, each modelled by its own independent BART ensemble (a sum of shallow, shrunk trees). Giving $\tau(X)$ a separate prior and scale stops the strong prognostic signal from being shrunk into the effect estimate, the *regularisation-induced confounding* that [Hahn, Murray & Carvalho (2020)](https://doi.org/10.1214/19-BA1195) flag. The estimated propensity score $\hat{\pi}(X)$ enters the prognostic model as an extra covariate to further reduce confounding bias.
+Bayesian Causal Forest decomposition. The outcome is split into a *prognostic* function $\mu(X)$ - the baseline outcome surface - and a *treatment effect* function $\tau(X)$, each modelled by its own independent BART ensemble (a sum of shallow, shrunk trees). Giving $\tau(X)$ a separate prior and scale lets the effect be shrunk towards homogeneity independently of the prognostic surface. To counter *regularisation-induced confounding* - shrinkage of the prognostic function biasing $\tau$ under targeted selection - the estimated propensity score $\hat{\pi}(X)$ enters the prognostic model as an extra covariate ([Hahn, Murray & Carvalho, 2020](https://doi.org/10.1214/19-BA1195)).
 ```
 
 ## Posterior Inference for Treatment Effects
