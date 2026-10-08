@@ -11,7 +11,7 @@ Each strategy trades on a different identifying assumption. The choice is dictat
 | Strategy | Identifying assumption | Handles | Estimation (see {doc}`inference`) |
 |---|---|---|---|
 | **Back-door adjustment** | All confounders of $(T, Y)$ are observed | Measured confounding | {doc}`direct_adjustment` |
-| **Front-door adjustment** | An observed mediator intercepts all $T \rightarrow Y$ paths | Unmeasured confounding of $(T, Y)$ | {doc}`direct_adjustment` |
+| **Front-door adjustment** | An observed mediator intercepts all $T \rightarrow Y$ paths | Unmeasured confounding of $(T, Y)$ | Plug-in via the two-stage formula in {prf:ref}`frontdoor-criterion`; no dedicated estimator in {doc}`inference` (see Pearl, 2009, §3.3.2) |
 | **Instrumental variables** | An instrument affects $Y$ only through $T$ | Unmeasured confounding | {doc}`instrumental_variables` |
 
 ## Back-door Adjustment
