@@ -18,6 +18,7 @@
 * **Barocas, S., Hardt, M., & Narayanan, A. (2019).** [*Fairness and Machine Learning: Limitations and Opportunities.*](https://fairmlbook.org/) MIT Press.
 * **Berk, R., Heidari, H., Jabbari, S., Kearns, M., & Roth, A. (2021).** *Fairness in criminal justice risk assessments: The state of the art.* Sociological Methods & Research, 50(1), 3-44. [DOI: 10.1177/0049124118782533](https://doi.org/10.1177/0049124118782533)
 * **Bowden, J., Davey Smith, G., & Burgess, S. (2015).** *Mendelian randomization with invalid instruments: effect estimation and bias detection through Egger regression.* International Journal of Epidemiology, 44(2), 512-525. [DOI: 10.1093/ije/dyv080](https://doi.org/10.1093/ije/dyv080)
+* **Bowden, J., Davey Smith, G., Haycock, P. C., & Burgess, S. (2016).** *Consistent estimation in Mendelian randomization with some invalid instruments using a weighted median estimator.* Genetic Epidemiology, 40(4), 304-314. [DOI: 10.1002/gepi.21965](https://doi.org/10.1002/gepi.21965)
 * **Breiman, L. (2001).** *Random forests.* Machine Learning, 45(1), 5-32. [DOI: 10.1023/A:1010933404324](https://doi.org/10.1023/A:1010933404324)
 * **Breiman, L., Friedman, J. H., Olshen, R., & Stone, C. J. (1984).** *Classification and regression trees.* Wadsworth. [DOI: 10.1201/9781315139470](https://doi.org/10.1201/9781315139470)
 * **Callaway, B., & Sant'Anna, P. H. C. (2021).** *Difference-in-differences with multiple time periods.* Journal of Econometrics, 225(2), 200-230. [DOI: 10.1016/j.jeconom.2020.12.001](https://doi.org/10.1016/j.jeconom.2020.12.001)
@@ -31,6 +32,7 @@
 * **Cunningham, S. (2021).** [*Causal Inference: The Mixtape.*](https://mixtape.scunning.com/) Yale University Press. [DOI: 10.12987/9780300255881](https://doi.org/10.12987/9780300255881)
 * **Curth, A., & van der Schaar, M. (2021).** *Nonparametric estimation of heterogeneous treatment effects: From theory to learning algorithms.* Proceedings of the 24th International Conference on Artificial Intelligence and Statistics (AISTATS), PMLR 130, 1810-1818. [PMLR: v130/curth21a](https://proceedings.mlr.press/v130/curth21a.html)
 * **Davey Smith, G., & Ebrahim, S. (2003).** *'Mendelian randomization': can genetic epidemiology contribute to understanding environmental determinants of disease?* International Journal of Epidemiology, 32(1), 1-22. [DOI: 10.1093/ije/dyg070](https://doi.org/10.1093/ije/dyg070)
+* **Ding, P., VanderWeele, T. J., & Robins, J. M. (2017).** *Instrumental variables as bias amplifiers with general outcome and confounding.* Biometrika, 104(2), 291-302. [DOI: 10.1093/biomet/asx009](https://doi.org/10.1093/biomet/asx009)
 * **Dwork, C., Hardt, M., Pitassi, T., Reingold, O., & Zemel, R. (2012).** *Fairness through awareness.* Proceedings of the 3rd Innovations in Theoretical Computer Science Conference (ITCS), 214-226. [arXiv:1104.3913](https://arxiv.org/abs/1104.3913)
 * **Foster, D. J., & Syrgkanis, V. (2023).** *Orthogonal statistical learning.* The Annals of Statistics, 51(3), 879-908. [DOI: 10.1214/23-AOS2258](https://doi.org/10.1214/23-AOS2258)
 * **Goodman-Bacon, A. (2021).** *Difference-in-differences with variation in treatment timing.* Journal of Econometrics, 225(2), 254-277. [DOI: 10.1016/j.jeconom.2021.03.014](https://doi.org/10.1016/j.jeconom.2021.03.014)
@@ -44,6 +46,7 @@
 * **Hernán, M. A., Hernández-Díaz, S., & Robins, J. M. (2004).** *A structural approach to selection bias.* Epidemiology, 15(5), 615-625. [DOI: 10.1097/01.ede.0000135174.63482.43](https://doi.org/10.1097/01.ede.0000135174.63482.43)
 * **Hernán, M. A., & Robins, J. M. (2020).** [*Causal Inference: What If.*](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/) Boca Raton: Chapman & Hall/CRC.
 * **Hill, J. L. (2011).** *Bayesian nonparametric modeling for causal inference.* Journal of Computational and Graphical Statistics, 20(1), 217-240. [DOI: 10.1198/jcgs.2010.08162](https://doi.org/10.1198/jcgs.2010.08162)
+* **Holland, P. W. (1986).** *Statistics and causal inference.* Journal of the American Statistical Association, 81(396), 945-960. [DOI: 10.1080/01621459.1986.10478354](https://doi.org/10.1080/01621459.1986.10478354)
 * **Hudgens, M. G., & Halloran, M. E. (2008).** *Toward causal inference with interference.* Journal of the American Statistical Association, 103(482), 832-842. [DOI: 10.1198/016214508000000292](https://doi.org/10.1198/016214508000000292)
 * **Imbens, G. W., & Angrist, J. D. (1994).** *Identification and estimation of local average treatment effects.* Econometrica, 62(2), 467-475. [DOI: 10.2307/2951620](https://doi.org/10.2307/2951620)
 * **Imbens, G. W., & Lemieux, T. (2008).** *Regression discontinuity designs: A guide to practice.* Journal of Econometrics, 142(2), 615-635. [DOI: 10.1016/j.jeconom.2007.05.001](https://doi.org/10.1016/j.jeconom.2007.05.001)
@@ -89,6 +92,7 @@
 * **VanderWeele, T. J. (2009).** *Concerning the consistency assumption in causal inference.* Epidemiology, 20(6), 880-883. [DOI: 10.1097/EDE.0b013e3181bd5638](https://doi.org/10.1097/EDE.0b013e3181bd5638)
 * **VanderWeele, T. J. (2015).** *Explanation in Causal Inference: Methods for Mediation and Interaction.* Oxford University Press.
 * **VanderWeele, T. J., & Ding, P. (2017).** *Sensitivity analysis in observational research: Introducing the E-value.* Annals of Internal Medicine, 167(4), 268-274. [DOI: 10.7326/M16-2607](https://doi.org/10.7326/M16-2607)
+* **Verma, T., & Pearl, J. (1990).** *Equivalence and synthesis of causal models.* In Proceedings of the Sixth Conference on Uncertainty in Artificial Intelligence (UAI'90), 220-227. [arXiv:1304.1108](https://arxiv.org/abs/1304.1108)
 * **Wager, S., & Athey, S. (2018).** *Estimation and inference of heterogeneous treatment effects using random forests.* Journal of the American Statistical Association, 113(523), 1228-1242. [DOI: 10.1080/01621459.2017.1319839](https://doi.org/10.1080/01621459.2017.1319839)
 * **Wooldridge, J. M. (2010).** *Econometric Analysis of Cross Section and Panel Data* (2nd ed.). MIT Press.
 * **Wooldridge, J. M. (2012).** *Introductory Econometrics: A Modern Approach* (5th ed.). Cengage Learning. [DOI: 10.1016/C2011-0-05506-1](https://doi.org/10.1016/C2011-0-05506-1)

@@ -157,14 +157,14 @@ Given observational data, can we *learn* the DAG rather than assuming it? **Caus
 :label: markov-equivalence
 :class: dropdown
 
-Two DAGs are **Markov equivalent** if they encode exactly the same set of $d$-separation (conditional independence) statements. DAGs in the same equivalence class share the same **skeleton** (undirected edges) and the same set of **v-structures** (collider patterns $X \rightarrow C \leftarrow Y$ where $X$ and $Y$ are not adjacent).
+Two DAGs are **Markov equivalent** if they encode exactly the same set of $d$-separation (conditional independence) statements ([Verma & Pearl, 1990](https://arxiv.org/abs/1304.1108)). DAGs in the same equivalence class share the same **skeleton** (undirected edges) and the same set of **v-structures** (collider patterns $X \rightarrow C \leftarrow Y$ where $X$ and $Y$ are not adjacent).
 ```
 
 Observational data alone can only identify the DAG up to its Markov equivalence class. Orienting all edges requires either interventional data or additional assumptions ([Shalizi, 2025, Section 22.3](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ### The SGS Algorithm
 
-The **SGS algorithm** (Spirtes, Glymour & Scheines, 1993) is a constraint-based procedure that recovers the Markov equivalence class from conditional independence tests. The following pseudo-code is adapted from [Shalizi (2025, Section 22.7)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf).
+The **SGS algorithm** ([Spirtes, Glymour & Scheines, 1993](https://doi.org/10.1007/978-1-4612-2748-9)) is a constraint-based procedure that recovers the Markov equivalence class from conditional independence tests. The following pseudo-code is adapted from [Shalizi (2025, Section 22.7)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf).
 
 ```{prf:algorithm} SGS Algorithm
 :label: sgs-algorithm

@@ -233,7 +233,7 @@ A randomised treatment $T$ with a mediator $M$, whose relationship with $Y$ is c
 - **No backdoor to close.** Since $T$ is randomised, no arrow enters $T$ and there is **no backdoor path** at all - the treatment is unconfounded by design.
 - **Why not condition on $M$?** Adjusting for the mediator would do double damage: it (i) blocks the indirect causal effect $T \rightarrow M \rightarrow Y$, and (ii) *opens* the collider path $T \rightarrow M \leftarrow U \rightarrow Y$, injecting spurious association through the unmeasured $U$.
 
-**Correct adjustment set: $\emptyset$ (adjust for nothing).** The total effect of $T$ on $Y$ is identified without conditioning on any variable. Recovering the *direct* effect that does **not** operate through $M$ would instead require the mediation formula and the assumption of no unmeasured $M$–$Y$ confounding - which $U$ violates here (see {doc}`debias`).
+**Correct adjustment set: $\emptyset$ (adjust for nothing).** The total effect of $T$ on $Y$ is identified without conditioning on any variable. Recovering the *direct* effect that does **not** operate through $M$ would instead require the mediation formula and the assumption of no unmeasured $M$–$Y$ confounding - which $U$ violates here (see {doc}`debias`; [Pearl, 2001](https://arxiv.org/abs/1301.2300); VanderWeele, 2015).
 
 **Identifying independence.** Randomisation makes treatment independent of the potential outcomes **unconditionally**:
 
@@ -270,7 +270,7 @@ Leave the remaining structures untouched:
 - $M$ is a **mediator** on the causal path $T \rightarrow M \rightarrow Y$ - conditioning on it would block part of the effect.
 - $C$ is a **collider** ($T \rightarrow C \leftarrow Y$) - conditioning on it would open a spurious path.
 
-**Correct minimal adjustment set: $\{Z_1, Z_2\}$** (equivalently $\{Z_1, Z_3\}$). Either choice blocks both backdoor paths while leaving all causal paths open. The instrument $I$, the mediator $M$, and the collider $C$ are all deliberately excluded ({prf:ref}`backdoor-criterion`). Note that adjusting for the instrument $I$ is not merely unnecessary - it can *amplify* bias from any residual unmeasured confounding, so it is left out on purpose.
+**Correct minimal adjustment set: $\{Z_1, Z_2\}$** (equivalently $\{Z_1, Z_3\}$). Either choice blocks both backdoor paths while leaving all causal paths open. The instrument $I$, the mediator $M$, and the collider $C$ are all deliberately excluded ({prf:ref}`backdoor-criterion`). Note that adjusting for the instrument $I$ is not merely unnecessary - it can *amplify* bias from any residual unmeasured confounding ([Ding, VanderWeele & Robins, 2017](https://doi.org/10.1093/biomet/asx009)), so it is left out on purpose.
 
 **Identifying independence.** Blocking both backdoor paths yields conditional exchangeability:
 
