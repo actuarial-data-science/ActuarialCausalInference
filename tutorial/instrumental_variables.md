@@ -54,6 +54,27 @@ The **same exogenous covariates $X$ must appear in both stages**. Omitting them 
 For valid inference, obtain 2SLS estimates from a **dedicated IV routine** (`linearmodels.IV2SLS` in Python, `AER::ivreg` in R, or `ivregress` in Stata) rather than by fitting the two OLS stages by hand. The two approaches agree on the point estimate $\hat{\beta}$, but only the IV routine returns correct standard errors. The reason is instructive: valid 2SLS inference computes the error variance from the *structural* residuals $u = Y - \hat{\beta}T$ using the **observed** treatment $T$, whereas a manual second-stage OLS would use the fitted-treatment residuals $\hat{\varepsilon} = Y - \hat{\beta}\hat{T}$. Since $\hat{\varepsilon} = u + \hat{\beta}(T - \hat{T})$, its variance $\mathbb{E}[\hat{\varepsilon}^2] = \mathbb{E}[u^2] + \beta^2\,\operatorname{Var}(T - \hat{T}) + 2\beta\,\mathbb{E}[u(T - \hat{T})]$ carries a **cross term that is non-zero precisely because $T$ is endogenous** ($u$ is correlated with the first-stage residual $T - \hat{T}$). Its sign is not determined in general, so the hand-rolled standard errors are not merely conservative - they are simply **wrong**, and can err in either direction. Using the dedicated routine keeps inference well-calibrated, which matters in actuarial screening where a mis-calibrated test can wrongly admit a useless intervention or reject a genuinely beneficial one (Wooldridge, 2010, *Econometric Analysis of Cross Section and Panel Data*, p. 96).
 ```
 
+```{admonition} Instruments in an insurance setting
+:class: tip
+
+Valid instruments are rarer in insurance than genetic variants are in epidemiology, but several recurring designs supply one:
+
+- **Randomised encouragement.** An insurer that nudges a random subset of policyholders toward a wellness programme, telematics device, or preventive screening creates an encouragement $I$ that shifts take-up $T$ without directly affecting the outcome $Y$ (claims) - the actuarial analogue of a randomised-encouragement trial.
+- **Assignment quasi-randomness.** Broker, agent, or claims-adjuster assignment that is effectively random conditional on observed routing rules can instrument for a treatment they influence (e.g. settlement speed), provided the adjuster affects the outcome *only* through that channel.
+- **Administrative geography.** Distance to the nearest claims office, repair shop, or clinic shifts the cost of using a service without plausibly causing the loss itself.
+- **Regulatory cut-over dates.** A rating-factor ban or product-rule change that takes effect on a fixed date instruments for the post-reform treatment, exploiting variation no single policyholder controls.
+
+In every case the exclusion restriction is the binding assumption and deserves explicit, domain-specific defence - the encouragement must not change behaviour except through take-up, the adjuster must not affect claims except through the treatment, and so on.
+```
+
+## Weak Instruments and Over-identification
+
+The IV conditions guarantee *consistency*, not *precision*. When the instrument is only weakly relevant - the first stage $T = \alpha I + \gamma X + \varepsilon_1$ has a small $\hat{\alpha}$ relative to its standard error - two problems arise even in large samples: the 2SLS estimator becomes badly biased toward the (confounded) OLS estimate, and its sampling distribution is non-normal, so conventional confidence intervals under-cover ([Staiger & Stock, 1997](https://doi.org/10.2307/2171753); [Bound, Jaeger & Baker, 1995](https://doi.org/10.1080/01621459.1995.10476536)).
+
+The standard diagnostic is the **first-stage $F$-statistic** on the excluded instrument(s). A common rule of thumb treats $F < 10$ as a weak-instrument warning, while [Stock & Yogo (2005)](https://doi.org/10.1017/CBO9780511614491.006) provide formal critical values that bound the worst-case 2SLS bias or test-size distortion; recent work argues the threshold should often be considerably higher. In an insurance encouragement design this matters directly: if only a small fraction of nudged policyholders actually take up the programme, the instrument is weak and the LATE estimate - however unbiased in principle - may be too noisy to act on.
+
+With **more instruments than endogenous treatments** (over-identification), the surplus moment conditions can be tested: under the null that *all* instruments satisfy the exclusion restriction, the Sargan ([Sargan, 1958](https://doi.org/10.2307/1907619)) or Hansen $J$ statistic should be small. A rejection signals that at least one instrument violates exogeneity (e.g. a pleiotropic SNP, or an "instrument" that has its own path to the outcome), though the test cannot say which. Over-identification also improves efficiency - the multiple-SNP MR estimators below are the canonical example.
+
 ## Mendelian Randomization
 
 Mendelian Randomization (MR) is an application of the instrumental variable principle to genetics and epidemiology. The idea - dating to [Katan (1986)](https://doi.org/10.1016%2Fs0140-6736%2886%2992972-7) and formalized by [Davey Smith & Ebrahim (2003)](https://doi.org/10.1093/ije/dyg070) - exploits the fact that genetic variants are assigned at conception, before any environmental exposure, and therefore satisfy the IV conditions almost by construction:
