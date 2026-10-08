@@ -125,7 +125,7 @@ This is the source of **collider bias** (also called **selection bias** or **Ber
 | **Collider** (Common Effect) | $X \rightarrow C \leftarrow Y$ | Independent | Dependent |
 
 ```{note}
-The **Independent** cells (chain/fork conditional on the middle node, collider marginal) follow from the {prf:ref}`causal-markov` alone: $d$-separation implies conditional independence. The **Dependent** cells (chain/fork marginal, conditioned collider) are the *converse* direction - inferring dependence from $d$-connection - and additionally require {prf:ref}`faithfulness`, introduced below. In a non-faithful distribution they can fail: e.g. in a linear chain $X \rightarrow M \rightarrow Y$ whose direct and indirect contributions cancel exactly, $X$ and $Y$ are marginally *independent* despite the open path.
+The **Independent** cells (chain/fork conditional on the middle node, collider marginal) follow from the {prf:ref}`causal-markov` alone: $d$-separation implies conditional independence. The **Dependent** cells (chain/fork marginal, conditioned collider) are the *converse* direction - inferring dependence from $d$-connection - and additionally require {prf:ref}`faithfulness`, introduced below. In a non-faithful distribution they can fail: e.g. in a linear model with $X \rightarrow M \rightarrow Y$ **and** a direct edge $X \rightarrow Y$ whose direct and indirect effects cancel exactly ($\beta_{XY} = -\beta_{XM}\beta_{MY}$), $X$ and $Y$ are marginally *independent* despite being $d$-connected.
 ```
 
 ## $d$-Separation
