@@ -31,10 +31,8 @@ parts:
 
   - caption: Actuarial Applications
     chapters:
-#      - file: application/case_study.ipynb
       - file: application/observational_data.ipynb
       - file: application/claims_triage.ipynb
-#      - file: application/traffic_study.ipynb
       - file: application/health_interventions.ipynb
 
   - caption: References
