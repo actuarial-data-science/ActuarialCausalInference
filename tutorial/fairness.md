@@ -1,3 +1,4 @@
+# Fairness and Discrimination-Free Pricing
 
 ## Causal Inference and Fairness
 
@@ -90,7 +91,45 @@ This resolves the philosophical objection cleanly: **we never intervene on $S$ a
 :label: group-fairness-criteria
 :class: dropdown
 
-The machine learning literature evaluates a predictor against several **group fairness criteria** ([Barocas et al., 2019](https://fairmlbook.org/)). The interactive explainer in {doc}`../application/pricing` lets you toggle between the criteria defined below and watch the consequence of each choice. Most are *classification-parity* conditions that constrain the decision $\hat{Y}$ (its rate or its errors) across groups; calibration is different - it constrains the outcome given the score, $Y \perp\!\!\!\perp S \mid \hat{\mu}(X)$, fixing the statistical meaning of the score rather than the decision rate. What distinguishes the criteria is *which* errors they equalise, and therefore *what they cost* when the groups have genuinely different risk.
+The machine learning literature evaluates a predictor against several **group fairness criteria** ([Barocas et al., 2019](https://fairmlbook.org/)). The interactive explainer below lets you toggle between the criteria defined in this section and watch the consequence of each choice. Most are *classification-parity* conditions that constrain the decision $\hat{Y}$ (its rate or its errors) across groups; calibration is different - it constrains the outcome given the score, $Y \perp\!\!\!\perp S \mid \hat{\mu}(X)$, fixing the statistical meaning of the score rather than the decision rate. What distinguishes the criteria is *which* errors they equalise, and therefore *what they cost* when the groups have genuinely different risk.
+```
+
+```{raw} html
+<iframe id="fairprice" src="../figure/fairness_price_explainer.html?v=20260612d"
+        style="width:100%; border:none; height:900px;"
+        title="Discrimination-free pricing interactive explainer"></iframe>
+<script>
+(function () {
+  var iframe = document.getElementById('fairprice');
+  function currentTheme() {
+    var root = document.documentElement;
+    var theme = root.getAttribute('data-theme');
+    if (theme === 'light' || theme === 'dark') return theme;
+    var mode = root.getAttribute('data-mode') || 'auto';
+    if (mode === 'light' || mode === 'dark') return mode;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function sendTheme() {
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'set-theme', value: currentTheme() }, '*');
+    }
+  }
+  window.addEventListener('message', function (e) {
+    if (!e.data) return;
+    if (e.data.type === 'fair-price-height') {
+      iframe.style.height = (e.data.height + 20) + 'px';
+    } else if (e.data.type === 'fair-price-ready') {
+      sendTheme();
+    }
+  });
+  new MutationObserver(sendTheme).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-mode', 'data-theme']
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sendTheme);
+  iframe.addEventListener('load', sendTheme);
+  sendTheme();
+})();
+</script>
 ```
 
 The **weakest** criterion is {prf:ref}`fairness-unawareness` (group unawareness): $S$ is simply not an input. As the whole of this page argues, proxy discrimination defeats it. The four criteria below are progressively more demanding constraints on the *decisions*, not the inputs.
