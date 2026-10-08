@@ -47,7 +47,7 @@ Different estimation methods target different estimands. The table below maps me
 | **Meta-Learners (S/T/X, R/DR)** | CATE | Decompose CATE estimation into regression sub-tasks | {doc}`heterogeneous_effects` |
 | **Causal Trees / Forests** | CATE | Partition covariate space to expose effect heterogeneity | {doc}`heterogeneous_effects` |
 | **Instrumental Variables / 2SLS** | LATE | Use exogenous variation from an instrument | {doc}`instrumental_variables` |
-| **Quasi-Experimental (DiD, RD, SC)** | ATT | Exploit natural experiments and institutional variation | {doc}`quasi_experimental` |
+| **Quasi-Experimental (DiD, RD, SC)** | ATT (DiD, SC) / effect at cutoff (RD) | Exploit natural experiments and institutional variation | {doc}`quasi_experimental` |
 | **Bayesian (BART / BCF)** | CATE | Posterior distributions over treatment effects via sum-of-trees priors | {doc}`bayesian` |
 
 ## Chapter Contents
