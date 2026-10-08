@@ -46,13 +46,26 @@ Unawareness is not sufficient - it does not prevent proxy discrimination.
 :label: discrimination-free-pricing
 :class: dropdown
 
-An insurance price is **discrimination-free** ([Lindholm et al., 2021](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)) if
+The **discrimination-free price** ([Lindholm et al., 2021](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)) averages the best-estimate price over the *marginal* population distribution of the sensitive attribute, severing its link with the covariates:
+
+$$
+\mu^{\mathrm{df}}(x) = \int \mu(x, s) \, \mathrm{d}P(s), \qquad \mu(x, s) = \mathbb{E}[Y \mid X = x, S = s].
+$$
+
+Because $S$ is integrated against its marginal $P(s)$ rather than its conditional $P(s \mid x)$, the resulting price removes both the direct and the proxy (indirect) dependence on $S$ while remaining a genuine function of the risk covariates $X$.
+```
+
+```{prf:remark} When unawareness is already discrimination-free
+:label: unawareness-sufficient
+:class: dropdown
+
+If the outcome does not depend on $S$ given $X$ - that is,
 
 $$
 P(Y \leq y \mid X, S) = P(Y \leq y \mid X) \quad \text{for all } y
 $$
 
-i.e., the sensitive attribute $S$ carries no additional information about $Y$ beyond the non-protected covariates $X$.
+- then $\mu(x, s)$ does not vary with $s$, and the discrimination-free price {prf:ref}`discrimination-free-pricing` coincides with the plain best-estimate (unawareness) price $\mu(x)$. This condition is a property of the *data-generating process*, not a definition of fairness: when it fails, $\mu^{\mathrm{df}}$ still removes the dependence on $S$, whereas the unawareness price channels it through $X$.
 ```
 
 ```{prf:remark} Limits of counterfactual fairness for immutable attributes
