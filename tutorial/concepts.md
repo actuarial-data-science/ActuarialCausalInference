@@ -118,7 +118,7 @@ The bridge from a causal estimand to a statistical estimand is built entirely fr
 No statistical procedure can *prove* a causal effect from observational data. Every estimate is conditional on assumptions that come from domain knowledge, not from the data. The role of the analyst is to (1) state these assumptions explicitly, (2) encode them in a DAG or potential-outcomes model, and (3) probe how fragile the conclusions are when the assumptions are relaxed.
 ```
 
-This is why **sensitivity analysis** is not optional but a core part of any credible causal study: rather than asking "is exchangeability true?", we ask "*how strong* would an unmeasured confounder have to be to overturn our conclusion?". These tools - E-values, Rosenbaum bounds, and partial-$R^2$ methods - are developed in {doc}`diagnostics` and {doc}`sensitivity`.
+This is why **sensitivity analysis** is not optional but a core part of any credible causal study: rather than asking "is exchangeability true?", we ask "*how strong* would an unmeasured confounder have to be to overturn our conclusion?". These tools - E-values, Rosenbaum bounds, and partial-$R^2$ methods - are developed in {doc}`diagnostics`.
 
 
 ### Notation

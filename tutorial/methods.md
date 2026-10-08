@@ -216,5 +216,5 @@ When no admissible adjustment set exists, an **instrument** $Z$ - a source of ex
 
 ```{note}
 :class: dropdown
-This section frames identification only. *How* to estimate each identified quantity from a finite sample - with propensity scores, regression, machine-learning, tree-based, or Bayesian methods - is the subject of {doc}`inference`, and the robustness of the underlying assumptions is examined in {doc}`sensitivity`.
+This section frames identification only. *How* to estimate each identified quantity from a finite sample - with propensity scores, regression, machine-learning, tree-based, or Bayesian methods - is the subject of {doc}`inference`, and the robustness of the underlying assumptions is examined in {doc}`diagnostics`.
 ```
