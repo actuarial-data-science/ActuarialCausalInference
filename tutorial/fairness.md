@@ -29,7 +29,7 @@ The actuarial problem this creates is precise: we must build a price that is **p
 **Proxy discrimination** (indirect discrimination) occurs when non-protected covariates $X$ that are correlated with the sensitive attribute $S$ allow the model to implicitly reconstruct $S$, even though $S$ is not used as an input.
 ```
 
-The mechanism is the tower property of conditional expectation: $\mu(X) = \int \mu(X, s) \, \mathrm{d}P(S{=}s \mid X)$. If $X$ and $S$ are dependent, the unawareness price channels information about $S$ through $X$ ([Lindholm et al., 2021](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)).
+The mechanism is the tower property of conditional expectation: $\mu(X) = \int \mu(X, s) \, \mathrm{d}P(S{=}s \mid X)$. If $X$ and $S$ are dependent, the unawareness price channels information about $S$ through $X$ ([Lindholm et al., 2022](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)).
 
 ### From Unawareness to the Discrimination-Free Price
 
@@ -46,7 +46,7 @@ Unawareness is not sufficient - it does not prevent proxy discrimination.
 :label: discrimination-free-pricing
 :class: dropdown
 
-The **discrimination-free price** ([Lindholm et al., 2021](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)) averages the best-estimate price over the *marginal* population distribution of the sensitive attribute, severing its link with the covariates:
+The **discrimination-free price** ([Lindholm et al., 2022](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)) averages the best-estimate price over the *marginal* population distribution of the sensitive attribute, severing its link with the covariates:
 
 $$
 \mu^{\mathrm{df}}(x) = \int \mu(x, s) \, \mathrm{d}P(s), \qquad \mu(x, s) = \mathbb{E}[Y \mid X = x, S = s].
@@ -81,7 +81,7 @@ For immutable characteristics such as gender or ethnicity, this counterfactual i
 :label: causal-dfp-connection
 :class: dropdown
 
-[Lindholm et al. (2021)](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117), Section 3, provide a causal motivation for {prf:ref}`discrimination-free-pricing` that sidesteps the difficulties of counterfactual fairness entirely. The starting point is a **directed acyclic graph (DAG)** in which $S$ may influence $Y$ both directly ($S \to Y$) and indirectly by shaping the non-protected covariates ($S \to X \to Y$).
+[Lindholm et al. (2022)](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117), Section 3, provide a causal motivation for {prf:ref}`discrimination-free-pricing` that sidesteps the difficulties of counterfactual fairness entirely. The starting point is a **directed acyclic graph (DAG)** in which $S$ may influence $Y$ both directly ($S \to Y$) and indirectly by shaping the non-protected covariates ($S \to X \to Y$).
 
 The causal question posed is:
 
@@ -211,7 +211,7 @@ i.e. among everyone assigned the same price $\hat{\mu}(X)$, the realised risk is
 :label: fairness-incompatibility
 :class: dropdown
 
-These criteria are useful **diagnostic checks** but cannot replace causal reasoning. [Lindholm et al. (2021)](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117) show that even a genuinely discrimination-free model violates them whenever $X$ and $S$ are statistically dependent. Moreover, except in trivial cases, the criteria are mutually incompatible at unequal base rates: no decision can be simultaneously calibrated *and* equalise both error rates ([Kleinberg et al., 2017](https://arxiv.org/abs/1609.05807); [Chouldechova, 2017](https://doi.org/10.1089/big.2016.0047)). Choosing a criterion is therefore a value judgement about *which* fairness to buy and *which* to forgo - not a technical detail the model can settle on its own.
+These criteria are useful **diagnostic checks** but cannot replace causal reasoning. [Lindholm et al. (2022)](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117) show that even a genuinely discrimination-free model violates them whenever $X$ and $S$ are statistically dependent. Moreover, except in trivial cases, the criteria are mutually incompatible at unequal base rates: no decision can be simultaneously calibrated *and* equalise both error rates ([Kleinberg et al., 2017](https://arxiv.org/abs/1609.05807); [Chouldechova, 2017](https://doi.org/10.1089/big.2016.0047)). Choosing a criterion is therefore a value judgement about *which* fairness to buy and *which* to forgo - not a technical detail the model can settle on its own.
 ```
 
 
