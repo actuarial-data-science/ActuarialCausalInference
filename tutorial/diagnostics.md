@@ -247,7 +247,7 @@ For a **protective effect** ($\text{RR}_{\text{obs}} < 1$) the radicand $\text{R
 
 A large E-value means the observed association is robust: only a very strong unmeasured confounder could explain it away. A small E-value indicates vulnerability to even moderate unmeasured confounding.
 
-For treatment effects on continuous outcomes, analogous E-values can be computed by first converting the effect to an approximate risk ratio scale.
+For treatment effects on continuous outcomes, analogous E-values can be computed by first converting the effect to an approximate risk ratio scale. Following [VanderWeele & Ding (2017)](https://doi.org/10.7326/M16-2607), a standardised mean difference $d$ (the effect divided by the pooled outcome SD) maps to $\text{RR} \approx \exp(0.91\,d)$, after which the E-value formula applies; a rate ratio for rare claim counts can be fed in directly. For the actuarial default - a frequency reduction already expressed as a rate ratio, or a severity shift standardised to $d$ - this yields one concrete E-value on the claims scale.
 
 ```{figure} figs/evalue_curve.svg
 :width: 90%

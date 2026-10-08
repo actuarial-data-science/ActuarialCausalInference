@@ -12,4 +12,4 @@ Once a causal effect has been *identified* ({doc}`identification`) and *estimate
 
 ## Fairness
 
-**{doc}`fairness`** - Beyond statistical bias, insurance models must not discriminate against protected groups. Covers proxy discrimination, fairness definitions (unawareness, discrimination-free pricing, counterfactual fairness), group fairness diagnostics, and why fairness is ultimately a causal question - closing with the actuary's end-to-end workflow.
+**{doc}`fairness`** - Beyond statistical bias, insurance models must not discriminate against protected groups. Covers proxy discrimination, fairness definitions (unawareness, discrimination-free pricing, counterfactual fairness), group fairness diagnostics, and why fairness is ultimately a causal question.

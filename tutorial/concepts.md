@@ -139,4 +139,7 @@ Throughout this tutorial we adopt the following conventions. Let $D = \{(X_i, T_
 | $\pi(x)$ | Propensity score: $\pi(x) = \mathbb{P}(T=1 \mid X=x)$ |
 | $\mu(t,x)$ | Outcome model: $\mu(t,x) = \mathbb{E}[Y \mid T=t, X=x]$ |
 | $m(x)$ | Marginal outcome regression: $m(x) = \mathbb{E}[Y \mid X=x]$ |
+| $\tau(x)$ | Conditional average treatment effect (CATE): $\tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X=x]$ |
+
+Estimands are abbreviated **ATE** (average treatment effect), **ATT** (average treatment effect on the treated), **CATE** (conditional ATE), and **LATE** (local ATE, i.e. the complier effect); they are defined in {doc}`inference`.
 

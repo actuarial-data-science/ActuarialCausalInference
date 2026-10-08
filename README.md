@@ -39,7 +39,7 @@ The tutorial guides the reader from foundational concepts, identification and in
 - {doc}`tutorial/fairness` - Discrimination and fairness in insurance pricing, and why fairness is a causal question.
 
 
-The actuary's end-to-end workflow connects the identification theory from {doc}`tutorial/identification` with the estimation methods in {doc}`tutorial/inference` and the validation tools in {doc}`tutorial/sensitivity`.
+The tutorial connects the identification theory from {doc}`tutorial/identification` with the estimation methods in {doc}`tutorial/inference` and the validation tools in {doc}`tutorial/diagnostics`.
 
 
 ### Actuarial Applications
