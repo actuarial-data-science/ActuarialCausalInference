@@ -104,7 +104,7 @@ A causal effect is **identifiable** if it can be expressed purely in terms of th
 
 The key distinction is between a **causal estimand** - defined via potential outcomes (e.g. the ATE $\mathbb{E}[Y(1) - Y(0)]$) - and a **statistical estimand** - a quantity computable from the observed data. Identifiability is the bridge: the assumptions of consistency, SUTVA, positivity, and exchangeability equate the two *at the conditional level*, $\mathbb{E}[Y(1) - Y(0) \mid X] = \mathbb{E}[Y \mid T=1, X] - \mathbb{E}[Y \mid T=0, X]$. The scalar ATE then follows by an outer expectation over $X$ (the standardisation / g-formula), $\mathbb{E}[Y(1) - Y(0)] = \mathbb{E}_X\big[\mathbb{E}[Y \mid T=1, X] - \mathbb{E}[Y \mid T=0, X]\big]$ - making estimation possible. For a formal treatment, see [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html) and [Hernán & Robins (2020, Ch. 2)](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/).
 
-For heterogeneous treatment effect estimation, see [Athey & Imbens (2016)](https://doi.org/10.1073/pnas.1510489113), [Wager & Athey (2018)](https://doi.org/10.1080/01621459.2017.1319839), and [Schmidt (2018)](https://doi.org/10.48550/arXiv.1810.13237).
+Identification of *heterogeneous* effects (CATEs) rests on these same assumptions applied conditionally on $X$; the associated estimators are developed in {doc}`heterogeneous_effects`.
 
 
 
