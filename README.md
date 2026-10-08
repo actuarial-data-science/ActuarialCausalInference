@@ -23,8 +23,8 @@ The tutorial guides the reader from foundational concepts, identification and in
 
 **Stage 2 - {doc}`tutorial/identification`:** Establishes *when* causal effects can be recovered from observational data. This requires verifying the causal assumptions, using graphical models to select correct adjustment sets, and choosing an identification strategy.
 - {doc}`tutorial/assumptions` - Consistency, SUTVA, positivity, exchangeability, and how to detect violations.
-- {doc}`tutorial/graphical_models` - DAGs, d-separation, backdoor and frontdoor criteria, causal discovery.
-- {doc}`tutorial/methods` - Identification strategies: back-door adjustment, front-door adjustment, and instrumental variables.
+- {doc}`tutorial/graphical_models` - DAGs, d-separation, and the three fundamental path structures (chains, forks, colliders).
+- {doc}`tutorial/methods` - Identification strategies: back-door and front-door adjustment (with their graphical criteria), instrumental variables, and causal discovery.
 
 **Stage 3 - {doc}`tutorial/inference`:** Covers *how* to estimate causal effects once identification is established. Methods range from classical propensity score approaches to modern machine learning estimators.
 - {doc}`tutorial/direct_adjustment` - G-computation, propensity score matching, inverse probability weighting, and the doubly robust estimators AIPW, TMLE and DML.

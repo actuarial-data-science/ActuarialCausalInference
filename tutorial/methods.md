@@ -24,7 +24,7 @@ $$
 
 This is the workhorse identification strategy and underpins propensity-score and regression-based estimators in {doc}`inference`.
 
-The following criteria provide graphical answers ([Shalizi, 2025, Section 21.1-21.2](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+The back-door criterion below gives the graphical test for when a candidate adjustment set $Z$ closes all back-door paths ([Shalizi, 2025, Section 21.1-21.2](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ### The Backdoor Criterion
 
