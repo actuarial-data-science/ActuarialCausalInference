@@ -250,7 +250,7 @@ In an SEM, the **treatment effect heterogeneity** is explicit: the coefficient o
 
 ## Doubly Robust Estimation: AIPW and TMLE
 
-Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the propensity model $\hat{\pi}(x)$ so that the estimate is consistent if *either* model is correctly specified - a property that single-model approaches lack. The *Augmented Inverse Propensity Weighting* (AIPW) estimator of [Robins, Rotnitzky & Zhao (1994)](https://doi.org/10.1080/01621459.1994.10476818) augments the G-computation estimate with an inverse-propensity-weighted residual correction; [Bang & Robins (2005)](https://doi.org/10.1111/j.1541-0420.2005.00377.x) developed the framework for causal inference, and [van der Laan & Rubin (2006)](https://doi.org/10.2202/1557-4679.1043) introduced *Targeted Maximum Likelihood Estimation* (TMLE) as a substitution-based alternative with the same robustness guarantee. DML (next section) is essentially AIPW equipped with Neyman-orthogonality and cross-fitting.
+Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the propensity model $\hat{\pi}(x)$ so that the estimate is consistent if *either* model is correctly specified - a property that single-model approaches lack. The *Augmented Inverse Propensity Weighting* (AIPW) estimator of [Robins, Rotnitzky & Zhao (1994)](https://doi.org/10.1080/01621459.1994.10476818) augments the G-computation estimate with an inverse-propensity-weighted residual correction; [Bang & Robins (2005)](https://doi.org/10.1111/j.1541-0420.2005.00377.x) developed the framework for causal inference, and [van der Laan & Rubin (2006)](https://doi.org/10.2202/1557-4679.1043) introduced *Targeted Maximum Likelihood Estimation* (TMLE) as a substitution-based alternative with the same robustness guarantee. The AIPW score is already Neyman-orthogonal (proved in the next section); DML's distinctive contribution is **cross-fitting** together with the rate conditions ($o_p(n^{-1/4})$ on each nuisance) that license plugging in flexible ML learners. In its *interactive-model* form DML is AIPW with cross-fitted ML nuisances, whereas the *partially-linear* form presented below is Robinson's residual-on-residual estimator.
 
 ```{prf:algorithm} Augmented Inverse Propensity Weighting (AIPW)
 :label: alg-aipw
@@ -414,12 +414,14 @@ Step 4 of {prf:ref}`alg-aipw`.
 ```{note}
 :class: dropdown
 
-**Outcome type matters - read before applying TMLE to loss data.** The targeting step above uses a **logistic fluctuation** (offset $\text{logit}\,\hat{\mu}^0$, clever covariate $H$), which is only valid when the outcome is **binary or bounded in $[0,1]$**. For unbounded continuous outcomes a different fluctuation family is required - a **Gaussian fluctuation with the identity link** ([van der Laan & Rubin, 2006](https://doi.org/10.2202/1557-4679.1043)) - otherwise the targeting step is misspecified and the resulting $\hat{\tau}$ is invalid.
+**Outcome type matters - read before applying TMLE to loss data.** The targeting step above uses a **logistic fluctuation** (offset $\text{logit}\,\hat{\mu}^0$, clever covariate $H$), which operates on outcomes in $[0,1]$. Applying it *directly* to an unbounded loss amount is incorrect - but the fix is **not** to abandon the logistic fluctuation. The recommended default ([Gruber & van der Laan, 2010](https://doi.org/10.2202/1557-4679.1260)) is to **rescale the outcome to $[0,1]$** via $\tilde{Y} = (Y - a)/(b - a)$, run the logistic fluctuation on $\tilde{Y}$, and back-transform; this keeps the targeted predictions in range and is more stable than an identity-link update, which can produce out-of-range fitted values.
 
-In non-life actuarial work this is the *usual* case, not an edge case: the primary outcomes - **claim amounts, loss ratios, and claim counts** - are continuous or count-valued and unbounded, not $\{0,1\}$. An actuary who applies the logistic formulation above directly to a loss amount is implementing an incorrect targeting step. Two practical routes:
+In non-life actuarial work bounded outcomes are not the default: the primary outcomes - **claim amounts, loss ratios, and claim counts** - are continuous or count-valued. Two routes:
 
-- **Bounded continuous outcomes** (e.g. loss ratios in $[0,1]$, or any outcome rescaled to $[0,1]$ via $\tilde{Y} = (Y - a)/(b - a)$ and back-transformed): the logistic fluctuation applies directly after rescaling ([Gruber & van der Laan, 2010](https://doi.org/10.2202/1557-4679.1260)).
-- **Unbounded outcomes** (claim severities, aggregate losses): use the Gaussian/identity-link fluctuation, or a count-appropriate family for frequencies.
+- **Default - rescale and keep the logistic fluctuation** (any outcome with known or estimable bounds $[a, b]$, including loss ratios in $[0,1]$): map to $[0,1]$, target, and back-transform ([Gruber & van der Laan, 2010](https://doi.org/10.2202/1557-4679.1260)).
+- **Alternative - identity-link (Gaussian) fluctuation** ([van der Laan & Rubin, 2006](https://doi.org/10.2202/1557-4679.1043)): valid for unbounded continuous outcomes, but can yield out-of-range predictions and is typically less stable.
+
+A caveat specific to insurance: heavy-tailed claim **severities** make *any* fluctuation step fragile, because a handful of large losses dominate the targeting update. A log- or otherwise variance-stabilising transform (taking care over the back-transform bias) is often advisable before TMLE.
 
 In practice, prefer a maintained implementation such as the R package [`tmle`](https://CRAN.R-project.org/package=tmle), which selects the correct fluctuation family for binary, bounded-continuous, and continuous outcomes automatically.
 ```
@@ -438,21 +440,23 @@ The DML estimator of [Chernozhukov et al. (2018)](https://doi.org/10.1111/ectj.1
 
 **Outputs** Estimated causal effect $\hat{\tau}$
 
-1. Split data $D$ into two disjoint sets: $D_{train}$ and $D_{eval}$ *(Cross-fitting/Honesty)*
+1. Split data $D$ into two disjoint folds $D_A$ and $D_B$ *(Sample splitting)*
 
 2. **Outcome Residualization**
-	1. Train model $\hat{\mu}(X) = \mathcal{L}_Y(Y \sim X)$ on $D_{train}$ *(Predict $Y$ using covariates only)*
-	2. Compute residuals $\tilde{Y} = Y - \hat{\mu}(X)$ on $D_{eval}$
+	1. Train model $\hat{\mu}(X) = \mathcal{L}_Y(Y \sim X)$ on $D_A$ *(Predict $Y$ using covariates only)*
+	2. Compute residuals $\tilde{Y} = Y - \hat{\mu}(X)$ on $D_B$
 
 3. **Treatment Residualization**
-	1. Train model $\hat{\pi}(X) = \mathcal{L}_T(T \sim X)$ on $D_{train}$ *(Estimate the treatment conditional mean $\pi(X) = \mathbb{E}[T \mid X]$; for binary $T$ this coincides with the propensity score $\mathbb{P}(T=1 \mid X)$)*
-	2. Compute residuals $\tilde{T} = T - \hat{\pi}(X)$ on $D_{eval}$
+	1. Train model $\hat{\pi}(X) = \mathcal{L}_T(T \sim X)$ on $D_A$ *(Estimate the treatment conditional mean $\pi(X) = \mathbb{E}[T \mid X]$; for binary $T$ this coincides with the propensity score $\mathbb{P}(T=1 \mid X)$)*
+	2. Compute residuals $\tilde{T} = T - \hat{\pi}(X)$ on $D_B$
 
 4. **Causal Estimation**
-	1. Regress outcome residuals on treatment residuals: $\tilde{Y} = \tau \tilde{T} + \varepsilon$
+	1. Estimate $\hat{\tau}$ by **no-intercept OLS** of the outcome residuals on the treatment residuals: $\tilde{Y} = \tau \tilde{T} + \varepsilon$
 	2. *Note:* This identifies the effect using only the "exogenous" variation in $T$
 
-5. Return estimated treatment effect $\hat{\tau}$
+5. **Cross-fitting:** swap the roles of $D_A$ and $D_B$ (fit the nuisances on $D_B$, then residualise and estimate on $D_A$) and **average** the two $\hat{\tau}$ estimates. With $K$ folds, repeat for each held-out fold and average, so every observation contributes to estimation while its nuisances are always fit out-of-fold - recovering full efficiency.
+
+6. Return estimated treatment effect $\hat{\tau}$
 ```
 
 ```{note}
