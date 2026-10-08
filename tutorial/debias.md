@@ -1,6 +1,6 @@
 # Biases and De-Biasing Toolkit
 
-In {doc}`assumptions` we established the four assumptions - {prf:ref}`consistency`, {prf:ref}`sutva`, {prf:ref}`positivity`, and {prf:ref}`exchangeability` - that allow causal effects to be identified from observational data. In {doc}`graphical_models` we introduced DAGs as the language for encoding and reasoning about these assumptions. In practice, **assumptions are rarely perfectly satisfied**. This chapter is a practical guide for the actuary: how to diagnose what went wrong, how to fix it, and how to ensure the resulting model is fair.
+In {doc}`assumptions` we established the four assumptions - {prf:ref}`consistency`, {prf:ref}`sutva`, {prf:ref}`positivity`, and {prf:ref}`exchangeability` - that allow causal effects to be identified from observational data. In {doc}`graphical_models` we introduced DAGs as the language for encoding and reasoning about these assumptions. In practice, **assumptions are rarely perfectly satisfied**. This chapter is a practical guide for the actuary: how to diagnose what went wrong and how to fix it. Fairness, a related but distinct concern, has its own chapter ({doc}`fairness`).
 
 ## What went wrong? - From Assumption Violations to Biases
 
@@ -92,7 +92,7 @@ The biases above are not merely theoretical concerns - they are practical obstac
 | **Reweight** (IPW, IPCW, overlap weighting) | Confounding, selection, positivity | {doc}`direct_adjustment` |
 | **Restrict** (trimming, redefine target population) | Positivity violations | {doc}`direct_adjustment` |
 | **Model the causal structure** (DAG-guided variable selection) | Collider bias, confounding | {doc}`graphical_models` |
-| **Cluster or network models** (incl. exposure-mapping / spillover-robust estimators) | Interference / spillover | - |
+| **Cluster or network models** (incl. exposure-mapping / spillover-robust estimators) | Interference / spillover | {doc}`assumptions` |
 | **Sensitivity analysis** | Unobserved confounding | {doc}`diagnostics` |
 
 ### Adjust

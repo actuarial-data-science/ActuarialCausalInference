@@ -56,7 +56,7 @@ The adjustment formula converts the interventional distribution $P(Y \mid \text{
 
 1. **Check descendant condition:** For each $z_i \in Z$:
 	1. If $z_i \in \text{Descendants}(T)$ in $\mathcal{G}$, return `False`
-2. **Enumerate backdoor paths:** Find all (undirected) paths between $T$ and $Y$ that have an arrow into $T$ (i.e. paths of the form $T \leftarrow \cdots\ \leftarrow Y$ or $T \leftarrow \cdots \rightarrow Y$)
+2. **Enumerate backdoor paths:** Find all (undirected) paths between $T$ and $Y$ whose first edge points into $T$ (i.e. any path of the form $T \leftarrow \cdots\ Y$); the interior of such a path may itself contain colliders
 3. **Check blocking:** For each backdoor path $p$:
 	1. If $p$ is not blocked by $Z$ (applying the $d$-separation rules from {prf:ref}`blocked-path`), return `False`
 4. Return `True`

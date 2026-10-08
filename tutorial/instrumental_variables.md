@@ -38,7 +38,7 @@ The instrumental variable $I$ is a source of exogenous variation in $T$ that is 
 
 1. **Stage 1: Regress $T$ on instrument $I$ and covariates $X$** *(Isolate exogenous variation)*
 	1. Estimate $\hat{\alpha}, \hat{\gamma}$ from $T = \alpha I + \gamma X + \varepsilon_1$
-	2. Compute predicted values $\hat{T} = \hat{\alpha} I + \hat{\gamma} X$ *($\hat{T}$ is now independent of $U$)*
+	2. Compute predicted values $\hat{T} = \hat{\alpha} I + \hat{\gamma} X$ *($\hat{T}$ is asymptotically uncorrelated with $U$)*
 
 2. **Stage 2: Regress $Y$ on predicted $\hat{T}$ and covariates $X$** *(Identify causal mechanism)*
 	1. Estimate $\hat{\beta}, \hat{\delta}$ from $Y = \beta \hat{T} + \delta X + \varepsilon_2$
@@ -77,7 +77,7 @@ With **more instruments than endogenous treatments** (over-identification), the 
 
 ## Mendelian Randomization
 
-Mendelian Randomization (MR) is an application of the instrumental variable principle to genetics and epidemiology. The idea - dating to [Katan (1986)](https://doi.org/10.1016%2Fs0140-6736%2886%2992972-7) and formalised by [Davey Smith & Ebrahim (2003)](https://doi.org/10.1093/ije/dyg070) - exploits the fact that genetic variants are assigned at conception, before any environmental exposure, and therefore satisfy the IV conditions almost by construction:
+Mendelian Randomization (MR) is an application of the instrumental variable principle to genetics and epidemiology. The idea - dating to [Katan (1986)](https://doi.org/10.1016/S0140-6736(86)92972-7) and formalised by [Davey Smith & Ebrahim (2003)](https://doi.org/10.1093/ije/dyg070) - exploits the fact that genetic variants are assigned at conception, before any environmental exposure, and therefore satisfy the IV conditions almost by construction:
 
 1. **Relevance**: the variant is associated with the exposure $T$ (e.g. LDL cholesterol level).
 2. **Exogeneity**: Mendelian randomization - the random shuffling of alleles during meiosis - makes the inherited variant independent of most confounders $U$.

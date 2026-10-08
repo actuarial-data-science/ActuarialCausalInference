@@ -170,7 +170,7 @@ $$
 Equivalently: if $X \perp_{\mathcal{G}} Y \mid Z$ ($d$-separation), then $X \perp\!\!\!\perp Y \mid Z$ (conditional independence in $P$).
 ```
 
-The Causal Markov Condition ensures that $d$-separation implies conditional independence. The converse - that every conditional independence in the data corresponds to a $d$-separation in the graph - requires an additional assumption.
+The Causal Markov Condition ensures that $d$-separation implies conditional independence ([Verma & Pearl, 1990](https://arxiv.org/abs/1304.1108)). The converse - that every conditional independence in the data corresponds to a $d$-separation in the graph - requires an additional assumption.
 
 ```{prf:assumption} Faithfulness
 :label: faithfulness

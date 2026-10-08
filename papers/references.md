@@ -107,7 +107,7 @@
 
 ## Useful Links
 ### Theory
-- [Causal ML Book](https://www.causalmlbook.com/synthetic-did-and-regression-discontinuity.html)
+- [Causal ML Book](https://www.causalmlbook.com/)
 - [Introduction to Causal Inference (Brady Neal, 2020)](https://www.bradyneal.com/Introduction_to_Causal_Inference-Aug27_2020-Neal.pdf)
 - [Python Causality Handbook](https://matheusfacure.github.io/python-causality-handbook/)
 - [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html)

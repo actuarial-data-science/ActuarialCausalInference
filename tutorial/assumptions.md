@@ -7,8 +7,7 @@ Causal inference from observational data relies on the idea that, under the assu
 Under the assumptions of ignorability (see below), the observed data represent the essential features of a randomised experiment, enabling the identification and consistent estimation of causal effects within the **potential outcomes framework**.
 
 ## Potential Outcomes Framework
-- [Rubin (1974)](https://doi.org/10.1037/h0037350) extended Neyman's (1923) theory for randomised experiments to observational studies.
-- Specifically, when treatment assignment is **strongly ignorable** given a set of observed covariates - that is, when the following two conditions hold ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)):
+[Rubin (1974)](https://doi.org/10.1037/h0037350) extended Neyman's (1923) theory for randomised experiments to observational studies. Treatment assignment is **strongly ignorable** given a set of observed covariates when the following two conditions hold ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)):
 
 $$
 (Y(1), Y(0)) \perp\!\!\!\perp T \mid X
@@ -18,7 +17,7 @@ $$
 0 < P(T = 1 \mid X) < 1,
 $$
 
-then conditioning on $X$ renders the treatment assignment mechanism analogous to that of a randomised controlled trial. More explanation in [Hernán & Robins (2020, Chs. 2-3)](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/) and in [Neal (2020)](https://www.bradyneal.com/Introduction_to_Causal_Inference-Aug27_2020-Neal.pdf). See also [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html) for a formal treatment.
+Conditioning on $X$ then renders the treatment assignment mechanism analogous to that of a randomised controlled trial. More explanation in [Hernán & Robins (2020, Chs. 2-3)](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/) and in [Neal (2020)](https://www.bradyneal.com/Introduction_to_Causal_Inference-Aug27_2020-Neal.pdf). See also [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html) for a formal treatment.
 
 ### Assumptions
 
@@ -100,7 +99,7 @@ Joint independence of the *pair* implies each marginal, but the converse fails i
 They should therefore be ranked **full $\succ$ marginal $\succ$ mean**, and only the level actually required for the target estimand need be invoked. The joint form is stated above because it is the classical strong-ignorability condition.
 ```
 
-In case of violation, exchangeability often produces severe bias, which is a separate dimension from the **probability** that it is violated in a given study; a mild but plausible violation and a severe but implausible one warrant very different responses.
+The **magnitude** of bias that a violation of exchangeability would cause is a separate dimension from the **probability** that it is violated in a given study; a mild but plausible violation and a severe but implausible one warrant very different responses.
 
 ```{note}
 :class: dropdown

@@ -2,7 +2,7 @@
 
 ## Causal Inference and Fairness
 
-Beyond causal bias, actuaries face a distinct but related challenge: ensuring that models do not discriminate against protected groups. EU regulation prohibits the use of protected characteristics (e.g. gender, ethnicity) for insurance pricing, but simply dropping the sensitive attribute $S$ does not solve the problem.
+Beyond causal bias, actuaries face a distinct but related challenge: ensuring that models do not discriminate against protected groups. EU regulation prohibits the use of protected characteristics (e.g. gender, ethnicity) for insurance pricing - sex under Directive 2004/113/EC (as interpreted in the *Test-Achats* ruling) and ethnicity under Directive 2000/43/EC - but simply dropping the sensitive attribute $S$ does not solve the problem.
 
 ### When is risk classification *discrimination*?
 
@@ -220,7 +220,7 @@ i.e. among everyone assigned the same price $\hat{\mu}(X)$, the realised risk is
 :label: fairness-incompatibility
 :class: dropdown
 
-These criteria are useful **diagnostic checks** but cannot replace causal reasoning. [Lindholm et al. (2022)](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117) show that even a genuinely discrimination-free model violates them whenever $X$ and $S$ are statistically dependent. Moreover, except in trivial cases, the criteria are mutually incompatible at unequal base rates: no decision can be simultaneously calibrated *and* equalise both error rates ([Kleinberg et al., 2017](https://arxiv.org/abs/1609.05807); [Chouldechova, 2017](https://doi.org/10.1089/big.2016.0047)). Choosing a criterion is therefore a value judgement about *which* fairness to buy and *which* to forgo - not a technical detail the model can settle on its own.
+These criteria are useful **diagnostic checks** but cannot replace causal reasoning. [Lindholm et al. (2022)](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117) show that even a genuinely discrimination-free model violates most of them whenever $X$ and $S$ are statistically dependent. Moreover, except in trivial cases, the criteria are mutually incompatible at unequal base rates: no decision can be simultaneously calibrated *and* equalise both error rates ([Kleinberg et al., 2017](https://arxiv.org/abs/1609.05807); [Chouldechova, 2017](https://doi.org/10.1089/big.2016.0047)). Choosing a criterion is therefore a value judgement about *which* fairness to buy and *which* to forgo - not a technical detail the model can settle on its own.
 ```
 
 

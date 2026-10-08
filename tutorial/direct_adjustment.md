@@ -41,7 +41,7 @@ The **propensity score** $\pi(x) = P(T = 1 \mid X = x)$ - the probability of rec
 
 (overlap)=
 ### Overlap (Common Support)
-Propensity score methods are only valid where treated and control units are actually *comparable*. This requirement is the empirical counterpart of the {prf:ref}`positivity`: For every covariate profile $x$, both treatment arms must have a positive (non-zero) probability of being observed,
+Propensity score methods are only valid where treated and control units are actually *comparable*. This requirement is the empirical counterpart of the positivity assumption ({prf:ref}`positivity`): for every covariate profile $x$, both treatment arms must have a positive (non-zero) probability of being observed,
 
 $$0 < \pi(x) < 1 \quad \text{for all } x .$$
 
@@ -248,7 +248,7 @@ In an SEM, the **treatment effect heterogeneity** is explicit: the coefficient o
 
 ## Doubly Robust Estimation: AIPW and TMLE
 
-Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the propensity model $\hat{\pi}(x)$ so that the estimate is consistent if *either* model is correctly specified - a property that single-model approaches lack. The *Augmented Inverse Propensity Weighting* (AIPW) estimator of [Robins, Rotnitzky & Zhao (1994)](https://doi.org/10.1080/01621459.1994.10476818) augments the G-computation estimate with an inverse-propensity-weighted residual correction; [Bang & Robins (2005)](https://doi.org/10.1111/j.1541-0420.2005.00377.x) developed the framework for causal inference, and [van der Laan & Rubin (2006)](https://doi.org/10.2202/1557-4679.1043) introduced *Targeted Maximum Likelihood Estimation* (TMLE) as a substitution-based alternative with the same robustness guarantee. The AIPW score is already Neyman-orthogonal (proved in the next section); DML's distinctive contribution is **cross-fitting** together with the rate conditions ($o_p(n^{-1/4})$ on each nuisance) that license plugging in flexible ML learners. In its *interactive-model* form DML is AIPW with cross-fitted ML nuisances, whereas the *partially-linear* form presented below is Robinson's residual-on-residual estimator.
+Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the propensity model $\hat{\pi}(x)$ so that the estimate is consistent if *either* model is correctly specified - a property that single-model approaches lack. The *Augmented Inverse Propensity Weighting* (AIPW) estimator of [Robins, Rotnitzky & Zhao (1994)](https://doi.org/10.1080/01621459.1994.10476818) augments the G-computation estimate with an inverse-propensity-weighted residual correction; [Bang & Robins (2005)](https://doi.org/10.1111/j.1541-0420.2005.00377.x) extended the doubly robust framework to causal inference, and [van der Laan & Rubin (2006)](https://doi.org/10.2202/1557-4679.1043) introduced *Targeted Maximum Likelihood Estimation* (TMLE) as a substitution-based alternative with the same robustness guarantee. The AIPW score is already Neyman-orthogonal (proved in the next section); DML's distinctive contribution is **cross-fitting** together with the rate conditions ($o_p(n^{-1/4})$ on each nuisance) that license plugging in flexible ML learners. In its *interactive-model* form DML is AIPW with cross-fitted ML nuisances, whereas the *partially-linear* form presented below is Robinson's residual-on-residual estimator.
 
 ```{prf:algorithm} Augmented Inverse Propensity Weighting (AIPW)
 :label: alg-aipw
@@ -380,14 +380,15 @@ $$
 
 Since both partial derivatives vanish at the truth for all directions
 $\delta_\mu$ and $\delta_\pi$, the AIPW score is Neyman orthogonal. Consequently,
-the bias of $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\hat{\psi}^{(i)}$ satisfies
+the bias of $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\hat{\psi}^{(i)}$ is second-order in the
+nuisance errors,
 
 $$
-\operatorname{Bias}(\hat{\tau})
-\propto (\hat{\mu} - \mu)(\hat{\pi} - \pi),
+|\operatorname{Bias}(\hat{\tau})|
+\lesssim \lVert \hat{\mu} - \mu \rVert_2\,\lVert \hat{\pi} - \pi \rVert_2,
 $$
 
-vanishing whenever either $\hat{\mu} \rightarrow \mu$ or
+and therefore vanishes whenever either $\hat{\mu} \rightarrow \mu$ or
 $\hat{\pi} \rightarrow \pi$ in probability, which is the double robustness stated in
 Step 4 of {prf:ref}`alg-aipw`.
 ```

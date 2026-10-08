@@ -76,7 +76,7 @@ Fully Bayesian propensity-score analysis is subtler than it looks. In a joint mo
 
 ## Bayesian Additive Regression Trees (BART)
 
-**BART** ([Chipman, George & McCulloch, 2010](https://doi.org/10.1214/09-AOAS285)) is a sum-of-trees regression model; its use for causal inference was introduced by [Hill (2011)](https://doi.org/10.1198/jcgs.2010.08162), and it is now the most widely used Bayesian method for heterogeneous treatment effect estimation. It models the outcome as a sum of regression trees with Bayesian priors on tree structure and leaf parameters.
+**BART** ([Chipman, George & McCulloch, 2010](https://doi.org/10.1214/09-AOAS285)) is a sum-of-trees regression model; its use for causal inference was introduced by [Hill (2011)](https://doi.org/10.1198/jcgs.2010.08162), and it is now a widely used Bayesian method for heterogeneous treatment effect estimation. It models the outcome as a sum of regression trees with Bayesian priors on tree structure and leaf parameters.
 
 ```{prf:definition} BART for Causal Inference
 :label: bart
@@ -161,7 +161,7 @@ From prior to posterior. A weakly informative *prior* $p(\tau)$ encodes the beli
 |--------|-------------|----------|
 | **Uncertainty** | Confidence intervals (coverage guarantee) | Credible intervals (direct probability) |
 | **Prior information** | Not formally incorporated | Encoded via priors |
-| **Small samples** | Relies on asymptotic approximations | Exact finite-sample posterior |
+| **Small samples** | Relies on asymptotic approximations | Exact finite-sample posterior (conditional on model and prior) |
 | **HTE estimation** | Causal forests ([Wager & Athey, 2018](https://doi.org/10.1080/01621459.2017.1319839)) | BART / BCF ([Hill, 2011](https://doi.org/10.1198/jcgs.2010.08162)) |
 | **Model uncertainty** | Model selection or averaging | Posterior model probabilities |
 | **Computation** | Often closed-form or fast | MCMC (slower but more flexible) |
@@ -171,4 +171,4 @@ From prior to posterior. A weakly informative *prior* $p(\tau)$ encodes the beli
 - **Prior sensitivity:** Check that conclusions are robust to reasonable prior specifications. Use weakly informative priors as defaults.
 - **Convergence diagnostics:** Monitor MCMC chains using $\hat{R}$ statistics, effective sample size, and trace plots.
 - **Scalability:** BART scales well to moderate-dimensional problems ($p \lesssim 100$). For very high-dimensional $X$, variable selection priors or sparsity-inducing modifications (e.g. DART, [Linero 2018](https://doi.org/10.1080/01621459.2016.1264957)) may be needed.
-- **Software:** Popular implementations include `bartCause` (R), `dbarts` (R), and `pymc-bart` (Python).
+- **Software:** Popular implementations include `bartCause` (R), `dbarts` (R), and `pymc-bart` (Python); for BCF specifically, `bcf` (R) and `stochtree` (R/Python).
