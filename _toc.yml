@@ -33,6 +33,7 @@ parts:
     chapters:
       - file: application/observational_data.ipynb
       - file: application/claims_triage.ipynb
+      - file: application/health_interventions.ipynb
 
   - caption: References
     chapters:

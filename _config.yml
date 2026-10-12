@@ -44,7 +44,6 @@ exclude_patterns:
   # Draft notebooks kept in the tree but not part of the published book
   - application/case_study.ipynb
   - application/confounding.ipynb
-  - application/health_interventions.ipynb
   - application/motivation.ipynb
   - application/sensitivity_analysis.ipynb
   - application/susceptible_subpopulation.ipynb
