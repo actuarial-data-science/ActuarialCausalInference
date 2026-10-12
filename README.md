@@ -47,7 +47,7 @@ The tutorial connects the identification theory from {doc}`tutorial/identificati
 The actuarial application notebooks ground the tutorial theory in concrete workflows. The diagram below lists the four workflow steps from the tutorial, names the insurance value-chain stages each step touches, and shows the three application notebooks as bars spanning the steps they cover. Click a workflow step to open its tutorial chapter, or an application bar to open the notebook.
 
 ```{raw} html
-<iframe id="apps-matrix" src="figure/applications_matrix.html?v=20261012"
+<iframe id="apps-matrix" src="figure/applications_matrix.html?v=20261012b"
         style="width:100%; border:none; height:640px;"
         title="Actuarial applications across the causal-inference workflow"></iframe>
 <script>
@@ -93,4 +93,4 @@ The actuarial application notebooks ground the tutorial theory in concrete workf
 
 ## Acknowledgements
 
-We would like to thank Marco Breitig, Michael Mayer, and Jan Tilly for their comprehensive reviews and feedback that led to significant improvements of this tutorial. Furthermore, we would like to thank the [Data Science Working Group of the SAV](https://www.actuarialdatascience.org) for supporting this work.
+We would like to thank Marco Breitig, Michael Mayer, and Jan Tilly for their comprehensive reviews and feedback that led to significant improvements of this tutorial. Furthermore, we would like to thank the [Data Science Working Group](https://www.actuarialdatascience.org) of the SAV for supporting this work.

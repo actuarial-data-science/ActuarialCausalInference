@@ -173,25 +173,20 @@
 </head>
 <body>
 
-<header>
-  <h1>Actuarial applications across the causal-inference workflow</h1>
-  <p>The four tutorial workflow steps (left) and the insurance value-chain stages they touch (middle). Each application notebook (right) is a bar that spans the workflow steps it covers — click a step to open its tutorial chapter, or a bar to open the notebook.</p>
-</header>
-
 <div class="matrix-wrap">
-<svg viewBox="0 0 720 440" role="img" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 800 440" role="img" xmlns="http://www.w3.org/2000/svg">
 <title>Actuarial applications across the causal-inference workflow</title>
-<desc>The four tutorial workflow steps (Concepts, Identification, Inference, Validation) are listed top to bottom with the insurance value-chain stages they involve. Three application notebooks are shown as vertical bars that span the workflow steps they cover: Observational data spans all four steps; Claims triage spans Identification and Inference; Health interventions spans Inference and Validation.</desc>
+<desc>Three columns: the four causal-inference workflow steps on the left, the application notebooks as bars spanning the steps they cover in the middle, and the insurance value chain on the right.</desc>
 
 <!-- ═══ COLUMN HEADERS ═══ -->
-<text class="ts" x="106" y="18" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:11px;font-weight:500">Actuary workflow</text>
-<text class="ts" x="327" y="18" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:11px;font-weight:500">Insurance value chain involved</text>
-<text class="ts" x="576" y="18" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:11px;font-weight:500">Applications (bars span the steps)</text>
+<text class="ts" x="153" y="18" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:11px;font-weight:500">Actuary workflow</text>
+<text class="ts" x="448" y="18" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:11px;font-weight:500">Applications</text>
+<text class="ts" x="700" y="18" text-anchor="middle" style="fill:var(--color-text-tertiary);font-size:11px;font-weight:500">Insurance value chain</text>
 
 <!-- ═══ WORKFLOW STEPS (left, grey) ═══ -->
 <a class="label-link" href="https://actuarial-data-science.github.io/ActuarialCausalInference/tutorial/concepts.html">
   <g class="c-gray">
-    <rect x="8" y="40" width="196" height="84" rx="8" stroke-width="0.6"/>
+    <rect x="8" y="40" width="290" height="84" rx="8" stroke-width="0.6"/>
     <text class="th" x="24" y="62" style="font-size:14px;font-weight:600">1 · Concepts</text>
     <text class="ts" x="24" y="82" style="font-size:10.5px;font-style:italic;font-weight:600">WHY is correlation unlike causation?</text>
     <text class="ts" x="24" y="101" style="font-size:10px">Estimands · potential outcomes</text>
@@ -199,7 +194,7 @@
 </a>
 <a class="label-link" href="https://actuarial-data-science.github.io/ActuarialCausalInference/tutorial/identification.html">
   <g class="c-gray">
-    <rect x="8" y="138" width="196" height="84" rx="8" stroke-width="0.6"/>
+    <rect x="8" y="138" width="290" height="84" rx="8" stroke-width="0.6"/>
     <text class="th" x="24" y="160" style="font-size:14px;font-weight:600">2 · Identification</text>
     <text class="ts" x="24" y="180" style="font-size:10.5px;font-style:italic;font-weight:600">WHAT do I want to estimate?</text>
     <text class="ts" x="24" y="199" style="font-size:10px">DAG · backdoor · assumptions</text>
@@ -207,7 +202,7 @@
 </a>
 <a class="label-link" href="https://actuarial-data-science.github.io/ActuarialCausalInference/tutorial/inference.html">
   <g class="c-gray">
-    <rect x="8" y="236" width="196" height="84" rx="8" stroke-width="0.6"/>
+    <rect x="8" y="236" width="290" height="84" rx="8" stroke-width="0.6"/>
     <text class="th" x="24" y="258" style="font-size:14px;font-weight:600">3 · Inference</text>
     <text class="ts" x="24" y="278" style="font-size:10.5px;font-style:italic;font-weight:600">HOW can I estimate it?</text>
     <text class="ts" x="24" y="297" style="font-size:10px">Estimate ATE / CATE</text>
@@ -215,45 +210,48 @@
 </a>
 <a class="label-link" href="https://actuarial-data-science.github.io/ActuarialCausalInference/tutorial/sensitivity.html">
   <g class="c-gray">
-    <rect x="8" y="334" width="196" height="84" rx="8" stroke-width="0.6"/>
+    <rect x="8" y="334" width="290" height="84" rx="8" stroke-width="0.6"/>
     <text class="th" x="24" y="356" style="font-size:14px;font-weight:600">4 · Validation</text>
     <text class="ts" x="24" y="376" style="font-size:10.5px;font-style:italic;font-weight:600">HOW MUCH can I trust the estimate?</text>
     <text class="ts" x="24" y="395" style="font-size:10px">Diagnostics · sensitivity · fairness</text>
   </g>
 </a>
 
-<!-- ═══ VALUE CHAIN (middle) ═══ -->
-<text class="ts" x="220" y="74">Product design ·</text>
-<text class="ts" x="220" y="92">Policy administration</text>
-<text class="ts" x="220" y="172">Policy administration ·</text>
-<text class="ts" x="220" y="190">Claims management</text>
-<text class="ts" x="220" y="270">Claims management ·</text>
-<text class="ts" x="220" y="288">Portfolio &amp; ALM</text>
-<text class="ts" x="220" y="368">Portfolio &amp; ALM ·</text>
-<text class="ts" x="220" y="386">Reporting &amp; regulation</text>
-
-<!-- ═══ APPLICATION LANES (right, lime) ═══ -->
+<!-- ═══ APPLICATION LANES (middle, lime) ═══ -->
 <a class="cell-link" href="https://actuarial-data-science.github.io/ActuarialCausalInference/application/observational_data.html">
   <g class="c-teal">
-    <rect x="448" y="40" width="80" height="378" rx="8" stroke-width="0.6"/>
-    <text class="th" transform="rotate(-90 486 229)" x="486" y="229" text-anchor="middle" dominant-baseline="central" style="font-size:12.5px;font-weight:600">Observational data</text>
-    <text class="ts" transform="rotate(-90 505 229)" x="505" y="229" text-anchor="middle" dominant-baseline="central" style="font-size:9.5px">end-to-end pipeline</text>
+    <rect x="320" y="40" width="80" height="378" rx="8" stroke-width="0.6"/>
+    <text class="th" transform="rotate(-90 360 229)" x="360" y="229" text-anchor="middle" dominant-baseline="central" style="font-size:12.5px;font-weight:600">Observational data</text>
+    <text class="ts" transform="rotate(-90 378 229)" x="378" y="229" text-anchor="middle" dominant-baseline="central" style="font-size:9.5px">end-to-end pipeline</text>
   </g>
 </a>
 <a class="cell-link" href="https://actuarial-data-science.github.io/ActuarialCausalInference/application/claims_triage.html">
   <g class="c-teal">
-    <rect x="536" y="138" width="80" height="182" rx="8" stroke-width="0.6"/>
-    <text class="th" transform="rotate(-90 574 229)" x="574" y="229" text-anchor="middle" dominant-baseline="central" style="font-size:12.5px;font-weight:600">Claims triage</text>
-    <text class="ts" transform="rotate(-90 593 229)" x="593" y="229" text-anchor="middle" dominant-baseline="central" style="font-size:9.5px">CATE · X/T-learner</text>
+    <rect x="408" y="138" width="80" height="182" rx="8" stroke-width="0.6"/>
+    <text class="th" transform="rotate(-90 448 229)" x="448" y="229" text-anchor="middle" dominant-baseline="central" style="font-size:12.5px;font-weight:600">Claims triage</text>
+    <text class="ts" transform="rotate(-90 466 229)" x="466" y="229" text-anchor="middle" dominant-baseline="central" style="font-size:9.5px">CATE · X/T-learner</text>
   </g>
 </a>
 <a class="cell-link" href="https://actuarial-data-science.github.io/ActuarialCausalInference/application/health_interventions.html">
   <g class="c-teal">
-    <rect x="624" y="236" width="80" height="182" rx="8" stroke-width="0.6"/>
-    <text class="th" transform="rotate(-90 662 327)" x="662" y="327" text-anchor="middle" dominant-baseline="central" style="font-size:12.5px;font-weight:600">Health interventions</text>
-    <text class="ts" transform="rotate(-90 681 327)" x="681" y="327" text-anchor="middle" dominant-baseline="central" style="font-size:9.5px">ATE · g-formula · E-values</text>
+    <rect x="496" y="236" width="80" height="182" rx="8" stroke-width="0.6"/>
+    <text class="th" transform="rotate(-90 536 327)" x="536" y="327" text-anchor="middle" dominant-baseline="central" style="font-size:12.5px;font-weight:600">Health interventions</text>
+    <text class="ts" transform="rotate(-90 554 327)" x="554" y="327" text-anchor="middle" dominant-baseline="central" style="font-size:9.5px">ATE · g-formula · E-values</text>
   </g>
 </a>
+
+<!-- ═══ INSURANCE VALUE CHAIN (right) ═══ -->
+<line x1="612" y1="72" x2="612" y2="392" stroke="var(--color-border-tertiary)" stroke-width="1.4"/>
+<circle cx="612" cy="72"  r="3.2" fill="var(--color-text-tertiary)"/>
+<text class="ts" x="626" y="72"  dominant-baseline="central">New product development</text>
+<circle cx="612" cy="152" r="3.2" fill="var(--color-text-tertiary)"/>
+<text class="ts" x="626" y="152" dominant-baseline="central">Underwriting</text>
+<circle cx="612" cy="232" r="3.2" fill="var(--color-text-tertiary)"/>
+<text class="ts" x="626" y="232" dominant-baseline="central">Claims handling</text>
+<circle cx="612" cy="312" r="3.2" fill="var(--color-text-tertiary)"/>
+<text class="ts" x="626" y="312" dominant-baseline="central">Portfolio management</text>
+<circle cx="612" cy="392" r="3.2" fill="var(--color-text-tertiary)"/>
+<text class="ts" x="626" y="392" dominant-baseline="central">Reporting</text>
 </svg>
 </div>
 
