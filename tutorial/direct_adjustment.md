@@ -113,6 +113,8 @@ Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-populatio
 ```
 
 ```{prf:proof}
+:class: dropdown
+
 We want to briefly prove that - under consistency, exchangeability, and positivity ($\pi(X) > 0$, so the weights $1/\pi(X)$ are well-defined) - weighting the observed outcomes $Y$ by the inverse of the propensity score $\pi(X)$ for the treated group recovers the mean *potential* outcome $\mathbb{E}[Y(1)]$.
 
 $$
@@ -293,6 +295,8 @@ $$
 Since $\eta = (\mu, \pi)$, we verify this separately for each component.
 
 ```{prf:proof}
+:class: dropdown
+
 We show that both $\partial_\mu\,\mathbb{E}[\psi][\delta_\mu] = 0$ and
 $\partial_\pi\,\mathbb{E}[\psi][\delta_\pi] = 0$ at the truth $\eta_0 = (\mu, \pi)$,
 for arbitrary directions $\delta_\mu = \tilde{\mu} - \mu$ and

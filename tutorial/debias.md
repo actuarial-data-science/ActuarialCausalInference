@@ -21,6 +21,7 @@ The remainder of this section defines each bias precisely.
 
 ```{prf:definition} Confounding Bias
 :label: confounding-bias
+:class: dropdown
 
 **Confounding bias** occurs when a fork variable $F$ causally influences both the treatment $T$ and the outcome $Y$, and the analysis fails to adjust for $F$.
 ```
@@ -46,6 +47,7 @@ In insurance, confounding arises when healthier policyholders self-select into w
 
 ```{prf:definition} Selection Bias
 :label: selection-bias
+:class: dropdown
 
 **Selection bias** arises when the sample analysed is not representative of the target population, because selection into the sample depends on variables related to both $T$ and $Y$.
 ```
@@ -58,6 +60,7 @@ When selection acts through a variable that is a *common effect* of $T$ and $Y$ 
 
 ```{prf:definition} Collider Bias
 :label: collider-bias-def
+:class: dropdown
 
 **Collider bias** (Berkson's paradox) occurs when the analysis conditions on a **collider** $C$ - a common effect of $T$ and $Y$. Conditioning on $C$ opens a non-causal path between $T$ and $Y$.
 ```

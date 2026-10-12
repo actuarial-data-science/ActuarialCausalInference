@@ -23,6 +23,7 @@ Conditioning on $X$ then renders the treatment assignment mechanism analogous to
 
 ```{prf:assumption} Consistency
 :label: consistency
+:class: dropdown
 
 $$
 Y(t) = Y \quad \text{when } T = t
@@ -37,6 +38,7 @@ The observed outcome $Y$ equals the potential outcome $Y(t)$ whenever the treatm
 
 ```{prf:assumption} Stable Unit Treatment Value Assumption (SUTVA)
 :label: sutva
+:class: dropdown
 
 $$
 Y_i(t_i) \text{ depends only on } t_i \text{ (not on } t_j \text{ for } j \neq i)
@@ -53,6 +55,7 @@ SUTVA is often treated as binary - satisfied or violated - but the literature di
 
 ```{prf:assumption} Positivity
 :label: positivity
+:class: dropdown
 
 $$
 0 < P(T = 1 \mid X = x) < 1 \quad \text{with probability } 1
@@ -71,6 +74,7 @@ This states that, for any possible covariate profile, treatment assignment is no
 
 ```{prf:assumption} Exchangeability (No unobserved confounding)
 :label: exchangeability
+:class: dropdown
 
 **Full (joint) exchangeability** - the *strong ignorability* condition of [Rosenbaum & Rubin (1983)](https://doi.org/10.1093/biomet/70.1.41):
 
