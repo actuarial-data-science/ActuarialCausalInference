@@ -44,12 +44,12 @@ The tutorial connects the identification theory from {doc}`tutorial/identificati
 
 ### Actuarial Applications
 
-The actuarial application notebooks ground the tutorial theory in concrete workflows. The matrix below maps each notebook onto two axes: the **insurance value chain** (rows) and the **actuary's causal inference workflow** (columns). Click any cell to open the corresponding notebook section.
+The actuarial application notebooks ground the tutorial theory in concrete workflows. The diagram below lists the four workflow steps from the tutorial, names the insurance value-chain stages each step touches, and shows the three application notebooks as bars spanning the steps they cover. Click a workflow step to open its tutorial chapter, or an application bar to open the notebook.
 
 ```{raw} html
-<iframe id="apps-matrix" src="figure/applications_matrix.html?v=20260623"
-        style="width:100%; border:none; height:760px;"
-        title="Actuarial applications value chain × workflow matrix"></iframe>
+<iframe id="apps-matrix" src="figure/applications_matrix.html?v=20261012"
+        style="width:100%; border:none; height:640px;"
+        title="Actuarial applications across the causal-inference workflow"></iframe>
 <script>
 (function () {
   var iframe = document.getElementById('apps-matrix');
