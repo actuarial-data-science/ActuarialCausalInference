@@ -93,4 +93,4 @@ The actuarial application notebooks ground the tutorial theory in concrete workf
 
 ## Acknowledgements
 
-We are deeply grateful to **Dr. Marco Breitig**, **Dr. Michael Mayer**, and **Dr. Jan Tilly** for their thorough and comprehensive reviews of this tutorial, and to the [Actuarial Data Science working group](https://www.actuarialdatascience.org) of the Swiss Association of Actuaries (SAV) for their valuable feedback. Their insights substantially improved the clarity, rigour, and practical relevance of this work.
+We would like to thank Marco Breitig, Michael Mayer, and Jan Tilly for their comprehensive reviews and feedback that led to significant improvements of this tutorial. Furthermore, we would like to thank the [Data Science Working Group of the SAV](https://www.actuarialdatascience.org) for supporting this work.
