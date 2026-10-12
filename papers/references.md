@@ -104,21 +104,4 @@
 * **Wooldridge, J. M. (2012).** *Introductory Econometrics: A Modern Approach* (5th ed.). Cengage Learning.
 * **Wright, S. (1934).** *The method of path coefficients.* The Annals of Mathematical Statistics, 5(3), 161-215. [DOI: 10.1214/aoms/1177732676](https://doi.org/10.1214/aoms/1177732676)
 * **Yadlowsky, S., Fleming, S., Shah, N., Brunskill, E., & Wager, S. (2021).** *Evaluating treatment prioritization rules via rank-weighted average treatment effects.* [arXiv:2111.07966](https://arxiv.org/abs/2111.07966)
-
-## Useful Links
-### Theory
-- [Causal ML Book](https://www.causalmlbook.com/)
-- [Introduction to Causal Inference (Brady Neal, 2020)](https://www.bradyneal.com/Introduction_to_Causal_Inference-Aug27_2020-Neal.pdf)
-- [Python Causality Handbook](https://matheusfacure.github.io/python-causality-handbook/)
-- [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html)
-- [Tutorial on Causal Inference](https://bookdown.org/mike/data_analysis/sec-causal-inference.html)
-- [QuantCo Blog Article: MetaLearners for CATE Estimation](https://tech.quantco.com/blog/metalearners)
-- [Causality Handbook](https://matheusfacure.github.io/python-causality-handbook/02-Randomised-Experiments.html)
-- [Google PAIR: *Measuring Fairness* explorable (2020)](https://pair.withgoogle.com/explorables/measuring-fairness/)
-
-### Data Sets and Potential Use Cases
-- [French Motor TPL Claims Data Set](https://www.kaggle.com/datasets/karansarpal/fremtpl2-french-motor-tpl-insurance-claims/data)
-- [Medical Cost Data Set](https://www.kaggle.com/datasets/mirichoi0218/insurance)
-- [CausalML: Interpretation of causal trees](https://causalml.readthedocs.io/en/stable/examples/causal_trees_interpretation.html)
-- [Interpretation of causal forests](https://lorentzen.ch/index.php/2024/09/02/explaining-a-causal-forest/) (Waterfall Plot, SHAP Values)
-- [Insurance Fraud Data Set](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/4954928053318020/1058911316420443/167703932442645/latest.html) Fraud 
+* **Yuksel, M., & Aydede, Y. (forthcoming).** [*Causal Inference and Machine Learning: In Economics, Social, and Health Sciences.*](https://www.causalmlbook.com/) Routledge. ISBN 978-1-032-82041-5. 
