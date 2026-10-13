@@ -91,6 +91,52 @@ The actuarial application notebooks ground the tutorial theory in concrete workf
 </script>
 ```
 
+
+````{admonition} Setup: running the actuarial application notebooks on a Mac
+:class: tip, dropdown
+This tutorial runs locally with a self-contained Python environment. The steps below assume a **MacBook** with a terminal (and [VS Code](https://code.visualstudio.com/) or JupyterLab to open the notebook).
+
+**1. Check you have Python 3.10+.** macOS ships an older Python, so install a current one if needed:
+
+```bash
+python3 --version          # need 3.10 or newer
+brew install python@3.11   # if not, install via Homebrew (https://brew.sh)
+```
+
+**2. Create and activate a virtual environment** in the project folder (keeps these packages isolated):
+
+```bash
+cd path/to/causalinference
+python3 -m venv .venv
+source .venv/bin/activate   # prompt now shows (.venv)
+```
+
+**3. Install the packages this notebook needs:**
+
+```bash
+pip install --upgrade pip
+pip install numpy pandas matplotlib seaborn scikit-learn networkx econml shap lightgbm
+# or, if a requirements file is provided:
+# pip install -r application/requirements.txt
+```
+
+**4. Register the environment as a Jupyter kernel** so you can pick it from the notebook:
+
+```bash
+pip install ipykernel jupyterlab
+python -m ipykernel install --user --name claims-triage --display-name "Python (claims-triage)"
+```
+
+**5. Open the notebook and select the kernel.**
+- *In VS Code:* open `claims_triage.ipynb`, click the **kernel picker** in the top-right, and choose **Python (claims-triage)** (or "Select Another Kernel → Python Environments → .venv").
+- *In JupyterLab:* run `jupyter lab`, open the notebook, then **Kernel → Change Kernel → Python (claims-triage)**.
+
+**6. Run it.** Execute the cells top to bottom (`Shift+Enter`, or *Run All*). The first import cell pulls in `econml` and `shap`; if it errors with *ModuleNotFoundError*, double-check that the selected kernel is the `.venv` you installed into.
+
+> **Tip:** `econml` may print harmless numerical-overflow warnings during inference — they are silenced with `np.errstate(...)` where relevant and do not affect the results.
+````
+
+
 ## Acknowledgements
 
 We would like to thank Marco Breitig, Michael Mayer, and Jan Tilly for their comprehensive reviews and feedback that led to significant improvements of this tutorial. Furthermore, we would like to thank the [Data Science Working Group](https://www.actuarialdatascience.org) of the SAV for supporting this work.
