@@ -13,7 +13,8 @@ import plotly.graph_objects as go
 import plotly.subplots as sp
 import seaborn as sns
 from sklearn.tree import _tree
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.model_selection import KFold
 
 # ---------------------------------------------------------------------------
 # SAV / ASA brand palette (Swiss Association of Actuaries logo)
@@ -703,6 +704,50 @@ def overlap_weighted_ate(df, treatment, outcome, ps):
     ate = (np.sum(w * t * y) / np.sum(w * t)
            - np.sum(w * (1 - t) * y) / np.sum(w * (1 - t)))
     return ate, w
+
+
+def aipw_ate(df, treatment, outcome, covariates, n_splits=2, random_state=0,
+             ps_clip=0.01):
+    """Augmented IPW (doubly robust) ATE with K-fold cross-fitting.
+
+    Combines an outcome model and a propensity model so the estimate is
+    consistent if *either* one is correctly specified (double robustness).
+    Cross-fitting fits the nuisance models on one fold and evaluates them on the
+    held-out fold, which removes own-observation overfitting bias. Returns the
+    point estimate together with the standard error implied by the efficient
+    influence function, so no separate bootstrap is needed.
+    """
+    X = df[covariates].astype(float).values
+    t = df[treatment].astype(int).values
+    y = df[outcome].astype(float).values
+    n = len(y)
+    mu1 = np.zeros(n)
+    mu0 = np.zeros(n)
+    ps = np.zeros(n)
+
+    kf = KFold(n_splits=n_splits, shuffle=True, random_state=random_state)
+    for train, test in kf.split(X):
+        # Propensity model on the training fold (standardised, as elsewhere).
+        mean = X[train].mean(axis=0)
+        std = X[train].std(axis=0)
+        std[std == 0] = 1.0
+        ps_model = LogisticRegression(max_iter=1000)
+        ps_model.fit((X[train] - mean) / std, t[train])
+        ps[test] = ps_model.predict_proba((X[test] - mean) / std)[:, 1]
+
+        # Separate outcome models for the treated and control arms.
+        tr = train[t[train] == 1]
+        ct = train[t[train] == 0]
+        mu1[test] = LinearRegression().fit(X[tr], y[tr]).predict(X[test])
+        mu0[test] = LinearRegression().fit(X[ct], y[ct]).predict(X[test])
+
+    ps = np.clip(ps, ps_clip, 1 - ps_clip)
+    # Efficient influence function: outcome-regression difference plus IPW-
+    # weighted residual corrections for each arm.
+    phi = (mu1 - mu0) + t * (y - mu1) / ps - (1 - t) * (y - mu0) / (1 - ps)
+    ate = phi.mean()
+    se = phi.std(ddof=1) / np.sqrt(n)
+    return {'ate': ate, 'se': se, 'phi': phi}
 
 
 def calculate_smd_weighted(df, covariates, treatment, weights):
