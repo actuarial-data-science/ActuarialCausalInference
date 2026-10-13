@@ -1,8 +1,6 @@
-# Fairness and Discrimination-Free Pricing
+# Fairness and Causal Inference
 
-## Causal Inference and Fairness
-
-Beyond causal bias, actuaries face a distinct but related challenge: ensuring that models do not discriminate against protected groups. EU regulation prohibits the use of protected characteristics (e.g. gender, ethnicity) for insurance pricing - sex under Directive 2004/113/EC (as interpreted in the *Test-Achats* ruling) and ethnicity under Directive 2000/43/EC - but simply dropping the sensitive attribute $S$ does not solve the problem.
+Beyond causal bias, actuaries face a distinct but related challenge: ensuring that models do not discriminate against protected groups. EU regulation prohibits the use of protected characteristics (e.g. gender, ethnicity) for insurance pricing - sex under [Directive 2004/113/EC](https://eur-lex.europa.eu/eli/dir/2004/113/oj) (as interpreted in the *Test-Achats* ruling) and ethnicity under [Directive 2000/43/EC](https://eur-lex.europa.eu/eli/dir/2000/43/oj) - but simply dropping the sensitive attribute $S$ does not solve the problem.
 
 ### When is risk classification *discrimination*?
 
@@ -10,9 +8,9 @@ A premium is a price for expected risk. Charging a 70-year-old more than a 30-ye
 
 This judgement is encoded in regulation:
 
-- **EU - sex.** The Gender Directive (2004/113/EC), as interpreted by the Court of Justice in the *Test-Achats* ruling ([C-236/09](https://curia.europa.eu/juris/liste.jsf?num=C-236/09), effective 21 December 2012), requires **unisex pricing**: sex may not be used as a rating factor that produces differences in individual premiums or benefits.
+- **EU - sex.** The Gender Directive ([2004/113/EC](https://eur-lex.europa.eu/eli/dir/2004/113/oj)), as interpreted by the Court of Justice in the *Test-Achats* ruling ([C-236/09](https://curia.europa.eu/juris/liste.jsf?num=C-236/09), effective 21 December 2012), requires **unisex pricing**: sex may not be used as a rating factor that produces differences in individual premiums or benefits.
 - **EU - AI systems.** Under the EU AI Act ([Regulation (EU) 2024/1689](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)), AI systems used for **risk assessment and pricing in life and health insurance** are classified as *high-risk*, triggering obligations on data governance, transparency and bias monitoring.
-- **Switzerland.** Switzerland is outside the EU, and sex-differentiated tariffs have historically been permitted in private insurance; supervision focuses on actuarial justification and the revised Federal Act on Data Protection (nFADP, in force 2023). The direction of travel - scrutiny of proxy discrimination in algorithmic pricing - nonetheless mirrors the EU debate.
+- **Switzerland.** Switzerland is outside the EU, and sex-differentiated tariffs have historically been permitted in private insurance; supervision focuses on actuarial justification and the revised [Federal Act on Data Protection](https://www.fedlex.admin.ch/eli/cc/2022/491/en) (nFADP, in force 2023). The direction of travel - scrutiny of proxy discrimination in algorithmic pricing - nonetheless mirrors the EU debate.
 
 ```{warning}
 Regulation in this area moves quickly and differs by line of business and jurisdiction. The specifics above are orientation, not legal advice - **verify the current rules** for your market and product before relying on them.

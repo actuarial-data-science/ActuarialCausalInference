@@ -1,4 +1,4 @@
-# Diagnostics and Sensitivity Analysis
+# Sensitivity Analysis
 
 The identification of causal effects from observational data rests on untestable assumptions - most critically, {prf:ref}`exchangeability` (no unmeasured confounding). **Sensitivity analysis** asks: *how robust are our conclusions to violations of these assumptions?* This section surveys the main approaches, following [Rosenbaum (2002)](https://doi.org/10.1007/978-1-4757-3692-2), [Cinelli & Hazlett (2020)](https://doi.org/10.1111/rssb.12348), and [Shalizi (2025)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf).
 

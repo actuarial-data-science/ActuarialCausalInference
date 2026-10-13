@@ -1,8 +1,8 @@
-# Biases and De-Biasing Toolkit
+# Diagnostics and De-Biasing Toolkit
 
 In {doc}`assumptions` we established the four assumptions - {prf:ref}`consistency`, {prf:ref}`sutva`, {prf:ref}`positivity`, and {prf:ref}`exchangeability` - that allow causal effects to be identified from observational data. In {doc}`graphical_models` we introduced DAGs as the language for encoding and reasoning about these assumptions. In practice, **assumptions are rarely perfectly satisfied**. This chapter is a practical guide for the actuary: how to diagnose what went wrong and how to fix it. Fairness, a related but distinct concern, has its own chapter ({doc}`fairness`).
 
-## What went wrong? - From Assumption Violations to Biases
+## What went wrong? - Diagnosing Assumption Violations
 
 When a causal assumption is violated, a specific bias enters the treatment effect estimate. The table below maps each assumption to the bias it produces and the diagnostic pattern visible in data.
 
