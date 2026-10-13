@@ -4,11 +4,11 @@ Once a causal effect has been *identified* ({doc}`identification`) and *estimate
 
 ## Diagnostics and Sensitivity Analysis
 
-**{doc}`diagnostics`** - Balance diagnostics (standardised mean differences, overlap and Love plots) confirm that measured confounders are balanced after adjustment, and placebo/falsification tests probe for residual bias. Sensitivity tools - E-values, Rosenbaum bounds, partial $R^2$ (omitted-variable bias), and Manski bounds - quantify how strong unmeasured confounding would need to be to overturn the conclusion.
+**{doc}`sensitivity_analysis`** - Balance diagnostics (standardised mean differences, overlap and Love plots) confirm that measured confounders are balanced after adjustment, and placebo/falsification tests probe for residual bias. Sensitivity tools - E-values, Rosenbaum bounds, partial $R^2$ (omitted-variable bias), and Manski bounds - quantify how strong unmeasured confounding would need to be to overturn the conclusion.
 
 ## Biases and De-biasing
 
-**{doc}`debias`** - A practical guide that maps each assumption violation to the bias it produces (confounding, selection, collider bias, positivity violations, interference) and to the de-biasing strategy that addresses it (adjust, reweight, restrict, restructure).
+**{doc}`diagnostics_debiasing`** - A practical guide that maps each assumption violation to the bias it produces (confounding, selection, collider bias, positivity violations, interference) and to the de-biasing strategy that addresses it (adjust, reweight, restrict, restructure).
 
 ## Fairness
 

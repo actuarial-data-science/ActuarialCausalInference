@@ -96,7 +96,7 @@ The biases above are not merely theoretical concerns - they are practical obstac
 | **Restrict** (trimming, redefine target population) | Positivity violations | {doc}`direct_adjustment` |
 | **Model the causal structure** (DAG-guided variable selection) | Collider bias, confounding | {doc}`graphical_models` |
 | **Cluster or network models** (incl. exposure-mapping / spillover-robust estimators) | Interference / spillover | {doc}`assumptions` |
-| **Sensitivity analysis** | Unobserved confounding | {doc}`diagnostics` |
+| **Sensitivity analysis** | Unobserved confounding | {doc}`sensitivity_analysis` |
 
 ### Adjust
 
@@ -120,4 +120,4 @@ When interference is present, assign treatment at the group level and analyse at
 
 ### Sensitivity analysis
 
-{prf:ref}`exchangeability` cannot be verified from data alone. **Sensitivity analysis** quantifies how strong an unmeasured confounder would need to be to explain away the estimated effect. Methods include E-values, Rosenbaum bounds, and partial $R^2$ sensitivity - covered in detail in {doc}`diagnostics`.
+{prf:ref}`exchangeability` cannot be verified from data alone. **Sensitivity analysis** quantifies how strong an unmeasured confounder would need to be to explain away the estimated effect. Methods include E-values, Rosenbaum bounds, and partial $R^2$ sensitivity - covered in detail in {doc}`sensitivity_analysis`.

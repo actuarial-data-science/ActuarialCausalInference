@@ -233,7 +233,7 @@ A randomised treatment $T$ with a mediator $M$, whose relationship with $Y$ is c
 - **No backdoor to close.** Since $T$ is randomised, no arrow enters $T$ and there is **no backdoor path** at all - the treatment is unconfounded by design.
 - **Why not condition on $M$?** Adjusting for the mediator would do double damage: it (i) blocks the indirect causal effect $T \rightarrow M \rightarrow Y$, and (ii) *opens* the collider path $T \rightarrow M \leftarrow U \rightarrow Y$, injecting spurious association through the unmeasured $U$.
 
-**Correct adjustment set: $\emptyset$ (adjust for nothing).** The total effect of $T$ on $Y$ is identified without conditioning on any variable. Recovering the *direct* effect that does **not** operate through $M$ would instead require the mediation formula and the assumption of no unmeasured $M$–$Y$ confounding - which $U$ violates here (see {doc}`debias`; [Pearl, 2001](https://arxiv.org/abs/1301.2300); VanderWeele, 2015).
+**Correct adjustment set: $\emptyset$ (adjust for nothing).** The total effect of $T$ on $Y$ is identified without conditioning on any variable. Recovering the *direct* effect that does **not** operate through $M$ would instead require the mediation formula and the assumption of no unmeasured $M$–$Y$ confounding - which $U$ violates here (see {doc}`diagnostics_debiasing`; [Pearl, 2001](https://arxiv.org/abs/1301.2300); VanderWeele, 2015).
 
 **Identifying independence.** Randomisation makes treatment independent of the potential outcomes **unconditionally**:
 

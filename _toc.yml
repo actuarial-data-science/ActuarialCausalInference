@@ -25,8 +25,8 @@ parts:
           - file: tutorial/bayesian.md
       - file: tutorial/sensitivity.md
         sections:
-          - file: tutorial/diagnostics.md
-          - file: tutorial/debias.md
+          - file: tutorial/sensitivity_analysis.md
+          - file: tutorial/diagnostics_debiasing.md
           - file: tutorial/fairness.md
 
   - caption: Actuarial Applications

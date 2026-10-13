@@ -34,12 +34,12 @@ The tutorial guides the reader from foundational concepts, identification and in
 - {doc}`tutorial/bayesian` - Bayesian causal inference with BART and Bayesian Causal Forests.
 
 **Stage 4 - {doc}`tutorial/sensitivity`:** Validates causal conclusions by assessing their robustness to untestable assumptions and ensuring the resulting model is fair.
-- {doc}`tutorial/diagnostics` - Balance diagnostics, placebo tests, E-values, Rosenbaum bounds, and partial $R^2$ sensitivity analysis.
-- {doc}`tutorial/debias` - Catalogue of biases (confounding, selection, collider) and de-biasing strategies.
+- {doc}`tutorial/sensitivity_analysis` - Balance diagnostics, placebo tests, E-values, Rosenbaum bounds, and partial $R^2$ sensitivity analysis.
+- {doc}`tutorial/diagnostics_debiasing` - Catalogue of biases (confounding, selection, collider) and de-biasing strategies.
 - {doc}`tutorial/fairness` - Discrimination and fairness in insurance pricing, and why fairness is a causal question.
 
 
-The tutorial connects the identification theory from {doc}`tutorial/identification` with the estimation methods in {doc}`tutorial/inference` and the validation tools in {doc}`tutorial/diagnostics`.
+The tutorial connects the identification theory from {doc}`tutorial/identification` with the estimation methods in {doc}`tutorial/inference` and the validation tools in {doc}`tutorial/sensitivity_analysis`.
 
 
 ### Actuarial Applications
