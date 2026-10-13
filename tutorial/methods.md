@@ -11,7 +11,7 @@ Each strategy trades on a different identifying assumption. The choice is dictat
 | Strategy | Identifying assumption | Handles | Estimation (see {doc}`inference`) |
 |---|---|---|---|
 | **Back-door adjustment** | All confounders of $(T, Y)$ are observed | Measured confounding | {doc}`direct_adjustment` |
-| **Front-door adjustment** | An observed mediator intercepts all $T \rightarrow Y$ paths | Unmeasured confounding of $(T, Y)$ | {doc}`direct_adjustment` |
+| **Front-door adjustment** | An observed mediator intercepts all $T \rightarrow Y$ paths | Unmeasured confounding of $(T, Y)$ | Plug-in via the two-stage formula in {prf:ref}`frontdoor-criterion`; no dedicated estimator in {doc}`inference` (see Pearl, 2009, §3.3.2) |
 | **Instrumental variables** | An instrument affects $Y$ only through $T$ | Unmeasured confounding | {doc}`instrumental_variables` |
 
 ## Back-door Adjustment
@@ -24,7 +24,7 @@ $$
 
 This is the workhorse identification strategy and underpins propensity-score and regression-based estimators in {doc}`inference`.
 
-The following criteria provide graphical answers ([Shalizi, 2025, Section 21.1-21.2](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+The back-door criterion below gives the graphical test for when a candidate adjustment set $Z$ closes all back-door paths ([Shalizi, 2025, Ch. 20](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ### The Backdoor Criterion
 
@@ -56,7 +56,7 @@ The adjustment formula converts the interventional distribution $P(Y \mid \text{
 
 1. **Check descendant condition:** For each $z_i \in Z$:
 	1. If $z_i \in \text{Descendants}(T)$ in $\mathcal{G}$, return `False`
-2. **Enumerate backdoor paths:** Find all (undirected) paths between $T$ and $Y$ that have an arrow into $T$ (i.e. paths of the form $T \leftarrow \cdots\ \leftarrow Y$ or $T \leftarrow \cdots \rightarrow Y$)
+2. **Enumerate backdoor paths:** Find all (undirected) paths between $T$ and $Y$ whose first edge points into $T$ (i.e. any path of the form $T \leftarrow \cdots\ Y$); the interior of such a path may itself contain colliders
 3. **Check blocking:** For each backdoor path $p$:
 	1. If $p$ is not blocked by $Z$ (applying the $d$-separation rules from {prf:ref}`blocked-path`), return `False`
 4. Return `True`
@@ -80,7 +80,7 @@ When confounding between $T$ and $Y$ is unobserved but an observed mediator $M$ 
 
 ### The Frontdoor Criterion
 
-When backdoor paths run through **unobserved** confounders and therefore cannot be blocked, the backdoor criterion cannot be applied. The frontdoor criterion provides an alternative identification strategy through an observed mediator ([Shalizi, 2025, Section 21.1](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
+When backdoor paths run through **unobserved** confounders and therefore cannot be blocked, the backdoor criterion cannot be applied. The frontdoor criterion provides an alternative identification strategy through an observed mediator ([Shalizi, 2025, Ch. 20](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ```{prf:criterion} Frontdoor Criterion
 :label: frontdoor-criterion
@@ -157,14 +157,14 @@ Given observational data, can we *learn* the DAG rather than assuming it? **Caus
 :label: markov-equivalence
 :class: dropdown
 
-Two DAGs are **Markov equivalent** if they encode exactly the same set of $d$-separation (conditional independence) statements. DAGs in the same equivalence class share the same **skeleton** (undirected edges) and the same set of **v-structures** (collider patterns $X \rightarrow C \leftarrow Y$ where $X$ and $Y$ are not adjacent).
+Two DAGs are **Markov equivalent** if they encode exactly the same set of $d$-separation (conditional independence) statements ([Verma & Pearl, 1990](https://arxiv.org/abs/1304.1108)). DAGs in the same equivalence class share the same **skeleton** (undirected edges) and the same set of **v-structures** (collider patterns $X \rightarrow C \leftarrow Y$ where $X$ and $Y$ are not adjacent).
 ```
 
 Observational data alone can only identify the DAG up to its Markov equivalence class. Orienting all edges requires either interventional data or additional assumptions ([Shalizi, 2025, Section 22.3](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf)).
 
 ### The SGS Algorithm
 
-The **SGS algorithm** (Spirtes, Glymour & Scheines, 1993) is a constraint-based procedure that recovers the Markov equivalence class from conditional independence tests. The following pseudo-code is adapted from [Shalizi (2025, Section 22.7)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf).
+The **SGS algorithm** ([Spirtes, Glymour & Scheines, 1993](https://doi.org/10.1007/978-1-4612-2748-9)) is a constraint-based procedure that recovers the Markov equivalence class from conditional independence tests. The following pseudo-code is adapted from [Shalizi (2025, Section 22.7)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf).
 
 ```{prf:algorithm} SGS Algorithm
 :label: sgs-algorithm
@@ -212,9 +212,9 @@ Causal discovery from observational data has fundamental limitations:
 
 ## Instrumental Variables
 
-When no admissible adjustment set exists, an **instrument** $Z$ - a source of exogenous variation in $T$ that affects $Y$ only through $T$ - can identify a local causal effect. The instrumental-variable estimator and its two-stage least-squares implementation are developed in {doc}`instrumental_variables`.
+When no admissible adjustment set exists, an **instrument** $I$ - a source of exogenous variation in $T$ that affects $Y$ only through $T$ - can identify a local causal effect. The instrumental-variable estimator and its two-stage least-squares implementation are developed in {doc}`instrumental_variables`.
 
 ```{note}
 :class: dropdown
-This section frames identification only. *How* to estimate each identified quantity from a finite sample - with propensity scores, regression, machine-learning, tree-based, or Bayesian methods - is the subject of {doc}`inference`, and the robustness of the underlying assumptions is examined in {doc}`sensitivity`.
+This section frames identification only. *How* to estimate each identified quantity from a finite sample - with propensity scores, regression, machine-learning, tree-based, or Bayesian methods - is the subject of {doc}`inference`, and the robustness of the underlying assumptions is examined in {doc}`sensitivity_analysis`.
 ```

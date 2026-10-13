@@ -1,4 +1,4 @@
-# Diagnostics and Sensitivity Analysis
+# Sensitivity Analysis
 
 The identification of causal effects from observational data rests on untestable assumptions - most critically, {prf:ref}`exchangeability` (no unmeasured confounding). **Sensitivity analysis** asks: *how robust are our conclusions to violations of these assumptions?* This section surveys the main approaches, following [Rosenbaum (2002)](https://doi.org/10.1007/978-1-4757-3692-2), [Cinelli & Hazlett (2020)](https://doi.org/10.1111/rssb.12348), and [Shalizi (2025)](https://www.stat.cmu.edu/~cshalizi/ADAfaEPoV/ADAfaEPoV.pdf).
 
@@ -12,6 +12,7 @@ Even with careful adjustment for observed confounders, the possibility of **unme
 
 Without sensitivity analysis, causal conclusions from observational data remain fundamentally incomplete.
 
+(interactive-sensitivity)=
 ### Partial $R^2$: how much confounding would it take?
 
 The figure below makes questions 1 and 2 tangible. Imagine our adjusted estimate is a positive effect of $+3$. Now hypothesise a confounder $U$ that we *failed* to measure and ask: how strongly would it have to be linked to the treatment **and** to the outcome before our conclusion collapses? Drag the two sliders - each one is a **partial $R^2$**, the share of variation in $T$ (or $Y$) that $U$ would explain *on top of* everything we already adjusted for ({prf:ref}`partial-r2`).
@@ -246,7 +247,7 @@ For a **protective effect** ($\text{RR}_{\text{obs}} < 1$) the radicand $\text{R
 
 A large E-value means the observed association is robust: only a very strong unmeasured confounder could explain it away. A small E-value indicates vulnerability to even moderate unmeasured confounding.
 
-For treatment effects on continuous outcomes, analogous E-values can be computed by first converting the effect to an approximate risk ratio scale.
+For treatment effects on continuous outcomes, analogous E-values can be computed by first converting the effect to an approximate risk ratio scale. Following [VanderWeele & Ding (2017)](https://doi.org/10.7326/M16-2607), a standardised mean difference $d$ (the effect divided by the pooled outcome SD) maps to $\text{RR} \approx \exp(0.91\,d)$, after which the E-value formula applies; a rate ratio for rare claim counts can be fed in directly. For the actuarial default - a frequency reduction already expressed as a rate ratio, or a severity shift standardised to $d$ - this yields one concrete E-value on the claims scale.
 
 ```{figure} figs/evalue_curve.svg
 :width: 90%
@@ -265,7 +266,7 @@ The E-value as a frontier. Each point on the red curve is a *combination* of con
 :label: partial-r2
 :class: dropdown
 
-Let $R^2_{Y \sim U \mid T, X}$ denote the partial $R^2$ of the omitted confounder $U$ with the outcome $Y$ (after adjusting for $T$ and $X$), and $R^2_{T \sim U \mid X}$ the partial $R^2$ with the treatment $T$. The bias in the treatment effect estimate due to omitting $U$ is bounded by:
+Let $R^2_{Y \sim U \mid T, X}$ denote the partial $R^2$ of the omitted confounder $U$ with the outcome $Y$ (after adjusting for $T$ and $X$), and $R^2_{T \sim U \mid X}$ the partial $R^2$ with the treatment $T$. The bias in the treatment effect estimate due to omitting $U$ is bounded by (with equality, up to sign, when the $R^2$ terms are read as the confounder's *actual* strengths rather than as upper limits):
 
 $$
 |\text{bias}| \leq \sqrt{\frac{R^2_{Y \sim U \mid T, X} \cdot R^2_{T \sim U \mid X}}{1 - R^2_{T \sim U \mid X}}} \cdot \frac{\text{SD}(Y_{\text{res}})}{\text{SD}(T_{\text{res}})}
@@ -278,7 +279,7 @@ This framework is particularly intuitive because the required confounding streng
 
 **Two robustness values.** [Cinelli & Hazlett (2020, Sec. 4.3)](https://doi.org/10.1111/rssb.12348) define two thresholds along the **equal-strength diagonal** - the locus where the confounder's partial $R^2$ with $T$ equals its partial $R^2$ with $Y$. The **robustness value for the point estimate**, $RV_{q=1}$, is the partial $R^2$ (with *both* $T$ and $Y$) at which the estimate is driven exactly to zero. The **robustness value for statistical significance**, $RV_{q=1,\alpha}$, is the (typically smaller) threshold at which the $(1-\alpha)$ confidence interval first reaches zero - beyond which the effect is no longer significant at level $\alpha$. Because a significant finding has a confidence interval strictly bounded away from zero, $RV_{q=1,\alpha} < RV_{q=1}$ whenever the estimate is significant, and the gap can be substantial. For an actuarial decision - whether to set a pricing adjustment or launch a triage protocol - the binding question is usually robustness of *significance* rather than of the point estimate, so $RV_{q=1,\alpha}$ is the more relevant number. Both are reported by default: by `sensemakr`, and by the DML robustness-value output in the claims-triage case study (which prints $RV$ alongside the smaller $RV_\alpha$).
 
-The `sensemakr` R package implements this approach and produces **contour plots** showing how the estimated effect changes across a grid of $(R^2_{Y \sim U \mid T, X}, R^2_{T \sim U \mid X})$ values. The interactive map at the [top of this section](#interactive-how-much-confounding-would-it-take) is exactly such a contour: the red frontier is the locus where the bias reaches the observed estimate, and the orange diamond is the "as strong as covariate $X$" benchmark. The further the benchmark sits inside the green (effect-survives) region, the more comfortably the conclusion withstands an omitted variable of comparable strength.
+The `sensemakr` R package implements this approach and produces **contour plots** showing how the estimated effect changes across a grid of $(R^2_{Y \sim U \mid T, X}, R^2_{T \sim U \mid X})$ values. The interactive map at the {ref}`top of this section <interactive-sensitivity>` is exactly such a contour: the red frontier is the locus where the bias reaches the observed estimate, and the orange diamond is the "as strong as covariate $X$" benchmark. The further the benchmark sits inside the green (effect-survives) region, the more comfortably the conclusion withstands an omitted variable of comparable strength.
 
 ## Bounds on Treatment Effects
 
@@ -311,7 +312,7 @@ Imposed together, MTR and MTS narrow the worst-case interval substantially; a va
 :width: 90%
 :name: fig-manski-bounds
 
-Worst-case bounds and the price of assumptions. Each bar is the *range of ATE values* compatible with the data under a given set of assumptions. With **no assumptions** beyond a bounded outcome, the interval is so wide it straddles zero - the data alone cannot even tell us the *sign* of the effect. Adding **monotonicity** (the treatment never hurts) lifts the lower edge exactly *to* zero - the sharp MTR lower bound equals zero identically ([Manski, 1997](https://doi.org/10.2307/2171738)), so the effect is now known to be non-negative but not bounded away from zero. Adding a valid **instrument** tightens the interval further still (Manski's IV bounds), but with heterogeneous effects it does *not* collapse the ATE to a point: point identification of the ATE would require constant effects ($\tau_i = \tau$ for all $i$) or full compliance. What a valid instrument *does* point-identify is a **different estimand** - the LATE, the average effect among compliers ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)), shown by the dashed line - which need not equal the ATE. The dashed line at $\tau = 0$ marks no effect.
+Worst-case bounds and the price of assumptions. Each bar is the *range of ATE values* compatible with the data under a given set of assumptions. With **no assumptions** beyond a bounded outcome, the interval is so wide it straddles zero - the data alone cannot even tell us the *sign* of the effect. Adding **monotonicity** (the treatment never hurts) lifts the lower edge exactly *to* zero - the sharp MTR lower bound equals zero identically ([Manski, 1997](https://doi.org/10.2307/2171738)), so the effect is now known to be non-negative but not bounded away from zero. Adding a valid **instrument** tightens the interval further still (Manski's IV bounds), but with heterogeneous effects it does *not* collapse the ATE to a point: point identification of the ATE would require constant effects ($\tau_i = \tau$ for all $i$) or full compliance. What a valid instrument *does* point-identify is a **different estimand** - the LATE, the average effect among compliers ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)), shown by the dashed LATE line - which need not equal the ATE. A separate dashed reference line at $\tau = 0$ marks no effect.
 ```
 
 **Reading the figure.** This answers question 3 - *what are the bounds under worst-case confounding?* - from the opposite direction to the E-value and Rosenbaum tools. Rather than asking how strong a confounder would have to be, partial identification asks what we can say *while assuming as little as possible*. The honest starting point (top bar) is often uncomfortably wide, which is precisely the message: a single number is only as credible as the assumptions that pin it down. Each assumption we are willing to defend buys a narrower interval, and the figure makes that trade-off explicit - a transparent alternative to reporting one estimate as if it were assumption-free.
@@ -324,6 +325,6 @@ The tools above slot into a single decision pipeline. The estimate is only trust
 :width: 85%
 :name: fig-pipeline-sensitivity
 
-The actuarial sensitivity-analysis workflow. After estimating an adjusted effect, three diagnostic gates are applied in turn. Each decision either **passes** the estimate downstream or routes it to a red **remedy** that is re-run before continuing. (1) If covariates are not balanced ($|\text{SMD}| \ge 0.1$), re-specify the propensity model - add splines/interactions, trim non-overlap, or switch between matching and weighting. (2) If a placebo / negative-control test detects a non-zero effect, treat it as residual confounding: revisit the DAG, add proxy controls, or move to an instrument or difference-in-differences design. (3) If the effect is not robust to a plausible unmeasured confounder (small E-value, low critical $\Gamma$, wide partial-$R^2$ bias), treat the estimate as fragile - gather more covariates, report worst-case Manski bounds, and temper the pricing or reserving decision. Only an estimate that clears all three gates reaches the transparent report.
+The actuarial sensitivity-analysis workflow. After estimating an adjusted effect, the estimate passes through three diagnostic gates in turn; each gate names, in red, the remedy to apply if its check fails before continuing. (1) If covariates are not balanced ($|\text{SMD}| \ge 0.1$), re-specify the propensity model - add splines/interactions, trim non-overlap, or switch between matching and weighting. (2) If a placebo / negative-control test detects a non-zero effect, treat it as residual confounding: revisit the DAG, add proxy controls, or move to an instrument or difference-in-differences design. (3) If the effect is not robust to a plausible unmeasured confounder (small E-value, low critical $\Gamma$, wide partial-$R^2$ bias), treat the estimate as fragile - gather more covariates, report worst-case Manski bounds, and temper the pricing or reserving decision. Only an estimate that clears all three gates reaches the transparent report.
 ```
 

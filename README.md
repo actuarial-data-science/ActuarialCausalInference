@@ -23,8 +23,8 @@ The tutorial guides the reader from foundational concepts, identification and in
 
 **Stage 2 - {doc}`tutorial/identification`:** Establishes *when* causal effects can be recovered from observational data. This requires verifying the causal assumptions, using graphical models to select correct adjustment sets, and choosing an identification strategy.
 - {doc}`tutorial/assumptions` - Consistency, SUTVA, positivity, exchangeability, and how to detect violations.
-- {doc}`tutorial/graphical_models` - DAGs, d-separation, backdoor and frontdoor criteria, causal discovery.
-- {doc}`tutorial/methods` - Identification strategies: back-door adjustment, front-door adjustment, and instrumental variables.
+- {doc}`tutorial/graphical_models` - DAGs, d-separation, and the three fundamental path structures (chains, forks, colliders).
+- {doc}`tutorial/methods` - Identification strategies: back-door and front-door adjustment (with their graphical criteria), instrumental variables, and causal discovery.
 
 **Stage 3 - {doc}`tutorial/inference`:** Covers *how* to estimate causal effects once identification is established. Methods range from classical propensity score approaches to modern machine learning estimators.
 - {doc}`tutorial/direct_adjustment` - G-computation, propensity score matching, inverse probability weighting, and the doubly robust estimators AIPW, TMLE and DML.
@@ -34,22 +34,22 @@ The tutorial guides the reader from foundational concepts, identification and in
 - {doc}`tutorial/bayesian` - Bayesian causal inference with BART and Bayesian Causal Forests.
 
 **Stage 4 - {doc}`tutorial/sensitivity`:** Validates causal conclusions by assessing their robustness to untestable assumptions and ensuring the resulting model is fair.
-- {doc}`tutorial/diagnostics` - Balance diagnostics, placebo tests, E-values, Rosenbaum bounds, and partial $R^2$ sensitivity analysis.
-- {doc}`tutorial/debias` - Catalogue of biases (confounding, selection, collider) and de-biasing strategies.
+- {doc}`tutorial/sensitivity_analysis` - Balance diagnostics, placebo tests, E-values, Rosenbaum bounds, and partial $R^2$ sensitivity analysis.
+- {doc}`tutorial/diagnostics_debiasing` - Catalogue of biases (confounding, selection, collider) and de-biasing strategies.
 - {doc}`tutorial/fairness` - Discrimination and fairness in insurance pricing, and why fairness is a causal question.
 
 
-The actuary's end-to-end workflow connects the identification theory from {doc}`tutorial/identification` with the estimation methods in {doc}`tutorial/inference` and the validation tools in {doc}`tutorial/sensitivity`.
+The tutorial connects the identification theory from {doc}`tutorial/identification` with the estimation methods in {doc}`tutorial/inference` and the validation tools in {doc}`tutorial/sensitivity_analysis`.
 
 
 ### Actuarial Applications
 
-The actuarial application notebooks ground the tutorial theory in concrete workflows. The matrix below maps each notebook onto two axes: the **insurance value chain** (rows) and the **actuary's causal inference workflow** (columns). Click any cell to open the corresponding notebook section.
+The actuarial application notebooks ground the tutorial theory in concrete workflows. The diagram below connects the two halves of this book side by side: on the left, the causal-inference-based workflow taught in the tutorial: Concepts, Identification, Inference, Validation, each posing the core question it answers and linking to its chapter. In the middle, the three application notebooks, drawn as bars that span exactly the workflow steps they include; and on the right, the insurance value chain, showing where along the business process, from new product development through underwriting, claims handling and portfolio management to reporting, these causal methods create value. 
 
 ```{raw} html
-<iframe id="apps-matrix" src="figure/applications_matrix.html?v=20260623"
-        style="width:100%; border:none; height:760px;"
-        title="Actuarial applications value chain × workflow matrix"></iframe>
+<iframe id="apps-matrix" src="figure/applications_matrix.html?v=20261012c"
+        style="width:100%; border:none; height:640px;"
+        title="Actuarial applications across the causal-inference workflow"></iframe>
 <script>
 (function () {
   var iframe = document.getElementById('apps-matrix');
@@ -90,3 +90,53 @@ The actuarial application notebooks ground the tutorial theory in concrete workf
 })();
 </script>
 ```
+
+
+````{admonition} Setup: running the actuarial application notebooks on a Mac
+:class: tip, dropdown
+This tutorial runs locally with a self-contained Python environment. The steps below assume a **MacBook** with a terminal (and [VS Code](https://code.visualstudio.com/) or JupyterLab to open the notebook).
+
+**1. Check you have Python 3.10+.** macOS ships an older Python, so install a current one if needed:
+
+```bash
+python3 --version          # need 3.10 or newer
+brew install python@3.11   # if not, install via Homebrew (https://brew.sh)
+```
+
+**2. Create and activate a virtual environment** in the project folder (keeps these packages isolated):
+
+```bash
+cd path/to/causalinference
+python3 -m venv .venv
+source .venv/bin/activate   # prompt now shows (.venv)
+```
+
+**3. Install the packages this notebook needs:**
+
+```bash
+pip install --upgrade pip
+pip install numpy pandas matplotlib seaborn scikit-learn networkx econml shap lightgbm
+# or, if a requirements file is provided:
+# pip install -r application/requirements.txt
+```
+
+**4. Register the environment as a Jupyter kernel** so you can pick it from the notebook:
+
+```bash
+pip install ipykernel jupyterlab
+python -m ipykernel install --user --name claims-triage --display-name "Python (claims-triage)"
+```
+
+**5. Open the notebook and select the kernel.**
+- *In VS Code:* open `claims_triage.ipynb`, click the **kernel picker** in the top-right, and choose **Python (claims-triage)** (or "Select Another Kernel → Python Environments → .venv").
+- *In JupyterLab:* run `jupyter lab`, open the notebook, then **Kernel → Change Kernel → Python (claims-triage)**.
+
+**6. Run it.** Execute the cells top to bottom (`Shift+Enter`, or *Run All*). The first import cell pulls in `econml` and `shap`; if it errors with *ModuleNotFoundError*, double-check that the selected kernel is the `.venv` you installed into.
+
+> **Tip:** `econml` may print harmless numerical-overflow warnings during inference — they are silenced with `np.errstate(...)` where relevant and do not affect the results.
+````
+
+
+## Acknowledgements
+
+We would like to thank Marco Breitig, Michael Mayer, and Jan Tilly for their comprehensive reviews and feedback that led to significant improvements of this tutorial. Furthermore, we would like to thank the [Data Science Working Group](https://www.actuarialdatascience.org) of the SAV for supporting this work.

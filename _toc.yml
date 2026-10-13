@@ -25,16 +25,14 @@ parts:
           - file: tutorial/bayesian.md
       - file: tutorial/sensitivity.md
         sections:
-          - file: tutorial/diagnostics.md
-          - file: tutorial/debias.md
+          - file: tutorial/sensitivity_analysis.md
+          - file: tutorial/diagnostics_debiasing.md
           - file: tutorial/fairness.md
 
   - caption: Actuarial Applications
     chapters:
-#      - file: application/case_study.ipynb
       - file: application/observational_data.ipynb
       - file: application/claims_triage.ipynb
-#      - file: application/traffic_study.ipynb
       - file: application/health_interventions.ipynb
 
   - caption: References

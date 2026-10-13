@@ -8,7 +8,11 @@ Direct-adjustment estimators recover the average treatment effect by explicitly 
 :width: 70%
 :name: fig-dr-dag
 
-Causal structure underlying adjustment-based regression estimators. The covariates $X$ confound the treatment–outcome relationship through the *propensity model* $\pi(X) = P(T = 1 \mid X)$ and the *outcome model* $\mu(X) = \mathbb{E}[Y \mid T, X]$. Doubly robust estimators combine both to estimate the causal effect $\tau$.
+Causal structure underlying adjustment-based regression estimators. The covariates $X$ confound the treatment–outcome relationship through the *propensity model* $\pi(X) = P(T = 1 \mid X)$ and the *outcome model* $\mu(t,x) = \mathbb{E}[Y \mid T=t, X=x]$. Doubly robust estimators combine both to estimate the causal effect $\tau$.
+```
+
+```{note}
+The algorithms below return *point* estimates $\hat{\tau}$. For the accompanying **standard errors and confidence intervals** - influence-function variance for AIPW/TMLE/DML, the bootstrap for matching, and the sandwich/weighted variance for IPW - see the *Uncertainty Quantification* section of {doc}`inference`.
 ```
 
 ## Outcome Regression and G-computation
@@ -33,17 +37,11 @@ The simplest regression adjustment fits a single outcome model $\hat{\mu}(t, x) 
 G-computation is consistent only if the outcome model is correctly specified. Because a misspecified $\hat{\mu}$ propagates directly into the estimate, it motivates the *doubly robust* estimators that add a second line of defence through the propensity score.
 
 ## Propensity Score Definition
-The probability of receiving treatment $T$ given a set of observed covariates $X$, defined as:
-
-$$
-\pi(x) = P(T = 1 \mid X = x)
-$$
-
-It reduces high-dimensional control variables into a single score in order to achieve covariate balance.
+The **propensity score** $\pi(x) = P(T = 1 \mid X = x)$ - the probability of receiving treatment given the observed covariates $X$, introduced by [Rosenbaum & Rubin (1983)](https://doi.org/10.1093/biomet/70.1.41) and defined in {doc}`concepts` - reduces high-dimensional control variables into a single score in order to achieve covariate balance.
 
 (overlap)=
 ### Overlap (Common Support)
-Propensity score methods are only valid where treated and control units are actually *comparable*. This requirement is the empirical counterpart of the {prf:ref}`positivity`: For every covariate profile $x$, both treatment arms must have a positive (non-zero) probability of being observed,
+Propensity score methods are only valid where treated and control units are actually *comparable*. This requirement is the empirical counterpart of the positivity assumption ({prf:ref}`positivity`): for every covariate profile $x$, both treatment arms must have a positive (non-zero) probability of being observed,
 
 $$0 < \pi(x) < 1 \quad \text{for all } x .$$
 
@@ -52,7 +50,7 @@ The range of covariates where this holds - where the propensity score distributi
 A lack of overlap can stem from two qualitatively different sources, and the distinction dictates the appropriate response ([Hernán & Robins, 2020](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/), Ch. 3; [Crump et al., 2009](https://doi.org/10.1093/biomet/asn055)):
 
 - **Structural zeros** - the covariate profile has *no theoretical chance* of appearing in one arm, e.g. an insurance programme with a hard eligibility rule. The causal effect is *not identified* for those units, and no matching or weighting can recover it; the target population must be redefined to the region where both arms are possible.
-- **Empirical near-violations** - overlap holds in the population, but finite-sample sparsity leaves some regions thinly populated. Overlap weighting, trimming, or restricting to the estimated common-support region ([Crump et al., 2009](https://doi.org/10.1093/biomet/asn055)) stabilise estimation here.
+- **Empirical near-violations** - overlap holds in the population, but finite-sample sparsity leaves some regions thinly populated. Overlap weighting ([Li, Morgan & Zaslavsky, 2018](https://doi.org/10.1080/01621459.2016.1260466)), trimming, or restricting to the estimated common-support region ([Crump et al., 2009](https://doi.org/10.1093/biomet/asn055)) stabilise estimation here.
 
 ## Propensity Score Matching
 Matching focuses on creating "apples-to-apples" comparisons by pairing treated units with similar control units. This algorithm typically estimates the Average Treatment Effect on the Treated (ATT).
@@ -74,7 +72,7 @@ Matching focuses on creating "apples-to-apples" comparisons by pairing treated u
 	2. Initialize empty matched set $\mathcal{M} = \emptyset$
 	3. For each unit $i \in \mathcal{T}$:
 
-		1. Find unit $j \in \mathcal{T}_0$ that minimizes $|\hat{\pi}(x_i) - \hat{\pi}(x_j)|$
+		1. Find unit $j \in \mathcal{T}_0$ that minimises $|\hat{\pi}(x_i) - \hat{\pi}(x_j)|$
 		2. If $|\hat{\pi}(x_i) - \hat{\pi}(x_j)| \leq \delta$: *(Apply caliper distance)*
 
 			1. Add pair $(i, j)$ to $\mathcal{M}$
@@ -87,7 +85,7 @@ Matching focuses on creating "apples-to-apples" comparisons by pairing treated u
 
 
 ## Inverse Propensity Score Weighting
-Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-population" where the treatment is independent of measured covariates. This approach is often used to estimate the Average Treatment Effect (ATE) for the entire population. {cite:t}`austin2011` This independence, however, is achieved *only if the propensity model $\hat{\pi}(x)$ is correctly specified* (and overlap holds): IPW is **singly robust** - consistent if and only if $\hat{\pi}(x)$ is correct. Under a misspecified propensity model (e.g. a logistic fit omitting a relevant covariate or non-linear interaction) the reweighted sample does *not* balance $X$, and the ATE estimate is biased - sometimes severely ([Kang & Schafer, 2007](https://doi.org/10.1214/07-STS227); [Lunceford & Davidian, 2004](https://doi.org/10.1002/sim.1903), Thm. 1). Doubly robust estimators (AIPW) relax this by staying consistent if *either* the propensity or the outcome model is correct.
+Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-population" where the treatment is independent of measured covariates. This approach is often used to estimate the Average Treatment Effect (ATE) for the entire population ([Austin, 2011](https://doi.org/10.1080/00273171.2011.568786)). This independence, however, is achieved *only if the propensity model $\hat{\pi}(x)$ is correctly specified* (and overlap holds): IPW is **singly robust** - consistent only if $\hat{\pi}(x)$ is correct. Under a misspecified propensity model (e.g. a logistic fit omitting a relevant covariate or non-linear interaction) the reweighted sample does *not* balance $X$, and the ATE estimate is biased - sometimes severely ([Kang & Schafer, 2007](https://doi.org/10.1214/07-STS227); [Lunceford & Davidian, 2004](https://doi.org/10.1002/sim.1903), Thm. 1). Doubly robust estimators (AIPW) relax this by staying consistent if *either* the propensity or the outcome model is correct.
 
 ```{prf:algorithm} Propensity Score Weighting
 :label: alg-psw
@@ -115,7 +113,9 @@ Weighting uses Inverse Probability Weighting (IPW) to create a "pseudo-populatio
 ```
 
 ```{prf:proof}
-We want to briefly prove that weighting the observed outcomes $Y$ by the inverse of the propensity score $\pi(X)$ for the treated group recovers the true (factual) mean $\mathbb{E}[Y(1)]$.
+:class: dropdown
+
+We want to briefly prove that - under consistency, exchangeability, and positivity ($\pi(X) > 0$, so the weights $1/\pi(X)$ are well-defined) - weighting the observed outcomes $Y$ by the inverse of the propensity score $\pi(X)$ for the treated group recovers the mean *potential* outcome $\mathbb{E}[Y(1)]$.
 
 $$
 \mathbb{E}\left[ \frac{T Y}{\pi(X)} \right] = \mathbb{E}[Y(1)]
@@ -250,7 +250,7 @@ In an SEM, the **treatment effect heterogeneity** is explicit: the coefficient o
 
 ## Doubly Robust Estimation: AIPW and TMLE
 
-Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the propensity model $\hat{\pi}(x)$ so that the estimate is consistent if *either* model is correctly specified - a property that single-model approaches lack. The *Augmented Inverse Propensity Weighting* (AIPW) estimator of [Robins, Rotnitzky & Zhao (1994)](https://doi.org/10.1080/01621459.1994.10476818) augments the G-computation estimate with an inverse-propensity-weighted residual correction; [Bang & Robins (2005)](https://doi.org/10.1111/j.1541-0420.2005.00377.x) developed the framework for causal inference, and [van der Laan & Rubin (2006)](https://doi.org/10.2202/1557-4679.1043) introduced *Targeted Maximum Likelihood Estimation* (TMLE) as a substitution-based alternative with the same robustness guarantee. DML (next section) is essentially AIPW equipped with Neyman-orthogonality and cross-fitting.
+Doubly robust estimators combine the outcome model $\hat{\mu}(t, x)$ with the propensity model $\hat{\pi}(x)$ so that the estimate is consistent if *either* model is correctly specified - a property that single-model approaches lack. The *Augmented Inverse Propensity Weighting* (AIPW) estimator of [Robins, Rotnitzky & Zhao (1994)](https://doi.org/10.1080/01621459.1994.10476818) augments the G-computation estimate with an inverse-propensity-weighted residual correction; [Bang & Robins (2005)](https://doi.org/10.1111/j.1541-0420.2005.00377.x) extended the doubly robust framework to causal inference, and [van der Laan & Rubin (2006)](https://doi.org/10.2202/1557-4679.1043) introduced *Targeted Maximum Likelihood Estimation* (TMLE) as a substitution-based alternative with the same robustness guarantee. The AIPW score is already Neyman-orthogonal (proved in the next section); DML's distinctive contribution is **cross-fitting** together with the rate conditions ($o_p(n^{-1/4})$ on each nuisance) that license plugging in flexible ML learners. In its *interactive-model* form DML is AIPW with cross-fitted ML nuisances, whereas the *partially-linear* form presented below is Robinson's residual-on-residual estimator.
 
 ```{prf:algorithm} Augmented Inverse Propensity Weighting (AIPW)
 :label: alg-aipw
@@ -295,6 +295,8 @@ $$
 Since $\eta = (\mu, \pi)$, we verify this separately for each component.
 
 ```{prf:proof}
+:class: dropdown
+
 We show that both $\partial_\mu\,\mathbb{E}[\psi][\delta_\mu] = 0$ and
 $\partial_\pi\,\mathbb{E}[\psi][\delta_\pi] = 0$ at the truth $\eta_0 = (\mu, \pi)$,
 for arbitrary directions $\delta_\mu = \tilde{\mu} - \mu$ and
@@ -355,7 +357,7 @@ $$
 \cdot\mathbb{E}[T\,(Y - \mu(1,X)) \mid X]\right]
 $$
 
-Under exchangeability, $\mathbb{E}[TY \mid X] = \pi(X)\mu(1,X)$ and
+By definition of $\mu$, $\mathbb{E}[TY \mid X] = \pi(X)\mu(1,X)$ and
 $\mathbb{E}[T \mid X] = \pi(X)$, so:
 
 $$
@@ -382,14 +384,15 @@ $$
 
 Since both partial derivatives vanish at the truth for all directions
 $\delta_\mu$ and $\delta_\pi$, the AIPW score is Neyman orthogonal. Consequently,
-the bias of $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\hat{\psi}^{(i)}$ satisfies
+the bias of $\hat{\tau} = \frac{1}{n}\sum_{i=1}^{n}\hat{\psi}^{(i)}$ is second-order in the
+nuisance errors,
 
 $$
-\operatorname{Bias}(\hat{\tau})
-\propto (\hat{\mu} - \mu)(\hat{\pi} - \pi),
+|\operatorname{Bias}(\hat{\tau})|
+\lesssim \lVert \hat{\mu} - \mu \rVert_2\,\lVert \hat{\pi} - \pi \rVert_2,
 $$
 
-vanishing whenever either $\hat{\mu} \rightarrow \mu$ or
+and therefore vanishes whenever either $\hat{\mu} \rightarrow \mu$ or
 $\hat{\pi} \rightarrow \pi$ in probability, which is the double robustness stated in
 Step 4 of {prf:ref}`alg-aipw`.
 ```
@@ -414,12 +417,14 @@ Step 4 of {prf:ref}`alg-aipw`.
 ```{note}
 :class: dropdown
 
-**Outcome type matters - read before applying TMLE to loss data.** The targeting step above uses a **logistic fluctuation** (offset $\text{logit}\,\hat{\mu}^0$, clever covariate $H$), which is only valid when the outcome is **binary or bounded in $[0,1]$**. For unbounded continuous outcomes a different fluctuation family is required - a **Gaussian fluctuation with the identity link** ([van der Laan & Rubin, 2006](https://doi.org/10.2202/1557-4679.1043)) - otherwise the targeting step is misspecified and the resulting $\hat{\tau}$ is invalid.
+**Outcome type matters - read before applying TMLE to loss data.** The targeting step above uses a **logistic fluctuation** (offset $\text{logit}\,\hat{\mu}^0$, clever covariate $H$), which operates on outcomes in $[0,1]$. Applying it *directly* to an unbounded loss amount is incorrect - but the fix is **not** to abandon the logistic fluctuation. The recommended default ([Gruber & van der Laan, 2010](https://doi.org/10.2202/1557-4679.1260)) is to **rescale the outcome to $[0,1]$** via $\tilde{Y} = (Y - a)/(b - a)$, run the logistic fluctuation on $\tilde{Y}$, and back-transform; this keeps the targeted predictions in range and is more stable than an identity-link update, which can produce out-of-range fitted values.
 
-In non-life actuarial work this is the *usual* case, not an edge case: the primary outcomes - **claim amounts, loss ratios, and claim counts** - are continuous or count-valued and unbounded, not $\{0,1\}$. An actuary who applies the logistic formulation above directly to a loss amount is implementing an incorrect targeting step. Two practical routes:
+In non-life actuarial work bounded outcomes are not the default: the primary outcomes - **claim amounts, loss ratios, and claim counts** - are continuous or count-valued. Two routes:
 
-- **Bounded continuous outcomes** (e.g. loss ratios in $[0,1]$, or any outcome rescaled to $[0,1]$ via $\tilde{Y} = (Y - a)/(b - a)$ and back-transformed): the logistic fluctuation applies directly after rescaling ([Gruber & van der Laan, 2010](https://doi.org/10.2202/1557-4679.1260)).
-- **Unbounded outcomes** (claim severities, aggregate losses): use the Gaussian/identity-link fluctuation, or a count-appropriate family for frequencies.
+- **Default - rescale and keep the logistic fluctuation** (any outcome with known or estimable bounds $[a, b]$, including loss ratios in $[0,1]$): map to $[0,1]$, target, and back-transform ([Gruber & van der Laan, 2010](https://doi.org/10.2202/1557-4679.1260)).
+- **Alternative - identity-link (Gaussian) fluctuation** ([van der Laan & Rubin, 2006](https://doi.org/10.2202/1557-4679.1043)): valid for unbounded continuous outcomes, but can yield out-of-range predictions and is typically less stable.
+
+A caveat specific to insurance: heavy-tailed claim **severities** make *any* fluctuation step fragile, because a handful of large losses dominate the targeting update. A log- or otherwise variance-stabilising transform (taking care over the back-transform bias) is often advisable before TMLE.
 
 In practice, prefer a maintained implementation such as the R package [`tmle`](https://CRAN.R-project.org/package=tmle), which selects the correct fluctuation family for binary, bounded-continuous, and continuous outcomes automatically.
 ```
@@ -438,21 +443,23 @@ The DML estimator of [Chernozhukov et al. (2018)](https://doi.org/10.1111/ectj.1
 
 **Outputs** Estimated causal effect $\hat{\tau}$
 
-1. Split data $D$ into two disjoint sets: $D_{train}$ and $D_{eval}$ *(Cross-fitting/Honesty)*
+1. Split data $D$ into two disjoint folds $D_A$ and $D_B$ *(Sample splitting)*
 
 2. **Outcome Residualization**
-	1. Train model $\hat{\mu}(X) = \mathcal{L}_Y(Y \sim X)$ on $D_{train}$ *(Predict $Y$ using covariates only)*
-	2. Compute residuals $\tilde{Y} = Y - \hat{\mu}(X)$ on $D_{eval}$
+	1. Train model $\hat{m}(X) = \mathcal{L}_Y(Y \sim X)$ on $D_A$ *(Predict $Y$ using covariates only)*
+	2. Compute residuals $\tilde{Y} = Y - \hat{m}(X)$ on $D_B$
 
 3. **Treatment Residualization**
-	1. Train model $\hat{\pi}(X) = \mathcal{L}_T(T \sim X)$ on $D_{train}$ *(Estimate the treatment conditional mean $\pi(X) = \mathbb{E}[T \mid X]$; for binary $T$ this coincides with the propensity score $\mathbb{P}(T=1 \mid X)$)*
-	2. Compute residuals $\tilde{T} = T - \hat{\pi}(X)$ on $D_{eval}$
+	1. Train model $\hat{\pi}(X) = \mathcal{L}_T(T \sim X)$ on $D_A$ *(Estimate the treatment conditional mean $\pi(X) = \mathbb{E}[T \mid X]$; for binary $T$ this coincides with the propensity score $\mathbb{P}(T=1 \mid X)$)*
+	2. Compute residuals $\tilde{T} = T - \hat{\pi}(X)$ on $D_B$
 
 4. **Causal Estimation**
-	1. Regress outcome residuals on treatment residuals: $\tilde{Y} = \tau \tilde{T} + \varepsilon$
+	1. Estimate $\hat{\tau}$ by **no-intercept OLS** of the outcome residuals on the treatment residuals: $\tilde{Y} = \tau \tilde{T} + \varepsilon$
 	2. *Note:* This identifies the effect using only the "exogenous" variation in $T$
 
-5. Return estimated treatment effect $\hat{\tau}$
+5. **Cross-fitting:** swap the roles of $D_A$ and $D_B$ (fit the nuisances on $D_B$, then residualise and estimate on $D_A$) and **average** the two $\hat{\tau}$ estimates. With $K$ folds, repeat for each held-out fold and average, so every observation contributes to estimation while its nuisances are always fit out-of-fold - recovering full efficiency.
+
+6. Return estimated treatment effect $\hat{\tau}$
 ```
 
 ```{note}
@@ -462,5 +469,5 @@ $$
 \tau^* = \frac{\mathbb{E}\!\big[\tau(X)\,\pi(X)\,(1-\pi(X))\big]}{\mathbb{E}\!\big[\pi(X)\,(1-\pi(X))\big]},
 $$
 
-with $\pi(X) = \mathbb{E}[T \mid X]$ the propensity score, which over-weights the region of good overlap ($\pi \approx \tfrac12$) and under-weights the propensity tails. $\tau^*$ equals the ATE only when effects are homogeneous or $\pi(X)$ is constant (an RCT) - neither holds in confounded insurance data. To target $\mathbb{E}[\tau(X)]$ under heterogeneity, use the **interactive model** $Y = \tau(X)T + g(X) + \varepsilon$ with an AIPW/doubly robust score, or average the CATEs from the meta-learners and causal forests in {doc}`heterogeneous_effects` ([Chernozhukov et al., 2018](https://doi.org/10.1111/ectj.12097), Sec. 2 vs. 4). Mixing a PLM-DML "ATE" with averaged causal-forest CATEs can therefore yield inconsistent numbers.
+with $\pi(X) = \mathbb{E}[T \mid X]$ the propensity score, which over-weights the region of good overlap ($\pi \approx \tfrac12$) and under-weights the propensity tails. $\tau^*$ equals the ATE only when effects are homogeneous or $\pi(X)$ is constant (an RCT) - neither holds in confounded insurance data. To target $\mathbb{E}[\tau(X)]$ under heterogeneity, use the **interactive model** $Y = \tau(X)T + g(X) + \varepsilon$ with an AIPW/doubly robust score, or average the CATEs from the meta-learners and causal forests in {doc}`heterogeneous_effects` (the partially linear vs. interactive regression models of [Chernozhukov et al., 2018](https://doi.org/10.1111/ectj.12097)). Mixing a PLM-DML "ATE" with averaged causal-forest CATEs can therefore yield inconsistent numbers.
 ```

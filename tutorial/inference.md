@@ -1,4 +1,4 @@
-# Causal Inference
+# Estimation of Causal Effects
 
 With the identification assumptions ({prf:ref}`consistency`, {prf:ref}`sutva`, {prf:ref}`positivity`, {prf:ref}`exchangeability`) established and the correct adjustment set identified via graphical models ({prf:ref}`backdoor-criterion`), we can now turn to **estimation**: computing causal effects from observed data $D = \{(X_i, T_i, Y_i)\}_{i=1}^{n}$.
 
@@ -28,11 +28,11 @@ The main causal estimands targeted in this tutorial are:
 
     $$\text{ATT} = \mathbb{E}[Y(1) - Y(0) \mid T=1]$$
 
-* **Local Average Treatment Effect (LATE):** The effect among the *compliers* - units whose treatment status responds to an instrument $Z$:
+* **Local Average Treatment Effect (LATE):** The effect among the *compliers* - units whose treatment status responds to an instrument $I$:
 
-    $$\text{LATE} = \mathbb{E}[Y(1) - Y(0) \mid T(Z=1)=1, T(Z=0)=0]$$
+    $$\text{LATE} = \mathbb{E}[Y(1) - Y(0) \mid T(I=1)=1, T(I=0)=0]$$
     
-    Recovered by instrumental-variable methods, it conditions on complier status rather than treatment receipt, so it is a distinct estimand from the ATT ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)).
+    Recovered by instrumental-variable methods, it conditions on complier status rather than treatment receipt, so it is a distinct estimand from the ATT, and is identified only under **monotonicity** (no defiers; see {doc}`instrumental_variables`) ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)).
 
 Different estimation methods target different estimands. The table below maps methods to their primary targets.
 
@@ -47,8 +47,30 @@ Different estimation methods target different estimands. The table below maps me
 | **Meta-Learners (S/T/X, R/DR)** | CATE | Decompose CATE estimation into regression sub-tasks | {doc}`heterogeneous_effects` |
 | **Causal Trees / Forests** | CATE | Partition covariate space to expose effect heterogeneity | {doc}`heterogeneous_effects` |
 | **Instrumental Variables / 2SLS** | LATE | Use exogenous variation from an instrument | {doc}`instrumental_variables` |
-| **Quasi-Experimental (DiD, RD, SC)** | ATT | Exploit natural experiments and institutional variation | {doc}`quasi_experimental` |
-| **Bayesian (BART / BCF)** | CATE | Posterior distributions over treatment effects via sum-of-trees priors | {doc}`bayesian` |
+| **Quasi-Experimental (DiD, RD, SC)** | ATT (DiD, SC) / effect at cutoff (RD) | Exploit natural experiments and institutional variation | {doc}`quasi_experimental` |
+| **Bayesian (BART / BCF)** | ATE, CATE | Posterior distributions over treatment effects via sum-of-trees priors | {doc}`bayesian` |
+
+## Uncertainty Quantification
+
+The algorithms in the following chapters return *point* estimates, but an actuary must report a **standard error** and a **confidence interval** alongside every effect. The appropriate tool depends on the estimator:
+
+- **AIPW, TMLE and DML (asymptotically linear estimators).** These admit a direct influence-function standard error. Because the doubly robust / orthogonal score $\hat\psi_i$ (the summand in {prf:ref}`alg-aipw`) is itself the estimator's influence function, the ATE and its standard error are simply the sample mean and (rescaled) sample standard deviation of the scores,
+
+    $$
+    \hat\tau = \frac{1}{n}\sum_{i=1}^{n}\hat\psi_i, \qquad \widehat{\mathrm{se}}(\hat\tau) = \frac{\mathrm{sd}(\hat\psi_i)}{\sqrt{n}},
+    $$
+
+    giving the Wald interval $\hat\tau \pm z_{1-\alpha/2}\,\widehat{\mathrm{se}}(\hat\tau)$. Cross-fitting is what makes this interval valid with flexible machine-learning nuisances ([Chernozhukov et al., 2018](https://doi.org/10.1111/ectj.12097)).
+
+- **G-computation (plug-in outcome regression).** The outcome model is nonlinear in the data, so there is no simple closed-form standard error; use the **nonparametric bootstrap**, refitting the outcome model on each resample.
+
+- **Propensity-score matching.** The ordinary bootstrap is **not valid** for nearest-neighbour matching estimators - the number of times a control is reused is non-smooth, and the bootstrap variance is inconsistent ([Abadie & Imbens, 2008](https://doi.org/10.3982/ECTA6474)). Use instead the matching-specific analytic variance of [Abadie & Imbens (2006)](https://doi.org/10.1111/j.1468-0262.2006.00655.x), or switch to a weighting (IPW/AIPW) estimator whose standard error is well behaved.
+
+- **IPW.** A standard error that ignores estimation of $\hat\pi$ is conservative; the honest route is again the influence-function form above (AIPW) or the bootstrap, refitting the propensity model on each resample.
+
+- **Causal forests.** The pointwise CATE $\hat\tau(x)$ is asymptotically normal, and the generalized random forest supplies a matching variance estimate via the **infinitesimal jackknife**, yielding valid pointwise confidence intervals ([Wager & Athey, 2018](https://doi.org/10.1080/01621459.2017.1319839); [Athey, Tibshirani & Wager, 2019](https://doi.org/10.1214/18-AOS1709)).
+
+- **Bayesian methods (BART / BCF).** Uncertainty is obtained for free as the posterior: the credible interval is read directly off the posterior draws of $\tau$ or $\tau(x)$ ({doc}`bayesian`).
 
 ## Chapter Contents
 

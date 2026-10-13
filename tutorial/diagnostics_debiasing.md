@@ -1,8 +1,8 @@
-# Biases and De-Biasing Toolkit
+# Diagnostics and De-Biasing Toolkit
 
-In {doc}`assumptions` we established the four assumptions - {prf:ref}`consistency`, {prf:ref}`sutva`, {prf:ref}`positivity`, and {prf:ref}`exchangeability` - that allow causal effects to be identified from observational data. In {doc}`graphical_models` we introduced DAGs as the language for encoding and reasoning about these assumptions. In practice, **assumptions are rarely perfectly satisfied**. This chapter is a practical guide for the actuary: how to diagnose what went wrong, how to fix it, and how to ensure the resulting model is fair.
+In {doc}`assumptions` we established the four assumptions - {prf:ref}`consistency`, {prf:ref}`sutva`, {prf:ref}`positivity`, and {prf:ref}`exchangeability` - that allow causal effects to be identified from observational data. In {doc}`graphical_models` we introduced DAGs as the language for encoding and reasoning about these assumptions. In practice, **assumptions are rarely perfectly satisfied**. This chapter is a practical guide for the actuary: how to diagnose what went wrong and how to fix it. Fairness, a related but distinct concern, has its own chapter ({doc}`fairness`).
 
-## What went wrong? - From Assumption Violations to Biases
+## What went wrong? - Diagnosing Assumption Violations
 
 When a causal assumption is violated, a specific bias enters the treatment effect estimate. The table below maps each assumption to the bias it produces and the diagnostic pattern visible in data.
 
@@ -20,7 +20,8 @@ The remainder of this section defines each bias precisely.
 ### Confounding Bias
 
 ```{prf:definition} Confounding Bias
-:label: confounding-bias
+:label: confounding-bias-def
+:class: dropdown
 
 **Confounding bias** occurs when a fork variable $F$ causally influences both the treatment $T$ and the outcome $Y$, and the analysis fails to adjust for $F$.
 ```
@@ -45,7 +46,8 @@ In insurance, confounding arises when healthier policyholders self-select into w
 ### Selection Bias
 
 ```{prf:definition} Selection Bias
-:label: selection-bias
+:label: selection-bias-def
+:class: dropdown
 
 **Selection bias** arises when the sample analysed is not representative of the target population, because selection into the sample depends on variables related to both $T$ and $Y$.
 ```
@@ -58,6 +60,7 @@ When selection acts through a variable that is a *common effect* of $T$ and $Y$ 
 
 ```{prf:definition} Collider Bias
 :label: collider-bias-def
+:class: dropdown
 
 **Collider bias** (Berkson's paradox) occurs when the analysis conditions on a **collider** $C$ - a common effect of $T$ and $Y$. Conditioning on $C$ opens a non-causal path between $T$ and $Y$.
 ```
@@ -92,16 +95,16 @@ The biases above are not merely theoretical concerns - they are practical obstac
 | **Reweight** (IPW, IPCW, overlap weighting) | Confounding, selection, positivity | {doc}`direct_adjustment` |
 | **Restrict** (trimming, redefine target population) | Positivity violations | {doc}`direct_adjustment` |
 | **Model the causal structure** (DAG-guided variable selection) | Collider bias, confounding | {doc}`graphical_models` |
-| **Cluster or network models** (incl. exposure-mapping / spillover-robust estimators) | Interference / spillover | - |
-| **Sensitivity analysis** | Unobserved confounding | {doc}`sensitivity` |
+| **Cluster or network models** (incl. exposure-mapping / spillover-robust estimators) | Interference / spillover | {doc}`assumptions` |
+| **Sensitivity analysis** | Unobserved confounding | {doc}`sensitivity_analysis` |
 
 ### Adjust
 
-Include confounders $F$ as covariates in the outcome model ([Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)), or use propensity score methods - matching, stratification, or inverse-probability weighting on $\pi(x) = P(T{=}1 \mid X{=}x)$ ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Austin, 2011](https://doi.org/10.1080/00273171.2011.568786)). **Doubly robust** estimators combine both approaches and are consistent if *either* the outcome model or the propensity model is correctly specified. Note that these strategies all target the ATE or ATT on the full (treated) population. When unmeasured confounders exist, **instrumental variables** exploit exogenous variation to recover a causal effect ([Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)) - but a *different* estimand: under effect heterogeneity IV identifies the **Local Average Treatment Effect** (LATE), the effect among the *compliers* whose treatment status responds to the instrument, not the ATE or ATT ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)). Because the complier subpopulation is specific to the instrument used, the LATE can differ markedly from the portfolio-wide effect an underwriter actually needs - so IV is not a drop-in substitute for the estimators above.
+Include confounders $F$ as covariates in the outcome model (Wooldridge, 2012), or use propensity score methods - matching, stratification, or inverse-probability weighting on $\pi(x) = P(T{=}1 \mid X{=}x)$ ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Austin, 2011](https://doi.org/10.1080/00273171.2011.568786)). **Doubly robust** estimators combine both approaches and are consistent if *either* the outcome model or the propensity model is correctly specified. Note that these strategies all target the ATE or ATT on the full (treated) population. When unmeasured confounders exist, **instrumental variables** exploit exogenous variation to recover a causal effect ([Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)) - but a *different* estimand: under effect heterogeneity IV identifies the **Local Average Treatment Effect** (LATE), the effect among the *compliers* whose treatment status responds to the instrument, not the ATE or ATT ([Imbens & Angrist, 1994](https://doi.org/10.2307/2951620)). Because the complier subpopulation is specific to the instrument used, the LATE can differ markedly from the portfolio-wide effect an underwriter actually needs - so IV is not a drop-in substitute for the estimators above.
 
 ### Reweight
 
-Inverse-probability weighting (IPW) creates a pseudo-population in which treatment is independent of confounders - provided the propensity model is correctly specified, since IPW is singly robust and biased under misspecification ([Kang & Schafer, 2007](https://doi.org/10.1214/07-STS227)). **Inverse-probability-of-censoring weighting** (IPCW) extends this idea to correct for selection bias due to attrition or censoring. **Stabilised weights** $w^{s} = P(T{=}t) / P(T{=}t \mid X)$ reduce variance ([Austin, 2011](https://doi.org/10.1080/00273171.2011.568786)). **Overlap weighting** - assigning each treated unit weight $1-\pi(x)$ and each control unit weight $\pi(x)$, whose product $\pi(x)(1-\pi(x))$ is the tilting function defining the overlap population ([Li, Morgan & Zaslavsky, 2018](https://doi.org/10.1080/01621459.2016.1260466)) - naturally down-weights units in regions of poor overlap and is particularly useful when positivity is borderline.
+Inverse-probability weighting (IPW) creates a pseudo-population in which treatment is independent of confounders - provided the propensity model is correctly specified, since IPW is singly robust and biased under misspecification ([Kang & Schafer, 2007](https://doi.org/10.1214/07-STS227); see {doc}`direct_adjustment` for details). **Inverse-probability-of-censoring weighting** (IPCW) extends this idea to correct for selection bias due to attrition or censoring. **Stabilised weights** $w^{s} = P(T{=}t) / P(T{=}t \mid X)$ reduce variance ([Austin, 2011](https://doi.org/10.1080/00273171.2011.568786)). **Overlap weighting** - assigning each treated unit weight $1-\pi(x)$ and each control unit weight $\pi(x)$, whose product $\pi(x)(1-\pi(x))$ is the tilting function defining the overlap population ([Li, Morgan & Zaslavsky, 2018](https://doi.org/10.1080/01621459.2016.1260466)) - naturally down-weights units in regions of poor overlap and is particularly useful when positivity is borderline.
 
 ### Restrict
 
@@ -109,7 +112,7 @@ When certain covariate strata have near-deterministic treatment assignment, the 
 
 ### Model the causal structure
 
-Use a DAG to distinguish confounders (adjust for them) from colliders (do not condition on them) and mediators. A mediator must **not** be handled by naive regression conditioning when a *direct* effect is the goal: conditioning on a mediator $M$ in a regression of $Y$ on $(T, M, X)$ does **not** identify the natural direct effect (NDE). It recovers at best the *controlled* direct effect (CDE) at a fixed level of $M$, and even that only if there is no unmeasured mediator–outcome confounder $U_M$ (a variable affecting both $M$ and $Y$) - otherwise conditioning on $M$ opens the collider path $M \leftarrow U_M \rightarrow Y$ and *introduces* bias. Such confounding is endemic in insurance data (health status, risk attitude, and socio-economic status all affect both programme engagement and claim outcomes). The NDE, $\mathbb{E}[Y(t, M(t'))\mid\cdot]$, where $t'$ denotes the alternative treatment, is identified only by the mediation formula under a strictly stronger set of assumptions (no unmeasured mediator–outcome confounding), not by regression conditioning (Pearl, 2001; VanderWeele, 2015). The {prf:ref}`backdoor-criterion` from {doc}`graphical_models` provides an algorithmic tool for selecting a valid covariate *adjustment set*. The {prf:ref}`frontdoor-criterion` is **not** an adjustment-set selector but an alternative identification strategy for the case where no admissible adjustment set exists - because every backdoor path runs through an unmeasured confounder - recovering the effect through a mediator rather than by covariate adjustment ([Pearl, 2009](https://doi.org/10.1017/CBO9780511803161), Cor. 3.3.4).
+Use a DAG to distinguish confounders (adjust for them) from colliders (do not condition on them) and mediators. A mediator must **not** be handled by naive regression conditioning when a *direct* effect is the goal: conditioning on a mediator $M$ in a regression of $Y$ on $(T, M, X)$ does **not** identify the natural direct effect (NDE). It recovers at best the *controlled* direct effect (CDE) at a fixed level of $M$, and even that only if there is no unmeasured mediator–outcome confounder $U_M$ (a variable affecting both $M$ and $Y$) - otherwise conditioning on $M$ opens the collider path $M \leftarrow U_M \rightarrow Y$ and *introduces* bias. Such confounding is endemic in insurance data (health status, risk attitude, and socio-economic status all affect both programme engagement and claim outcomes). The NDE, $\mathbb{E}[Y(t, M(t'))\mid\cdot]$, where $t'$ denotes the alternative treatment, is identified only by the mediation formula under a strictly stronger set of assumptions (no unmeasured mediator–outcome confounding), not by regression conditioning ([Pearl, 2001](https://arxiv.org/abs/1301.2300); VanderWeele, 2015). The {prf:ref}`backdoor-criterion` from {doc}`graphical_models` provides an algorithmic tool for selecting a valid covariate *adjustment set*. The {prf:ref}`frontdoor-criterion` is **not** an adjustment-set selector but an alternative identification strategy for the case where no admissible adjustment set exists - because every backdoor path runs through an unmeasured confounder - recovering the effect through a mediator rather than by covariate adjustment ([Pearl, 2009](https://doi.org/10.1017/CBO9780511803161), Theorem 3.3.4).
 
 ### Cluster or network models
 
@@ -117,4 +120,4 @@ When interference is present, assign treatment at the group level and analyse at
 
 ### Sensitivity analysis
 
-{prf:ref}`exchangeability` cannot be verified from data alone. **Sensitivity analysis** quantifies how strong an unmeasured confounder would need to be to explain away the estimated effect. Methods include E-values, Rosenbaum bounds, and partial $R^2$ sensitivity - covered in detail in {doc}`sensitivity`.
+{prf:ref}`exchangeability` cannot be verified from data alone. **Sensitivity analysis** quantifies how strong an unmeasured confounder would need to be to explain away the estimated effect. Methods include E-values, Rosenbaum bounds, and partial $R^2$ sensitivity - covered in detail in {doc}`sensitivity_analysis`.

@@ -13,7 +13,8 @@ import plotly.graph_objects as go
 import plotly.subplots as sp
 import seaborn as sns
 from sklearn.tree import _tree
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.model_selection import KFold
 
 # ---------------------------------------------------------------------------
 # SAV / ASA brand palette (Swiss Association of Actuaries logo)
@@ -705,8 +706,60 @@ def overlap_weighted_ate(df, treatment, outcome, ps):
     return ate, w
 
 
+def aipw_ate(df, treatment, outcome, covariates, n_splits=2, random_state=0,
+             ps_clip=0.01):
+    """Augmented IPW (doubly robust) ATE with K-fold cross-fitting.
+
+    Combines an outcome model and a propensity model so the estimate is
+    consistent if *either* one is correctly specified (double robustness).
+    Cross-fitting fits the nuisance models on one fold and evaluates them on the
+    held-out fold, which removes own-observation overfitting bias. Returns the
+    point estimate together with the standard error implied by the efficient
+    influence function, so no separate bootstrap is needed.
+    """
+    X = df[covariates].astype(float).values
+    t = df[treatment].astype(int).values
+    y = df[outcome].astype(float).values
+    n = len(y)
+    mu1 = np.zeros(n)
+    mu0 = np.zeros(n)
+    ps = np.zeros(n)
+
+    kf = KFold(n_splits=n_splits, shuffle=True, random_state=random_state)
+    for train, test in kf.split(X):
+        # Propensity model on the training fold (standardised, as elsewhere).
+        mean = X[train].mean(axis=0)
+        std = X[train].std(axis=0)
+        std[std == 0] = 1.0
+        ps_model = LogisticRegression(max_iter=1000)
+        ps_model.fit((X[train] - mean) / std, t[train])
+        ps[test] = ps_model.predict_proba((X[test] - mean) / std)[:, 1]
+
+        # Separate outcome models for the treated and control arms.
+        tr = train[t[train] == 1]
+        ct = train[t[train] == 0]
+        mu1[test] = LinearRegression().fit(X[tr], y[tr]).predict(X[test])
+        mu0[test] = LinearRegression().fit(X[ct], y[ct]).predict(X[test])
+
+    ps = np.clip(ps, ps_clip, 1 - ps_clip)
+    # Efficient influence function: outcome-regression difference plus IPW-
+    # weighted residual corrections for each arm.
+    phi = (mu1 - mu0) + t * (y - mu1) / ps - (1 - t) * (y - mu0) / (1 - ps)
+    ate = phi.mean()
+    se = phi.std(ddof=1) / np.sqrt(n)
+    return {'ate': ate, 'se': se, 'phi': phi}
+
+
 def calculate_smd_weighted(df, covariates, treatment, weights):
-    """Standardised mean differences after applying weights (for balance checks)."""
+    """Standardised mean differences after applying weights (for balance checks).
+
+    The group means in the numerator are *weighted* (computed on the weighted
+    pseudo-population), but the denominator uses the **unweighted** group
+    variances from the full, unadjusted sample, held fixed - the convention of
+    {prf:ref}`smd` (Austin, 2009). Re-deriving the denominator from the weighted
+    sample would let extreme weights deflate the variance and make balance look
+    better than it is.
+    """
     t = df[treatment].astype(int).values
     w = np.asarray(weights, dtype=float)
     out = {}
@@ -716,8 +769,9 @@ def calculate_smd_weighted(df, covariates, treatment, weights):
         xt, xc = x[t == 1], x[t == 0]
         mt = np.average(xt, weights=wt)
         mc = np.average(xc, weights=wc)
-        vt = np.average((xt - mt) ** 2, weights=wt)
-        vc = np.average((xc - mc) ** 2, weights=wc)
+        # Denominator: unweighted variances from the full, unadjusted sample, fixed.
+        vt = xt.var(ddof=1)
+        vc = xc.var(ddof=1)
         pooled = np.sqrt((vt + vc) / 2)
         out[cov] = (mt - mc) / pooled if pooled > 0 else 0.0
     return pd.Series(out)

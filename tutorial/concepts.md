@@ -17,7 +17,7 @@ Causal inference provides the tools to move beyond "what predicts $Y$?" to "what
 
 Modern causal inference grew out of two complementary traditions, and this tutorial draws on both.
 
-The **potential-outcomes (or counterfactual) tradition** originates with [Neyman (1923)](https://doi.org/10.1214/ss/1177012031), who introduced potential outcomes for randomized experiments, and was extended to observational studies by [Rubin (1974)](https://doi.org/10.1037/h0037350). The potential outcomes framework posits that for every unit $i$, there exist two potential outcomes: $Y_i(1)$, the outcome that *would* be observed if unit $i$ received treatment ($T=1$), and $Y_i(0)$, the outcome that *would* be observed under control ($T=0$). Only one of these is ever realised - the one corresponding to the treatment actually received - making the other a **counterfactual**. Causal effects are defined as contrasts between these potential outcomes (e.g. $\tau_i = Y_i(1) - Y_i(0)$), and causal inference is framed as a **missing-data problem**.
+The **potential-outcomes (or counterfactual) tradition** originates with [Neyman (1923; transl. 1990)](https://doi.org/10.1214/ss/1177012031), who introduced potential outcomes for randomised experiments, and was extended to observational studies by [Rubin (1974)](https://doi.org/10.1037/h0037350). The potential outcomes framework posits that for every unit $i$, there exist two potential outcomes: $Y_i(1)$, the outcome that *would* be observed if unit $i$ received treatment ($T=1$), and $Y_i(0)$, the outcome that *would* be observed under control ($T=0$). Only one of these is ever realised - the one corresponding to the treatment actually received - making the other a **counterfactual**. Causal effects are defined as contrasts between these potential outcomes (e.g. $\tau_i = Y_i(1) - Y_i(0)$), and causal inference is framed as a **missing-data problem**.
 
 
 The **structural / graphical tradition** traces back to the path analysis of [Wright (1934)](https://doi.org/10.1214/aoms/1177732676) and was formalised by [Pearl (1995)](https://doi.org/10.1093/biomet/82.4.669), [2009](https://doi.org/10.1017/CBO9780511803161). It encodes causal assumptions in **directed acyclic graphs (DAGs)** and structural equations, making questions of confounding, adjustment, and identification graphically explicit.
@@ -53,11 +53,11 @@ The propensity score was introduced by [Rosenbaum & Rubin (1983)](https://doi.or
 
 ### Assignment Mechanism
 
-The **assignment mechanism** describes the process by which units come to receive a particular treatment. In a **randomized controlled trial** (RCT) the mechanism is known and controlled by the experimenter. In observational data, treatment is instead determined by factors such as self-selection, physician decisions, or policy rules - and these factors may themselves be related to the outcome ([Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)). Understanding (or modelling) the assignment mechanism is the central challenge of causal inference from observational data, and it is what the identification assumptions (consistency, positivity, exchangeability) are designed to address.
+The **assignment mechanism** describes the process by which units come to receive a particular treatment. In a **randomised controlled trial** (RCT) the mechanism is known and controlled by the experimenter. In observational data, treatment is instead determined by factors such as self-selection, physician decisions, or policy rules - and these factors may themselves be related to the outcome (Wooldridge, 2012). Understanding (or modelling) the assignment mechanism is the central challenge of causal inference from observational data, and it is what the identification assumptions (consistency, positivity, exchangeability) are designed to address.
 
 ### Confounding
 
-A **confounder** (or fork) $F$ is a variable that causally influences both the treatment assignment $T$ and the outcome $Y$. When confounders are present but not adjusted for, the observed association between $T$ and $Y$ mixes a causal term with a spurious *baseline* (selection) difference between the two groups - this is **confounding bias** ([Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1); [Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)). As the decomposition below makes precise, without further assumptions the causal term isolated by the naive contrast is the average treatment effect *on the treated* (ATT), **not** the unconditional average treatment effect (ATE), and the residual equals pure confounding only under effect homogeneity ($\text{ATT} = \text{ATE}$). For a visual tutorial on confounding via Simpson's Paradox, see [this simulation walkthrough](https://www.biostatistics.ca/when-data-lies-simpsons-paradox-a-step-by-step-simulation-code-notebook/).
+A **confounder** (or fork) $F$ is a variable that causally influences both the treatment assignment $T$ and the outcome $Y$. When confounders are present but not adjusted for, the observed association between $T$ and $Y$ mixes a causal term with a spurious *baseline* (selection) difference between the two groups - this is **confounding bias** (Wooldridge, 2012; [Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)). As the decomposition below makes precise, without further assumptions the causal term isolated by the naive contrast is the average treatment effect *on the treated* (ATT), **not** the unconditional average treatment effect (ATE), and the residual equals pure confounding only under effect homogeneity ($\text{ATT} = \text{ATE}$). For a classic discussion of confounding via Simpson's Paradox, see [Pearl (2009, Ch. 6)](https://doi.org/10.1017/CBO9780511803161).
 
 $$
 \underbrace{\mathbb{E}[Y \mid T=1] - \mathbb{E}[Y \mid T=0]}_{\text{observed difference}} \;=\; \underbrace{\mathbb{E}[Y(1) - Y(0) \mid T=1]}_{\text{ATT}} \;+\; \underbrace{\mathbb{E}[Y(0) \mid T=1] - \mathbb{E}[Y(0) \mid T=0]}_{\text{baseline (selection) bias}}
@@ -66,8 +66,8 @@ $$
 Attributing the whole residual to confounding while calling the causal term the "ATE" would silently assume no treatment-effect heterogeneity - untenable in insurance, where high-risk self-selectors typically have differential effects ([Angrist & Pischke, 2009, Sec. 3.2](https://doi.org/10.1515/9781400829828)). The goal of causal inference methods (matching, weighting, regression adjustment, etc.) is to eliminate this bias by appropriately adjusting for the confounders.
 
 
-### Randomized Controlled Trials
-The **"gold standard"** for causal inference is the randomized controlled trial (RCT). Randomization in treatment assignment ensures that treatment and control groups are as similar as possible, eliminating confounding and ensuring the treatment $T$ is independent of potential outcomes ([Rubin, 1974](https://doi.org/10.1037/h0037350); [Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)).
+### Randomised Controlled Trials
+The **"gold standard"** for causal inference is the randomised controlled trial (RCT). Randomisation in treatment assignment ensures that treatment and control groups are as similar as possible, eliminating confounding and ensuring the treatment $T$ is independent of potential outcomes ([Rubin, 1974](https://doi.org/10.1037/h0037350); [Angrist & Pischke, 2015](https://doi.org/10.2307/j.ctt5vhbqm)).
 
 ```{figure} figs/rct_benchmark.svg
 :width: 90%
@@ -76,7 +76,7 @@ The **"gold standard"** for causal inference is the randomized controlled trial 
 In an RCT, treatment is assigned by chance, so both measured and unmeasured covariates are balanced across the treatment and control arms. This balance is what makes the simple difference in means an unbiased estimate of the causal effect.
 ```
 
-Because randomization makes $T \perp\!\!\!\perp (Y(1), Y(0))$ hold *by design*, the RCT is best understood as the **benchmark that observational methods try to emulate**. When we cannot randomize, the methods in this tutorial - matching, weighting, regression adjustment, and graphical reasoning - all aim to reconstruct, *conditional on covariates*, the covariate balance that randomization would have produced automatically.
+Because randomisation makes $T \perp\!\!\!\perp (Y(1), Y(0))$ hold *by design*, the RCT is best understood as the **benchmark that observational methods try to emulate**. When we cannot randomise, the methods in this tutorial - matching, weighting, regression adjustment, and graphical reasoning - all aim to reconstruct, *conditional on covariates*, the covariate balance that randomisation would have produced automatically.
 
 ```{note}
 :class: dropdown
@@ -84,10 +84,10 @@ RCTs are often infeasible in actuarial settings: we cannot randomly assign polic
 ```
 
 ### Observational Data
-Causal inference from observational data relies on the idea that, under the assumptions of the **Rubin Causal Model** ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)), an observational study can be regarded as a *conditionally randomized experiment*. Under the assumptions of ignorability, the observed data $D$ represent the essential features of a randomized experiment, enabling the identification and consistent estimation of causal effects. 
+When treatment is not randomised, causal inference rests on the idea that - under the **Rubin Causal Model** ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)) and the assumption of ignorability - an observational study can be treated as a *conditionally randomised experiment*. This framing, and the assumptions that license it, are developed in {doc}`assumptions`.
 
 ## Fundamental Problem of Causal Inference
-Using binary treatments, every unit $i$ has two **potential outcomes** - $Y_i(1)$ under treatment and $Y_i(0)$ under control - but only one can ever be observed. The observed outcome is the **factual**; the outcome under the alternative treatment is the **counterfactual**. Since we cannot reset time to see what would have happened to the same unit under a different treatment, it is impossible to directly calculate individual treatment effects $\tau_i = Y_i(1) - Y_i(0)$. This fundamental identification problem was formalised by [Rubin (1974)](https://doi.org/10.1037/h0037350) and is discussed in detail in [Angrist & Pischke (2015, Ch. 1)](https://doi.org/10.2307/j.ctt5vhbqm).
+Using binary treatments, every unit $i$ has two **potential outcomes** - $Y_i(1)$ under treatment and $Y_i(0)$ under control - but only one can ever be observed. The observed outcome is the **factual**; the outcome under the alternative treatment is the **counterfactual**. Since we cannot reset time to see what would have happened to the same unit under a different treatment, it is impossible to directly calculate individual treatment effects $\tau_i = Y_i(1) - Y_i(0)$. This fundamental identification problem - the **Fundamental Problem of Causal Inference** - was named and formalised by [Holland (1986)](https://doi.org/10.1080/01621459.1986.10478354), building on the potential-outcomes framework of [Rubin (1974)](https://doi.org/10.1037/h0037350), and is discussed in detail in [Angrist & Pischke (2015, Ch. 1)](https://doi.org/10.2307/j.ctt5vhbqm).
 
 ```{figure} figs/fundamental_problem.svg
 :width: 80%
@@ -102,9 +102,9 @@ The fundamental problem of causal inference: for each unit we observe the outcom
 ### Identifiability
 A causal effect is **identifiable** if it can be expressed purely in terms of the observed data distribution, given a set of structural assumptions.
 
-The key distinction is between a **causal estimand** - defined via potential outcomes (e.g. the ATE $\mathbb{E}[Y(1) - Y(0)]$) - and a **statistical estimand** - a quantity computable from the observed data. Identifiability is the bridge: the assumptions of consistency, SUTVA, positivity, and exchangeability equate the two *at the conditional level*, $\mathbb{E}[Y(1) - Y(0) \mid X] = \mathbb{E}[Y \mid T=1, X] - \mathbb{E}[Y \mid T=0, X]$, and the scalar ATE then follows by an outer expectation over $X$ (the standardisation / g-formula), $\mathbb{E}[Y(1) - Y(0)] = \mathbb{E}_X\big[\mathbb{E}[Y \mid T=1, X] - \mathbb{E}[Y \mid T=0, X]\big]$ - making estimation possible. For a formal treatment, see [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html) and the [Assumptions Guide](https://www.uniqcret.com/post/causal-inference-assumptions-guide).
+The key distinction is between a **causal estimand** - defined via potential outcomes (e.g. the ATE $\mathbb{E}[Y(1) - Y(0)]$) - and a **statistical estimand** - a quantity computable from the observed data. Identifiability is the bridge: the assumptions of consistency, SUTVA, positivity, and exchangeability equate the two *at the conditional level*, $\mathbb{E}[Y(1) - Y(0) \mid X] = \mathbb{E}[Y \mid T=1, X] - \mathbb{E}[Y \mid T=0, X]$. The scalar ATE then follows by an outer expectation over $X$ (the standardisation / g-formula), $\mathbb{E}[Y(1) - Y(0)] = \mathbb{E}_X\big[\mathbb{E}[Y \mid T=1, X] - \mathbb{E}[Y \mid T=0, X]\big]$ - making estimation possible. For a formal treatment, see [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html) and [Hernán & Robins (2020, Ch. 2)](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/).
 
-For heterogeneous treatment effect estimation, see [Athey & Imbens (2016)](https://doi.org/10.1073/pnas.1510489113), [Wager & Athey (2018)](https://doi.org/10.1080/01621459.2017.1319839), and [Schmidt (2018)](https://doi.org/10.48550/arXiv.1810.13237).
+Identification of *heterogeneous* effects (CATEs) rests on these same assumptions applied conditionally on $X$; the associated estimators are developed in {doc}`heterogeneous_effects`.
 
 
 
@@ -118,7 +118,7 @@ The bridge from a causal estimand to a statistical estimand is built entirely fr
 No statistical procedure can *prove* a causal effect from observational data. Every estimate is conditional on assumptions that come from domain knowledge, not from the data. The role of the analyst is to (1) state these assumptions explicitly, (2) encode them in a DAG or potential-outcomes model, and (3) probe how fragile the conclusions are when the assumptions are relaxed.
 ```
 
-This is why **sensitivity analysis** is not optional but a core part of any credible causal study: rather than asking "is exchangeability true?", we ask "*how strong* would an unmeasured confounder have to be to overturn our conclusion?". These tools - E-values, Rosenbaum bounds, and partial-$R^2$ methods - are developed in {doc}`diagnostics` and {doc}`sensitivity`.
+This is why **sensitivity analysis** is not optional but a core part of any credible causal study: rather than asking "is exchangeability true?", we ask "*how strong* would an unmeasured confounder have to be to overturn our conclusion?". These tools - E-values, Rosenbaum bounds, and partial-$R^2$ methods - are developed in {doc}`sensitivity_analysis`.
 
 
 ### Notation
@@ -135,6 +135,11 @@ Throughout this tutorial we adopt the following conventions. Let $D = \{(X_i, T_
 | $M$ | Mediator (variable on the causal path from $T$ to $Y$) |
 | $S$ | Sensitive attribute (protected characteristic, e.g. gender, ethnicity) |
 | $U$ | Unmeasured / unobserved confounder |
-| $D$ | Observed dataset: $D = \{(X_i, T_i, Y_i)\}_{i=1}^{n}$ |
+| $I$ | Instrument (source of exogenous variation in $T$ that affects $Y$ only through $T$) |
 | $\pi(x)$ | Propensity score: $\pi(x) = \mathbb{P}(T=1 \mid X=x)$ |
+| $\mu(t,x)$ | Outcome model: $\mu(t,x) = \mathbb{E}[Y \mid T=t, X=x]$ |
+| $m(x)$ | Marginal outcome regression: $m(x) = \mathbb{E}[Y \mid X=x]$ |
+| $\tau(x)$ | Conditional average treatment effect (CATE): $\tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X=x]$ |
+
+Estimands are abbreviated **ATE** (average treatment effect), **ATT** (average treatment effect on the treated), **CATE** (conditional ATE), and **LATE** (local ATE, i.e. the complier effect); they are defined in {doc}`inference`.
 

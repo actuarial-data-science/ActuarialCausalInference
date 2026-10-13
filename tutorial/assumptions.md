@@ -1,14 +1,13 @@
 # Assumptions
 
-## From Observational Data to Conditionally Randomized Experiments
+## From Observational Data to Conditionally Randomised Experiments
 
-Causal inference from observational data relies on the idea that, under the assumptions of the **Rubin Causal Model** ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)), an observational study can be regarded as a *conditionally randomized experiment*. 
+Causal inference from observational data relies on the idea that, under the assumptions of the **Rubin Causal Model** ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)), an observational study can be regarded as a *conditionally randomised experiment*. 
 
-Under the assumptions of ignorability (see below), the observed data represent the essential features of a randomized experiment, enabling the identification and consistent estimation of causal effects within the **potential outcomes framework**.
+Under the assumptions of ignorability (see below), the observed data represent the essential features of a randomised experiment, enabling the identification and consistent estimation of causal effects within the **potential outcomes framework**.
 
 ## Potential Outcomes Framework
-- [Rubin (1974)](https://doi.org/10.1037/h0037350) extended Neyman's (1923) theory for randomized experiments to observational studies.
-- Specifically, when treatment assignment is **strongly ignorable** given a set of observed covariates - that is, when the following two conditions hold ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)):
+[Rubin (1974)](https://doi.org/10.1037/h0037350) extended Neyman's (1923) theory for randomised experiments to observational studies. Treatment assignment is **strongly ignorable** given a set of observed covariates when the following two conditions hold ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41)):
 
 $$
 (Y(1), Y(0)) \perp\!\!\!\perp T \mid X
@@ -18,12 +17,13 @@ $$
 0 < P(T = 1 \mid X) < 1,
 $$
 
-then conditioning on $X$ renders the treatment assignment mechanism analogous to that of a randomized controlled trial. More explanation in the [Assumptions Guide](https://www.uniqcret.com/post/causal-inference-assumptions-guide) and in [Neal (2020)](https://www.bradyneal.com/Introduction_to_Causal_Inference-Aug27_2020-Neal.pdf). See also [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html) for a formal treatment.
+Conditioning on $X$ then renders the treatment assignment mechanism analogous to that of a randomised controlled trial. More explanation in [Hernán & Robins (2020, Chs. 2-3)](https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/) and in [Neal (2020)](https://www.bradyneal.com/Introduction_to_Causal_Inference-Aug27_2020-Neal.pdf). See also [Oxford: Causal Assumptions](https://www.stats.ox.ac.uk/~evans/APTS/causassmp.html) for a formal treatment.
 
 ### Assumptions
 
 ```{prf:assumption} Consistency
 :label: consistency
+:class: dropdown
 
 $$
 Y(t) = Y \quad \text{when } T = t
@@ -32,12 +32,13 @@ $$
 
 The observed outcome $Y$ equals the potential outcome $Y(t)$ whenever the treatment actually received is $T = t$. This assumption is what makes potential outcomes empirically meaningful: without it, $Y(t)$ is a purely abstract quantity with no necessary connection to what is measured in data.
 
-**Detecting violations:** Violations arise when the treatment $T$ is not sufficiently well-defined. If units assigned $T = t$ received meaningfully different variants - different doses, formulations, timing, or delivery mechanisms - then $Y(t)$ is not a single quantity but an average over distinct potential outcomes that should not be conflated. Empirically, this manifests as effect heterogeneity within treatment arms that cannot be explained by measured covariates. Stratifying by treatment sub-type and testing whether effect estimates shift substantially is a practical diagnostic. Interference violations are harder to detect but can sometimes be probed by examining whether outcomes of untreated units vary with the treatment density of their neighbours.
+**Detecting violations:** Violations arise when the treatment $T$ is not sufficiently well-defined. If units assigned $T = t$ received meaningfully different variants - different doses, formulations, timing, or delivery mechanisms - then $Y(t)$ is not a single quantity but an average over distinct potential outcomes that should not be conflated. Empirically, this manifests as effect heterogeneity within treatment arms that cannot be explained by measured covariates. Stratifying by treatment sub-type and testing whether effect estimates shift substantially is a practical diagnostic.
 
 ([Rubin, 1980](https://doi.org/10.2307/2287653); [Cole & Frangakis, 2009](https://doi.org/10.1097/EDE.0b013e31818ef366); [VanderWeele, 2009](https://doi.org/10.1097/EDE.0b013e3181bd5638))
 
 ```{prf:assumption} Stable Unit Treatment Value Assumption (SUTVA)
 :label: sutva
+:class: dropdown
 
 $$
 Y_i(t_i) \text{ depends only on } t_i \text{ (not on } t_j \text{ for } j \neq i)
@@ -49,11 +50,12 @@ In Rubin's original formulation, SUTVA bundled no-interference together with con
 **Detecting violations:** Interference is suspected when outcomes of untreated units **correlate with the treatment rate in their neighbourhood or group**. In insurance, if offering a discount to some policyholders influences the behaviour of others in the same household or employer group, SUTVA is violated. Diagnostic: compare outcomes of control units across clusters with different treatment intensities - if they differ systematically, interference is present.
 
 ```{note}
-SUTVA is often treated as binary - satisfied or violated - but the literature distinguishes **partial interference** ([Hudgens & Halloran, 2008](https://doi.org/10.1198/016214508000000292)), where spillovers operate only within known clusters, from **global interference**, where they may propagate across the entire population. In group health insurance or fleet policies, interference is typically neither absent nor unbounded but **structured by household or employer group membership**: a wellness incentive or safe-driving programme offered to some members of a group may affect the behaviour and outcomes of others in the same group, but not across groups. When this cluster structure is known, spillover effects can be accommodated rather than assumed away. Beyond the cluster models discussed in {ref}`debias`, **spillover-robust estimators** based on the exposure-mapping approach of [Aronow & Samii (2017)](https://doi.org/10.1214/16-AOAS1005) allow consistent estimation of average causal effects under general (partial) interference by modelling each unit's exposure to the treatment of others.
+SUTVA is often treated as binary - satisfied or violated - but the literature distinguishes **partial interference** ([Hudgens & Halloran, 2008](https://doi.org/10.1198/016214508000000292)), where spillovers operate only within known clusters, from **global interference**, where they may propagate across the entire population. In group health insurance or fleet policies, interference is typically neither absent nor unbounded but **structured by household or employer group membership**: a wellness incentive or safe-driving programme offered to some members of a group may affect the behaviour and outcomes of others in the same group, but not across groups. When this cluster structure is known, spillover effects can be accommodated rather than assumed away. Beyond the cluster models discussed in {doc}`diagnostics_debiasing`, **spillover-robust estimators** based on the exposure-mapping approach of [Aronow & Samii (2017)](https://doi.org/10.1214/16-AOAS1005) allow consistent estimation of average causal effects under general (partial) interference by modelling each unit's exposure to the treatment of others.
 ```
 
 ```{prf:assumption} Positivity
 :label: positivity
+:class: dropdown
 
 $$
 0 < P(T = 1 \mid X = x) < 1 \quad \text{with probability } 1
@@ -72,6 +74,7 @@ This states that, for any possible covariate profile, treatment assignment is no
 
 ```{prf:assumption} Exchangeability (No unobserved confounding)
 :label: exchangeability
+:class: dropdown
 
 **Full (joint) exchangeability** - the *strong ignorability* condition of [Rosenbaum & Rubin (1983)](https://doi.org/10.1093/biomet/70.1.41):
 
@@ -80,7 +83,7 @@ $$
 $$
 ```
 
-Conditioning on the observed covariates $X$ is then sufficient to remove confounding bias. This is also called *conditional exchangeability* or *conditional ignorability* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); [Wooldridge, 2012](https://doi.org/10.1016/C2011-0-05506-1)).
+Conditioning on the observed covariates $X$ is then sufficient to remove confounding bias. This is also called *conditional exchangeability* or *conditional ignorability* ([Rosenbaum & Rubin, 1983](https://doi.org/10.1093/biomet/70.1.41); Wooldridge, 2012).
 
 ```{note}
 :class: dropdown
@@ -100,17 +103,17 @@ Joint independence of the *pair* implies each marginal, but the converse fails i
 They should therefore be ranked **full $\succ$ marginal $\succ$ mean**, and only the level actually required for the target estimand need be invoked. The joint form is stated above because it is the classical strong-ignorability condition.
 ```
 
-In case of violation, exchangeability often produces severe bias, which is a separate dimension from the **probability** that it is violated in a given study; a mild but plausible violation and a severe but implausible one warrant very different responses.
+The **magnitude** of bias that a violation of exchangeability would cause is a separate dimension from the **probability** that it is violated in a given study; a mild but plausible violation and a severe but implausible one warrant very different responses.
 
 ```{note}
 :class: dropdown
 
-Rather than treating exchangeability as a binary "true or false" property, it is more useful to adopt a **graduated view of assumption strength**. The empirically productive question is not *"does unobserved confounding exist?"* - it almost always does to some degree - but *"how strong would an unmeasured confounder have to be to overturn our conclusion?"* This reframing makes **sensitivity analysis the natural companion to the exchangeability assumption from the moment it is introduced**: tools such as E-values, Rosenbaum bounds, and Manski-style partial-identification bounds operationalise exactly this graduated view. They are developed in {doc}`sensitivity` and {doc}`diagnostics`.
+Rather than treating exchangeability as a binary "true or false" property, it is more useful to adopt a **graduated view of assumption strength**. The empirically productive question is not *"does unobserved confounding exist?"* - it almost always does to some degree - but *"how strong would an unmeasured confounder have to be to overturn our conclusion?"* This reframing makes **sensitivity analysis the natural companion to the exchangeability assumption from the moment it is introduced**: tools such as E-values, Rosenbaum bounds, and Manski-style partial-identification bounds operationalise exactly this graduated view. They are developed in {doc}`sensitivity_analysis`.
 ```
 
 **Detecting violations:** Exchangeability **cannot be directly tested** because it concerns unobserved confounders by definition. However, indirect evidence includes: (1) **sensitivity analysis** - computing E-values or applying the method of [Cinelli & Hazlett (2020)](https://doi.org/10.1111/rssb.12348) to assess how strong an unmeasured confounder would need to be to explain away the effect; (2) **negative control outcomes** - outcomes known to be unaffected by $T$ that should show zero effect if exchangeability holds; (3) **placebo/falsification tests** - applying the estimator to subgroups where no effect is expected. Persistent sensitivity of results to small unmeasured confounders signals concern.
 
-By exchangeability ({prf:ref}`exchangeability`) and consistency ({prf:ref}`consistency`), the estimation of the average (causal) treatment effect can be done based on observed data. At the level of a fixed covariate profile $X=x$,
+By exchangeability ({prf:ref}`exchangeability`), consistency ({prf:ref}`consistency`), and positivity ({prf:ref}`positivity`), the estimation of the average (causal) treatment effect can be done based on observed data; positivity guarantees that the conditional mean $\mathbb{E}[Y \mid X=x, T=t]$ is well-defined ($P(T=t \mid X=x) > 0$) over the covariate region we marginalise across, and only **mean** exchangeability (the weakest form above) is actually required. At the level of a fixed covariate profile $X=x$,
 
 $$
 \mathbb{E}[Y(t) \mid X=x] 

@@ -1,7 +1,6 @@
+# Fairness and Causal Inference
 
-## Causal Inference and Fairness
-
-Beyond causal bias, actuaries face a distinct but related challenge: ensuring that models do not discriminate against protected groups. EU regulation prohibits the use of protected characteristics (e.g. gender, ethnicity) for insurance pricing, but simply dropping the sensitive attribute $S$ does not solve the problem.
+Beyond causal bias, actuaries face a distinct but related challenge: ensuring that models do not discriminate against protected groups. EU regulation prohibits the use of protected characteristics (e.g. gender, ethnicity) for insurance pricing - sex under [Directive 2004/113/EC](https://eur-lex.europa.eu/eli/dir/2004/113/oj) (as interpreted in the *Test-Achats* ruling) and ethnicity under [Directive 2000/43/EC](https://eur-lex.europa.eu/eli/dir/2000/43/oj) - but simply dropping the sensitive attribute $S$ does not solve the problem.
 
 ### When is risk classification *discrimination*?
 
@@ -9,9 +8,9 @@ A premium is a price for expected risk. Charging a 70-year-old more than a 30-ye
 
 This judgement is encoded in regulation:
 
-- **EU - sex.** The Gender Directive (2004/113/EC), as interpreted by the Court of Justice in the *Test-Achats* ruling ([C-236/09](https://curia.europa.eu/juris/liste.jsf?num=C-236/09), effective 21 December 2012), requires **unisex pricing**: sex may not be used as a rating factor that produces differences in individual premiums or benefits.
+- **EU - sex.** The Gender Directive ([2004/113/EC](https://eur-lex.europa.eu/eli/dir/2004/113/oj)), as interpreted by the Court of Justice in the *Test-Achats* ruling ([C-236/09](https://curia.europa.eu/juris/liste.jsf?num=C-236/09), effective 21 December 2012), requires **unisex pricing**: sex may not be used as a rating factor that produces differences in individual premiums or benefits.
 - **EU - AI systems.** Under the EU AI Act ([Regulation (EU) 2024/1689](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)), AI systems used for **risk assessment and pricing in life and health insurance** are classified as *high-risk*, triggering obligations on data governance, transparency and bias monitoring.
-- **Switzerland.** Switzerland is outside the EU, and sex-differentiated tariffs have historically been permitted in private insurance; supervision focuses on actuarial justification and the revised Federal Act on Data Protection (nFADP, in force 2023). The direction of travel - scrutiny of proxy discrimination in algorithmic pricing - nonetheless mirrors the EU debate.
+- **Switzerland.** Switzerland is outside the EU, and sex-differentiated tariffs have historically been permitted in private insurance; supervision focuses on actuarial justification and the revised [Federal Act on Data Protection](https://www.fedlex.admin.ch/eli/cc/2022/491/en) (nFADP, in force 2023). The direction of travel - scrutiny of proxy discrimination in algorithmic pricing - nonetheless mirrors the EU debate.
 
 ```{warning}
 Regulation in this area moves quickly and differs by line of business and jurisdiction. The specifics above are orientation, not legal advice - **verify the current rules** for your market and product before relying on them.
@@ -28,7 +27,16 @@ The actuarial problem this creates is precise: we must build a price that is **p
 **Proxy discrimination** (indirect discrimination) occurs when non-protected covariates $X$ that are correlated with the sensitive attribute $S$ allow the model to implicitly reconstruct $S$, even though $S$ is not used as an input.
 ```
 
-The mechanism is the tower property of conditional expectation: $\mu(X) = \int \mu(X, s) \, \mathrm{d}P(S{=}s \mid X)$. If $X$ and $S$ are dependent, the unawareness price channels information about $S$ through $X$ ([Lindholm et al., 2021](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)).
+The mechanism is the tower property of conditional expectation: $\mu(X) = \int \mu(X, s) \, \mathrm{d}P(S{=}s \mid X)$. If $X$ and $S$ are dependent, the unawareness price channels information about $S$ through $X$ ([Lindholm et al., 2022](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)).
+
+Causally, this is cleanest to see on a graph. {numref}`fig-fairness-dag` separates the covariates into a **proxy** $X_1$ that is influenced by the sensitive attribute ($S \to X_1$) and a **legitimate risk factor** $X_2$ that is not. The dependence of the price on $S$ then decomposes into **path-specific effects**: a *direct* effect $S \to Y$ (overt discrimination, blocked by not using $S$) and an *indirect* effect along $S \to X_1 \to Y$ (proxy discrimination, which survives unawareness). The legitimate channel $X_2 \to Y$ is exactly what we want the price to retain. Framing fairness this way - which pathways may transmit $S$'s influence to the price - is what ties the rest of this chapter to the causal machinery of {doc}`graphical_models` and {doc}`diagnostics_debiasing`: the discrimination-free price below is the estimand that keeps the $X_2 \to Y$ path while cutting the $S \to X_1 \to Y$ path.
+
+```{figure} figs/fairness_dag.svg
+:width: 80%
+:name: fig-fairness-dag
+
+Proxy discrimination as a path-specific effect. The sensitive attribute $S$ reaches the claim $Y$ through two routes: the **proxy path** $S \to X_1 \to Y$ (indirect discrimination, which persists even when $S$ is dropped as an input) and, in general, a direct path $S \to Y$. The **legitimate risk factor** $X_2$ affects $Y$ without carrying any information about $S$. Discrimination-free pricing aims to retain the $X_2 \to Y$ channel while severing $S$'s influence through $X_1$.
+```
 
 ### From Unawareness to the Discrimination-Free Price
 
@@ -45,13 +53,26 @@ Unawareness is not sufficient - it does not prevent proxy discrimination.
 :label: discrimination-free-pricing
 :class: dropdown
 
-An insurance price is **discrimination-free** ([Lindholm et al., 2021](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)) if
+The **discrimination-free price** ([Lindholm et al., 2022](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117)) averages the best-estimate price over the *marginal* population distribution of the sensitive attribute, severing its link with the covariates:
+
+$$
+\mu^{\mathrm{df}}(x) = \int \mu(x, s) \, \mathrm{d}P(s), \qquad \mu(x, s) = \mathbb{E}[Y \mid X = x, S = s].
+$$
+
+Because $S$ is integrated against its marginal $P(s)$ rather than its conditional $P(s \mid x)$, the resulting price removes both the direct and the proxy (indirect) dependence on $S$ while remaining a genuine function of the risk covariates $X$.
+```
+
+```{prf:remark} When unawareness is already discrimination-free
+:label: unawareness-sufficient
+:class: dropdown
+
+If the outcome does not depend on $S$ given $X$ - that is,
 
 $$
 P(Y \leq y \mid X, S) = P(Y \leq y \mid X) \quad \text{for all } y
 $$
 
-i.e., the sensitive attribute $S$ carries no additional information about $Y$ beyond the non-protected covariates $X$.
+- then $\mu(x, s)$ does not vary with $s$, and the discrimination-free price {prf:ref}`discrimination-free-pricing` coincides with the plain best-estimate (unawareness) price $\mu(x)$. This condition is a property of the *data-generating process*, not a definition of fairness: when it fails, $\mu^{\mathrm{df}}$ still removes the dependence on $S$, whereas the unawareness price channels it through $X$.
 ```
 
 ```{prf:remark} Limits of counterfactual fairness for immutable attributes
@@ -67,7 +88,7 @@ For immutable characteristics such as gender or ethnicity, this counterfactual i
 :label: causal-dfp-connection
 :class: dropdown
 
-[Lindholm et al. (2021)](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117), Section 3, provide a causal motivation for {prf:ref}`discrimination-free-pricing` that sidesteps the difficulties of counterfactual fairness entirely. The starting point is a **directed acyclic graph (DAG)** in which $S$ may influence $Y$ both directly ($S \to Y$) and indirectly by shaping the non-protected covariates ($S \to X \to Y$).
+[Lindholm et al. (2022)](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117), Section 3, provide a causal motivation for {prf:ref}`discrimination-free-pricing` that sidesteps the difficulties of counterfactual fairness entirely. The starting point is a **directed acyclic graph (DAG)** in which $S$ may influence $Y$ both directly ($S \to Y$) and indirectly by shaping the non-protected covariates ($S \to X \to Y$).
 
 The causal question posed is:
 
@@ -90,7 +111,45 @@ This resolves the philosophical objection cleanly: **we never intervene on $S$ a
 :label: group-fairness-criteria
 :class: dropdown
 
-The machine learning literature evaluates a predictor against several **group fairness criteria** ([Barocas et al., 2019](https://fairmlbook.org/)). The interactive explainer in {doc}`../application/pricing` lets you toggle between the criteria defined below and watch the consequence of each choice. Most are *classification-parity* conditions that constrain the decision $\hat{Y}$ (its rate or its errors) across groups; calibration is different - it constrains the outcome given the score, $Y \perp\!\!\!\perp S \mid \hat{\mu}(X)$, fixing the statistical meaning of the score rather than the decision rate. What distinguishes the criteria is *which* errors they equalise, and therefore *what they cost* when the groups have genuinely different risk.
+The machine learning literature evaluates a predictor against several **group fairness criteria** ([Barocas et al., 2019](https://fairmlbook.org/)). The interactive explainer below lets you toggle between the criteria defined in this section and watch the consequence of each choice. Most are *classification-parity* conditions that constrain the decision $\hat{Y}$ (its rate or its errors) across groups; calibration is different - it constrains the outcome given the score, $Y \perp\!\!\!\perp S \mid \hat{\mu}(X)$, fixing the statistical meaning of the score rather than the decision rate. What distinguishes the criteria is *which* errors they equalise, and therefore *what they cost* when the groups have genuinely different risk.
+```
+
+```{raw} html
+<iframe id="fairprice" src="../figure/fairness_price_explainer.html?v=20260612d"
+        style="width:100%; border:none; height:900px;"
+        title="Discrimination-free pricing interactive explainer"></iframe>
+<script>
+(function () {
+  var iframe = document.getElementById('fairprice');
+  function currentTheme() {
+    var root = document.documentElement;
+    var theme = root.getAttribute('data-theme');
+    if (theme === 'light' || theme === 'dark') return theme;
+    var mode = root.getAttribute('data-mode') || 'auto';
+    if (mode === 'light' || mode === 'dark') return mode;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function sendTheme() {
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({ type: 'set-theme', value: currentTheme() }, '*');
+    }
+  }
+  window.addEventListener('message', function (e) {
+    if (!e.data) return;
+    if (e.data.type === 'fair-price-height') {
+      iframe.style.height = (e.data.height + 20) + 'px';
+    } else if (e.data.type === 'fair-price-ready') {
+      sendTheme();
+    }
+  });
+  new MutationObserver(sendTheme).observe(document.documentElement, {
+    attributes: true, attributeFilter: ['data-mode', 'data-theme']
+  });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', sendTheme);
+  iframe.addEventListener('load', sendTheme);
+  sendTheme();
+})();
+</script>
 ```
 
 The **weakest** criterion is {prf:ref}`fairness-unawareness` (group unawareness): $S$ is simply not an input. As the whole of this page argues, proxy discrimination defeats it. The four criteria below are progressively more demanding constraints on the *decisions*, not the inputs.
@@ -159,7 +218,7 @@ i.e. among everyone assigned the same price $\hat{\mu}(X)$, the realised risk is
 :label: fairness-incompatibility
 :class: dropdown
 
-These criteria are useful **diagnostic checks** but cannot replace causal reasoning. [Lindholm et al. (2021)](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117) show that even a genuinely discrimination-free model violates them whenever $X$ and $S$ are statistically dependent. Moreover, except in trivial cases, the criteria are mutually incompatible at unequal base rates: no decision can be simultaneously calibrated *and* equalise both error rates ([Kleinberg et al., 2017](https://arxiv.org/abs/1609.05807); [Chouldechova, 2017](https://doi.org/10.1089/big.2016.0047)). Choosing a criterion is therefore a value judgement about *which* fairness to buy and *which* to forgo - not a technical detail the model can settle on its own.
+These criteria are useful **diagnostic checks** but cannot replace causal reasoning. [Lindholm et al. (2022)](https://www.cambridge.org/core/journals/astin-bulletin-journal-of-the-iaa/article/discriminationfree-insurance-pricing/ED25C4053690E56050F437B8DF2AD117) show that even a genuinely discrimination-free model violates most of them whenever $X$ and $S$ are statistically dependent. Moreover, except in trivial cases, the criteria are mutually incompatible at unequal base rates: no decision can be simultaneously calibrated *and* equalise both error rates ([Kleinberg et al., 2017](https://arxiv.org/abs/1609.05807); [Chouldechova, 2017](https://doi.org/10.1089/big.2016.0047)). Choosing a criterion is therefore a value judgement about *which* fairness to buy and *which* to forgo - not a technical detail the model can settle on its own.
 ```
 
 

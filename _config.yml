@@ -41,6 +41,13 @@ launch_buttons:
 
 exclude_patterns:
   - causal_venv/*
+  # Draft notebooks kept in the tree but not part of the published book
+  - application/case_study.ipynb
+  - application/confounding.ipynb
+  - application/motivation.ipynb
+  - application/sensitivity_analysis.ipynb
+  - application/susceptible_subpopulation.ipynb
+  - tutorial/treatment_effects.ipynb
 
 sphinx:
   extra_extensions:
@@ -49,6 +56,7 @@ sphinx:
   config:
     numfig: true
     copyright: "2026"
+    html_favicon: figure/logo.png
     html_static_path:
     - _static
     html_css_files:

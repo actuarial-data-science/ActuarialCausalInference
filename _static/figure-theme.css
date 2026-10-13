@@ -382,6 +382,24 @@ html[data-mode="dark"]  div.admonition.important > .admonition-title::after {
   color: #C2C5C2 !important;
 }
 
+/* ---- Branded report admonition (:class: sav-report) -> SAV lime green */
+div.admonition.sav-report {
+  border-color: #98C21F !important;
+  background-color: rgba(152, 194, 31, 0.10) !important;
+}
+div.admonition.sav-report > .admonition-title {
+  background-color: rgba(152, 194, 31, 0.18) !important;
+}
+html[data-theme="dark"] div.admonition.sav-report,
+html[data-mode="dark"]  div.admonition.sav-report {
+  border-color: #C5DE7A !important;
+  background-color: rgba(197, 222, 122, 0.10) !important;
+}
+html[data-theme="dark"] div.admonition.sav-report > .admonition-title,
+html[data-mode="dark"]  div.admonition.sav-report > .admonition-title {
+  background-color: rgba(197, 222, 122, 0.18) !important;
+}
+
 /* ===================================================================== *
  * Proof-box icons (the "bell")
  * ---------------------------------------------------------------------
