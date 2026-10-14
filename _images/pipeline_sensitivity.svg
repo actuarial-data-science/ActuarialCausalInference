@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 574" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    /* Connectors / arrows */
+    .conn { stroke: #6d6e71; }
+    .conn-mk { fill: #6d6e71; }
+    /* Grey (logo grey) - estimate, checks, report */
+    .grey-b { fill: #eceded; stroke: #8a8b8e; }
+    .grey-t { fill: #42434a; }
+    .grey-s { fill: #5f6066; }
+    /* Limegreen - decision diamonds */
+    .lime-b { fill: #eef3dd; stroke: #7d9f17; }
+    .lime-t { fill: #3d4f10; }
+    /* Red - recommendation on failure */
+    .red-b { fill: #fdecea; stroke: #e53935; }
+    .red-t { fill: #8e1d18; }
+    .red-s { fill: #a8332c; }
+    /* Decision labels */
+    .fail-t { fill: #c62828; }
+    .pass-t { fill: #5b7510; }
+
+    @media (prefers-color-scheme: dark) {
+      .conn { stroke: #9aa4af; }
+      .conn-mk { fill: #9aa4af; }
+      .grey-b { fill: #1b1f24; stroke: #7c7e85; }
+      .grey-t { fill: #c9cdd3; }
+      .grey-s { fill: #a7abb2; }
+      .lime-b { fill: #1f2a10; stroke: #aacb3f; }
+      .lime-t { fill: #cfe39a; }
+      .red-b { fill: #3a1715; stroke: #f06a66; }
+      .red-t { fill: #ffb3ae; }
+      .red-s { fill: #f0918c; }
+      .fail-t { fill: #f06a66; }
+      .pass-t { fill: #aacb3f; }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="conn-mk" d="M0,0 L8,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- 1 - adjusted estimate -->
+  <rect class="grey-b" x="70" y="24" width="500" height="58" rx="8" stroke-width="2"/>
+  <text class="grey-t" x="320" y="50" text-anchor="middle" font-size="16" font-weight="bold">Adjusted effect estimate</text>
+  <text class="grey-s" x="320" y="69" text-anchor="middle" font-size="11.5">PS weighting &#183; matching &#183; outcome regression</text>
+  <line class="conn" x1="320" y1="82" x2="320" y2="120" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 2 - gate 1: balance -->
+  <rect class="grey-b" x="70" y="120" width="500" height="84" rx="8" stroke-width="2"/>
+  <text class="grey-t" x="320" y="146" text-anchor="middle" font-size="14" font-weight="bold">1 &#183; Balance diagnostics</text>
+  <text class="grey-s" x="320" y="167" text-anchor="middle" font-size="11">SMD &#183; Love plot &#183; variance ratios &#183; overlap</text>
+  <text class="red-s" x="320" y="187" text-anchor="middle" font-size="11">if it fails &#8594; re-specify the propensity model</text>
+  <line class="conn" x1="320" y1="204" x2="320" y2="242" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 3 - gate 2: placebo -->
+  <rect class="grey-b" x="70" y="242" width="500" height="84" rx="8" stroke-width="2"/>
+  <text class="grey-t" x="320" y="268" text-anchor="middle" font-size="14" font-weight="bold">2 &#183; Placebo / falsification</text>
+  <text class="grey-s" x="320" y="289" text-anchor="middle" font-size="11">negative-control outcome / treatment &#183; pre-trend</text>
+  <text class="red-s" x="320" y="309" text-anchor="middle" font-size="11">if it fails &#8594; address residual confounding (DAG &#183; proxies &#183; IV / DiD)</text>
+  <line class="conn" x1="320" y1="326" x2="320" y2="364" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 4 - gate 3: robustness -->
+  <rect class="grey-b" x="70" y="364" width="500" height="84" rx="8" stroke-width="2"/>
+  <text class="grey-t" x="320" y="390" text-anchor="middle" font-size="14" font-weight="bold">3 &#183; Robustness to unmeasured U</text>
+  <text class="grey-s" x="320" y="411" text-anchor="middle" font-size="11">E-value &#183; partial R&#178; &#183; Rosenbaum &#915; &#183; Manski bounds</text>
+  <text class="red-s" x="320" y="431" text-anchor="middle" font-size="11">if it fails &#8594; treat as fragile; report worst-case bounds</text>
+  <line class="conn" x1="320" y1="448" x2="320" y2="486" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 5 - transparent report (deliverable) -->
+  <rect class="lime-b" x="70" y="486" width="500" height="64" rx="8" stroke-width="2.4"/>
+  <text class="lime-t" x="320" y="513" text-anchor="middle" font-size="15" font-weight="bold">Transparent actuarial report</text>
+  <text class="lime-t" x="320" y="533" text-anchor="middle" font-size="11">estimate + diagnostics + sensitivity bounds + pricing / reserving impact</text>
+</svg>

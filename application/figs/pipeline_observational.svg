@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 620" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    /* grey = steps, limegreen = final deliverable */
+    .conn { stroke: #6d6e71; }
+    .conn-mk { fill: #6d6e71; }
+    .grey-b { fill: #eceded; stroke: #8a8b8e; }
+    .grey-t { fill: #42434a; }
+    .grey-s { fill: #5f6066; }
+    .lime-b { fill: #eef3dd; stroke: #7d9f17; }
+    .lime-t { fill: #3d4f10; }
+
+    @media (prefers-color-scheme: dark) {
+      .conn { stroke: #9aa4af; }
+      .conn-mk { fill: #9aa4af; }
+      .grey-b { fill: #1b1f24; stroke: #7c7e85; }
+      .grey-t { fill: #c9cdd3; }
+      .grey-s { fill: #a7abb2; }
+      .lime-b { fill: #1f2a10; stroke: #aacb3f; }
+      .lime-t { fill: #cfe39a; }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="conn-mk" d="M0,0 L8,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- 1 - data -->
+  <rect class="grey-b" x="60" y="24" width="440" height="58" rx="8" stroke-width="2"/>
+  <text class="grey-t" x="280" y="58" text-anchor="middle" font-size="15" font-weight="bold">Observational data  (X &#183; T &#183; Y)</text>
+  <line class="conn" x1="280" y1="82" x2="280" y2="120" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 2 - encode DAG -->
+  <rect class="grey-b" x="60" y="120" width="440" height="58" rx="8" stroke-width="2"/>
+  <text class="grey-t" x="280" y="154" text-anchor="middle" font-size="15" font-weight="bold">1 &#183; Encode assumptions in a causal DAG</text>
+  <line class="conn" x1="280" y1="178" x2="280" y2="216" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 3 - validate assumptions -->
+  <rect class="grey-b" x="60" y="216" width="440" height="66" rx="8" stroke-width="2"/>
+  <text class="grey-t" x="280" y="244" text-anchor="middle" font-size="14" font-weight="bold">2 &#183; Validate the four identification assumptions</text>
+  <text class="grey-s" x="280" y="266" text-anchor="middle" font-size="11.5">Consistency &#183; SUTVA &#183; Positivity &#183; Exchangeability</text>
+  <line class="conn" x1="280" y1="282" x2="280" y2="320" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 4 - remedy & re-estimate -->
+  <rect class="grey-b" x="60" y="320" width="440" height="80" rx="8" stroke-width="2"/>
+  <text class="grey-t" x="280" y="346" text-anchor="middle" font-size="14" font-weight="bold">3 &#183; Remedy any violation &amp; re-estimate</text>
+  <text class="grey-s" x="280" y="367" text-anchor="middle" font-size="11.5">redefine &#183; cluster &#183; trim &#183; reweight &#183; IV</text>
+  <text class="grey-s" x="280" y="385" text-anchor="middle" font-size="11.5">quantify robustness: E-value &#183; &#915; &#183; partial R&#178;</text>
+  <line class="conn" x1="280" y1="400" x2="280" y2="438" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 5 - report estimate -->
+  <rect class="grey-b" x="60" y="438" width="440" height="58" rx="8" stroke-width="2"/>
+  <text class="grey-t" x="280" y="472" text-anchor="middle" font-size="15" font-weight="bold">4 &#183; Report the adjusted effect estimate</text>
+  <line class="conn" x1="280" y1="496" x2="280" y2="534" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 6 - transparent report (deliverable) -->
+  <rect class="lime-b" x="60" y="534" width="440" height="62" rx="8" stroke-width="2.4"/>
+  <text class="lime-t" x="280" y="561" text-anchor="middle" font-size="15" font-weight="bold">Transparent report</text>
+  <text class="lime-t" x="280" y="581" text-anchor="middle" font-size="11.5">estimate + diagnostics + sensitivity bounds</text>
+</svg>

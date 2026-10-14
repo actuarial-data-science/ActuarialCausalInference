@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="270" viewBox="0 0 600 270" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .arrow { fill: #333; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="arFront" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L9,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- U (Unobserved) -->
+  <circle cx="300" cy="60" r="30" fill="#f2f2f2" stroke="#777" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="300" y="66" text-anchor="middle" font-size="18" fill="#555">U</text>
+  <text class="muted" x="300" y="22" text-anchor="middle" font-size="12">unobserved</text>
+
+  <!-- T (Treatment) -->
+  <circle cx="110" cy="180" r="32" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="110" y="186" text-anchor="middle" font-size="20" fill="#136c3a">T</text>
+  <text class="muted" x="110" y="236" text-anchor="middle" font-size="12">treatment</text>
+
+  <!-- M (Mediator) -->
+  <circle cx="300" cy="180" r="32" fill="#fff7e6" stroke="#d9920a" stroke-width="2"/>
+  <text x="300" y="186" text-anchor="middle" font-size="20" fill="#8a5b00">M</text>
+  <text class="muted" x="300" y="236" text-anchor="middle" font-size="12">mediator</text>
+
+  <!-- Y (Outcome) -->
+  <circle cx="490" cy="180" r="32" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <text x="490" y="186" text-anchor="middle" font-size="20" fill="#3a4149">Y</text>
+  <text class="muted" x="490" y="236" text-anchor="middle" font-size="12">outcome</text>
+
+  <line class="muted-l" x1="276" y1="78" x2="135" y2="160" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arFront)"/>
+  <line class="muted-l" x1="324" y1="78" x2="465" y2="160" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arFront)"/>
+  <line class="ink-l" x1="142" y1="180" x2="264" y2="180" stroke-width="2" marker-end="url(#arFront)"/>
+  <line class="ink-l" x1="332" y1="180" x2="454" y2="180" stroke-width="2" marker-end="url(#arFront)"/>
+</svg>

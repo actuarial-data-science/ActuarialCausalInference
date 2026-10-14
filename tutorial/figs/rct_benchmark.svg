@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="290" viewBox="0 0 600 290" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .arrow { fill: #333; }
+    .t-ink { fill: #b5481f; }
+    .c-ink { fill: #2a6bb0; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+      .t-ink { fill: #ec9468; }
+      .c-ink { fill: #7ab0ea; }
+    }
+  </style>
+  <defs>
+    <marker id="arRct" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L9,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- Population (grey heterogeneous units: Delta + Nabla shapes) -->
+  <rect x="24" y="70" width="140" height="160" rx="10" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <text class="muted" x="94" y="62" text-anchor="middle" font-size="12">population</text>
+  <!-- row 1 (y=99) -->
+  <polygon points="43,92 36,105 50,105" fill="#9aa4af"/>
+  <polygon points="77,106 70,93 84,93" fill="#9aa4af"/>
+  <polygon points="111,92 104,105 118,105" fill="#9aa4af"/>
+  <polygon points="145,106 138,93 152,93" fill="#9aa4af"/>
+  <!-- row 2 (y=133) -->
+  <polygon points="43,140 36,127 50,127" fill="#9aa4af"/>
+  <polygon points="77,126 70,139 84,139" fill="#9aa4af"/>
+  <polygon points="111,140 104,127 118,127" fill="#9aa4af"/>
+  <polygon points="145,126 138,139 152,139" fill="#9aa4af"/>
+  <!-- row 3 (y=167) -->
+  <polygon points="43,160 36,173 50,173" fill="#9aa4af"/>
+  <polygon points="77,174 70,161 84,161" fill="#9aa4af"/>
+  <polygon points="111,160 104,173 118,173" fill="#9aa4af"/>
+  <polygon points="145,174 138,161 152,161" fill="#9aa4af"/>
+  <!-- row 4 (y=201) -->
+  <polygon points="43,208 36,195 50,195" fill="#9aa4af"/>
+  <polygon points="77,194 70,207 84,207" fill="#9aa4af"/>
+  <polygon points="111,208 104,195 118,195" fill="#9aa4af"/>
+  <polygon points="145,194 138,207 152,207" fill="#9aa4af"/>
+
+  <!-- Randomiser (SAV/ASA green) -->
+  <circle cx="300" cy="150" r="44" fill="#eef5da" stroke="#95C11F" stroke-width="2"/>
+  <text x="300" y="142" text-anchor="middle" font-size="11" fill="#5f7d10">random</text>
+  <text x="300" y="156" text-anchor="middle" font-size="11" fill="#5f7d10">treatment</text>
+  <text x="300" y="170" text-anchor="middle" font-size="11" fill="#5f7d10">assignment</text>
+
+  <line class="ink-l" x1="170" y1="150" x2="252" y2="150" stroke-width="2" marker-end="url(#arRct)"/>
+
+  <!-- arrows to groups (short) -->
+  <line class="ink-l" x1="340" y1="124" x2="388" y2="94" stroke-width="2" marker-end="url(#arRct)"/>
+  <line class="ink-l" x1="340" y1="176" x2="388" y2="206" stroke-width="2" marker-end="url(#arRct)"/>
+
+  <!-- Treatment group (orange) -->
+  <rect x="392" y="40" width="180" height="84" rx="10" fill="#fae9e1" stroke="#D85A30" stroke-width="2"/>
+  <text class="t-ink" x="482" y="32" text-anchor="middle" font-size="12">treatment (T = 1)</text>
+  <polygon points="422,53 415,66 429,66" fill="#D85A30"/>
+  <polygon points="462,67 455,54 469,54" fill="#D85A30"/>
+  <polygon points="502,53 495,66 509,66" fill="#D85A30"/>
+  <polygon points="542,67 535,54 549,54" fill="#D85A30"/>
+  <polygon points="422,107 415,94 429,94" fill="#D85A30"/>
+  <polygon points="462,93 455,106 469,106" fill="#D85A30"/>
+  <polygon points="502,107 495,94 509,94" fill="#D85A30"/>
+  <polygon points="542,93 535,106 549,106" fill="#D85A30"/>
+
+  <!-- Control group (blue) -->
+  <rect x="392" y="178" width="180" height="84" rx="10" fill="#e6eefb" stroke="#378ADD" stroke-width="2"/>
+  <text class="c-ink" x="482" y="278" text-anchor="middle" font-size="12">control (T = 0)</text>
+  <polygon points="422,191 415,204 429,204" fill="#378ADD"/>
+  <polygon points="462,205 455,192 469,192" fill="#378ADD"/>
+  <polygon points="502,191 495,204 509,204" fill="#378ADD"/>
+  <polygon points="542,205 535,192 549,192" fill="#378ADD"/>
+  <polygon points="422,245 415,232 429,232" fill="#378ADD"/>
+  <polygon points="462,231 455,244 469,244" fill="#378ADD"/>
+  <polygon points="502,245 495,232 509,232" fill="#378ADD"/>
+  <polygon points="542,231 535,244 549,244" fill="#378ADD"/>
+</svg>

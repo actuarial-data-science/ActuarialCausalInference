@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="598" viewBox="0 0 780 598" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .arrow { fill: #555; }
+    .node  { fill: #eef2ff; stroke: #3b4cca; }
+    .nodet { fill: #1f2d7a; }
+    .leafbox { fill: #fbfbfd; stroke: #b9bfd0; }
+    .axis  { stroke: #999; }
+    .treat-f { fill: #D85A30; }
+    .treat-s { stroke: #D85A30; }
+    .ctrl-f  { fill: #378ADD; }
+    .ctrl-s  { stroke: #378ADD; }
+    .meanT { stroke: #D85A30; }
+    .meanC { stroke: #378ADD; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+      .node  { fill: #20294d; stroke: #8893e6; }
+      .nodet { fill: #cdd4ff; }
+      .leafbox { fill: #161b22; stroke: #3a4150; }
+      .axis  { stroke: #6b7280; }
+    }
+  </style>
+  <defs>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L8,3 L0,6 Z"/>
+    </marker>
+    <marker id="arT" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path fill="#888" d="M0,0 L8,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- ===================== TREE EDGES ===================== -->
+  <!-- root -> internal (yes) -->
+  <line class="ink-l" x1="372" y1="78" x2="222" y2="144" stroke-width="2"/>
+  <text class="muted" x="280" y="104" font-size="12" font-style="italic">yes</text>
+  <!-- root -> leaf C (no) -->
+  <line class="ink-l" x1="408" y1="78" x2="600" y2="296" stroke-width="2"/>
+  <text class="muted" x="520" y="150" font-size="12" font-style="italic">no</text>
+  <!-- internal -> leaf A (yes) -->
+  <line class="ink-l" x1="192" y1="188" x2="110" y2="296" stroke-width="2"/>
+  <text class="muted" x="128" y="244" font-size="12" font-style="italic">yes</text>
+  <!-- internal -> leaf B (no) -->
+  <line class="ink-l" x1="228" y1="188" x2="320" y2="296" stroke-width="2"/>
+  <text class="muted" x="292" y="244" font-size="12" font-style="italic">no</text>
+
+  <!-- ===================== TREE NODES ===================== -->
+  <!-- root split -->
+  <rect class="node" x="312" y="34" width="156" height="46" rx="10" stroke-width="2"/>
+  <text class="nodet" x="390" y="56" text-anchor="middle" font-size="17" font-style="italic">X&#8321; &lt; c&#8321; ?</text>
+
+  <!-- internal split -->
+  <rect class="node" x="142" y="146" width="136" height="44" rx="10" stroke-width="2"/>
+  <text class="nodet" x="210" y="167" text-anchor="middle" font-size="16" font-style="italic">X&#8322; &lt; c&#8322; ?</text>
+
+  <!-- ===================== LEAF A ===================== -->
+  <g>
+    <rect class="leafbox" x="20" y="300" width="184" height="150" rx="8" stroke-width="1.5"/>
+    <text class="ink-t" x="112" y="320" text-anchor="middle" font-size="13" font-weight="bold">Leaf A</text>
+    <text class="muted" x="112" y="334" text-anchor="middle" font-size="10">large positive effect</text>
+    <!-- mini y-axis -->
+    <line class="axis" x1="44" y1="344" x2="44" y2="420" stroke-width="1.2"/>
+    <text class="muted" x="34" y="386" text-anchor="middle" font-size="10" transform="rotate(-90 34 386)">Y</text>
+    <!-- treated column -->
+    <circle class="treat-f" cx="78" cy="352" r="4"/>
+    <circle class="treat-f" cx="92" cy="358" r="4"/>
+    <circle class="treat-f" cx="70" cy="362" r="4"/>
+    <circle class="treat-f" cx="88" cy="348" r="4"/>
+    <line class="meanT" x1="64" y1="356" x2="100" y2="356" stroke-width="1.6" stroke-dasharray="4,3"/>
+    <!-- control column -->
+    <circle class="ctrl-f" cx="140" cy="402" r="4"/>
+    <circle class="ctrl-f" cx="154" cy="408" r="4"/>
+    <circle class="ctrl-f" cx="132" cy="410" r="4"/>
+    <circle class="ctrl-f" cx="150" cy="398" r="4"/>
+    <line class="meanC" x1="126" y1="405" x2="162" y2="405" stroke-width="1.6" stroke-dasharray="4,3"/>
+    <!-- tau bracket -->
+    <line class="ink-l" x1="176" y1="356" x2="176" y2="405" stroke-width="1.3" marker-start="url(#ar)" marker-end="url(#ar)"/>
+    <text class="ink-t" x="112" y="442" text-anchor="middle" font-size="12" font-style="italic">&#964;&#770;&#7497; = y&#772;&#8321; &#8722; y&#772;&#8320; &#8776; +6</text>
+  </g>
+
+  <!-- ===================== LEAF B ===================== -->
+  <g>
+    <rect class="leafbox" x="228" y="300" width="184" height="150" rx="8" stroke-width="1.5"/>
+    <text class="ink-t" x="320" y="320" text-anchor="middle" font-size="13" font-weight="bold">Leaf B</text>
+    <text class="muted" x="320" y="334" text-anchor="middle" font-size="10">small effect</text>
+    <line class="axis" x1="252" y1="344" x2="252" y2="420" stroke-width="1.2"/>
+    <text class="muted" x="242" y="386" text-anchor="middle" font-size="10" transform="rotate(-90 242 386)">Y</text>
+    <!-- treated -->
+    <circle class="treat-f" cx="286" cy="372" r="4"/>
+    <circle class="treat-f" cx="300" cy="366" r="4"/>
+    <circle class="treat-f" cx="278" cy="378" r="4"/>
+    <circle class="treat-f" cx="296" cy="380" r="4"/>
+    <line class="meanT" x1="272" y1="374" x2="308" y2="374" stroke-width="1.6" stroke-dasharray="4,3"/>
+    <!-- control -->
+    <circle class="ctrl-f" cx="348" cy="390" r="4"/>
+    <circle class="ctrl-f" cx="362" cy="396" r="4"/>
+    <circle class="ctrl-f" cx="340" cy="398" r="4"/>
+    <circle class="ctrl-f" cx="358" cy="386" r="4"/>
+    <line class="meanC" x1="334" y1="392" x2="370" y2="392" stroke-width="1.6" stroke-dasharray="4,3"/>
+    <line class="ink-l" x1="384" y1="374" x2="384" y2="392" stroke-width="1.3" marker-start="url(#ar)" marker-end="url(#ar)"/>
+    <text class="ink-t" x="320" y="442" text-anchor="middle" font-size="12" font-style="italic">&#964;&#770;&#7497; = y&#772;&#8321; &#8722; y&#772;&#8320; &#8776; +1</text>
+  </g>
+
+  <!-- ===================== LEAF C ===================== -->
+  <g>
+    <rect class="leafbox" x="508" y="300" width="184" height="150" rx="8" stroke-width="1.5"/>
+    <text class="ink-t" x="600" y="320" text-anchor="middle" font-size="13" font-weight="bold">Leaf C</text>
+    <text class="muted" x="600" y="334" text-anchor="middle" font-size="10">negative effect</text>
+    <line class="axis" x1="532" y1="344" x2="532" y2="420" stroke-width="1.2"/>
+    <text class="muted" x="522" y="386" text-anchor="middle" font-size="10" transform="rotate(-90 522 386)">Y</text>
+    <!-- treated (lower) -->
+    <circle class="treat-f" cx="566" cy="402" r="4"/>
+    <circle class="treat-f" cx="580" cy="408" r="4"/>
+    <circle class="treat-f" cx="558" cy="410" r="4"/>
+    <circle class="treat-f" cx="576" cy="398" r="4"/>
+    <line class="meanT" x1="552" y1="405" x2="588" y2="405" stroke-width="1.6" stroke-dasharray="4,3"/>
+    <!-- control (higher) -->
+    <circle class="ctrl-f" cx="628" cy="362" r="4"/>
+    <circle class="ctrl-f" cx="642" cy="356" r="4"/>
+    <circle class="ctrl-f" cx="620" cy="368" r="4"/>
+    <circle class="ctrl-f" cx="638" cy="370" r="4"/>
+    <line class="meanC" x1="614" y1="364" x2="650" y2="364" stroke-width="1.6" stroke-dasharray="4,3"/>
+    <line class="ink-l" x1="664" y1="364" x2="664" y2="405" stroke-width="1.3" marker-start="url(#ar)" marker-end="url(#ar)"/>
+    <text class="ink-t" x="600" y="442" text-anchor="middle" font-size="12" font-style="italic">&#964;&#770;&#7497; = y&#772;&#8321; &#8722; y&#772;&#8320; &#8776; &#8722;2</text>
+  </g>
+
+  <!-- ===================== LEGEND & FORMULA ===================== -->
+  <g>
+    <circle class="treat-f" cx="120" cy="492" r="5"/>
+    <text class="ink-t" x="132" y="496" font-size="12">treated unit (T = 1)</text>
+    <circle class="ctrl-f" cx="300" cy="492" r="5"/>
+    <text class="ink-t" x="312" y="496" font-size="12">control unit (T = 0)</text>
+    <line class="ink-l" x1="470" y1="492" x2="490" y2="492" stroke-width="1.3" marker-start="url(#ar)" marker-end="url(#ar)"/>
+    <text class="ink-t" x="498" y="496" font-size="12" font-style="italic">&#964;&#770;&#7497; = within-leaf CATE</text>
+  </g>
+
+  </svg>

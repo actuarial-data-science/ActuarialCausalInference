@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="330" viewBox="0 0 600 330" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .arrow { fill: #333; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="arDsep2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L9,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- edges first (covered at their source by the node circles drawn on top) -->
+  <line class="ink-l" x1="100" y1="180" x2="269.6" y2="95.2" stroke-width="2" marker-end="url(#arDsep2)"/>
+  <line class="ink-l" x1="300" y1="80" x2="469.6" y2="164.8" stroke-width="2" marker-end="url(#arDsep2)"/>
+  <line class="ink-l" x1="100" y1="180" x2="466" y2="180" stroke-width="2" marker-end="url(#arDsep2)"/>
+  <line class="muted-l" x1="300" y1="275" x2="300" y2="114" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arDsep2)"/>
+  <line class="muted-l" x1="300" y1="275" x2="469.3" y2="194.6" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arDsep2)"/>
+
+  <!-- T (Treatment) -->
+  <circle cx="100" cy="180" r="30" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="100" y="186" text-anchor="middle" font-size="20" fill="#136c3a">T</text>
+  <text class="muted" x="100" y="138" text-anchor="middle" font-size="12">treatment</text>
+
+  <!-- M (Mediator) -->
+  <circle cx="300" cy="80" r="30" fill="#fff7e6" stroke="#d9920a" stroke-width="2"/>
+  <text x="300" y="86" text-anchor="middle" font-size="20" fill="#8a5b00">M</text>
+  <text class="muted" x="300" y="38" text-anchor="middle" font-size="12">mediator</text>
+
+  <!-- Y (Outcome) -->
+  <circle cx="500" cy="180" r="30" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <text x="500" y="186" text-anchor="middle" font-size="20" fill="#3a4149">Y</text>
+  <text class="muted" x="500" y="138" text-anchor="middle" font-size="12">outcome</text>
+
+  <!-- U (unmeasured mediator-outcome confounder) -->
+  <circle cx="300" cy="275" r="30" fill="#fdecec" stroke="#cc3b3b" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="300" y="281" text-anchor="middle" font-size="20" fill="#8a1f1f">U</text>
+  <text class="muted" x="300" y="320" text-anchor="middle" font-size="12">unmeasured</text>
+</svg>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sensitivity to unmeasured confounding — interactive explainer</title>
+<style>
+  :root{
+    --txt:#2c2c2a; --txt2:#5f5e5a; --txt3:#8a897f;
+    --card:#e8eae6; --bd:rgba(0,0,0,0.14); --bd2:rgba(0,0,0,0.28);
+    --accent:#7d9f17; --track:rgba(0,0,0,0.12);
+    --safe:#7d9f17; --danger:#d62728;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --txt:#e6e6e3; --txt2:#aeaca4; --txt3:#86857d;
+      --card:rgba(255,255,255,0.06); --bd:rgba(255,255,255,0.16); --bd2:rgba(255,255,255,0.30);
+      --accent:#aacb3f; --track:rgba(255,255,255,0.16);
+      --safe:#aacb3f; --danger:#ef5552;
+    }
+  }
+  html[data-mode="light"]{
+    --txt:#2c2c2a; --txt2:#5f5e5a; --txt3:#8a897f;
+    --card:#e8eae6; --bd:rgba(0,0,0,0.14); --bd2:rgba(0,0,0,0.28);
+    --accent:#7d9f17; --track:rgba(0,0,0,0.12);
+    --safe:#7d9f17; --danger:#d62728;
+  }
+  html[data-mode="dark"]{
+    --txt:#e6e6e3; --txt2:#aeaca4; --txt3:#86857d;
+    --card:rgba(255,255,255,0.06); --bd:rgba(255,255,255,0.16); --bd2:rgba(255,255,255,0.30);
+    --accent:#aacb3f; --track:rgba(255,255,255,0.16);
+    --safe:#aacb3f; --danger:#ef5552;
+  }
+  html,body{background:transparent; margin:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--txt); font-size:15px; line-height:1.6; padding:8px 2px 16px;
+  }
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+  .ctrls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:1.25rem;}
+  .lblrow{display:flex;justify-content:space-between;font-size:13px;color:var(--txt2);margin-bottom:5px;}
+  .lblrow b{color:var(--txt);font-weight:500;}
+  .hint{font-size:12px;color:var(--txt3);margin-top:3px;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:var(--track);outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:none;}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:none;}
+  button{font:inherit;font-size:14px;color:var(--txt);background:transparent;border:0.5px solid var(--bd2);border-radius:8px;padding:7px 14px;cursor:pointer;}
+  button:hover{background:var(--card);}
+  button:active{transform:scale(0.98);}
+  #benchBtn{color:#8a8b8e;border-color:#8a8b8e;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:1.5rem 0 1.75rem;}
+  .card{background:var(--card);border-radius:8px;padding:0.85rem 1rem;}
+  .card .k{font-size:13px;color:var(--txt2);}
+  .card .v{font-size:24px;font-weight:500;}
+  .legend{display:flex;flex-wrap:wrap;align-items:center;gap:16px;font-size:12px;color:var(--txt2);margin-bottom:6px;}
+  .legend span{display:flex;align-items:center;gap:5px;}
+  .legend svg{display:inline-block;vertical-align:middle;}
+  .sw{width:11px;height:11px;border-radius:3px;display:inline-block;}
+  .panlbl{font-size:13px;color:var(--txt2);margin:0 0 4px;display:flex;justify-content:space-between;gap:12px;}
+  .panlbl em{font-style:normal;color:var(--txt3);}
+  .pan{margin-bottom:1.5rem;}
+</style>
+</head>
+<body>
+<h2 class="sr-only">Interactive sensitivity analysis. Two sliders set how strongly a hypothetical unmeasured confounder is associated with the treatment and with the outcome; the panels show the bias-adjusted treatment effect, a partial R-squared contour with the zero-effect frontier, and whether the conclusion survives.</h2>
+
+<div class="ctrls">
+  <div>
+    <div class="lblrow"><span>Confounder &rarr; treatment&#160;&#160;(partial R&sup2;)</span><b id="rtOut">0.10</b></div>
+    <input id="rt" type="range" min="0" max="0.6" step="0.01" value="0.10" />
+    <div class="hint">how much of T it would explain, beyond X</div>
+  </div>
+  <div>
+    <div class="lblrow"><span>Confounder &rarr; outcome&#160;&#160;(partial R&sup2;)</span><b id="ryOut">0.10</b></div>
+    <input id="ry" type="range" min="0" max="0.6" step="0.01" value="0.10" />
+    <div class="hint">how much of Y it would explain, beyond T and X</div>
+  </div>
+</div>
+
+<div style="margin-bottom:0.5rem;">
+  <button id="benchBtn" type="button">&#9670;&nbsp; Set "as strong as covariate X"</button>
+  <button id="resetBtn" type="button">&#8635;&nbsp; Reset</button>
+</div>
+
+<div class="cards">
+  <div class="card"><div class="k">Observed effect</div><div class="v" id="mObs">&mdash;</div></div>
+  <div class="card"><div class="k">Bias-adjusted effect</div><div class="v" id="mAdj">&mdash;</div></div>
+  <div class="card"><div class="k">Robustness value</div><div class="v" id="mRV">&mdash;</div></div>
+  <div class="card"><div class="k">Verdict</div><div class="v" id="mVerdict">&mdash;</div></div>
+</div>
+
+<div class="legend">
+  <span><span class="sw" style="background:#7d9f17;opacity:0.32;"></span>effect survives</span>
+  <span><span class="sw" style="background:#d62728;opacity:0.32;"></span>effect explained away</span>
+  <span><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="#7d9f17"/></svg>current confounder</span>
+  <span><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7,1 L13,7 L7,13 L1,7 Z" fill="#8a8b8e"/></svg>benchmark: as strong as X</span>
+</div>
+
+<div class="panlbl"><span>1 &middot; Partial R&sup2; map &mdash; how strong must the confounder be to flip the conclusion?</span></div>
+<div class="pan" id="pContour"></div>
+
+<div class="panlbl"><span>2 &middot; Effect on the same scale &mdash; bias drags the estimate toward (and past) zero</span><em id="barInfo"></em></div>
+<div class="pan" id="pBar"></div>
+
+<script>
+(function(){
+  var p=new URLSearchParams(location.search).get('theme');
+  function apply(t){document.documentElement.setAttribute('data-mode',t);}
+  function systemTheme(){return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  function parentTheme(){
+    try{
+      var root=window.parent.document.documentElement;
+      var t=root.getAttribute('data-theme');
+      if(t==='light'||t==='dark')return t;
+      var m=root.getAttribute('data-mode');
+      if(m==='light'||m==='dark')return m;
+    }catch(e){}
+    return null;
+  }
+  if(p==='dark'||p==='light')apply(p);
+  else apply(parentTheme()||systemTheme());
+  if(!p){matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(e){if(!parentTheme())apply(e.matches?'dark':'light');});}
+  window.addEventListener('message',function(ev){
+    var d=ev.data;
+    if(d&&d.type==='set-theme'){
+      if(d.value==='dark'||d.value==='light')apply(d.value);
+      else if(d.value==='auto')apply(parentTheme()||systemTheme());
+    }
+  });
+  if(window.parent&&window.parent!==window){window.parent.postMessage({type:'sens-ready'},'*');}
+})();
+
+(function(){
+  // --- Fixed scenario (a stylised but self-consistent example) -------------
+  var OBS = 3.0;            // observed (regression-adjusted) effect, in outcome units
+  var RMAX = 0.6;           // slider range for each partial R-squared
+  // Bias model (Cinelli & Hazlett style): |bias| grows with sqrt(rT * rY).
+  // BIAS_K is calibrated so an equally-strong confounder on both fronts needs
+  // partial R-squared = RV to drive the effect to zero.
+  var RV = 0.45;            // robustness value -> zero-effect frontier rT*rY = RV^2
+  var BIAS_K = OBS / RV;    // so bias = BIAS_K*sqrt(rT*rY); = OBS when sqrt=RV
+  var FRONT = RV * RV;      // rT*rY along the zero-effect frontier
+  var BENCH = {rt:0.16, ry:0.21};  // "as strong as observed covariate X"
+
+  var rtEl=document.getElementById('rt'), ryEl=document.getElementById('ry');
+
+  function bias(rt,ry){return BIAS_K*Math.sqrt(Math.max(0,rt*ry));}
+  function fmt(v,d){if(v===null||isNaN(v))return "\u2014";return (v>=0?"+":"")+v.toFixed(d===undefined?2:d);}
+
+  function postHeight(){try{parent.postMessage({type:'sens-height',height:Math.ceil(document.body.getBoundingClientRect().height)},'*');}catch(e){}}
+
+  function render(){
+    var rt=parseFloat(rtEl.value), ry=parseFloat(ryEl.value);
+    document.getElementById('rtOut').textContent=rt.toFixed(2);
+    document.getElementById('ryOut').textContent=ry.toFixed(2);
+
+    var b=bias(rt,ry);
+    var adj=OBS-b;                 // positive observed effect dragged down
+    var survives=adj>0;
+
+    document.getElementById('mObs').textContent=fmt(OBS);
+    var adjEl=document.getElementById('mAdj');
+    adjEl.textContent=fmt(adj);
+    adjEl.style.color=survives?'var(--safe)':'var(--danger)';
+    document.getElementById('mRV').textContent=RV.toFixed(2);
+    var vEl=document.getElementById('mVerdict');
+    vEl.textContent=survives?'survives':'explained away';
+    vEl.style.color=survives?'var(--safe)':'var(--danger)';
+    vEl.style.fontSize='18px';
+
+    document.getElementById('barInfo').textContent=
+      'bias \u2248 '+b.toFixed(2)+'  \u00b7  '+Math.round(100*b/OBS)+'% of the estimate';
+
+    // ---- Panel 1: partial-R^2 contour ----
+    var W=560,H=340,Xa=60,Xb=520,Yb=300,Yt=40;
+    function X(r){return Xa+(Xb-Xa)*(r/RMAX);}
+    function Y(r){return Yb-(Yb-Yt)*(r/RMAX);}
+
+    // frontier rT*rY = FRONT, drawn from where it enters the box.
+    var rt0=FRONT/RMAX;            // ry = RMAX edge
+    var pts=[];
+    for(var i=0;i<=60;i++){
+      var x=rt0+(RMAX-rt0)*i/60;
+      pts.push([X(x),Y(FRONT/x)]);
+    }
+    var frontPath='M'+pts.map(function(q){return q[0].toFixed(1)+','+q[1].toFixed(1);}).join(' L');
+
+    // "explained away" region: upper-right beyond the frontier.
+    var region=frontPath+' L'+X(RMAX).toFixed(1)+','+Y(RMAX).toFixed(1)+
+               ' L'+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1)+' Z';
+
+    var svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="Partial R-squared contour. The curved frontier marks where the bias-adjusted effect reaches zero; the current confounder and the benchmark covariate are plotted as points.">';
+    // safe + danger fields
+    svg+='<rect x="'+Xa+'" y="'+Yt+'" width="'+(Xb-Xa)+'" height="'+(Yb-Yt)+'" fill="#7d9f17" opacity="0.10"/>';
+    svg+='<path d="'+region+'" fill="#d62728" opacity="0.16"/>';
+    // diagonal (equal strength)
+    svg+='<line x1="'+X(0)+'" y1="'+Y(0)+'" x2="'+X(RMAX)+'" y2="'+Y(RMAX)+'" stroke="var(--txt3)" stroke-width="1" stroke-dasharray="4,4" opacity="0.7"/>';
+    // frontier
+    svg+='<path d="'+frontPath+'" fill="none" stroke="#d62728" stroke-width="2.6"/>';
+    svg+='<text x="'+(X(RMAX)-6)+'" y="'+(Y(FRONT/RMAX)+34)+'" font-size="11.5" fill="#d62728" text-anchor="end" font-weight="bold">effect = 0</text>';
+    // axes
+    svg+='<line x1="'+Xa+'" y1="'+Yb+'" x2="'+Xb+'" y2="'+Yb+'" stroke="var(--bd2)" stroke-width="1"/>';
+    svg+='<line x1="'+Xa+'" y1="'+Yt+'" x2="'+Xa+'" y2="'+Yb+'" stroke="var(--bd2)" stroke-width="1"/>';
+    [0,0.15,0.3,0.45,0.6].forEach(function(tk){
+      svg+='<text x="'+X(tk).toFixed(1)+'" y="'+(Yb+16)+'" font-size="11" text-anchor="middle" fill="var(--txt3)">'+tk.toFixed(2)+'</text>';
+      svg+='<text x="'+(Xa-8)+'" y="'+(Y(tk)+4).toFixed(1)+'" font-size="11" text-anchor="end" fill="var(--txt3)">'+tk.toFixed(2)+'</text>';
+    });
+    svg+='<text x="'+((Xa+Xb)/2)+'" y="'+(Yb+34)+'" font-size="12.5" text-anchor="middle" fill="var(--txt2)">partial R&#178; of confounder with treatment</text>';
+    svg+='<text x="20" y="'+((Yt+Yb)/2)+'" font-size="12.5" text-anchor="middle" fill="var(--txt2)" transform="rotate(-90 20 '+((Yt+Yb)/2)+')">partial R&#178; with outcome</text>';
+    // benchmark point
+    svg+='<path d="M'+X(BENCH.rt).toFixed(1)+','+(Y(BENCH.ry)-7).toFixed(1)+' l7,7 l-7,7 l-7,-7 Z" fill="#8a8b8e" stroke="#fff" stroke-width="1.2"/>';
+    svg+='<text x="'+X(BENCH.rt).toFixed(1)+'" y="'+(Y(BENCH.ry)-13).toFixed(1)+'" font-size="11" fill="#8a8b8e" text-anchor="middle">as strong as X</text>';
+    // current point
+    svg+='<circle cx="'+X(rt).toFixed(1)+'" cy="'+Y(ry).toFixed(1)+'" r="6.5" fill="#7d9f17" stroke="#fff" stroke-width="1.6"/>';
+    svg+='</svg>';
+    document.getElementById('pContour').innerHTML=svg;
+
+    // ---- Panel 2: effect on a number line ----
+    var W2=560,H2=140,Pa=60,Pb=520,axisY=92;
+    var TMIN=-1.5,TMAX=3.6;
+    function Xe(t){return Pa+(Pb-Pa)*((t-TMIN)/(TMAX-TMIN));}
+    var s2='<svg viewBox="0 0 '+W2+' '+H2+'" width="100%" role="img" aria-label="Number line of the treatment effect, showing the observed estimate, the bias-adjusted estimate and the zero line.">';
+    // axis
+    s2+='<line x1="'+Pa+'" y1="'+axisY+'" x2="'+Pb+'" y2="'+axisY+'" stroke="var(--bd2)" stroke-width="1"/>';
+    [-1,0,1,2,3].forEach(function(tk){
+      s2+='<line x1="'+Xe(tk).toFixed(1)+'" y1="'+(axisY-4)+'" x2="'+Xe(tk).toFixed(1)+'" y2="'+(axisY+4)+'" stroke="var(--bd2)" stroke-width="1"/>';
+      s2+='<text x="'+Xe(tk).toFixed(1)+'" y="'+(axisY+20)+'" font-size="11" text-anchor="middle" fill="var(--txt3)">'+(tk>0?"+":"")+tk+'</text>';
+    });
+    // zero line
+    s2+='<line x1="'+Xe(0).toFixed(1)+'" y1="34" x2="'+Xe(0).toFixed(1)+'" y2="'+(axisY+6)+'" stroke="var(--txt3)" stroke-width="1.2" stroke-dasharray="4,4"/>';
+    s2+='<text x="'+Xe(0).toFixed(1)+'" y="28" font-size="11" text-anchor="middle" fill="var(--txt3)">no effect</text>';
+    // shrink bar observed -> adjusted
+    var xObs=Xe(OBS), xAdj=Xe(Math.max(TMIN,adj));
+    s2+='<line x1="'+xAdj.toFixed(1)+'" y1="'+axisY+'" x2="'+xObs.toFixed(1)+'" y2="'+axisY+'" stroke="'+(survives?'#7d9f17':'#d62728')+'" stroke-width="7" opacity="0.5" stroke-linecap="round"/>';
+    // observed marker
+    s2+='<circle cx="'+xObs.toFixed(1)+'" cy="'+axisY+'" r="6" fill="none" stroke="var(--txt2)" stroke-width="2"/>';
+    s2+='<text x="'+xObs.toFixed(1)+'" y="'+(axisY-14)+'" font-size="11" text-anchor="middle" fill="var(--txt2)">observed '+fmt(OBS)+'</text>';
+    // adjusted marker
+    s2+='<circle cx="'+xAdj.toFixed(1)+'" cy="'+axisY+'" r="7" fill="'+(survives?'#7d9f17':'#d62728')+'" stroke="#fff" stroke-width="1.6"/>';
+    s2+='<text x="'+xAdj.toFixed(1)+'" y="'+(axisY+38)+'" font-size="11.5" text-anchor="middle" fill="'+(survives?'#7d9f17':'#d62728')+'" font-weight="bold">adjusted '+fmt(adj)+'</text>';
+    s2+='</svg>';
+    document.getElementById('pBar').innerHTML=s2;
+
+    postHeight();
+  }
+
+  rtEl.addEventListener('input',render);
+  ryEl.addEventListener('input',render);
+  document.getElementById('benchBtn').addEventListener('click',function(){
+    rtEl.value=BENCH.rt;ryEl.value=BENCH.ry;render();
+  });
+  document.getElementById('resetBtn').addEventListener('click',function(){
+    rtEl.value=0.10;ryEl.value=0.10;render();
+  });
+  window.addEventListener('resize',postHeight);
+  window.addEventListener('load',postHeight);
+  render();
+})();
+</script>
+</body>
+</html>

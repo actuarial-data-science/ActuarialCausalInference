@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="320" viewBox="0 0 660 320" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .ink-l { stroke: #333; }
+    .ink-t { fill: #333; }
+    .muted { fill: #777; }
+    .muted-l { stroke: #777; }
+    .arrow { fill: #333; }
+    @media (prefers-color-scheme: dark) {
+      .ink-l { stroke: #c9d1d9; }
+      .ink-t { fill: #e6edf3; }
+      .muted { fill: #9aa4af; }
+      .muted-l { stroke: #9aa4af; }
+      .arrow { fill: #c9d1d9; }
+    }
+  </style>
+  <defs>
+    <marker id="arTrad" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path class="arrow" d="M0,0 L9,3 L0,6 Z"/>
+    </marker>
+  </defs>
+
+  <!-- divider -->
+  <line class="muted-l" x1="330" y1="40" x2="330" y2="288" stroke-width="1" stroke-dasharray="4,5"/>
+
+  <!-- ===================== LEFT: Potential outcomes ===================== -->
+  <text class="ink-t" x="165" y="34" text-anchor="middle" font-size="15" font-weight="bold">Potential outcomes</text>
+  <text class="muted" x="165" y="54" text-anchor="middle" font-size="12">Neyman (1923) &#183; Rubin (1974)</text>
+
+  <!-- Y(1) observed -->
+  <rect x="60" y="92" width="150" height="48" rx="8" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="135" y="115" text-anchor="middle" font-size="16" fill="#136c3a">Y(1)</text>
+  <text x="135" y="132" text-anchor="middle" font-size="11" fill="#136c3a">factual &#8212; observed</text>
+
+  <!-- Y(0) counterfactual -->
+  <rect x="60" y="160" width="150" height="48" rx="8" fill="#f2f2f2" stroke="#777" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="135" y="183" text-anchor="middle" font-size="16" fill="#555">Y(0)</text>
+  <text x="135" y="200" text-anchor="middle" font-size="11" fill="#555">counterfactual &#8212; ?</text>
+
+  <!-- effect (centred below the boxes, clear of the divider) -->
+  <text class="ink-t" x="135" y="232" text-anchor="middle" font-size="13" font-style="italic">&#964; = Y(1) &#8211; Y(0)</text>
+  <text class="muted" x="135" y="258" text-anchor="middle" font-size="12">"What would have happened</text>
+  <text class="muted" x="135" y="274" text-anchor="middle" font-size="12">under the other treatment?"</text>
+
+  <!-- ===================== RIGHT: Structural / graphical ===================== -->
+  <text class="ink-t" x="495" y="34" text-anchor="middle" font-size="15" font-weight="bold">Structural causal models</text>
+  <text class="muted" x="495" y="54" text-anchor="middle" font-size="12">Wright (1934) &#183; Pearl (1995)</text>
+
+  <!-- F -->
+  <circle cx="495" cy="100" r="28" fill="#fdecec" stroke="#cc3b3b" stroke-width="2"/>
+  <text x="495" y="106" text-anchor="middle" font-size="18" fill="#8a1f1f">F</text>
+
+  <!-- T -->
+  <circle cx="425" cy="200" r="28" fill="#e8f7ee" stroke="#1f9d55" stroke-width="2"/>
+  <text x="425" y="206" text-anchor="middle" font-size="18" fill="#136c3a">T</text>
+
+  <!-- Y -->
+  <circle cx="565" cy="200" r="28" fill="#eef1f4" stroke="#9aa4af" stroke-width="2"/>
+  <text x="565" y="206" text-anchor="middle" font-size="18" fill="#3a4149">Y</text>
+
+  <line class="ink-l" x1="476" y1="121" x2="442" y2="180" stroke-width="2" marker-end="url(#arTrad)"/>
+  <line class="ink-l" x1="514" y1="121" x2="548" y2="180" stroke-width="2" marker-end="url(#arTrad)"/>
+  <line class="ink-l" x1="455" y1="200" x2="535" y2="200" stroke-width="2" marker-end="url(#arTrad)"/>
+
+  <text class="muted" x="495" y="258" text-anchor="middle" font-size="12">"Which arrows generate the</text>
+  <text class="muted" x="495" y="274" text-anchor="middle" font-size="12">association we observe?"</text>
+</svg>
