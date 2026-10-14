@@ -16,25 +16,23 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
     <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
@@ -44,18 +42,17 @@
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/figure-theme.css?v=c26ee37f" />
   
-  <!-- So that users can add custom icons -->
-  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -121,7 +118,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial/heterogeneous_effects';</script>
-    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/figure-theme.js?v=29b104fa"></script>
     <link rel="icon" href="../_static/logo.png"/>
@@ -131,30 +127,34 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="prev" title="Direct Adjustment" href="direct_adjustment.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
-  
-    
-    <script src="../_static/searchtools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script src="../searchindex.js"></script>
-  
   </head>
-  <body data-default-mode="">
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
-
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
-  
-  <dialog id="pst-search-dialog">
-    
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -162,6 +162,7 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -169,59 +170,15 @@ const thebe_selector_output = ".output, .cell_output"
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
   
-    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-<div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
-    <span class="fa-solid fa-bars"></span>
-  </button>
-  
-  
-  <div class="col-lg-9 navbar-header-items">
-    
-    
-    <div class="navbar-header-items__end">
-      
-        <div class="navbar-item navbar-persistent--container">
-          
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-        </div>
-      
-      
-    </div>
-    
-  </div>
-  
-  
-    <div class="navbar-persistent--mobile">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-    </div>
-  
-
-  
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
-  
-</div>
-
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -230,8 +187,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -261,17 +217,21 @@ const thebe_selector_output = ".output, .cell_output"
     
     
     <img src="../_static/logo.png" class="logo__image only-light" alt="Actuarial Causal Inference Tutorial - Home"/>
-    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Actuarial Causal Inference Tutorial - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Actuarial Causal Inference Tutorial - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -323,14 +283,9 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -413,7 +368,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  class="btn btn-sm btn-fullscreen-button"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -427,17 +382,25 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -459,7 +422,7 @@ const thebe_selector_output = ".output, .cell_output"
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="pst-show_toc_level nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meta-learners-for-heterogeneous-effects">Meta-Learners for Heterogeneous Effects</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-trees">Causal Trees</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-forests">Causal Forests</a></li>
@@ -548,15 +511,15 @@ const thebe_selector_output = ".output, .cell_output"
 </div><p>Similar to CART <a class="reference external" href="https://doi.org/10.1201/9781315139470">(Breiman et al., 1984)</a>, a causal tree partitions the sample into subgroups. It creates a partition of the patient population into subpopulations (i.e., leaves <span class="math notranslate nohighlight">\(\ell\in\mathcal{L}\)</span>) using recursive binary splitting. In contrast to a decision tree, a causal tree estimates the treatment effect <span class="math notranslate nohighlight">\(\hat{\tau}\)</span> directly by modelling the contrast in potential outcomes rather than modelling both potential outcomes and then taking their contrast.</p>
 <p>Since a covariate that affects the expected outcome <span class="math notranslate nohighlight">\(\mathbb{E}[Y \mid X = x]\)</span> does not necessarily affect the treatment effect and vice versa, the splitting criterion is chosen with respect to covariates that actually cause treatment effect heterogeneity, as explained below.</p>
 <p>For each split, the outcome-covariate pair is determined such that it maximizes the weighted difference <span class="math notranslate nohighlight">\(n_L\cdot n_R\cdot (\hat{\tau}_L-\hat{\tau}_R)^2\)</span> where <span class="math notranslate nohighlight">\(n_L\)</span> denotes the number of observations assigned to the left node and <span class="math notranslate nohighlight">\(n_R\)</span> the number of observations that are assigned to right node. The first two factors, <span class="math notranslate nohighlight">\(n_L\)</span> and <span class="math notranslate nohighlight">\(n_R\)</span>, are a variance-decomposition weight: the product vanishes when either child is nearly empty (<span class="math notranslate nohighlight">\(n_L\)</span> or <span class="math notranslate nohighlight">\(n_R \to 0\)</span>) and grows as both children get larger, so it penalises degenerate splits that peel off a tiny leaf and favours splits into two well-populated leaves. The squared difference makes sure that the treatment effects between the two subpopulations are as heterogeneous as possible. The actual causal-tree objective of <a class="reference external" href="https://doi.org/10.1073/pnas.1510489113">Athey &amp; Imbens (2016)</a> maximises an estimate of <span class="math notranslate nohighlight">\(-\text{EMSE}_\tau\)</span>, the expected mean squared error: this heterogeneity reward <em>minus</em> a penalty for the within-leaf variance of each <span class="math notranslate nohighlight">\(\hat{\tau}_\ell\)</span>, which grows when a leaf contains few treated <strong>or</strong> few control units, together with an honesty correction for estimating effects on a held-out sample. A constant, hence homogeneous, treatment effect is assumed across all observations within the respective subpopulation aggregated in a leaf. Within each leaf, units act as if randomised: the CATE is the difference in mean outcomes. We write <span class="math notranslate nohighlight">\(\hat{Y}^{(-i)} = \hat{m}^{(-i)}(x^{(i)})\)</span> for the cross-fitted outcome prediction of unit <span class="math notranslate nohighlight">\(i\)</span> (Step 1):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-343a44ad-85bf-456d-885b-e6bc742c5970">
-<span class="eqno">(1)<a class="headerlink" href="#equation-343a44ad-85bf-456d-885b-e6bc742c5970" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-12aab709-7c0b-422b-bc91-42eba345825c">
+<span class="eqno">(1)<a class="headerlink" href="#equation-12aab709-7c0b-422b-bc91-42eba345825c" title="Permalink to this equation">#</a></span>\[\begin{align}
      \hat{\tau}_L\leftarrow \text{OLS}\left((Y^{(i)}-\hat{Y}^{(-i)})\sim(T^{(i)}-\hat{\pi}^{(-i)}(x^{(i)})):x^{(i)}\in L\right) \\
      \hat{\tau}_R\leftarrow  \text{OLS}\left((Y^{(i)}-\hat{Y}^{(-i)})\sim(T^{(i)}-\hat{\pi}^{(-i)}(x^{(i)})):x^{(i)}\in R\right)
 \end{align}\]</div>
 <p>Two points on this split-selection rule. First, the residualised form above - regressing the centred outcome on the centred treatment - is the R-learner / generalised-random-forest generalisation of <a class="reference external" href="https://doi.org/10.1214/18-AOS1709">Athey, Tibshirani &amp; Wager (2019)</a> and <a class="reference external" href="https://doi.org/10.1093/biomet/asaa076">Nie &amp; Wager (2021)</a>; the <em>original</em> causal tree of <a class="reference external" href="https://doi.org/10.1073/pnas.1510489113">Athey &amp; Imbens (2016)</a> selects splits by a plain within-leaf difference in means and requires no residualisation. Second, the leave-one-out nuisances <span class="math notranslate nohighlight">\(\hat{Y}^{(-i)}\)</span> and <span class="math notranslate nohighlight">\(\hat{\pi}^{(-i)}(x^{(i)})\)</span> - where the <span class="math notranslate nohighlight">\((-i)\)</span> superscript denotes an estimate that excludes unit <span class="math notranslate nohighlight">\(i\)</span> - are <em>not</em> produced by a single tree: they must be pre-computed by cross-fitting (Step 1 above). Only in the forest (<a class="reference internal" href="#alg-causalforest">Algorithm 13</a>) do they arise for free, as out-of-bag by-products of the <span class="math notranslate nohighlight">\(B\)</span>-tree ensemble (a unit is out-of-bag in every tree that did not subsample it).</p>
 <p>The stopping criterion of further partitioning the population into subgroups is usually pre-specified by hyperparameters such as the minimum number of observations per leaf, a threshold for the weighted difference in the resulting treatment effects or a difference in sizes between the resulting nodes in terms of control and treatment group. If one of these minimum requirements is not met due to an additional split, the partitioning process is stopped and the algorithm intermediately returns the partition of <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>. Given this partition, the estimation step is executed to get CATEs that basically are differences in outcomes for treatment and control observations. In every leaf <span class="math notranslate nohighlight">\(\ell\)</span>, there are both treated and untreated patients. Hence, the CATE is estimated as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f677263f-37dd-4c87-870e-fb7424925f9d">
-<span class="eqno">(2)<a class="headerlink" href="#equation-f677263f-37dd-4c87-870e-fb7424925f9d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ba948442-ca63-4567-8597-89b53d67be80">
+<span class="eqno">(2)<a class="headerlink" href="#equation-ba948442-ca63-4567-8597-89b53d67be80" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \hat{\tau}^{(\ell)}(x)=\frac{\sum_{\{i:T^{(i)}=1,\, x^{(i)}\in \ell\}}Y^{(i)}}{\left|\{i:T^{(i)}=1,\, x^{(i)}\in \ell\}\right|}-\frac{\sum_{\{i:T^{(i)}=0,\, x^{(i)}\in \ell\}}Y^{(i)}}{\left|\{i:T^{(i)}=0,\, x^{(i)}\in \ell\}\right|}
 \end{equation}\]</div>
 <figure class="align-default" id="fig-causal-tree">
@@ -614,14 +577,14 @@ m(x) = \mathbb{E}[Y \mid X = x], \qquad \pi(x) = \mathbb{P}(T = 1 \mid X = x),
 </ol>
 </section>
 </div><p>Fitting <span class="math notranslate nohighlight">\(B\)</span> causal trees, we repeat the separation step into a construction data set and an estimation data set repeatedly for every causal tree. Hence, every single base learner is fitted on different subsamples of the observational data set. This ensures <em>honesty</em> in the ensemble setting as well, when the individual causal trees are composed to a causal forest. Every causal tree again recursively builds a partition into binary splits of the entire patient population based on the construction set. Then, it estimates the CATEs in the leaves <span class="math notranslate nohighlight">\(\ell^{(b)}\)</span> based on the estimation set. After <span class="math notranslate nohighlight">\(B\)</span> causal trees have been built, the forest proximity weights that define each observation’s local neighbourhood are calculated for every observation - with each tree’s leaf membership <span class="math notranslate nohighlight">\(\ell^{(b)}(x)\)</span> and leaf size <span class="math notranslate nohighlight">\(|\ell^{(b)}(x)|\)</span> evaluated on that tree’s <em>estimation</em> sample, in keeping with honesty - as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6fb378b5-44f8-49d1-a198-954787ee4115">
-<span class="eqno">(3)<a class="headerlink" href="#equation-6fb378b5-44f8-49d1-a198-954787ee4115" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b2dfaf80-3856-4482-ac30-86d6380d9543">
+<span class="eqno">(3)<a class="headerlink" href="#equation-b2dfaf80-3856-4482-ac30-86d6380d9543" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \alpha^{(j)}(x)=\frac{1}{B}\sum_{b=1}^{B}\frac{\mathbb{1}\{X^{(j)}\in\ell^{(b)}(x)\}}{\left|\ell^{(b)}(x)\right|}.
 \end{equation}\]</div>
 <p>The weights indicate how often another patient <span class="math notranslate nohighlight">\(j\not = i\)</span> with covariates <span class="math notranslate nohighlight">\(X^{(j)}\)</span> falls in the same leaf as the patient of interest <span class="math notranslate nohighlight">\(i\)</span> with covariates <span class="math notranslate nohighlight">\(x\)</span> across the trees in the forest. The more often the patients are in the same leaf, the closer they are to each other and the higher is the weight of patient when estimating the treatment effect of the observation with given covariates and outcome.</p>
 <p>The causal forest is hence not used to construct the final estimate of CATE as an average over all single estimations but rather for adaptive neighbourhood matching of each individual observation. The actual CATE is then obtained locally as the solution of a proximity-weighted R-learner moment condition over its nearest neighbours, i.e., similar patients <a class="reference external" href="https://doi.org/10.1214/18-AOS1709">(Athey, Tibshirani &amp; Wager, 2019)</a>; <a class="reference external" href="https://doi.org/10.1093/biomet/asaa076">(Nie &amp; Wager, 2021)</a>, as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-379722f4-8800-4d78-a15a-4979bbf27fef">
-<span class="eqno">(4)<a class="headerlink" href="#equation-379722f4-8800-4d78-a15a-4979bbf27fef" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-633ebb83-9e6d-45a7-8da3-d199b1b2366a">
+<span class="eqno">(4)<a class="headerlink" href="#equation-633ebb83-9e6d-45a7-8da3-d199b1b2366a" title="Permalink to this equation">#</a></span>\[\begin{equation}
     \hat{\tau}(x)=\frac{\sum_{j=1}^n \alpha^{(j)}(x)(Y^{(j)}-\hat{Y}^{(-j)})(T^{(j)}-\hat{\pi}^{(-j)}(x^{(j)}))}{ \sum \alpha^{(j)}(x)(T^{(j)}-\hat{\pi}^{(-j)}(x^{(j)}))^2}.
 \end{equation}\]</div>
 <figure class="align-default" id="fig-causal-forest">
@@ -699,17 +662,15 @@ m(x) = \mathbb{E}[Y \mid X = x], \qquad \pi(x) = \mathbb{P}(T = 1 \mid X = x),
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item"><div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="pst-show_toc_level nav section-nav flex-column">
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#meta-learners-for-heterogeneous-effects">Meta-Learners for Heterogeneous Effects</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-trees">Causal Trees</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-forests">Causal Forests</a></li>
@@ -762,8 +723,8 @@ By Theresa Blümlein, Patrick Cheridito, and Daniel Meier
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

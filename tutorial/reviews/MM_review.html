@@ -1,0 +1,1088 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Review: Actuarial Causal Inference Tutorial &#8212; Actuarial Causal Inference Tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebe.css?v=9bca0c2f" />
+    <link rel="stylesheet" type="text/css" href="../../_static/code.css?v=1719a5f1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_widget.css?v=7446dea4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/thebe-button-patch.css?v=e3482d12" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/figure-theme.css?v=c26ee37f" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script src="../../_static/sphinx-thebe-i18n.js?v=ea266e56"></script>
+    <script defer="defer" src="../../_static/refresh.js?v=9bea9b76"></script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script defer="defer" src="../../_static/sphinx-thebe-lite.js?v=93e2d225"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>let thebePythonReady = 'Python interaction ready!';</script>
+    <script>let thebeRunningCells = 'Running pre-initialized cells...';</script>
+    <script>let thebeLoadingThebe = 'Loading Thebe...';</script>
+    <script>let thebeWaitingForPackages = 'Waiting for packages to load...';</script>
+    <script>let thebeLaunchingPyodide = 'Launching Pyodide kernel';</script>
+    <script>let thebeInitializingThebe = 'Initializing Thebe';</script>
+    <script>let thebeDeleteCell = 'delete cell';</script>
+    <script>let thebeDeleteThisCell = 'delete this cell';</script>
+    <script>let thebeClear = 'clear';</script>
+    <script>let thebeClearOutput = 'clear the output of the cell';</script>
+    <script>let thebeAddCell = 'add cell';</script>
+    <script>let thebeAddNewCell = 'adds a new cell underneath';</script>
+    <script>let thebeLaunchingBinder = 'Launching from mybinder.org';</script>
+    <script>let thebeLoadingCDN = 'Loading thebe from CDN...';</script>
+    <script>let thebeRun = 'run';</script>
+    <script>let thebeRunCell = 'run this cell';</script>
+    <script>let thebeRunAll = 'run all';</script>
+    <script>let thebeRunAllCells = 'run all cells';</script>
+    <script>let thebeRestartRun = 'restart & run all';</script>
+    <script>let thebeRestartRunCells = 'restart the kernel and run all cells';</script>
+    <script>let thebeLiveCode = 'Live Code';</script>
+    <script>let thebeLaunchThebe = 'Launch Thebe';</script>
+    <script>const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial/reviews/MM_review';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/figure-theme.js?v=29b104fa"></script>
+    <link rel="icon" href="../../_static/logo.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Actuarial Causal Inference Tutorial - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Actuarial Causal Inference Tutorial - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../README.html">
+                    Actuarial Causal Inference Tutorial
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts of Causal Inference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../identification.html">Identification</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../assumptions.html">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../graphical_models.html">Graphical Causal Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods.html">Identification Strategies</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../inference.html">Estimation of Causal Effects</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../direct_adjustment.html">Direct Adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../heterogeneous_effects.html">Heterogeneous Treatment Effects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../instrumental_variables.html">Instrumental Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quasi_experimental.html">Quasi-Experimental Designs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bayesian.html">Bayesian Causal Inference</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sensitivity.html">Validation and Sensitivity Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sensitivity_analysis.html">Sensitivity Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics_debiasing.html">Diagnostics and De-Biasing Toolkit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fairness.html">Fairness and Causal Inference</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Actuarial Applications</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../application/observational_data.html">Observational Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../application/claims_triage.html">Explainable Motor Claims Triage with CATE</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../application/health_interventions.html">Synthetic Health Dataset for Causal Inference Tutorial</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../papers/references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tutorial/reviews/MM_review.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Review: Actuarial Causal Inference Tutorial</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overall-assessment">0. Overall assessment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-reader-s-checklist-items-to-confirm-during-the-manual-read-through">0b. Reader’s checklist — items to confirm during the manual read-through</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#substantive-claims-to-re-read-critically-major">Substantive claims to re-read critically ([Major])</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references-and-section-numbers-to-verify-against-the-source-verify">References and section numbers to verify against the source ([Verify])</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notebooks-items-to-confirm-see-section-20">Notebooks — items to confirm (see Section 20)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-visual-checks-when-browsing-the-built-book">Quick visual checks when browsing the built book</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-cutting-issues">1. Cross-cutting issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readme-md">2. <code class="docutils literal notranslate"><span class="pre">README.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-concepts-md">3. <code class="docutils literal notranslate"><span class="pre">tutorial/concepts.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-identification-md">4. <code class="docutils literal notranslate"><span class="pre">tutorial/identification.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-assumptions-md">5. <code class="docutils literal notranslate"><span class="pre">tutorial/assumptions.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-graphical-models-md">6. <code class="docutils literal notranslate"><span class="pre">tutorial/graphical_models.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-methods-md">7. <code class="docutils literal notranslate"><span class="pre">tutorial/methods.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-inference-md">8. <code class="docutils literal notranslate"><span class="pre">tutorial/inference.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-direct-adjustment-md">9. <code class="docutils literal notranslate"><span class="pre">tutorial/direct_adjustment.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-heterogeneous-effects-md">10. <code class="docutils literal notranslate"><span class="pre">tutorial/heterogeneous_effects.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-instrumental-variables-md">11. <code class="docutils literal notranslate"><span class="pre">tutorial/instrumental_variables.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-quasi-experimental-md">12. <code class="docutils literal notranslate"><span class="pre">tutorial/quasi_experimental.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-bayesian-md">13. <code class="docutils literal notranslate"><span class="pre">tutorial/bayesian.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-sensitivity-md">14. <code class="docutils literal notranslate"><span class="pre">tutorial/sensitivity.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-diagnostics-md">15. <code class="docutils literal notranslate"><span class="pre">tutorial/diagnostics.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-debias-md">16. <code class="docutils literal notranslate"><span class="pre">tutorial/debias.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-fairness-md">17. <code class="docutils literal notranslate"><span class="pre">tutorial/fairness.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#papers-references-md">18. <code class="docutils literal notranslate"><span class="pre">papers/references.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#toc-yml-config-yml">19. <code class="docutils literal notranslate"><span class="pre">_toc.yml</span></code> / <code class="docutils literal notranslate"><span class="pre">_config.yml</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application-notebooks">20. Application notebooks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-observational-data-ipynb-in-toc">20.1 <code class="docutils literal notranslate"><span class="pre">application/observational_data.ipynb</span></code> (in TOC)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-claims-triage-ipynb-in-toc">20.2 <code class="docutils literal notranslate"><span class="pre">application/claims_triage.ipynb</span></code> (in TOC)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-health-interventions-ipynb-in-toc">20.3 <code class="docutils literal notranslate"><span class="pre">application/health_interventions.ipynb</span></code> (in TOC)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-utils-py">20.4 <code class="docutils literal notranslate"><span class="pre">application/utils.py</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix-a-mechanical-check-log">Appendix A — Mechanical check log</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="review-actuarial-causal-inference-tutorial">
+<h1>Review: Actuarial Causal Inference Tutorial<a class="headerlink" href="#review-actuarial-causal-inference-tutorial" title="Link to this heading">#</a></h1>
+<p>Line numbers (<code class="docutils literal notranslate"><span class="pre">L12</span></code>) refer to the file at the commit above. Each item carries one tag:</p>
+<p>| Tag | Meaning |</p>
+<p>|—|—|</p>
+<p>| <strong>[Build]</strong> | Broken cross-reference, missing label/file, or something that will produce a Sphinx warning / dead link. Mechanical, please fix. |</p>
+<p>| <strong>[Major]</strong> | Statement that is wrong or misleading as written, or a structural inconsistency that will confuse readers. |</p>
+<p>| <strong>[Minor]</strong> | Imprecise, incomplete, or missing citation; worth fixing but not wrong per se. |</p>
+<p>| <strong>[Nit]</strong> | Typo, wording, style, duplication. |</p>
+<p>| <strong>[Verify]</strong> | I could not confirm the claim/reference from the text alone; please check against the source. |</p>
+<hr class="docutils" />
+<section id="overall-assessment">
+<h2>0. Overall assessment<a class="headerlink" href="#overall-assessment" title="Link to this heading">#</a></h2>
+<p>This is a well-structured and unusually careful tutorial. Things that stand out positively and should be kept as they are:</p>
+<ul class="simple">
+<li><p>The four-stage organisation (concepts → identification → estimation → validation) is clear, and the hub pages (<code class="docutils literal notranslate"><span class="pre">identification.md</span></code>, <code class="docutils literal notranslate"><span class="pre">inference.md</span></code>, <code class="docutils literal notranslate"><span class="pre">sensitivity.md</span></code>) make navigation easy.</p></li>
+<li><p>The ATT-vs-ATE decomposition of the naive contrast (<code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> L60–66, <code class="docutils literal notranslate"><span class="pre">debias.md</span></code> L33–41) is more precise than in most introductory texts.</p></li>
+<li><p>The three worked d-separation examples (<code class="docutils literal notranslate"><span class="pre">graphical_models.md</span></code> L186–282) are excellent teaching material, in particular Example 2 (mediator with unmeasured confounding) and the explicit “identifying independence” paragraphs.</p></li>
+<li><p>The sensitivity chapter is strong: fixed-denominator SMD (<code class="docutils literal notranslate"><span class="pre">diagnostics.md</span></code> L72–88), the amplification factor in the partial-<span class="math notranslate nohighlight">\(R^2\)</span> bound with numeric under-statement figures, the two robustness values, and the Manski/MTR/MTS discussion are all correct and well motivated. The telematics pre-treatment placebo example (L149) is exactly the kind of actuarial grounding the rest of the tutorial would benefit from.</p></li>
+<li><p>The TMLE outcome-type warning, the PLM-DML “what does <span class="math notranslate nohighlight">\(\tau^*\)</span> actually target” note, and the Neyman-orthogonality proof are valuable additions rarely found in tutorials.</p></li>
+<li><p>The interactive explainers are a real asset.</p></li>
+</ul>
+<p>The main weaknesses, in order of importance:</p>
+<ol class="arabic simple">
+<li><p>A handful of <strong>broken MyST references / a missing page</strong> that will surface as build warnings or dead links (Section 1, C10).</p></li>
+<li><p>Several <strong>mathematically over-stated or incorrect sentences</strong>, mostly in <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code>, <code class="docutils literal notranslate"><span class="pre">instrumental_variables.md</span></code>, <code class="docutils literal notranslate"><span class="pre">bayesian.md</span></code> and <code class="docutils literal notranslate"><span class="pre">fairness.md</span></code> (flagged <strong>[Major]</strong> below).</p></li>
+<li><p><strong>Inconsistent chapter descriptions and notation</strong> across hub pages and chapters (C1–C3).</p></li>
+<li><p><strong>Bibliography drift</strong>: ~20 in-text citations have no entry in <code class="docutils literal notranslate"><span class="pre">papers/references.md</span></code>, several Shalizi chapter numbers are wrong, and a few DOIs look suspicious (C4, C8).</p></li>
+<li><p>The chapter titled “Inference” contains <strong>no frequentist uncertainty quantification</strong> for any of the ATE/CATE estimators (C11).</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="b-reader-s-checklist-items-to-confirm-during-the-manual-read-through">
+<h2>0b. Reader’s checklist — items to confirm during the manual read-through<a class="headerlink" href="#b-reader-s-checklist-items-to-confirm-during-the-manual-read-through" title="Link to this heading">#</a></h2>
+<p>These are the findings where a second pair of eyes matters most: either the claim in the text is substantively wrong/over-stated (<strong>[Major]</strong>), or I could not confirm a reference from the text alone (<strong>[Verify]</strong>). Tick them off while reading; the full reasoning is in the per-file sections below.</p>
+<section id="substantive-claims-to-re-read-critically-major">
+<h3>Substantive claims to re-read critically ([Major])<a class="headerlink" href="#substantive-claims-to-re-read-critically-major" title="Link to this heading">#</a></h3>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">graphical_models.md</span></code> <strong>L128</strong> — faithfulness counter-example: a bare chain <span class="math notranslate nohighlight">\(X\to M\to Y\)</span> has one path; cancellation needs a direct edge <span class="math notranslate nohighlight">\(X\to Y\)</span> as well. Confirm the sentence is wrong as written.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">methods.md</span></code> <strong>L14</strong> — table says front-door <em>estimation</em> is in <code class="docutils literal notranslate"><span class="pre">direct_adjustment</span></code>; confirm no front-door estimator exists there.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">inference.md</span></code> <strong>L50</strong> — RD listed as targeting the ATT; compare with <code class="docutils literal notranslate"><span class="pre">quasi_experimental.md</span></code> L37/L47 (effect at cutoff).</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> <strong>L253</strong> vs <strong>L429–457</strong> — “DML is essentially AIPW …” but the DML algorithm shown is the PLM/Robinson form; check the two passages are reconciled.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> <strong>L441–452</strong> — is this cross-fitting (swap + average) or single sample-splitting? Is “Honesty” the right term here?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> <strong>L417–424</strong> — TMLE note: is the logistic fluctuation really “invalid” for unbounded <span class="math notranslate nohighlight">\(Y\)</span>, or is rescale-to-<span class="math notranslate nohighlight">\([0,1]\)</span> the recommended default (Gruber &amp; van der Laan 2010)?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> <strong>L45–71</strong> — which causal tree is being defined: Athey–Imbens (difference-in-means splits, no nuisances) or GRF-style (residualised)? Read L53, L57–71, L84, L88–90 together.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> <strong>L120</strong> — “<span class="math notranslate nohighlight">\(\hat\tau-\tau=O_p(\|\Delta_m\|\,\|\Delta_\pi\|)\)</span>”: is this the total error or only the nuisance-induced bias?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> <strong>L123</strong> — “the CATE estimator stays <span class="math notranslate nohighlight">\(\sqrt n\)</span>-consistent”: does this hold for a nonparametric <span class="math notranslate nohighlight">\(\tau(x)\)</span> from a forest?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> <strong>L141–151</strong> — forest algorithm computes per-leaf CATEs (Steps 1.4–1.5) that the final estimator (L166–168) never uses; is subsampling missing?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">instrumental_variables.md</span></code> <strong>L19–23</strong> — LATE claimed for compliers without stating <strong>monotonicity</strong> anywhere in the chapter.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">instrumental_variables.md</span></code> <strong>L49</strong> — “bivariate 2SLS valid only if no observed covariate affects <span class="math notranslate nohighlight">\(Y\)</span>”: is that the right condition, or is it “instrument only conditionally exogenous”?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">instrumental_variables.md</span></code> <strong>L53</strong> — SE argument: <span class="math notranslate nohighlight">\(\hat\varepsilon=u+\hat\beta(T-\hat T)\)</span>; is the cross-term <span class="math notranslate nohighlight">\(2\beta\,\mathbb{E}[u(T-\hat T)]\)</span> zero under endogeneity? Does “too large” follow?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">quasi_experimental.md</span></code> <strong>L9</strong> — Goodman-Bacon “motivates the heterogeneity-robust estimators in <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects</span></code>”: are meta-learners/forests the intended target, or Callaway &amp; Sant’Anna / Sun &amp; Abraham?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">bayesian.md</span></code> <strong>L13</strong> — can Bayes factors select among competing <em>causal</em> models (Markov-equivalent DAGs, exchangeability)?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">bayesian.md</span></code> <strong>L52–66</strong> — Bayesian propensity score: is the feedback / “PS not in the likelihood” issue (Robins &amp; Ritov 1997; Zigler et al. 2013) acknowledged?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">bayesian.md</span></code> <strong>L107–121</strong> — regularisation-induced confounding: is it addressed by the separate <span class="math notranslate nohighlight">\(\tau\)</span> ensemble (as the text says) or by including <span class="math notranslate nohighlight">\(\hat\pi(x)\)</span> in <span class="math notranslate nohighlight">\(\mu\)</span> (as Hahn, Murray &amp; Carvalho 2020 say)?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">fairness.md</span></code> <strong>L48–50</strong> — is <span class="math notranslate nohighlight">\(P(Y\le y\mid X,S)=P(Y\le y\mid X)\)</span> the Lindholm et al. <em>definition</em> of the discrimination-free price, or is the definition <span class="math notranslate nohighlight">\(\mu^*(x)=\int\mu(x,s)\,\mathrm dP(s)\)</span> (as derived at L78–80)?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> <strong>L358</strong> — does the orthogonality proof actually need exchangeability at this step, or is <span class="math notranslate nohighlight">\(\mathbb{E}[TY\mid X]=\pi(X)\mu(1,X)\)</span> definitional?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">assumptions.md</span></code> <strong>L114–124</strong> — does the identification derivation need positivity to be well defined?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Whole “Inference” chapter — is any frequentist standard error / confidence interval given for G-computation, PSM, IPW, AIPW, TMLE, DML, meta-learners, causal forests? (C11)</p></li>
+</ul>
+</section>
+<section id="references-and-section-numbers-to-verify-against-the-source-verify">
+<h3>References and section numbers to verify against the source ([Verify])<a class="headerlink" href="#references-and-section-numbers-to-verify-against-the-source-verify" title="Link to this heading">#</a></h3>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Shalizi (2025) chapter/section numbers everywhere (C4): <code class="docutils literal notranslate"><span class="pre">graphical_models.md</span></code> L3, L20, L47, L117, L153, L183; <code class="docutils literal notranslate"><span class="pre">methods.md</span></code> L27, L83, L152, L163, L170, L203; <code class="docutils literal notranslate"><span class="pre">instrumental_variables.md</span></code> L17 (“Ch. 23”); <code class="docutils literal notranslate"><span class="pre">bayesian.md</span></code> L5 (“Ch. 21”). Current TOC: 18 Graphical Models · 19 Graphical Causal Models · 20 Identifying Causal Effects · 21 Estimating Causal Effects · 22 Discovering Causal Structure · 23 Time Series.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> L32 — Richardson &amp; Robins (2014), DOI 10.1214/14-STS485: is this the intended SCM/PO-equivalence reference?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> L56, L60 and elsewhere — Wooldridge (2012), DOI 10.1016/C2011-0-05506-1 (Elsevier DOI for a Cengage textbook?).</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> L465 — Chernozhukov et al. (2018) “Sec. 2 vs. 4”: PLR is Sec. 4 and IRM Sec. 5 in the <em>Econometrics Journal</em> version?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">diagnostics.md</span></code> L279 — Cinelli &amp; Hazlett (2020) “Sec. 4.3” for robustness values (4.2?).</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">debias.md</span></code> L112 — Pearl (2009) “Cor. 3.3.4”: front-door adjustment is Theorem 3.3.4?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">fairness.md</span></code> L70, L78 — Lindholm et al. “Section 3” / “Proposition 15”: numbering in the published ASTIN Bulletin 52(1) version vs arXiv?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">fairness.md</span></code> L31, L48, L70, L162 — year 2021 vs published 2022 (DOI 10.1017/asb.2021.23); <code class="docutils literal notranslate"><span class="pre">references.md</span></code> lists a <em>different</em> Lindholm et al. 2022.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">instrumental_variables.md</span></code> L53 — Wooldridge (2010) “p. 96” for the manual-2SLS SE remark.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">_toc.yml</span></code> L10 — does <code class="docutils literal notranslate"><span class="pre">maxdepth:</span> <span class="pre">1</span></code> hide the nested <code class="docutils literal notranslate"><span class="pre">sections:</span></code> in the sidebar?</p></li>
+</ul>
+</section>
+<section id="notebooks-items-to-confirm-see-section-20">
+<h3>Notebooks — items to confirm (see Section 20)<a class="headerlink" href="#notebooks-items-to-confirm-see-section-20" title="Link to this heading">#</a></h3>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">observational_data.ipynb</span></code> cell 6 — the sub-type bonus (+1.5 for half the treated) is added to the <em>main</em> outcome <code class="docutils literal notranslate"><span class="pre">Y</span></code>, so the true pooled ATE is 5.75, not the <code class="docutils literal notranslate"><span class="pre">ATE</span> <span class="pre">=</span> <span class="pre">5.0</span></code> quoted throughout (cells 4, 11, 23). Is the “bias from <span class="math notranslate nohighlight">\(U\)</span>” therefore overstated?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">observational_data.ipynb</span></code> cells 17, 19, 21 — positivity plots use the <em>true</em> propensity, and the adjustment set switches between <code class="docutils literal notranslate"><span class="pre">{X1,X2}</span></code> and <code class="docutils literal notranslate"><span class="pre">{X1..X5}</span></code>; is the residual imbalance in cell 21 due to extreme weights (as claimed) or to omitting X3–X5 from the propensity model?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">utils.py</span></code> <code class="docutils literal notranslate"><span class="pre">calculate_smd_weighted</span></code> — weighted variances in the denominator, contradicting <code class="docutils literal notranslate"><span class="pre">diagnostics.md</span></code> L72–88 (fixed unweighted denominator).</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">utils.py</span></code> <code class="docutils literal notranslate"><span class="pre">rosenbaum_sensitivity</span></code> — sign test, whereas the notebook text (cell 27 comment) and tutorial speak of the signed-rank statistic.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">claims_triage.ipynb</span></code> cells 11–12 — <code class="docutils literal notranslate"><span class="pre">LinearDML(X=None)</span></code> is the PLM; under the deliberately heterogeneous effect it targets the overlap-weighted <span class="math notranslate nohighlight">\(\tau^*\)</span> (see <code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> L459–466), yet is labelled “debiased ATE” and compared to the true ATE and to the causal-forest mean CATE.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">claims_triage.ipynb</span></code> cells 14, 19 — estimated CATEs are graded against <code class="docutils literal notranslate"><span class="pre">tau_true</span></code>, which contains the idiosyncratic lognormal factor (an ITE), not the CATE <span class="math notranslate nohighlight">\(\mathbb{E}[\tau\mid x]\)</span>.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">claims_triage.ipynb</span></code> cell 27 — “none of our observed features explains anywhere near 12% …” is asserted, not computed; severity likely exceeds it for cost.</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">health_interventions.ipynb</span></code> — is this notebook meant to be published? Exclusion restriction violated by construction (cell 5: <code class="docutils literal notranslate"><span class="pre">itt</span></code> directly multiplies mortality by 0.75) yet <code class="docutils literal notranslate"><span class="pre">itt</span></code> is used as an instrument (cell 21); sign conventions flip between “naive” and estimator outputs (cells 17–23); no ground truth for <code class="docutils literal notranslate"><span class="pre">df_synthetic</span></code>; every output printed twice; no narrative.</p></li>
+</ul>
+</section>
+<section id="quick-visual-checks-when-browsing-the-built-book">
+<h3>Quick visual checks when browsing the built book<a class="headerlink" href="#quick-visual-checks-when-browsing-the-built-book" title="Link to this heading">#</a></h3>
+<ul class="contains-task-list simple">
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">assumptions.md</span></code> L52 — does the <code class="docutils literal notranslate"><span class="pre">{ref}</span></code>debias`` link render, or show as unresolved?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> L90 — does <code class="docutils literal notranslate"><span class="pre">{cite:t}</span></code>austin2011`` render as literal text?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">fairness.md</span></code> L93 — does the link to <code class="docutils literal notranslate"><span class="pre">application/pricing</span></code> 404? Is the fairness price explainer shown anywhere?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">fairness.md</span></code> — does the page have a title in the sidebar (no H1 in source)?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> <code class="docutils literal notranslate"><span class="pre">diagnostics.md</span></code> L281 — does “top of this section” jump to the interactive map?</p></li>
+<li class="task-list-item"><p><input class="task-list-item-checkbox" disabled="disabled" type="checkbox"> Sidebar — are <code class="docutils literal notranslate"><span class="pre">application/case_study</span></code>, <code class="docutils literal notranslate"><span class="pre">motivation</span></code>, <code class="docutils literal notranslate"><span class="pre">confounding</span></code>, <code class="docutils literal notranslate"><span class="pre">sensitivity_analysis</span></code>, <code class="docutils literal notranslate"><span class="pre">susceptible_subpopulation</span></code> reachable / intended?</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="cross-cutting-issues">
+<h2>1. Cross-cutting issues<a class="headerlink" href="#cross-cutting-issues" title="Link to this heading">#</a></h2>
+<p><strong>C1 — <code class="docutils literal notranslate"><span class="pre">{doc}</span></code>sensitivity`` is cited as the place where sensitivity tools “are developed”, but that page is a 15-line hub.</strong> The tools live in <code class="docutils literal notranslate"><span class="pre">diagnostics.md</span></code>. Affected: <code class="docutils literal notranslate"><span class="pre">README.md</span></code> L42; <code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> L121 (cites both); <code class="docutils literal notranslate"><span class="pre">identification.md</span></code> L20; <code class="docutils literal notranslate"><span class="pre">assumptions.md</span></code> L110; <code class="docutils literal notranslate"><span class="pre">methods.md</span></code> L219; <code class="docutils literal notranslate"><span class="pre">debias.md</span></code> L96, L120. Point to <code class="docutils literal notranslate"><span class="pre">diagnostics</span></code> (or make <code class="docutils literal notranslate"><span class="pre">sensitivity.md</span></code> carry real content, see <code class="docutils literal notranslate"><span class="pre">sensitivity.md</span></code> below). <strong>[Minor]</strong></p>
+<p><strong>C2 — Chapter descriptions do not match chapter contents.</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">README.md</span></code> L26 says <code class="docutils literal notranslate"><span class="pre">graphical_models</span></code> covers “backdoor and frontdoor criteria, causal discovery”; <code class="docutils literal notranslate"><span class="pre">identification.md</span></code> L13 says the same. In fact the Backdoor Criterion, Frontdoor Criterion and Causal Discovery (SGS/PC) all live in <code class="docutils literal notranslate"><span class="pre">methods.md</span></code> (L29–211). <code class="docutils literal notranslate"><span class="pre">graphical_models.md</span></code> only <em>references</em> <code class="docutils literal notranslate"><span class="pre">backdoor-criterion</span></code> forward (L207, L273).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">methods.md</span></code> L27 (“The following criteria provide graphical answers …”) is a dangling sentence that clearly used to introduce the criteria inside the graphical-models chapter.</p></li>
+<li><p>Suggest either moving the two criteria (and possibly Causal Discovery) back into <code class="docutils literal notranslate"><span class="pre">graphical_models.md</span></code> — they are graphical results, not “strategies” — leaving <code class="docutils literal notranslate"><span class="pre">methods.md</span></code> with the three strategies + estimands, or fixing all descriptions. <strong>[Major]</strong></p></li>
+</ul>
+<p><strong>C3 — Notation is not consistent, and the notation table is incomplete.</strong></p>
+<ul class="simple">
+<li><p>Instrument: <span class="math notranslate nohighlight">\(Z\)</span> in <code class="docutils literal notranslate"><span class="pre">inference.md</span></code> L31–33 and <code class="docutils literal notranslate"><span class="pre">methods.md</span></code> L215; <span class="math notranslate nohighlight">\(I\)</span> in <code class="docutils literal notranslate"><span class="pre">graphical_models.md</span></code> L247ff, <code class="docutils literal notranslate"><span class="pre">instrumental_variables.md</span></code> throughout, <code class="docutils literal notranslate"><span class="pre">quasi_experimental.md</span></code> L40. <span class="math notranslate nohighlight">\(Z\)</span> also denotes the adjustment set in the Backdoor Criterion (<code class="docutils literal notranslate"><span class="pre">methods.md</span></code> L33–43) and confounders <span class="math notranslate nohighlight">\(Z_1,Z_2,Z_3\)</span> in Example 3. Pick <span class="math notranslate nohighlight">\(I\)</span> for the instrument (it is what the figure uses) and add it to the notation table in <code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> L127–139.</p></li>
+<li><p>Collider: <span class="math notranslate nohighlight">\(C\)</span> in the table (L134) but <span class="math notranslate nohighlight">\(K\)</span> in Example 3 (<code class="docutils literal notranslate"><span class="pre">graphical_models.md</span></code> L249).</p></li>
+<li><p>Outcome model: <span class="math notranslate nohighlight">\(\mu(X)=\mathbb{E}[Y\mid T,X]\)</span> in the figure caption <code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> L11, <span class="math notranslate nohighlight">\(\mu(t,x)=\mathbb{E}[Y\mid T=t,X=x]\)</span> in G-computation/AIPW (L16, L253ff), but <span class="math notranslate nohighlight">\(\hat\mu(X)=\mathcal{L}_Y(Y\sim X)=\mathbb{E}[Y\mid X]\)</span> in the DML algorithm (L441ff) and R-learner (<code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> L35). <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> L105 then introduces <span class="math notranslate nohighlight">\(m(x)\)</span> for <span class="math notranslate nohighlight">\(\mathbb{E}[Y\mid X]\)</span>. Use <span class="math notranslate nohighlight">\(\mu(t,x)\)</span> for the outcome model and <span class="math notranslate nohighlight">\(m(x)\)</span> for the marginal regression everywhere, and add both to the table.</p></li>
+<li><p><span class="math notranslate nohighlight">\(D\)</span> appears twice in the notation table (L125 definition and row L138). <strong>[Minor]</strong></p></li>
+</ul>
+<p><strong>C4 — Shalizi (2025) chapter numbers.</strong> I checked the current ADAfaEPoV table of contents (text dated 8 Feb 2025): Ch. 18 Graphical Models, 19 Graphical Causal Models, 20 Identifying Causal Effects, 21 Estimating Causal Effects, 22 Discovering Causal Structure, 23 Time Series. Hence:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">methods.md</span></code> L27 and L83 cite “Section 21.1–21.2” / “Section 21.1” for the back-/front-door criteria → these are in <strong>Ch. 20</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">instrumental_variables.md</span></code> L17 cites “Ch. 23” for IV → Ch. 23 is Time Series; IV is in <strong>Ch. 20</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bayesian.md</span></code> L5 cites “Shalizi (2025, Ch. 21)” for Bayesian causal inference → Ch. 21 is frequentist estimation; Shalizi has no Bayesian causal chapter. Remove or replace (e.g. Rubin 1978; Imbens &amp; Rubin 2015 Ch. 8; Li, Ding &amp; Mealli 2023, <em>JRSS-A</em>, “Bayesian causal inference: a critical review”).</p></li>
+<li><p>Because the draft is revised continuously, state the version date in <code class="docutils literal notranslate"><span class="pre">references.md</span></code> (“draft of 8 February 2025”) and re-check all §-numbers (<code class="docutils literal notranslate"><span class="pre">graphical_models.md</span></code> L3, L20, L47, L117, L153, L183; <code class="docutils literal notranslate"><span class="pre">methods.md</span></code> L152, L163, L170, L203). <strong>[Verify]</strong></p></li>
+</ul>
+<p><strong>C5 — US/UK spelling is mixed</strong> (“randomized”/”randomised”, “destabilize”/”minimises”, “personalization”/”modelling”, “categorize”). British spelling dominates; make it uniform. <strong>[Nit]</strong></p>
+<p><strong>C6 — “patients” in an actuarial tutorial.</strong> <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> uses “patient(s)” 17 times (L45, L73, L86, L101, L157, L163, L165, L175, L178) and <code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> L129 says “patient/policyholder”. Replace with “unit”/”policyholder”. <strong>[Nit]</strong></p>
+<p><strong>C7 — Verbatim or near-verbatim duplication.</strong> Propensity-score definition (<code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> L44–49 and <code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> L35–43); the “conditionally randomized experiment” paragraph (<code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> L87 ≡ <code class="docutils literal notranslate"><span class="pre">assumptions.md</span></code> L5–7); LATE definition (<code class="docutils literal notranslate"><span class="pre">inference.md</span></code> L31–35 and <code class="docutils literal notranslate"><span class="pre">quasi_experimental.md</span></code> L37–47); the causal-forest introduction (<code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> L125 ≡ L130); IPW singly-robust statement (<code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> L90 and <code class="docutils literal notranslate"><span class="pre">debias.md</span></code> L104). Keep one instance and cross-reference. <strong>[Nit]</strong></p>
+<p><strong>C8 — Bibliography drift.</strong> The following in-text citations have <strong>no entry</strong> in <code class="docutils literal notranslate"><span class="pre">papers/references.md</span></code>: Austin 2009; Bowden, Davey Smith &amp; Burgess 2015; Cole &amp; Frangakis 2009; Davey Smith &amp; Ebrahim 2003; Greenland &amp; Robins 1986 and 2009; Hernán, Hernández-Díaz &amp; Robins 2004; Kang &amp; Schafer 2007; Katan 1986; Lindholm et al. 2021 (ASTIN); Lipsitch, Tchetgen &amp; Cohen 2010; Lunceford &amp; Davidian 2004; Neal 2020 (in “Useful Links” only); Richardson &amp; Robins 2014; Rosenbaum 2002; Rubin 1980; Schmidt 2018; VanderWeele 2009; Wooldridge 2012; Wooldridge 2010; Pearl 2001; VanderWeele 2015; Spirtes, Glymour &amp; Scheines 1993; Li, Morgan &amp; Zaslavsky 2018. Conversely Athey &amp; Wager (2019) is listed but never cited. Several citations are plain text without a link (Pearl 2001, VanderWeele 2015 in <code class="docutils literal notranslate"><span class="pre">debias.md</span></code> L112; SGS 1993 in <code class="docutils literal notranslate"><span class="pre">methods.md</span></code> L167; Wooldridge 2010 in <code class="docutils literal notranslate"><span class="pre">instrumental_variables.md</span></code> L53). <strong>[Minor]</strong></p>
+<p><strong>C9 — Blog-grade sources in an SAV publication.</strong> <code class="docutils literal notranslate"><span class="pre">uniqcret.com/post/causal-inference-assumptions-guide</span></code> (<code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> L105, <code class="docutils literal notranslate"><span class="pre">assumptions.md</span></code> L21, <code class="docutils literal notranslate"><span class="pre">references.md</span></code> Useful Links) and <code class="docutils literal notranslate"><span class="pre">biostatistics.ca</span></code> (<code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> L60) are personal blogs. Replace with Hernán &amp; Robins (2020, Chs. 2–3) or Imbens &amp; Rubin (2015, Ch. 12), or at least move them to “Useful Links”. <strong>[Minor]</strong></p>
+<p><strong>C10 — Build / link breakages (all verified by grep against the source tree).</strong></p>
+<p>| Location | Problem | Fix |</p>
+<p>|—|—|—|</p>
+<p>| <code class="docutils literal notranslate"><span class="pre">assumptions.md</span></code> L52 | <code class="docutils literal notranslate"><span class="pre">{ref}</span></code>debias<code class="docutils literal notranslate"> <span class="pre">—</span> <span class="pre">there</span> <span class="pre">is</span> <span class="pre">no</span> <span class="pre">label</span> <span class="pre">`(debias)=`</span> <span class="pre">anywhere</span> <span class="pre">|</span> <span class="pre">use</span> <span class="pre">`{doc}`debias</span></code> |</p>
+<p>| <code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> L90 | <code class="docutils literal notranslate"><span class="pre">{cite:t}</span></code>austin2011`` — no <code class="docutils literal notranslate"><span class="pre">.bib</span></code> file and no <code class="docutils literal notranslate"><span class="pre">sphinxcontrib.bibtex</span></code> in <code class="docutils literal notranslate"><span class="pre">_config.yml</span></code>; renders as an unresolved role | replace with the inline-link style used everywhere else |</p>
+<p>| <code class="docutils literal notranslate"><span class="pre">fairness.md</span></code> L93 | <code class="docutils literal notranslate"><span class="pre">{doc}</span></code>../application/pricing`` — <code class="docutils literal notranslate"><span class="pre">application/pricing.ipynb</span></code> does not exist | create it or remove the sentence; note <code class="docutils literal notranslate"><span class="pre">figure/fairness_price_explainer.html</span></code> exists but is embedded nowhere — presumably meant for this page |</p>
+<p>| <code class="docutils literal notranslate"><span class="pre">diagnostics.md</span></code> L281 | <code class="docutils literal notranslate"><span class="pre">[top</span> <span class="pre">of</span> <span class="pre">this</span> <span class="pre">section](#interactive-how-much-confounding-would-it-take)</span></code> — the heading at L15 is “Partial <span class="math notranslate nohighlight">\(R^2\)</span>: how much confounding would it take?”, so the generated anchor will not match | add an explicit label <code class="docutils literal notranslate"><span class="pre">(interactive-sensitivity)=</span></code> above L15 and use <code class="docutils literal notranslate"><span class="pre">{ref}</span></code> |</p>
+<p>| <code class="docutils literal notranslate"><span class="pre">fairness.md</span></code> L2 | page has no <code class="docutils literal notranslate"><span class="pre">#</span></code> H1 title; starts at <code class="docutils literal notranslate"><span class="pre">##</span></code> | add <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">Fairness</span> <span class="pre">and</span> <span class="pre">Discrimination-Free</span> <span class="pre">Pricing</span></code> (or similar) |</p>
+<p>| <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> L52, L129 | <code class="docutils literal notranslate"><span class="pre">(sec:ct)=</span></code> / <code class="docutils literal notranslate"><span class="pre">(sec:cf)=</span></code> placed <em>after</em> the headings — they label the following paragraph, not the section — and are never referenced | move above the <code class="docutils literal notranslate"><span class="pre">##</span></code> line or delete |</p>
+<p>| <code class="docutils literal notranslate"><span class="pre">_toc.yml</span></code> L36, L39 | commented-out <code class="docutils literal notranslate"><span class="pre">application/case_study.ipynb</span></code> and <code class="docutils literal notranslate"><span class="pre">application/traffic_study.ipynb</span></code> (the latter does not exist); five notebooks in <code class="docutils literal notranslate"><span class="pre">application/</span></code> (<code class="docutils literal notranslate"><span class="pre">case_study</span></code>, <code class="docutils literal notranslate"><span class="pre">confounding</span></code>, <code class="docutils literal notranslate"><span class="pre">motivation</span></code>, <code class="docutils literal notranslate"><span class="pre">sensitivity_analysis</span></code>, <code class="docutils literal notranslate"><span class="pre">susceptible_subpopulation</span></code>) are not in the TOC and will trigger “document isn’t included in any toctree” warnings | include or move out of the source tree / add to <code class="docutils literal notranslate"><span class="pre">exclude_patterns</span></code> |</p>
+<p>| <code class="docutils literal notranslate"><span class="pre">tutorial/figs/</span></code> | unused assets: <code class="docutils literal notranslate"><span class="pre">actuary_workflow.svg</span></code>, <code class="docutils literal notranslate"><span class="pre">fairness_dag.svg</span></code>, <code class="docutils literal notranslate"><span class="pre">rosenbaum_bounds.svg</span></code>, <code class="docutils literal notranslate"><span class="pre">effect_comparison.png</span></code>, <code class="docutils literal notranslate"><span class="pre">iptw_weights.png</span></code>, <code class="docutils literal notranslate"><span class="pre">love_plot.png</span></code>, <code class="docutils literal notranslate"><span class="pre">ps_overlap.png</span></code>, <code class="docutils literal notranslate"><span class="pre">psm_vs_iptw_concept.png</span></code>, <code class="docutils literal notranslate"><span class="pre">generate_propensity_figures.py</span></code> | delete or use (see <code class="docutils literal notranslate"><span class="pre">sensitivity.md</span></code> below re <code class="docutils literal notranslate"><span class="pre">actuary_workflow.svg</span></code>) |</p>
+<p><strong>C11 — No uncertainty quantification for the frequentist estimators.</strong> The chapter is called “Causal Inference” but G-computation, PSM, IPW, AIPW, TMLE, DML, meta-learners and causal forests are all presented as point-estimate algorithms. A short subsection (or a note per algorithm) on standard errors would close an important gap for actuaries who must report confidence intervals: influence-function SE for AIPW/DML (<span class="math notranslate nohighlight">\(\widehat{\mathrm{se}} = \mathrm{sd}(\hat\psi_i)/\sqrt n\)</span>, which the Neyman-orthogonality section already sets up), the bootstrap and its failure for nearest-neighbour matching (Abadie &amp; Imbens 2008, <em>Econometrica</em>), and the GRF variance estimate for causal forests. <strong>[Major]</strong></p>
+</section>
+<hr class="docutils" />
+<section id="readme-md">
+<h2>2. <code class="docutils literal notranslate"><span class="pre">README.md</span></code><a class="headerlink" href="#readme-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L10</strong> [Nit] “destabilize”, “categorize” (US) vs “minimises”, “realised” elsewhere (C5).</p></li>
+<li><p><strong>L24–27</strong> [Major] Chapter descriptions mismatch; see C2.</p></li>
+<li><p><strong>L42</strong> [Minor] “The actuary’s end-to-end workflow …” — there is no such workflow section or figure anywhere in the tutorial (<code class="docutils literal notranslate"><span class="pre">fairness.md</span></code> ends with a normative takeaway; <code class="docutils literal notranslate"><span class="pre">actuary_workflow.svg</span></code> is unused). Either add it (natural home: <code class="docutils literal notranslate"><span class="pre">sensitivity.md</span></code>) or drop the sentence. Same issue in <code class="docutils literal notranslate"><span class="pre">sensitivity.md</span></code> L15.</p></li>
+<li><p><strong>L5</strong> [Nit] Two applications are named (health programme, claims routing), but the TOC ships three notebooks (<code class="docutils literal notranslate"><span class="pre">observational_data</span></code>, <code class="docutils literal notranslate"><span class="pre">claims_triage</span></code>, <code class="docutils literal notranslate"><span class="pre">health_interventions</span></code>). Mention all three or explain the matrix.</p></li>
+<li><p><strong>L45–91</strong> [Nit] Fine. The <code class="docutils literal notranslate"><span class="pre">postMessage(...,</span> <span class="pre">'*')</span></code> wildcard origin is acceptable for a static site but could be tightened to <code class="docutils literal notranslate"><span class="pre">location.origin</span></code>.</p></li>
+</ul>
+</section>
+<section id="tutorial-concepts-md">
+<h2>3. <code class="docutils literal notranslate"><span class="pre">tutorial/concepts.md</span></code><a class="headerlink" href="#tutorial-concepts-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L20</strong> [Nit] The Neyman (1923) DOI points to the 1990 <em>Statistical Science</em> translation; write “Neyman (1923; transl. 1990)” as in <code class="docutils literal notranslate"><span class="pre">references.md</span></code>.</p></li>
+<li><p><strong>L32</strong> [Verify] “Richardson &amp; Robins, 2014, DOI 10.1214/14-STS485” — please confirm this DOI is the intended reference for SCM/potential-outcome equivalence (their SWIG paper is a 2013 UW CSSS working paper).</p></li>
+<li><p><strong>L56, L60</strong> [Verify] “Wooldridge, 2012, DOI 10.1016/C2011-0-05506-1” — this is an Elsevier book DOI; Wooldridge’s <em>Introductory Econometrics</em> is published by Cengage. Check the DOI resolves to the intended book.</p></li>
+<li><p><strong>L60</strong> [Minor] Blog link (C9).</p></li>
+<li><p><strong>L87</strong> [Nit] The term “Rubin Causal Model” was coined by Holland (1986), not Rosenbaum &amp; Rubin (1983). Cite Holland, P. W. (1986), “Statistics and Causal Inference”, <em>JASA</em> 81(396), 945–960, DOI 10.1080/01621459.1986.10478354 — currently absent from the bibliography.</p></li>
+<li><p><strong>L87</strong> [Nit] Paragraph duplicated verbatim in <code class="docutils literal notranslate"><span class="pre">assumptions.md</span></code> L5–7 (C7).</p></li>
+<li><p><strong>L90</strong> [Minor] “This fundamental identification problem was formalised by Rubin (1974)” — the phrase <em>Fundamental Problem of Causal Inference</em> and its formalisation are due to Holland (1986). Cite Holland here.</p></li>
+<li><p><strong>L105</strong> [Minor] Blog link (C9). Also the sentence is very long; split after “at the conditional level”.</p></li>
+<li><p><strong>L107</strong> [Nit] A paragraph of heterogeneous-treatment-effect references (incl. “Schmidt (2018)”, arXiv 1810.13237, not in bibliography) sits under “Identifiability” with no connection to the text. Move to <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> or delete.</p></li>
+<li><p><strong>L121</strong> [Minor] Points to <code class="docutils literal notranslate"><span class="pre">diagnostics</span></code> <strong>and</strong> <code class="docutils literal notranslate"><span class="pre">sensitivity</span></code> — see C1.</p></li>
+<li><p><strong>L129</strong> [Nit] “patient/policyholder” (C6).</p></li>
+<li><p><strong>L127–139</strong> [Minor] Notation table gaps (C3): no instrument, no <span class="math notranslate nohighlight">\(\mu(t,x)\)</span> / <span class="math notranslate nohighlight">\(m(x)\)</span>, no <span class="math notranslate nohighlight">\(\tau\)</span>, no ATE/ATT/CATE/LATE abbreviations; <span class="math notranslate nohighlight">\(D\)</span> defined twice.</p></li>
+<li><p>General [Nit] The section also defines the propensity score (L44–49) which is redefined in <code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> L35–43 (C7).</p></li>
+</ul>
+</section>
+<section id="tutorial-identification-md">
+<h2>4. <code class="docutils literal notranslate"><span class="pre">tutorial/identification.md</span></code><a class="headerlink" href="#tutorial-identification-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L13, L17</strong> [Major] Descriptions of <code class="docutils literal notranslate"><span class="pre">graphical_models</span></code> and <code class="docutils literal notranslate"><span class="pre">methods</span></code> do not match content (C2).</p></li>
+<li><p><strong>L13–20</strong> [Nit] This file uses em-dashes “—” while every other file uses spaced hyphens “ - “. Harmonise.</p></li>
+<li><p><strong>L20</strong> [Minor] Warning box ends “developed in <code class="docutils literal notranslate"><span class="pre">sensitivity</span></code>” → <code class="docutils literal notranslate"><span class="pre">diagnostics</span></code> (C1). Otherwise an excellent paragraph.</p></li>
+</ul>
+</section>
+<section id="tutorial-assumptions-md">
+<h2>5. <code class="docutils literal notranslate"><span class="pre">tutorial/assumptions.md</span></code><a class="headerlink" href="#tutorial-assumptions-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L5–7</strong> [Nit] Duplicate of <code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> L87 (C7).</p></li>
+<li><p><strong>L10–21</strong> [Nit] The “Potential Outcomes Framework” is a single sentence broken into two bullets and a continuation paragraph (”- Rubin (1974) extended …”, “- Specifically, when …”, then “then conditioning on <span class="math notranslate nohighlight">\(X\)</span> …”). Rewrite as prose.</p></li>
+<li><p><strong>L21</strong> [Minor] Blog link (C9).</p></li>
+<li><p><strong>L35</strong> [Minor] The consistency “Detecting violations” paragraph ends with a sentence about <strong>interference</strong> (“Interference violations are harder to detect …”). Interference belongs to SUTVA and is covered again at L49. Move/delete.</p></li>
+<li><p><strong>L37</strong> [Minor] Rubin 1980, Cole &amp; Frangakis 2009, VanderWeele 2009 not in bibliography (C8).</p></li>
+<li><p><strong>L47</strong> [Nit] Good paragraph, but very long; consider splitting the i.i.d.-vs-no-interference discussion into the note.</p></li>
+<li><p><strong>L52</strong> [Build] <code class="docutils literal notranslate"><span class="pre">{ref}</span></code>debias<code class="docutils literal notranslate"> <span class="pre">→</span> <span class="pre">`{doc}`debias</span></code> (C10).</p></li>
+<li><p><strong>L71</strong> [Nit] <code class="docutils literal notranslate"><span class="pre">{ref}</span></code>overlap`` resolves correctly. ✓</p></li>
+<li><p><strong>L88</strong> [Minor] Greenland &amp; Robins 1986 and 2009 not in bibliography.</p></li>
+<li><p><strong>L103</strong> [Nit] “In case of violation, exchangeability often produces severe bias, which is a separate dimension from the probability that it is violated” — grammatically the subject is wrong. Suggest: “The <em>magnitude</em> of bias that a violation of exchangeability would cause is a separate dimension from the <em>probability</em> that it is violated; a mild but plausible violation and a severe but implausible one warrant very different responses.”</p></li>
+<li><p><strong>L110</strong> [Minor] “developed in <code class="docutils literal notranslate"><span class="pre">sensitivity</span></code> and <code class="docutils literal notranslate"><span class="pre">diagnostics</span></code>” (C1).</p></li>
+<li><p><strong>L114–124</strong> [Minor] The identification derivation should also invoke <strong>positivity</strong>: <span class="math notranslate nohighlight">\(\mathbb{E}[Y\mid X=x,T=t]\)</span> is only defined where <span class="math notranslate nohighlight">\(P(T=t\mid X=x)&gt;0\)</span>. Add a “pos.” step or a sentence. Also worth noting, given the nice nested-exchangeability note at L84–98, that only <em>mean</em> exchangeability is used here.</p></li>
+</ul>
+</section>
+<section id="tutorial-graphical-models-md">
+<h2>6. <code class="docutils literal notranslate"><span class="pre">tutorial/graphical_models.md</span></code><a class="headerlink" href="#tutorial-graphical-models-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L3</strong> [Verify] Shalizi chapter/section numbers (C4).</p></li>
+<li><p><strong>L128</strong> [Major] The faithfulness counter-example is wrong as stated: “in a linear chain <span class="math notranslate nohighlight">\(X\to M\to Y\)</span> whose direct and indirect contributions cancel exactly” — a chain has a <em>single</em> path, so nothing can cancel. Cancellation needs two paths, e.g. <span class="math notranslate nohighlight">\(X\to M\to Y\)</span> <strong>and</strong> <span class="math notranslate nohighlight">\(X\to Y\)</span> with <span class="math notranslate nohighlight">\(\beta_{XY} = -\beta_{XM}\beta_{MY}\)</span>. Rewrite: “e.g. in a linear model with <span class="math notranslate nohighlight">\(X\to M\to Y\)</span> and a direct edge <span class="math notranslate nohighlight">\(X\to Y\)</span> whose direct and indirect effects cancel exactly, <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are marginally independent despite being <span class="math notranslate nohighlight">\(d\)</span>-connected.”</p></li>
+<li><p><strong>L131–154</strong> [Nit] Blocked-path condition 1 says “chain or fork on <span class="math notranslate nohighlight">\(p\)</span>”; the standard phrasing is “non-collider on <span class="math notranslate nohighlight">\(p\)</span>” (covers both). Optional.</p></li>
+<li><p><strong>L173</strong> [Nit] Fine. Note that “local Markov ⇔ global Markov (d-separation)” is a theorem (Verma &amp; Pearl 1988); a citation would help since the box says “Equivalently”.</p></li>
+<li><p><strong>L236</strong> [Minor] “(see <code class="docutils literal notranslate"><span class="pre">debias</span></code>)” for the mediation formula — <code class="docutils literal notranslate"><span class="pre">debias.md</span></code> L112 discusses NDE/CDE but never states the mediation formula. Either add it there or cite Pearl (2001) / VanderWeele (2015) directly.</p></li>
+<li><p><strong>L273, L281</strong> [Minor] “adjusting for the instrument <span class="math notranslate nohighlight">\(I\)</span> … can <em>amplify</em> bias” — correct (Z-bias) but uncited. Cite Pearl (2010) “On a class of bias-amplifying variables that endanger effect estimates”, UAI, and/or Ding, VanderWeele &amp; Robins (2017), <em>Biometrika</em> 104(2), 291–302.</p></li>
+<li><p><strong>L249</strong> [Nit] Collider is <span class="math notranslate nohighlight">\(K\)</span> here vs <span class="math notranslate nohighlight">\(C\)</span> in the notation table (C3).</p></li>
+</ul>
+</section>
+<section id="tutorial-methods-md">
+<h2>7. <code class="docutils literal notranslate"><span class="pre">tutorial/methods.md</span></code><a class="headerlink" href="#tutorial-methods-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L1</strong> [Nit] File is <code class="docutils literal notranslate"><span class="pre">methods.md</span></code>, title “Identification Strategies”; README calls it “methods”. Consider renaming the file to <code class="docutils literal notranslate"><span class="pre">strategies.md</span></code> for consistency (optional).</p></li>
+<li><p><strong>L14</strong> [Major] The “Strategies at a glance” table says front-door adjustment is estimated in <code class="docutils literal notranslate"><span class="pre">direct_adjustment</span></code> — but that chapter contains <strong>no</strong> front-door estimator. Either add a short plug-in front-door estimator (two regressions + the formula at L101) or change the cell to “not covered; see Pearl (2009) §3.3.2 / Fulcher et al. 2020”.</p></li>
+<li><p><strong>L27</strong> [Nit] Dangling sentence “The following criteria provide graphical answers” (C2).</p></li>
+<li><p><strong>L27, L83</strong> [Verify] Shalizi “Section 21.1–21.2” → Ch. 20 (C4).</p></li>
+<li><p><strong>L59</strong> [Nit] “paths of the form <span class="math notranslate nohighlight">\(T\leftarrow\cdots\leftarrow Y\)</span> or <span class="math notranslate nohighlight">\(T\leftarrow\cdots\rightarrow Y\)</span>” — a backdoor path is <em>any</em> path starting with an arrow into <span class="math notranslate nohighlight">\(T\)</span>; the interior can contain colliders. Simplify to “any path between <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> whose first edge points into <span class="math notranslate nohighlight">\(T\)</span>”.</p></li>
+<li><p><strong>L157–163</strong> [Minor] Markov equivalence: cite Verma &amp; Pearl (1990), “Equivalence and synthesis of causal models”, UAI.</p></li>
+<li><p><strong>L167</strong> [Minor] “Spirtes, Glymour &amp; Scheines, 1993” is unlinked and not in the bibliography (<em>Causation, Prediction, and Search</em>, Springer/MIT Press; 2nd ed. 2000).</p></li>
+<li><p><strong>L213–217</strong> [Minor] Instrument denoted <span class="math notranslate nohighlight">\(Z\)</span> (C3).</p></li>
+<li><p><strong>L219</strong> [Minor] “<code class="docutils literal notranslate"><span class="pre">sensitivity</span></code>” → <code class="docutils literal notranslate"><span class="pre">diagnostics</span></code> (C1).</p></li>
+<li><p>General [Nit] The Causal Discovery section (L150–211) is a detour in a chapter on identification <em>strategies</em>; consider moving it to <code class="docutils literal notranslate"><span class="pre">graphical_models.md</span></code> (which the README already claims covers it).</p></li>
+</ul>
+</section>
+<section id="tutorial-inference-md">
+<h2>8. <code class="docutils literal notranslate"><span class="pre">tutorial/inference.md</span></code><a class="headerlink" href="#tutorial-inference-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L1</strong> [Minor] Title “Causal Inference” for a chapter about <strong>estimation</strong> is confusing in a book whose subject is causal inference. Suggest “Estimation of Causal Effects” (and “Stage 3 – Estimation” in the README).</p></li>
+<li><p><strong>L31–35</strong> [Minor] LATE uses <span class="math notranslate nohighlight">\(Z\)</span> for the instrument (C3); and LATE requires <strong>monotonicity</strong> (no defiers), which is nowhere stated in the tutorial — add “under monotonicity, <span class="math notranslate nohighlight">\(T(Z{=}1)\ge T(Z{=}0)\)</span>” here or in <code class="docutils literal notranslate"><span class="pre">instrumental_variables.md</span></code>.</p></li>
+<li><p><strong>L50</strong> [Major] “Quasi-Experimental (DiD, RD, SC) → ATT”: RD does <strong>not</strong> target the ATT; it identifies the effect at the cutoff <span class="math notranslate nohighlight">\(\mathbb{E}[Y(1)-Y(0)\mid X=c]\)</span> (correctly stated in <code class="docutils literal notranslate"><span class="pre">quasi_experimental.md</span></code> L37 and L47). Split the row or write “ATT (DiD, SC) / effect at cutoff (RD)”.</p></li>
+<li><p><strong>L51</strong> [Minor] “Bayesian (BART/BCF) → CATE”: BART is equally used for the ATE; write “ATE, CATE”.</p></li>
+<li><p><strong>L43–51</strong> [Minor] Add a “Uncertainty” column or a sentence pointing to where SEs come from (C11).</p></li>
+</ul>
+</section>
+<section id="tutorial-direct-adjustment-md">
+<h2>9. <code class="docutils literal notranslate"><span class="pre">tutorial/direct_adjustment.md</span></code><a class="headerlink" href="#tutorial-direct-adjustment-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L11</strong> [Nit] Caption uses <span class="math notranslate nohighlight">\(\mu(X)=\mathbb{E}[Y\mid T,X]\)</span> — inconsistent with <span class="math notranslate nohighlight">\(\mu(t,x)\)</span> used from L16 onward (C3).</p></li>
+<li><p><strong>L35–43</strong> [Nit] Duplicate propensity definition (C7).</p></li>
+<li><p><strong>L46</strong> [Nit] “the empirical counterpart of the <a class="reference internal" href="../assumptions.html#positivity">Assumption 3</a>:” — sphinx-proof renders this as “of the Assumption 3”, which reads oddly. Write “of the positivity assumption (<a class="reference internal" href="../assumptions.html#positivity">Assumption 3</a>)”.</p></li>
+<li><p><strong>L55</strong> [Minor] “Overlap weighting” appears here without citation (it is cited in <code class="docutils literal notranslate"><span class="pre">debias.md</span></code> L104 — Li, Morgan &amp; Zaslavsky 2018). Add the citation here too, and add it to the bibliography.</p></li>
+<li><p><strong>L90</strong> [Build] <code class="docutils literal notranslate"><span class="pre">{cite:t}</span></code>austin2011`` (C10).</p></li>
+<li><p><strong>L90</strong> [Minor] “IPW is singly robust — consistent <strong>if and only if</strong> <span class="math notranslate nohighlight">\(\hat\pi(x)\)</span> is correct” — “only if” is the defensible direction; a misspecified <span class="math notranslate nohighlight">\(\hat\pi\)</span> that still balances the relevant covariates can be consistent. Write “consistent only if …”.</p></li>
+<li><p><strong>L118</strong> [Minor] “recovers the true (factual) mean <span class="math notranslate nohighlight">\(\mathbb{E}[Y(1)]\)</span>” — <span class="math notranslate nohighlight">\(\mathbb{E}[Y(1)]\)</span> is a mean <em>potential</em> outcome, not a factual mean. Also the proof divides by <span class="math notranslate nohighlight">\(\pi(X)\)</span> and therefore needs <strong>positivity</strong>; state it next to consistency and exchangeability.</p></li>
+<li><p><strong>L169</strong> [Nit] “the true ATT exceeds the true ATE” holds for <span class="math notranslate nohighlight">\(\beta&gt;0\)</span> in the SEM below; add “(for positive <span class="math notranslate nohighlight">\(\beta\)</span>)” if the slider allows negative values.</p></li>
+<li><p><strong>L253</strong> [Minor] “DML (next section) is essentially AIPW equipped with Neyman-orthogonality and cross-fitting” — the AIPW score <em>is already</em> Neyman-orthogonal (the chapter proves it at L272–392). What DML adds is cross-fitting plus the rate conditions (<span class="math notranslate nohighlight">\(o_p(n^{-1/4})\)</span>) that let ML nuisance estimators be plugged in; and the DML algorithm actually presented (L429–457) is the <strong>PLM/Robinson</strong> version, not AIPW. Rephrase: “DML in its <em>interactive-model</em> form is AIPW with cross-fitted ML nuisances; the <em>partially-linear</em> form presented below is Robinson’s residual-on-residual estimator.”</p></li>
+<li><p><strong>L253</strong> [Nit] “Bang &amp; Robins (2005) developed the framework for causal inference” — double robustness was first noted by Scharfstein, Rotnitzky &amp; Robins (1999); Bang &amp; Robins (2005) popularised it for causal models. Consider “extended … to causal inference”.</p></li>
+<li><p><strong>L358</strong> [Minor] “Under exchangeability, <span class="math notranslate nohighlight">\(\mathbb{E}[TY\mid X]=\pi(X)\mu(1,X)\)</span>” — this identity is purely algebraic once <span class="math notranslate nohighlight">\(\mu(1,x):=\mathbb{E}[Y\mid T=1,X=x]\)</span> (the <em>observational</em> regression), so exchangeability is not needed for the orthogonality proof at all. Say “by definition of <span class="math notranslate nohighlight">\(\mu\)</span>”.</p></li>
+<li><p><strong>L388</strong> [Nit] “<span class="math notranslate nohighlight">\(\mathrm{Bias}(\hat\tau)\propto(\hat\mu-\mu)(\hat\pi-\pi)\)</span>” is informal; state “the second-order remainder is bounded by <span class="math notranslate nohighlight">\(\|\hat\mu-\mu\|_2\,\|\hat\pi-\pi\|_2\)</span>”.</p></li>
+<li><p><strong>L417–424</strong> [Minor] The TMLE note over-states: (i) the logistic fluctuation is not “invalid” for unbounded <span class="math notranslate nohighlight">\(Y\)</span> — the <em>recommended</em> practice (Gruber &amp; van der Laan 2010) is to rescale <span class="math notranslate nohighlight">\(Y\)</span> to <span class="math notranslate nohighlight">\([0,1]\)</span> and keep the logistic fluctuation, precisely because the linear/identity fluctuation can produce out-of-range predictions and is less stable; (ii) “a count-appropriate family for frequencies” is not a standard TMLE recipe — drop or cite. Suggest reordering: rescale-and-logistic as the default, identity-link as the alternative, plus a caveat that heavy-tailed claim severities make any fluctuation step fragile (consider log-transform or bounded transforms).</p></li>
+<li><p><strong>L441</strong> [Minor] “Split data … <em>(Cross-fitting/Honesty)</em>” — <em>honesty</em> is the Athey–Imbens term for causal trees, not DML terminology; and the algorithm as written is <em>sample splitting</em>, not <em>cross-fitting</em>: cross-fitting swaps the roles of <span class="math notranslate nohighlight">\(D_{\text{train}}\)</span> and <span class="math notranslate nohighlight">\(D_{\text{eval}}\)</span> (or uses <span class="math notranslate nohighlight">\(K\)</span> folds) and <strong>averages</strong> the resulting <span class="math notranslate nohighlight">\(\hat\tau\)</span>’s, recovering full efficiency. Add the swap/average step (also because <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> L35 says “as in <code class="docutils literal notranslate"><span class="pre">alg-dml</span></code>”).</p></li>
+<li><p><strong>L452</strong> [Nit] Step 4.1 should be “no-intercept OLS of <span class="math notranslate nohighlight">\(\tilde Y\)</span> on <span class="math notranslate nohighlight">\(\tilde T\)</span>”.</p></li>
+<li><p><strong>L465</strong> [Verify] “Chernozhukov et al., 2018, Sec. 2 vs. 4” — in the <em>Econometrics Journal</em> version the PLR model is Section 4 and the interactive regression model (ATE/ATTE) is Section 5. Check.</p></li>
+<li><p><strong>L465</strong> [Nit] “<span class="math notranslate nohighlight">\(\tau^*\)</span> equals the ATE only when effects are homogeneous or <span class="math notranslate nohighlight">\(\pi(X)\)</span> is constant” — also when <span class="math notranslate nohighlight">\(\tau(X)\)</span> is uncorrelated with <span class="math notranslate nohighlight">\(\pi(X)(1-\pi(X))\)</span>; write “in particular when …”.</p></li>
+<li><p>General [Major] No standard errors for any estimator (C11).</p></li>
+</ul>
+</section>
+<section id="tutorial-heterogeneous-effects-md">
+<h2>10. <code class="docutils literal notranslate"><span class="pre">tutorial/heterogeneous_effects.md</span></code><a class="headerlink" href="#tutorial-heterogeneous-effects-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L21</strong> [Minor] “X-learner <em>(cross fitting on imputed effects)</em>” — the “X” stands for <em>crossing</em> the imputed effects, not for cross-fitting (which is a different concept used two algorithms later). Rename the parenthetical.</p></li>
+<li><p><strong>L45</strong> [Nit] “two patients” (C6).</p></li>
+<li><p><strong>L45–48</strong> [Major] The bullets claim that “causal trees and forests <em>residualise</em> the outcome and the treatment” — but the original Athey &amp; Imbens (2016) causal tree does <strong>not</strong> (as L84 itself concedes). The algorithm <code class="docutils literal notranslate"><span class="pre">alg-causaltree</span></code> (L57–71) is therefore a hybrid: Step 1 pre-computes cross-fitted nuisances “needed by the residualised split criterion”, yet L53 says it “shows their [Athey &amp; Imbens’] procedure”, and the leaf estimator at L88–90 is a plain difference in means. Please choose one presentation: (a) the original honest causal tree (difference-in-means splits, no nuisances) followed by “GRF generalises this with local centering”, or (b) an explicitly labelled “GRF-style honest causal tree”. As written the reader cannot tell which algorithm is being defined.</p></li>
+<li><p><strong>L53</strong> [Nit] “In contrast to modelling the effect of the treatment on the potential outcome effect linearly” — garbled; suggest “Rather than imposing a parametric form on <span class="math notranslate nohighlight">\(\tau(x)\)</span>”.</p></li>
+<li><p><strong>L64</strong> [Nit] “Subsample data and split into construction and estimation sets” — fine, but the forest algorithm (L141) omits the subsampling step; add it there.</p></li>
+<li><p><strong>L77</strong> [Nit] “the outcome-covariate pair is determined” → “the (covariate, split-point) pair”.</p></li>
+<li><p><strong>L77</strong> [Minor] “We denote <span class="math notranslate nohighlight">\(\mathbb{E}[Y^{(-i)}\mid X=x^{(i)}]=\hat Y^{(-i)}\)</span>” is not well-formed (an expectation of a leave-one-out quantity equated to an estimate). Use the definition already given in Step 1: <span class="math notranslate nohighlight">\(\hat Y^{(-i)}=\hat m^{(-i)}(x^{(i)})\)</span>.</p></li>
+<li><p><strong>L84</strong> [Nit] “leave-one-out nuisances” vs “K-fold out-of-fold prediction” (L63) — different things; use “cross-fitted” consistently.</p></li>
+<li><p><strong>L86</strong> [Nit] “the algorithm intermediately returns” → “the algorithm returns the current partition”.</p></li>
+<li><p><strong>L101</strong> [Minor] “ensures unbiased estimates of CATEs” — honesty removes the <em>adaptive-selection</em> bias and yields valid asymptotic inference; the leaf estimates are still subject to sampling variability and to confounding if the leaf is not “as good as random”. Soften to “removes the bias induced by selecting the splits on the same data”.</p></li>
+<li><p><strong>L120</strong> [Major] “<span class="math notranslate nohighlight">\(\hat\tau-\tau=O_p(\|\Delta_m\|_2\|\Delta_\pi\|_2)\)</span>” is not correct as an equality: the total error also contains the <span class="math notranslate nohighlight">\(O_p(n^{-1/2})\)</span> (or slower, for CATE) sampling term. What is second-order is the <em>nuisance-induced bias</em>. Write “the nuisance-induced bias is <span class="math notranslate nohighlight">\(O_p(\|\Delta_m\|_2\|\Delta_\pi\|_2)\)</span>”.</p></li>
+<li><p><strong>L123</strong> [Major] “so the CATE estimator stays <span class="math notranslate nohighlight">\(\sqrt n\)</span>-consistent and asymptotically normal” — a <em>nonparametric</em> CATE <span class="math notranslate nohighlight">\(\tau(x)\)</span> estimated by a forest is <strong>not</strong> <span class="math notranslate nohighlight">\(\sqrt n\)</span>-consistent; its rate is slower (GRF gives asymptotic normality at a rate <span class="math notranslate nohighlight">\(\sigma_n(x)\gg n^{-1/2}\)</span>). <span class="math notranslate nohighlight">\(\sqrt n\)</span> applies to the <em>parametric</em> target in the PLM (Robinson) or to averages of the CATE. Rephrase accordingly and cite Wager &amp; Athey (2018, Thm. 3.1) / Athey, Tibshirani &amp; Wager (2019).</p></li>
+<li><p><strong>L125 and L130</strong> [Nit] Paragraph duplicated verbatim (C7).</p></li>
+<li><p><strong>L130</strong> [Nit] “weak learners” — random-forest trees are not weak learners in the boosting sense; write “base learners”.</p></li>
+<li><p><strong>L141</strong> [Minor] Forest algorithm: Step 1.1 should read “Draw a subsample; split it into construction and estimation sets”; Steps 1.4–1.5 (per-leaf CATE <span class="math notranslate nohighlight">\(\hat\tau^{(\ell,b)}\)</span>) are computed but never used, since the final estimate (L166–168) uses only the leaf <em>memberships</em> via <span class="math notranslate nohighlight">\(\alpha^{(j)}(x)\)</span>. Remove them or add “(used only for diagnostics)”.</p></li>
+<li><p><strong>L159–161</strong> [Nit] Under honesty, the sum defining <span class="math notranslate nohighlight">\(\alpha^{(j)}(x)\)</span> should run over the <em>estimation-sample</em> units of tree <span class="math notranslate nohighlight">\(b\)</span>; say so.</p></li>
+<li><p><strong>L163</strong> [Nit] “and the higher is the weight of patient when estimating” — grammar; also “patients” (C6).</p></li>
+<li><p>General [Minor] Missing: how to <em>evaluate</em> CATE estimates (no ground truth) — e.g. RATE/Qini or calibration checks (Yadlowsky et al. 2021; Chernozhukov et al. GATES/BLP) — highly relevant for the claims-triage use case.</p></li>
+</ul>
+</section>
+<section id="tutorial-instrumental-variables-md">
+<h2>11. <code class="docutils literal notranslate"><span class="pre">tutorial/instrumental_variables.md</span></code><a class="headerlink" href="#tutorial-instrumental-variables-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L17</strong> [Verify] “Shalizi (2025, Ch. 23)” → Ch. 20 (C4).</p></li>
+<li><p><strong>L19–23</strong> [Major] The three conditions identify a LATE <strong>only with monotonicity</strong> (no defiers) — or a constant effect. Neither is mentioned anywhere in the chapter although L23 says “2SLS identifies a local average treatment effect for compliers”. Add condition 4, <em>Monotonicity</em>: <span class="math notranslate nohighlight">\(T(I{=}1)\ge T(I{=}0)\)</span> for all units (Imbens &amp; Angrist 1994; Angrist, Imbens &amp; Rubin 1996).</p></li>
+<li><p><strong>L40</strong> [Nit] “<span class="math notranslate nohighlight">\(\hat T\)</span> is now independent of <span class="math notranslate nohighlight">\(U\)</span>” → “asymptotically uncorrelated with <span class="math notranslate nohighlight">\(U\)</span>” (it is a linear function of <span class="math notranslate nohighlight">\(I\)</span> and <span class="math notranslate nohighlight">\(X\)</span>; independence is not implied and not needed).</p></li>
+<li><p><strong>L49</strong> [Major] “The bivariate form … is valid only under the strong assumption that <strong>no observed covariate affects <span class="math notranslate nohighlight">\(Y\)</span></strong>” — this is not correct. Bivariate IV is valid whenever the instrument is <em>unconditionally</em> exogenous (e.g. randomised encouragement, lottery), regardless of whether covariates affect <span class="math notranslate nohighlight">\(Y\)</span>; covariates then only improve precision. Covariates are <em>required</em> when exogeneity holds only <em>conditionally</em> on <span class="math notranslate nohighlight">\(X\)</span> (i.e. <span class="math notranslate nohighlight">\(X\)</span> is correlated with both <span class="math notranslate nohighlight">\(I\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>), which is what the first half of the paragraph correctly says. Rewrite the last sentence.</p></li>
+<li><p><strong>L53</strong> [Major] The standard-error argument omits the cross term. With <span class="math notranslate nohighlight">\(\hat\varepsilon=u+\hat\beta(T-\hat T)\)</span>, <span class="math notranslate nohighlight">\(\mathbb{E}[\hat\varepsilon^2]=\mathbb{E}[u^2]+\beta^2\mathrm{Var}(T-\hat T)+2\beta\,\mathbb{E}[u(T-\hat T)]\)</span>, and the cross term is <strong>non-zero precisely because <span class="math notranslate nohighlight">\(T\)</span> is endogenous</strong> (<span class="math notranslate nohighlight">\(u\)</span> is correlated with the first-stage residual). Its sign is not determined, so “hand-rolled standard errors come out too large” is not a general result — they are simply <em>wrong</em>. State that, keep the recommendation to use a dedicated IV routine, and check the Wooldridge (2010) page reference (§5.2.1, around p. 97). Also add Wooldridge 2010 to the bibliography.</p></li>
+<li><p><strong>L58</strong> [Nit] Katan DOI is URL-encoded (<code class="docutils literal notranslate"><span class="pre">10.1016%2Fs0140-6736%2886%2992972-7</span></code>); write it plainly.</p></li>
+<li><p><strong>L76</strong> [Minor] “weighted median estimators” — cite Bowden et al. (2016), <em>Genetic Epidemiology</em> 40(4).</p></li>
+<li><p>General [Minor] Missing topics that matter in practice: <strong>weak instruments</strong> (first-stage <span class="math notranslate nohighlight">\(F\)</span>, Staiger &amp; Stock 1997; Stock &amp; Yogo 2005) and <strong>over-identification tests</strong>. Also the only worked example is genetic; an insurance instrument (broker/agent assignment, randomised encouragement to a wellness programme, distance to a claims office, a regulatory cut-over date) would ground the chapter. Also <code class="docutils literal notranslate"><span class="pre">debias.md</span></code> L100 and <code class="docutils literal notranslate"><span class="pre">diagnostics.md</span></code> L307 make LATE points that would sit better here.</p></li>
+</ul>
+</section>
+<section id="tutorial-quasi-experimental-md">
+<h2>12. <code class="docutils literal notranslate"><span class="pre">tutorial/quasi_experimental.md</span></code><a class="headerlink" href="#tutorial-quasi-experimental-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L5</strong> [Nit] “These designs are especially relevant for longitudinal data” — DiD and SC yes; RD is typically cross-sectional. Qualify.</p></li>
+<li><p><strong>L5</strong> [Nit] Angrist &amp; Pischke (2015) is linked to the Princeton catalogue here but to DOI 10.2307/j.ctt5vhbqm in <code class="docutils literal notranslate"><span class="pre">concepts.md</span></code>; use one.</p></li>
+<li><p><strong>L9</strong> [Major] “This diagnostic motivates the heterogeneity-robust estimators in <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects</span></code>” — the heterogeneity-robust <em>DiD</em> estimators that Goodman-Bacon motivates are Callaway &amp; Sant’Anna (2021), Sun &amp; Abraham (2021), de Chaisemartin &amp; D’Haultfœuille (2020), Borusyak, Jaravel &amp; Spiess (2024) — not meta-learners or causal forests. Fix the pointer.</p></li>
+<li><p><strong>L9</strong> [Nit] Very long paragraph; split the Goodman-Bacon decomposition into its own paragraph or a note.</p></li>
+<li><p><strong>L37–47</strong> [Minor] The LATE definition duplicates <code class="docutils literal notranslate"><span class="pre">inference.md</span></code> L31–35 and uses <span class="math notranslate nohighlight">\(I\)</span> instead of <span class="math notranslate nohighlight">\(Z\)</span> (C3, C7). Also mention <strong>fuzzy RD</strong>, which <em>does</em> identify a LATE at the cutoff (Hahn, Todd &amp; van der Klaauw 2001) — the current text (“This is a different object from the LATE”) is only true for sharp RD, which L47 acknowledges but a reader may miss.</p></li>
+<li><p><strong>L65–66</strong> [Nit] “Fit a local regression … <span class="math notranslate nohighlight">\(\hat\mu_-(c)=\lim_{x\uparrow c}\mathbb{E}[Y\mid X=x]\)</span>” mixes estimator and population target; write “estimate <span class="math notranslate nohighlight">\(\mu_-(c)=\lim …\)</span> by local linear regression on <span class="math notranslate nohighlight">\([c-h,c)\)</span>”.</p></li>
+<li><p><strong>L71–93</strong> [Minor] Synthetic control: add one sentence on inference (placebo-in-space permutation tests, Abadie, Diamond &amp; Hainmueller 2010) — it links naturally to the placebo tests in <code class="docutils literal notranslate"><span class="pre">diagnostics.md</span></code>.</p></li>
+<li><p>General [Minor] No actuarial examples at all in this chapter. Suggestions: a bonus-malus or deductible reform as a DiD; a deductible/age eligibility threshold as an RD; a cantonal regulatory change with other cantons as donors for SC.</p></li>
+</ul>
+</section>
+<section id="tutorial-bayesian-md">
+<h2>13. <code class="docutils literal notranslate"><span class="pre">tutorial/bayesian.md</span></code><a class="headerlink" href="#tutorial-bayesian-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L5</strong> [Verify] Shalizi Ch. 21 is not about Bayesian causal inference (C4).</p></li>
+<li><p><strong>L13</strong> [Major] “Model comparison via Bayes factors … helps select among competing causal models” — Bayes factors cannot discriminate between Markov-equivalent DAGs, nor test exchangeability; the identifying assumptions remain untestable in the Bayesian framework exactly as in the frequentist one. Qualify: model comparison can select among <em>outcome models</em>, not among <em>causal structures</em>.</p></li>
+<li><p><strong>L52–66</strong> [Major] The Bayesian propensity-score section omits the well-known difficulty: in a fully Bayesian joint model of <span class="math notranslate nohighlight">\((T,Y)\)</span> the propensity score does not appear in the likelihood for the outcome parameters (Robins &amp; Ritov 1997; Rubin 1985), and naive joint modelling creates <em>feedback</em> from the outcome model into the propensity model (Zigler et al. 2013, <em>Biometrics</em>; Zigler 2016, <em>Statistical Science</em>). “Account for propensity-model uncertainty, unlike plug-in frequentist approaches” is therefore too rosy; state the feedback issue and the usual fix (cut feedback / two-stage).</p></li>
+<li><p><strong>L71</strong> [Nit] “now the most widely used Bayesian method for HTE” — unsupported superlative; “widely used” suffices.</p></li>
+<li><p><strong>L107–121</strong> [Major] Regularisation-induced confounding (RIC) is mis-attributed. In Hahn, Murray &amp; Carvalho (2020) RIC arises because shrinkage of the <em>prognostic</em> function <span class="math notranslate nohighlight">\(\mu\)</span> biases <span class="math notranslate nohighlight">\(\tau\)</span> under targeted selection; their remedy for RIC is <strong>including <span class="math notranslate nohighlight">\(\hat\pi(x)\)</span> as a covariate in <span class="math notranslate nohighlight">\(\mu\)</span></strong> (L115 says this is “additionally … to reduce confounding bias”). The separate <span class="math notranslate nohighlight">\(\tau(x)\)</span> ensemble with its own (stronger) prior is motivated by a <em>different</em> goal: allowing <span class="math notranslate nohighlight">\(\tau\)</span> to be shrunk towards homogeneity independently of <span class="math notranslate nohighlight">\(\mu\)</span>. Swap the two motivations at L113 and in the figure caption L121.</p></li>
+<li><p><strong>L150</strong> [Nit] “Exact finite-sample posterior” — exact <em>conditional on the model and prior</em>; add the qualifier since the frequentist column is criticised for approximations.</p></li>
+<li><p><strong>L160</strong> [Nit] Add <code class="docutils literal notranslate"><span class="pre">bcf</span></code> (R) and <code class="docutils literal notranslate"><span class="pre">stochtree</span></code> (R/Python) for BCF.</p></li>
+<li><p>General [Minor] Two omissions: (i) a sentence that Bayesian methods rely on exchangeability just as much — the prior cannot repair unmeasured confounding — and a pointer to Bayesian sensitivity analysis (McCandless, Gustafson &amp; Levy 2007); (ii) no actuarial example.</p></li>
+</ul>
+</section>
+<section id="tutorial-sensitivity-md">
+<h2>14. <code class="docutils literal notranslate"><span class="pre">tutorial/sensitivity.md</span></code><a class="headerlink" href="#tutorial-sensitivity-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L3–15</strong> [Minor] Fine as a hub, but many chapters send readers here for content that is in <code class="docutils literal notranslate"><span class="pre">diagnostics.md</span></code> (C1). Either re-point those links or give this page substance — the natural candidate is the missing “actuary’s end-to-end workflow” (README L42) using the unused <code class="docutils literal notranslate"><span class="pre">figs/actuary_workflow.svg</span></code>.</p></li>
+<li><p><strong>L15</strong> [Minor] “closing with the actuary’s end-to-end workflow” — <code class="docutils literal notranslate"><span class="pre">fairness.md</span></code> contains no such section.</p></li>
+</ul>
+</section>
+<section id="tutorial-diagnostics-md">
+<h2>15. <code class="docutils literal notranslate"><span class="pre">tutorial/diagnostics.md</span></code><a class="headerlink" href="#tutorial-diagnostics-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L3</strong> [Nit] “Shalizi (2025)” with no chapter. Shalizi has little on sensitivity analysis; consider dropping or citing Ch. 21’s short discussion explicitly.</p></li>
+<li><p><strong>L15</strong> [Build] Heading anchor mismatch with L281 (C10).</p></li>
+<li><p><strong>L19–25</strong> [Nit] Good. “green region”/”red frontier” assume the explainer’s colours; fine.</p></li>
+<li><p><strong>L72–88</strong> [Nit] Correct and well argued. ✓</p></li>
+<li><p><strong>L155</strong> [Minor] Rosenbaum (2002) not in bibliography.</p></li>
+<li><p><strong>L149</strong> [Nit] The telematics pre-treatment placebo example is excellent — consider promoting it to a boxed example so it is not lost in a bullet list.</p></li>
+<li><p><strong>L249</strong> [Minor] “analogous E-values can be computed by first converting the effect to an approximate risk ratio scale” — give the recipe from VanderWeele &amp; Ding (2017): for a standardised mean difference <span class="math notranslate nohighlight">\(d\)</span>, <span class="math notranslate nohighlight">\(\mathrm{RR}\approx\exp(0.91\,d)\)</span>; for a rate ratio with rare outcomes, use it directly. Claim counts/severities (the actuarial default) deserve one concrete line.</p></li>
+<li><p><strong>L265–277</strong> [Nit] Given specific partial-<span class="math notranslate nohighlight">\(R^2\)</span> values the OVB expression is an <em>equality</em> up to sign, not merely a bound; “bounded by” is fine as long as the <span class="math notranslate nohighlight">\(R^2\)</span>’s are read as upper limits, but say so.</p></li>
+<li><p><strong>L279</strong> [Verify] “Cinelli &amp; Hazlett (2020, Sec. 4.3)” — robustness values are defined in their Section 4.2 in the published version, I believe. Check.</p></li>
+<li><p><strong>L281</strong> [Build] Broken self-anchor (C10).</p></li>
+<li><p><strong>L291–309</strong> [Nit] Correct (I verified the bound algebra and the “contains zero” claim). ✓</p></li>
+<li><p><strong>L314</strong> [Nit] Caption mentions two dashed lines (“LATE … shown by the dashed line” and “The dashed line at <span class="math notranslate nohighlight">\(\tau=0\)</span>”). Distinguish (colour/style) or reword.</p></li>
+<li><p><strong>L319–329</strong> [Nit] Good closing figure.</p></li>
+</ul>
+</section>
+<section id="tutorial-debias-md">
+<h2>16. <code class="docutils literal notranslate"><span class="pre">tutorial/debias.md</span></code><a class="headerlink" href="#tutorial-debias-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L3</strong> [Nit] “… and how to ensure the resulting model is fair” — fairness has been moved to its own chapter; drop the clause or add “(see <code class="docutils literal notranslate"><span class="pre">fairness</span></code>)”.</p></li>
+<li><p><strong>L10–17</strong> [Nit] Good table. Consider adding a “Remedy” column linking to Section “How to fix it”.</p></li>
+<li><p><strong>L55, L72</strong> [Nit] Two long paragraphs on selection ≡ collider bias say the same thing twice; merge into one and keep one figure.</p></li>
+<li><p><strong>L95</strong> [Nit] “Covered in: -” for cluster/network models — say “not covered” or point to <code class="docutils literal notranslate"><span class="pre">assumptions.md</span></code> L52 note.</p></li>
+<li><p><strong>L96, L120</strong> [Minor] “<code class="docutils literal notranslate"><span class="pre">sensitivity</span></code>” → <code class="docutils literal notranslate"><span class="pre">diagnostics</span></code> (C1).</p></li>
+<li><p><strong>L104</strong> [Minor] Li, Morgan &amp; Zaslavsky (2018) and Kang &amp; Schafer (2007) not in bibliography.</p></li>
+<li><p><strong>L112</strong> [Minor] “(Pearl, 2001; VanderWeele, 2015)” unlinked, not in bibliography. Pearl (2001) “Direct and indirect effects”, UAI; VanderWeele (2015) <em>Explanation in Causal Inference</em>, OUP.</p></li>
+<li><p><strong>L112</strong> [Verify] “Pearl (2009), Cor. 3.3.4” — the front-door adjustment is <strong>Theorem 3.3.4</strong> in <em>Causality</em> (2nd ed.), §3.3.2. Check.</p></li>
+<li><p><strong>L112</strong> [Nit] The mediation discussion is dense and important; consider a small figure (mediator with <span class="math notranslate nohighlight">\(U_M\)</span>) — <code class="docutils literal notranslate"><span class="pre">figs/dsep_example2.svg</span></code> from <code class="docutils literal notranslate"><span class="pre">graphical_models.md</span></code> could be reused.</p></li>
+</ul>
+</section>
+<section id="tutorial-fairness-md">
+<h2>17. <code class="docutils literal notranslate"><span class="pre">tutorial/fairness.md</span></code><a class="headerlink" href="#tutorial-fairness-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>L1–2</strong> [Build] No H1 title (C10).</p></li>
+<li><p><strong>L4</strong> [Nit] “EU regulation prohibits the use of protected characteristics (e.g. gender, ethnicity)” — sex is covered by Directive 2004/113/EC as interpreted in <em>Test-Achats</em>; ethnicity by Directive 2000/43/EC. One sentence citing both would be more precise.</p></li>
+<li><p><strong>L14</strong> [Nit] Switzerland: consider mentioning FINMA supervision and that the Gender Equality Act does not cover private insurance pricing, since that is the crux for Swiss readers.</p></li>
+<li><p><strong>L31</strong> [Nit] Correct (tower property). ✓</p></li>
+<li><p><strong>L48–50</strong> [Major] The definition box states that a price is discrimination-free if <span class="math notranslate nohighlight">\(P(Y\le y\mid X,S)=P(Y\le y\mid X)\)</span> for all <span class="math notranslate nohighlight">\(y\)</span>. That is <strong>not</strong> the Lindholm et al. definition. Their <em>discrimination-free price</em> is <span class="math notranslate nohighlight">\(\mu^*(x)=\int\mu(x,s)\,\mathrm dP(s)\)</span> — i.e. exactly the formula the text derives later at L78–80. The displayed condition is instead a property of the <em>data</em> (no direct dependence of <span class="math notranslate nohighlight">\(Y\)</span> on <span class="math notranslate nohighlight">\(S\)</span> given <span class="math notranslate nohighlight">\(X\)</span>) under which best-estimate and discrimination-free prices coincide. Replace the box content with the <span class="math notranslate nohighlight">\(\mu^*\)</span> definition (and, if wanted, keep the displayed condition as a remark on when unawareness is already discrimination-free).</p></li>
+<li><p><strong>L31, L48, L70, L162</strong> [Minor] “Lindholm et al. (2021)”: the ASTIN Bulletin paper “Discrimination-free insurance pricing” is <strong>2022</strong>, 52(1), 55–89, DOI 10.1017/asb.2021.23 (2021 is the online-first date). <code class="docutils literal notranslate"><span class="pre">references.md</span></code> lists a <em>different</em> Lindholm et al. 2022 (the arXiv discussion paper) and not the ASTIN one. Add the ASTIN entry with DOI and make years consistent.</p></li>
+<li><p><strong>L70, L78</strong> [Verify] “Section 3” and “Proposition 15” — numbering differs between the arXiv and published versions; check against the ASTIN version you cite.</p></li>
+<li><p><strong>L93</strong> [Build] <code class="docutils literal notranslate"><span class="pre">{doc}</span></code>../application/pricing`` does not exist; <code class="docutils literal notranslate"><span class="pre">figure/fairness_price_explainer.html</span></code> is never embedded (C10).</p></li>
+<li><p><strong>L93–160</strong> [Minor] The group-fairness section is good but the chapter as a whole is only loosely tied to <em>causal inference</em> (one remark at L68–85). Given the book’s title, consider foregrounding the causal DAG (<span class="math notranslate nohighlight">\(S\to X\to Y\)</span>, <span class="math notranslate nohighlight">\(S\to Y\)</span>) as a figure (<code class="docutils literal notranslate"><span class="pre">figs/fairness_dag.svg</span></code> exists and is unused) and framing proxy discrimination as a path-specific effect from the start.</p></li>
+<li><p><strong>L162</strong> [Nit] “even a genuinely discrimination-free model violates them whenever <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(S\)</span> are statistically dependent” — true for demographic parity; for calibration/equal accuracy it depends. Consider “violates most of them”.</p></li>
+<li><p><strong>L166–172</strong> [Nit] Strong closing section. ✓</p></li>
+</ul>
+</section>
+<section id="papers-references-md">
+<h2>18. <code class="docutils literal notranslate"><span class="pre">papers/references.md</span></code><a class="headerlink" href="#papers-references-md" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Missing entries: see C8 (about 20 items) plus Holland (1986), Lindholm et al. (2022, ASTIN), Li, Morgan &amp; Zaslavsky (2018), Pearl (2010) / Ding, VanderWeele &amp; Robins (2017) if added, Verma &amp; Pearl (1990), Sun &amp; Abraham (2021), de Chaisemartin &amp; D’Haultfœuille (2020), Zigler et al. (2013), Abadie &amp; Imbens (2008). <strong>[Minor]</strong></p></li>
+<li><p>Athey &amp; Wager (2019) is listed but never cited. <strong>[Nit]</strong></p></li>
+<li><p>Shalizi (2025): add the draft date (C4). <strong>[Minor]</strong></p></li>
+<li><p>Neyman (1923) entry is correct and complete — mirror it in-text (<code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> L20). <strong>[Nit]</strong></p></li>
+<li><p>“Useful Links”: the Causal ML Book link points to a sub-page (<code class="docutils literal notranslate"><span class="pre">synthetic-did-and-regression-discontinuity.html</span></code>) rather than the book root; the uniqcret.com entry (C9). <strong>[Nit]</strong></p></li>
+<li><p>“Data Sets”: fine.</p></li>
+</ul>
+</section>
+<section id="toc-yml-config-yml">
+<h2>19. <code class="docutils literal notranslate"><span class="pre">_toc.yml</span></code> / <code class="docutils literal notranslate"><span class="pre">_config.yml</span></code><a class="headerlink" href="#toc-yml-config-yml" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_toc.yml</span></code> L35–39: orphan and non-existent notebooks (C10). <strong>[Build]</strong></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_toc.yml</span></code> L10: <code class="docutils literal notranslate"><span class="pre">maxdepth:</span> <span class="pre">1</span></code> with <code class="docutils literal notranslate"><span class="pre">sections:</span></code> nested under chapters — check the sidebar actually shows the sub-pages; if not, use <code class="docutils literal notranslate"><span class="pre">maxdepth:</span> <span class="pre">2</span></code>. <strong>[Verify]</strong></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_config.yml</span></code> L4 <code class="docutils literal notranslate"><span class="pre">date:</span> <span class="pre">2026-01-01</span></code> and <code class="docutils literal notranslate"><span class="pre">copyright:</span> <span class="pre">&quot;2026&quot;</span></code> — fine if intentional. <strong>[Nit]</strong></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_config.yml</span></code>: no <code class="docutils literal notranslate"><span class="pre">bibtex_bibfiles</span></code> although <code class="docutils literal notranslate"><span class="pre">{cite:t}</span></code> is used once (C10). <strong>[Build]</strong></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="application-notebooks">
+<h2>20. Application notebooks<a class="headerlink" href="#application-notebooks" title="Link to this heading">#</a></h2>
+<p>General remarks (apply to all three published notebooks):</p>
+<ul class="simple">
+<li><p><strong>[Build]</strong> Execution counts are non-monotone with gaps and <code class="docutils literal notranslate"><span class="pre">None</span></code>s (e.g. <code class="docutils literal notranslate"><span class="pre">observational_data</span></code> cell 21 has output but no count; <code class="docutils literal notranslate"><span class="pre">health_interventions</span></code> runs 61→85). Do a clean <em>Restart &amp; Run All</em> before committing so outputs match the code.</p></li>
+<li><p><strong>[Build]</strong> Kernel metadata differs per notebook (<code class="docutils literal notranslate"><span class="pre">causalinference</span></code>, <code class="docutils literal notranslate"><span class="pre">.figvenv</span> <span class="pre">(3.9.6)</span></code>, <code class="docutils literal notranslate"><span class="pre">3.9.22</span></code>). Launch buttons (Binder/Colab, <code class="docutils literal notranslate"><span class="pre">_config.yml</span></code>) need <code class="docutils literal notranslate"><span class="pre">name:</span> <span class="pre">python3</span></code>. Also the Mac-specific setup box in <code class="docutils literal notranslate"><span class="pre">claims_triage</span></code> cell 1 should be generic and point at the actual <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> (root file lacks <code class="docutils literal notranslate"><span class="pre">shap</span></code>, <code class="docutils literal notranslate"><span class="pre">lightgbm</span></code>, <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>; <code class="docutils literal notranslate"><span class="pre">tutorial/requirements.txt</span></code> has them — consolidate into one file).</p></li>
+<li><p><strong>[Build]</strong> Six orphan notebooks in <code class="docutils literal notranslate"><span class="pre">application/</span></code> are drafts (<code class="docutils literal notranslate"><span class="pre">case_study</span></code> — student exercise with a Windows path <code class="docutils literal notranslate"><span class="pre">C:\Users\Theresa\…</span></code> in its outputs; <code class="docutils literal notranslate"><span class="pre">confounding</span></code>, <code class="docutils literal notranslate"><span class="pre">motivation</span></code>, <code class="docutils literal notranslate"><span class="pre">sensitivity_analysis</span></code>, <code class="docutils literal notranslate"><span class="pre">susceptible_subpopulation</span></code>, <code class="docutils literal notranslate"><span class="pre">tutorial/treatment_effects.ipynb</span></code> — one to six cells of notes). They are built as orphan pages and are the targets of <code class="docutils literal notranslate"><span class="pre">{doc}</span></code> links from published notebooks (<code class="docutils literal notranslate"><span class="pre">claims_triage</span></code> cell 3 → <code class="docutils literal notranslate"><span class="pre">confounding</span></code>, cell 27 → <code class="docutils literal notranslate"><span class="pre">sensitivity_analysis</span></code>). Move them out of the source tree (or into <code class="docutils literal notranslate"><span class="pre">exclude_patterns</span></code>) and fix the two links.</p></li>
+<li><p><strong>[Nit]</strong> <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">utils</span> <span class="pre">import</span> <span class="pre">*</span></code> in every notebook; <code class="docutils literal notranslate"><span class="pre">warnings.filterwarnings(&quot;ignore&quot;)</span></code> / <code class="docutils literal notranslate"><span class="pre">np.seterr(all=&quot;ignore&quot;)</span></code> globally; duplicate imports (<code class="docutils literal notranslate"><span class="pre">observational_data</span></code> cell 3 imports <code class="docutils literal notranslate"><span class="pre">plotly.graph_objects</span></code> twice); emoji check-marks in summary boxes.</p></li>
+<li><p><strong>[Minor]</strong> No frequentist confidence intervals anywhere except econml’s <code class="docutils literal notranslate"><span class="pre">ate_interval</span></code>; ties in with C11.</p></li>
+</ul>
+<section id="application-observational-data-ipynb-in-toc">
+<h3>20.1 <code class="docutils literal notranslate"><span class="pre">application/observational_data.ipynb</span></code> (in TOC)<a class="headerlink" href="#application-observational-data-ipynb-in-toc" title="Link to this heading">#</a></h3>
+<p>A well-designed notebook that operationalises the four assumptions; the negative-control test and the Rosenbaum matching with a proper assignment solver are good practice. Issues:</p>
+<ul class="simple">
+<li><p><strong>Cell 6</strong> [Major] <code class="docutils literal notranslate"><span class="pre">Y</span> <span class="pre">=</span> <span class="pre">Y</span> <span class="pre">+</span> <span class="pre">np.where(Treatment_Subtype</span> <span class="pre">==</span> <span class="pre">1,</span> <span class="pre">1.5,</span> <span class="pre">0.0)</span></code> modifies the <em>main</em> outcome. The true ATE of the label “treated” is therefore <span class="math notranslate nohighlight">\(5 + 0.5\cdot1.5 = 5.75\)</span>, not 5.0. Consequences: the “True ATE = 5” line in the cell-11 figure is wrong; cell 23 attributes the whole gap <span class="math notranslate nohighlight">\(6.785-5.0\)</span> to <span class="math notranslate nohighlight">\(U\)</span>, whereas the <span class="math notranslate nohighlight">\(U\)</span>-induced bias is ≈1.0 (which the placebo estimate in cell 29, 1.005, confirms nicely). Generate a separate <code class="docutils literal notranslate"><span class="pre">Y_Subtype</span></code> for the consistency check, as already done for <code class="docutils literal notranslate"><span class="pre">Y_Spillover</span></code> and <code class="docutils literal notranslate"><span class="pre">Y_Negative_Control</span></code>.</p></li>
+<li><p><strong>Cell 7</strong> [Nit] The printed “DAG” omits X3→T, X4→T and U, which the DGP contains and cell 8 discusses.</p></li>
+<li><p><strong>Cell 8</strong> [Minor] “backdoor paths <span class="math notranslate nohighlight">\(X\to T\)</span> and <span class="math notranslate nohighlight">\(X\to Y\)</span>” — a backdoor path is <span class="math notranslate nohighlight">\(T\leftarrow X\to Y\)</span>. Pearl (2011) and Myers et al. (2011) are not in <code class="docutils literal notranslate"><span class="pre">references.md</span></code>.</p></li>
+<li><p><strong>Cell 12</strong> [Nit] Concludes “consistency is questionable” although cell 10 carefully explains the diagnostic cannot separate this from effect modification; no test of the sub-type <em>difference</em> is run.</p></li>
+<li><p><strong>Cell 13–14</strong> [Minor] “A significant correlation is direct evidence of spillover” — it is also produced by group-level confounding; say “consistent with”. <code class="docutils literal notranslate"><span class="pre">interference_diagnostic(...,</span> <span class="pre">'Y')</span></code> is computed twice.</p></li>
+<li><p><strong>Cell 16–17</strong> [Major] The text says “we inspect the <em>estimated</em> propensity scores”, but the box plots use the DGP’s true probabilities (<code class="docutils literal notranslate"><span class="pre">P_Propensity_Score_Good/Violate</span></code>). Estimate them, as the reader would have to.</p></li>
+<li><p><strong>Cell 19</strong> [Minor] Propensity model uses <code class="docutils literal notranslate"><span class="pre">X1..X5</span></code>, i.e. adjusts for the instruments X3–X5, contradicting the “adjust for exactly {X1, X2}” contract of cells 8 and 11 without comment. Also “Naive IPW” in the table is the <em>stabilised</em> Hájek estimator (<code class="docutils literal notranslate"><span class="pre">ipw_ate(stabilized=True)</span></code>), and trimming discards 645 of 1000 units — worth stating that the estimand changes (harmless here only because the effect is homogeneous).</p></li>
+<li><p><strong>Cell 20–21</strong> [Major] Love plot: the violated regime estimates the propensity on <code class="docutils literal notranslate"><span class="pre">{X1,</span> <span class="pre">X2}</span></code> only, so X3–X5 stay imbalanced <em>because they are not in the model</em>, not because of “extreme weights that adjustment cannot remove” as the text claims. Use the same propensity specification as cell 19 or fix the explanation.</p></li>
+<li><p><strong>Cell 23</strong> [Minor] E-value is computed with <code class="docutils literal notranslate"><span class="pre">sd_outcome</span> <span class="pre">=</span> <span class="pre">sd(Y)</span></code> (total SD, includes the treatment effect); state the convention. “True ATE 5.0 &lt;- bias remains because U is unobserved” — see cell 6.</p></li>
+<li><p><strong>Cell 25</strong> [Nit] The “as strong as X2” benchmark is a simplified version of Cinelli &amp; Hazlett’s bounding (which uses relative strengths <span class="math notranslate nohighlight">\(k_D,k_Y\)</span>); say so.</p></li>
+<li><p><strong>Cell 26–27</strong> [Minor] Text and code comment speak of the <em>signed-rank</em> statistic, but <code class="docutils literal notranslate"><span class="pre">utils.rosenbaum_sensitivity</span></code> implements the <em>sign test</em> with a normal approximation and a one-sided alternative. Align (Wilcoxon signed-rank bounds are standard and more powerful), and say the test is one-sided.</p></li>
+<li><p><strong>Cell 30</strong> [Minor] LaLonde (1986) and Imbens &amp; Xu (2024) missing from <code class="docutils literal notranslate"><span class="pre">references.md</span></code>; <code class="docutils literal notranslate"><span class="pre">{doc}</span></code>../tutorial/sensitivity`` in cells 1 and 22 → <code class="docutils literal notranslate"><span class="pre">diagnostics</span></code> (C1).</p></li>
+</ul>
+</section>
+<section id="application-claims-triage-ipynb-in-toc">
+<h3>20.2 <code class="docutils literal notranslate"><span class="pre">application/claims_triage.ipynb</span></code> (in TOC)<a class="headerlink" href="#application-claims-triage-ipynb-in-toc" title="Link to this heading">#</a></h3>
+<p>The strongest notebook: clear business framing, ground truth, policy evaluation against realised savings, econml’s OVB sensitivity with a per-stratum RV profile. Issues:</p>
+<ul class="simple">
+<li><p><strong>Cell 8</strong> [Major] <code class="docutils literal notranslate"><span class="pre">tau_true</span> <span class="pre">=</span> <span class="pre">-savings_rate</span> <span class="pre">*</span> <span class="pre">baseline_cost</span></code> includes the idiosyncratic lognormal factor that is <em>unknown at triage</em>. It is therefore an <strong>individual</strong> effect, not the CATE <span class="math notranslate nohighlight">\(\tau(x)=\mathbb{E}[\tau_i\mid x] = -\text{savings\_rate}\cdot\text{size\_scale}\cdot e^{0.08}\)</span>. Cells 14 (scatter “recovered individual effects”) and 19 (“Predicted −4,449 vs True −2,661”) grade the forest against an unattainable target; the oracle curve in cell 23 likewise ranks on realised noise. Add <code class="docutils literal notranslate"><span class="pre">cate_true</span></code> and grade against it; keep <code class="docutils literal notranslate"><span class="pre">tau_true</span></code> for the policy-value evaluation (cell 22), where realised savings are the right yardstick.</p></li>
+<li><p><strong>Cell 11–12</strong> [Major] <code class="docutils literal notranslate"><span class="pre">LinearDML(...,</span> <span class="pre">X=None,</span> <span class="pre">W=features)</span></code> is the partially-linear model. The tutorial’s own note (<code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> L459–466) says that under heterogeneous effects it targets the overlap-weighted <span class="math notranslate nohighlight">\(\tau^*\)</span> and warns against comparing it with averaged causal-forest CATEs — exactly what cells 12 and 14 do (“DML estimate −903 … True ATE −867”, “Causal-forest average CATE −908”). Either use an AIPW/IRM estimator for the ATE (<code class="docutils literal notranslate"><span class="pre">econml.dr.LinearDRLearner().ate()</span></code> or <code class="docutils literal notranslate"><span class="pre">CausalForestDML.ate()</span></code>) or relabel the PLM number honestly.</p></li>
+<li><p><strong>Cell 13</strong> [Minor] “staying doubly robust through the same residualisation as DML” — residualisation gives Neyman orthogonality, not double robustness (the tutorial says so itself, <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> L123).</p></li>
+<li><p><strong>Cell 15</strong> [Nit] “every claim in this group has <span class="math notranslate nohighlight">\(\hat\tau&gt;0\)</span>” is an empirical claim about the forest output not checked in code.</p></li>
+<li><p><strong>Cell 17</strong> [Nit] Seven tqdm progress-bar stream outputs are committed; silence SHAP’s progress bar.</p></li>
+<li><p><strong>Cell 19</strong> [Minor] Picking the claim with the <em>largest</em> predicted saving guarantees a winner’s-curse over-estimate (−4,449 vs −2,661) — a teachable point that goes unmentioned.</p></li>
+<li><p><strong>Cell 21</strong> [Nit] “<em>Regelwerk</em>” (German) in an English text.</p></li>
+<li><p><strong>Cell 24</strong> [Verify] Chernozhukov et al. (2022), DOI 10.3982/ECTA19345 (“Long Story Short”) — check publication details; not in <code class="docutils literal notranslate"><span class="pre">references.md</span></code>.</p></li>
+<li><p><strong>Cell 27</strong> [Major] “none of our observed features individually explains anywhere near 12% of the residual variation in both directions” — asserted, not computed. <code class="docutils literal notranslate"><span class="pre">severity</span></code> drives both routing (logit coefficient 1.8) and cost (+CHF 6,000 range) and plausibly exceeds 12% for cost. Compute the benchmark partial <span class="math notranslate nohighlight">\(R^2\)</span>s (as <code class="docutils literal notranslate"><span class="pre">observational_data</span></code> cell 25 does) and plot them on the contour.</p></li>
+<li><p><strong>Cell 28</strong> [Minor] “confounding bias adds (roughly) the same worst-case shift to every effect” — the bound scales with residual SDs, which differ strongly across severity strata; soften.</p></li>
+<li><p>General [Minor] None of the diagnostics from <code class="docutils literal notranslate"><span class="pre">observational_data</span></code> (estimated-propensity overlap, SMD/Love plot) are applied to the claims data; one cell would make the two notebooks consistent.</p></li>
+</ul>
+</section>
+<section id="application-health-interventions-ipynb-in-toc">
+<h3>20.3 <code class="docutils literal notranslate"><span class="pre">application/health_interventions.ipynb</span></code> (in TOC)<a class="headerlink" href="#application-health-interventions-ipynb-in-toc" title="Link to this heading">#</a></h3>
+<p>This notebook is not at publication standard and, in its current form, contradicts the tutorial. Recommend removing it from <code class="docutils literal notranslate"><span class="pre">_toc.yml</span></code> until rewritten (README L5 promises “assessing whether a health improvement programme is genuinely effective from purely observational data”).</p>
+<ul class="simple">
+<li><p><strong>Whole notebook</strong> [Major] One markdown cell (the title, which describes a <em>dataset generator</em>); no narrative, no links to the tutorial, no DAG, no diagnostics, no conclusions. Every stream output appears twice (executed twice without clearing); dev scaffolding remains (<code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">START!!</span></code> cell 8, <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">END!!</span></code> cell 15, empty cell 24).</p></li>
+<li><p><strong>Cell 5</strong> [Major] The DGP gives <code class="docutils literal notranslate"><span class="pre">itt</span></code> a <strong>direct</strong> effect on mortality (<code class="docutils literal notranslate"><span class="pre">risk_multiplier</span> <span class="pre">*=</span> <span class="pre">0.75</span></code> for <code class="docutils literal notranslate"><span class="pre">itt==1</span></code>) in addition to the effect through <code class="docutils literal notranslate"><span class="pre">w</span></code>. Cell 21 then uses <code class="docutils literal notranslate"><span class="pre">itt</span></code> as an instrument for <code class="docutils literal notranslate"><span class="pre">w</span></code> — the exclusion restriction is violated by construction, so the “LATE” is not identified. (With one-sided non-compliance, a valid LATE would equal the ATT; worth saying if the design is fixed.)</p></li>
+<li><p><strong>Cells 8–15</strong> [Major] A second dataset is generated by fitting LightGBM models on the first (80–95 % MCAR-missing) dataset and sampling from them. The uptake model has validation AUC <strong>0.520</strong> (cell 12 — essentially random, so confounding is nearly absent in <code class="docutils literal notranslate"><span class="pre">df_synthetic</span></code>), the ITT effect shrinks from 28 % to 12 %, and there is <strong>no ground truth</strong> for <code class="docutils literal notranslate"><span class="pre">df_synthetic</span></code> — unlike the other two notebooks nothing can be graded. “79,732 complete cases” (cell 12) is wrong; the rows are 80–95 % missing.</p></li>
+<li><p><strong>Cells 17–23</strong> [Major] Sign conventions are inconsistent: “naive” is computed as control − treated (positive = reduction), econml effects are treated − control (negative = reduction). <code class="docutils literal notranslate"><span class="pre">abs()</span></code> then hides the sign, so the S-learner’s <strong>+0.0053</strong> (a mortality <em>increase</em>) is reported as “21.8 % mortality reduction” and tagged “✅ Unbiased (population)” (cell 23). “All unbiased methods converge to similar estimates” is false on the notebook’s own output (−0.0004 … +0.0053).</p></li>
+<li><p><strong>Cell 21</strong> [Minor] <code class="docutils literal notranslate"><span class="pre">DMLIV(model_t_xwz=RandomForestRegressor,</span> <span class="pre">...,</span> <span class="pre">discrete_treatment=True)</span></code> — first-stage model for a binary treatment should be a classifier; complier effect is divided by the <em>overall</em> mortality rate.</p></li>
+<li><p><strong>Cell 22</strong> [Minor] Individual X-learner effects range −0.47 … +0.44 on a 2.4 % outcome; “most reliable for HTE” is unsupported.</p></li>
+<li><p><strong>Cells 4–5</strong> [Nit] Python <code class="docutils literal notranslate"><span class="pre">for</span></code> loops over 100k rows; vectorise.</p></li>
+<li><p><strong>Cell 23</strong> [Nit] “BUSINESS RECOMMENDATIONS” branch on <code class="docutils literal notranslate"><span class="pre">abs(dml_ate)</span> <span class="pre">&gt;</span> <span class="pre">0.01</span></code> without any inference.</p></li>
+</ul>
+</section>
+<section id="application-utils-py">
+<h3>20.4 <code class="docutils literal notranslate"><span class="pre">application/utils.py</span></code><a class="headerlink" href="#application-utils-py" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">calculate_smd_weighted</span></code> [Major] uses <strong>weighted</strong> variances in the denominator; <code class="docutils literal notranslate"><span class="pre">diagnostics.md</span></code> L72–88 (correctly) prescribes the fixed, unweighted, unadjusted-sample SD. Pass the raw SDs in.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rosenbaum_sensitivity</span></code> [Minor] sign test, one-sided, normal approximation — see 20.1 cell 26–27; docstring says “sign-test version” but the notebook text says signed-rank.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">estimate_propensity</span></code> [Minor] <code class="docutils literal notranslate"><span class="pre">LogisticRegression()</span></code> default L2 penalty (C=1) shrinks scores toward 0.5, masking positivity problems and biasing IPW weights; use <code class="docutils literal notranslate"><span class="pre">penalty=None</span></code> (or very large <code class="docutils literal notranslate"><span class="pre">C</span></code>) for a propensity model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ipw_ate</span></code> [Nit] Hájek normalisation makes <code class="docutils literal notranslate"><span class="pre">stabilized=True/False</span></code> return identical ATEs (only the reported max weight differs); document.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ols_treatment_effect</span></code> [Nit] homoskedastic SEs; claim-cost outcomes are heteroskedastic — consider HC SEs (<code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> is in the requirements).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">e_value_from_effect</span></code>, <code class="docutils literal notranslate"><span class="pre">robustness_value</span></code>, <code class="docutils literal notranslate"><span class="pre">adjusted_estimate</span></code> [✓] formulas verified against VanderWeele &amp; Ding (2017) and Cinelli &amp; Hazlett (2020).</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="appendix-a-mechanical-check-log">
+<h2>Appendix A — Mechanical check log<a class="headerlink" href="#appendix-a-mechanical-check-log" title="Link to this heading">#</a></h2>
+<p>Commands run against the working tree (for reproducibility):</p>
+<ul class="simple">
+<li><p>Labels defined: <code class="docutils literal notranslate"><span class="pre">(overlap)=</span></code> (direct_adjustment L44), <code class="docutils literal notranslate"><span class="pre">(sec:ct)=</span></code> (heterogeneous_effects L52), <code class="docutils literal notranslate"><span class="pre">(sec:cf)=</span></code> (L129). No <code class="docutils literal notranslate"><span class="pre">(debias)=</span></code> label exists.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{cite:t}</span></code> usages: 1 (<code class="docutils literal notranslate"><span class="pre">direct_adjustment.md</span></code> L90). <code class="docutils literal notranslate"><span class="pre">.bib</span></code> files: none.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{doc}</span></code> targets: all resolve except <code class="docutils literal notranslate"><span class="pre">../application/pricing</span></code>.</p></li>
+<li><p>Interactive explainers embedded: <code class="docutils literal notranslate"><span class="pre">applications_matrix.html</span></code> (README), <code class="docutils literal notranslate"><span class="pre">psm_iptw_explainer.html</span></code> (direct_adjustment), <code class="docutils literal notranslate"><span class="pre">loveplot_explainer.html</span></code>, <code class="docutils literal notranslate"><span class="pre">rosenbaum_explainer.html</span></code>, <code class="docutils literal notranslate"><span class="pre">sensitivity_explainer.html</span></code> (diagnostics). <strong>Not</strong> embedded: <code class="docutils literal notranslate"><span class="pre">fairness_price_explainer.html</span></code>.</p></li>
+<li><p>Unused figure assets: listed in C10.</p></li>
+<li><p>Dash style: <code class="docutils literal notranslate"><span class="pre">identification.md</span></code> uses “—” (5×); all other files use “ - “.</p></li>
+<li><p>“patient” occurrences: <code class="docutils literal notranslate"><span class="pre">concepts.md</span></code> 1, <code class="docutils literal notranslate"><span class="pre">heterogeneous_effects.md</span></code> 17.</p></li>
+</ul>
+</section>
+</section>
+
+        <script type="text/x-thebe-config">
+        {
+            "rootPath": "../..",
+            "requestKernel": true,
+            "useJupyterLite": true,
+            "useBinder": false,
+            "kernelOptions": {
+                "path": "/"
+            },
+            "codeMirrorConfig": {
+                "theme": "default",
+                "mode": "python"
+            },
+            "mountRestartButton": false,
+            "mountRestartallButton": false
+        }
+        </script>
+        <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overall-assessment">0. Overall assessment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-reader-s-checklist-items-to-confirm-during-the-manual-read-through">0b. Reader’s checklist — items to confirm during the manual read-through</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#substantive-claims-to-re-read-critically-major">Substantive claims to re-read critically ([Major])</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references-and-section-numbers-to-verify-against-the-source-verify">References and section numbers to verify against the source ([Verify])</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notebooks-items-to-confirm-see-section-20">Notebooks — items to confirm (see Section 20)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-visual-checks-when-browsing-the-built-book">Quick visual checks when browsing the built book</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-cutting-issues">1. Cross-cutting issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#readme-md">2. <code class="docutils literal notranslate"><span class="pre">README.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-concepts-md">3. <code class="docutils literal notranslate"><span class="pre">tutorial/concepts.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-identification-md">4. <code class="docutils literal notranslate"><span class="pre">tutorial/identification.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-assumptions-md">5. <code class="docutils literal notranslate"><span class="pre">tutorial/assumptions.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-graphical-models-md">6. <code class="docutils literal notranslate"><span class="pre">tutorial/graphical_models.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-methods-md">7. <code class="docutils literal notranslate"><span class="pre">tutorial/methods.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-inference-md">8. <code class="docutils literal notranslate"><span class="pre">tutorial/inference.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-direct-adjustment-md">9. <code class="docutils literal notranslate"><span class="pre">tutorial/direct_adjustment.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-heterogeneous-effects-md">10. <code class="docutils literal notranslate"><span class="pre">tutorial/heterogeneous_effects.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-instrumental-variables-md">11. <code class="docutils literal notranslate"><span class="pre">tutorial/instrumental_variables.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-quasi-experimental-md">12. <code class="docutils literal notranslate"><span class="pre">tutorial/quasi_experimental.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-bayesian-md">13. <code class="docutils literal notranslate"><span class="pre">tutorial/bayesian.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-sensitivity-md">14. <code class="docutils literal notranslate"><span class="pre">tutorial/sensitivity.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-diagnostics-md">15. <code class="docutils literal notranslate"><span class="pre">tutorial/diagnostics.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-debias-md">16. <code class="docutils literal notranslate"><span class="pre">tutorial/debias.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorial-fairness-md">17. <code class="docutils literal notranslate"><span class="pre">tutorial/fairness.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#papers-references-md">18. <code class="docutils literal notranslate"><span class="pre">papers/references.md</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#toc-yml-config-yml">19. <code class="docutils literal notranslate"><span class="pre">_toc.yml</span></code> / <code class="docutils literal notranslate"><span class="pre">_config.yml</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#application-notebooks">20. Application notebooks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-observational-data-ipynb-in-toc">20.1 <code class="docutils literal notranslate"><span class="pre">application/observational_data.ipynb</span></code> (in TOC)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-claims-triage-ipynb-in-toc">20.2 <code class="docutils literal notranslate"><span class="pre">application/claims_triage.ipynb</span></code> (in TOC)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-health-interventions-ipynb-in-toc">20.3 <code class="docutils literal notranslate"><span class="pre">application/health_interventions.ipynb</span></code> (in TOC)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#application-utils-py">20.4 <code class="docutils literal notranslate"><span class="pre">application/utils.py</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix-a-mechanical-check-log">Appendix A — Mechanical check log</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Theresa Blümlein, Patrick Cheridito, and Daniel Meier
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

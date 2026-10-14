@@ -16,25 +16,23 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/thebe.css?v=9bca0c2f" />
     <link rel="stylesheet" type="text/css" href="../_static/code.css?v=1719a5f1" />
@@ -44,18 +42,17 @@
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/figure-theme.css?v=c26ee37f" />
   
-  <!-- So that users can add custom icons -->
-  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -121,7 +118,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'application/claims_triage';</script>
-    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/figure-theme.js?v=29b104fa"></script>
     <link rel="icon" href="../_static/logo.png"/>
@@ -131,30 +127,34 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="prev" title="Observational Data" href="observational_data.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
-  
-    
-    <script src="../_static/searchtools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script src="../searchindex.js"></script>
-  
   </head>
-  <body data-default-mode="">
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
-
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
-  
-  <dialog id="pst-search-dialog">
-    
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -162,6 +162,7 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -169,59 +170,15 @@ const thebe_selector_output = ".output, .cell_output"
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
   
-    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-<div class="bd-header__inner bd-page-width">
-  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
-    <span class="fa-solid fa-bars"></span>
-  </button>
-  
-  
-  <div class="col-lg-9 navbar-header-items">
-    
-    
-    <div class="navbar-header-items__end">
-      
-        <div class="navbar-item navbar-persistent--container">
-          
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-        </div>
-      
-      
-    </div>
-    
-  </div>
-  
-  
-    <div class="navbar-persistent--mobile">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button>
-    </div>
-  
-
-  
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
-  
-</div>
-
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -230,8 +187,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -261,17 +217,21 @@ const thebe_selector_output = ".output, .cell_output"
     
     
     <img src="../_static/logo.png" class="logo__image only-light" alt="Actuarial Causal Inference Tutorial - Home"/>
-    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Actuarial Causal Inference Tutorial - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Actuarial Causal Inference Tutorial - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -323,14 +283,9 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -480,7 +435,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  class="btn btn-sm btn-fullscreen-button"
   title="Fullscreen mode"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -494,17 +449,25 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -526,7 +489,7 @@ const thebe_selector_output = ".output, .cell_output"
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="pst-show_toc_level nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#actuarial-relevance">Actuarial Relevance</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-causal-setup">The causal setup</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-causal-graph">The causal graph</a></li>
@@ -641,7 +604,7 @@ if not hasattr(matplotlib.RcParams, "_get"):
 
 <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">apply_sav_theme</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"figure.figsize"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -655,43 +618,43 @@ if not hasattr(matplotlib.RcParams, "_get"):
 <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">FancyArrowPatch</span>
 
 <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
-<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">"X"</span><span class="p">,</span> <span class="s2">"T"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"X"</span><span class="p">,</span> <span class="s2">"Y"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"T"</span><span class="p">,</span> <span class="s2">"Y"</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)])</span>
 
-<span class="n">pos</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"X"</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="s2">"T"</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="s2">"Y"</span><span class="p">:</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)}</span>
-<span class="n">node_colors</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"X"</span><span class="p">:</span> <span class="n">SAV_GREY_LIGHT</span><span class="p">,</span> <span class="s2">"T"</span><span class="p">:</span> <span class="n">SAV_GREEN</span><span class="p">,</span> <span class="s2">"Y"</span><span class="p">:</span> <span class="n">SAV_CHARCOAL</span><span class="p">}</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)}</span>
+<span class="n">node_colors</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="n">SAV_GREY_LIGHT</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="n">SAV_GREEN</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="n">SAV_CHARCOAL</span><span class="p">}</span>
 <span class="n">node_labels</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">"X"</span><span class="p">:</span> <span class="s2">"$X$</span><span class="se">\n</span><span class="s2">claim features</span><span class="se">\n</span><span class="s2">(severity, injury,</span><span class="se">\n</span><span class="s2">third party, ...)"</span><span class="p">,</span>
-    <span class="s2">"T"</span><span class="p">:</span> <span class="s2">"$T$</span><span class="se">\n</span><span class="s2">specialist</span><span class="se">\n</span><span class="s2">handling"</span><span class="p">,</span>
-    <span class="s2">"Y"</span><span class="p">:</span> <span class="s2">"$Y$</span><span class="se">\n</span><span class="s2">final</span><span class="se">\n</span><span class="s2">claim cost"</span><span class="p">,</span>
+    <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="s2">&quot;$X$</span><span class="se">\n</span><span class="s2">claim features</span><span class="se">\n</span><span class="s2">(severity, injury,</span><span class="se">\n</span><span class="s2">third party, ...)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;T&quot;</span><span class="p">:</span> <span class="s2">&quot;$T$</span><span class="se">\n</span><span class="s2">specialist</span><span class="se">\n</span><span class="s2">handling&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Y&quot;</span><span class="p">:</span> <span class="s2">&quot;$Y$</span><span class="se">\n</span><span class="s2">final</span><span class="se">\n</span><span class="s2">claim cost&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
 
 <span class="c1"># Edges: solid = causal effect of interest, dashed grey = confounding back-door</span>
-<span class="n">edge_style</span> <span class="o">=</span> <span class="p">{(</span><span class="s2">"T"</span><span class="p">,</span> <span class="s2">"Y"</span><span class="p">):</span> <span class="p">(</span><span class="n">SAV_GREEN</span><span class="p">,</span> <span class="s2">"-"</span><span class="p">,</span> <span class="mf">2.4</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">"X"</span><span class="p">,</span> <span class="s2">"T"</span><span class="p">):</span> <span class="p">(</span><span class="n">SAV_GREY</span><span class="p">,</span> <span class="s2">"--"</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">),</span>
-              <span class="p">(</span><span class="s2">"X"</span><span class="p">,</span> <span class="s2">"Y"</span><span class="p">):</span> <span class="p">(</span><span class="n">SAV_GREY</span><span class="p">,</span> <span class="s2">"--"</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">)}</span>
+<span class="n">edge_style</span> <span class="o">=</span> <span class="p">{(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">):</span> <span class="p">(</span><span class="n">SAV_GREEN</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="mf">2.4</span><span class="p">),</span>
+              <span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">):</span> <span class="p">(</span><span class="n">SAV_GREY</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">),</span>
+              <span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">):</span> <span class="p">(</span><span class="n">SAV_GREY</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">)}</span>
 <span class="k">for</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">ls</span><span class="p">,</span> <span class="n">lw</span><span class="p">)</span> <span class="ow">in</span> <span class="n">edge_style</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">arrow</span> <span class="o">=</span> <span class="n">FancyArrowPatch</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="n">u</span><span class="p">],</span> <span class="n">pos</span><span class="p">[</span><span class="n">v</span><span class="p">],</span> <span class="n">arrowstyle</span><span class="o">=</span><span class="s2">"-|&gt;"</span><span class="p">,</span> <span class="n">mutation_scale</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span>
+    <span class="n">arrow</span> <span class="o">=</span> <span class="n">FancyArrowPatch</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="n">u</span><span class="p">],</span> <span class="n">pos</span><span class="p">[</span><span class="n">v</span><span class="p">],</span> <span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-|&gt;&quot;</span><span class="p">,</span> <span class="n">mutation_scale</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span>
                             <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="n">lw</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">ls</span><span class="p">,</span>
                             <span class="n">shrinkA</span><span class="o">=</span><span class="mi">26</span><span class="p">,</span> <span class="n">shrinkB</span><span class="o">=</span><span class="mi">26</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">arrow</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pos</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">7000</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">node_colors</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">7000</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">node_colors</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
                <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">node_labels</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">node_labels</span><span class="p">[</span><span class="n">node</span><span class="p">],</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
 <span class="c1"># Annotate the edges</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="sa">r</span><span class="s2">"$\tau(x)$  causal effect"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREEN_DARK</span><span class="p">,</span>
-        <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.60</span><span class="p">,</span> <span class="s2">"confounding"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREY</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">63</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.84</span><span class="p">,</span> <span class="mf">0.60</span><span class="p">,</span> <span class="s2">"confounding"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREY</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=-</span><span class="mi">63</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.07</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$\tau(x)$  causal effect&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREEN_DARK</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.60</span><span class="p">,</span> <span class="s2">&quot;confounding&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREY</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">63</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.84</span><span class="p">,</span> <span class="mf">0.60</span><span class="p">,</span> <span class="s2">&quot;confounding&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREY</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=-</span><span class="mi">63</span><span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.35</span><span class="p">,</span> <span class="mf">1.35</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">"off"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Claims-triage DAG: $X$ confounds the specialist effect on cost"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Claims-triage DAG: $X$ confounds the specialist effect on cost&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -729,17 +692,17 @@ if not hasattr(matplotlib.RcParams, "_get"):
 <span class="n">policy_tenure</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>                    <span class="c1"># years with the insurer</span>
 
 <span class="n">feature_cols</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">"severity"</span><span class="p">,</span> <span class="s2">"injury"</span><span class="p">,</span> <span class="s2">"third_party"</span><span class="p">,</span>
-    <span class="s2">"driver_age"</span><span class="p">,</span> <span class="s2">"vehicle_age"</span><span class="p">,</span> <span class="s2">"prior_claims"</span><span class="p">,</span> <span class="s2">"policy_tenure"</span><span class="p">,</span>
+    <span class="s2">&quot;severity&quot;</span><span class="p">,</span> <span class="s2">&quot;injury&quot;</span><span class="p">,</span> <span class="s2">&quot;third_party&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;driver_age&quot;</span><span class="p">,</span> <span class="s2">&quot;vehicle_age&quot;</span><span class="p">,</span> <span class="s2">&quot;prior_claims&quot;</span><span class="p">,</span> <span class="s2">&quot;policy_tenure&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">"severity"</span><span class="p">:</span> <span class="n">severity</span><span class="p">,</span>
-    <span class="s2">"injury"</span><span class="p">:</span> <span class="n">injury</span><span class="p">,</span>
-    <span class="s2">"third_party"</span><span class="p">:</span> <span class="n">third_party</span><span class="p">,</span>
-    <span class="s2">"driver_age"</span><span class="p">:</span> <span class="n">driver_age</span><span class="p">,</span>
-    <span class="s2">"vehicle_age"</span><span class="p">:</span> <span class="n">vehicle_age</span><span class="p">,</span>
-    <span class="s2">"prior_claims"</span><span class="p">:</span> <span class="n">prior_claims</span><span class="p">,</span>
-    <span class="s2">"policy_tenure"</span><span class="p">:</span> <span class="n">policy_tenure</span><span class="p">,</span>
+    <span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="n">severity</span><span class="p">,</span>
+    <span class="s2">&quot;injury&quot;</span><span class="p">:</span> <span class="n">injury</span><span class="p">,</span>
+    <span class="s2">&quot;third_party&quot;</span><span class="p">:</span> <span class="n">third_party</span><span class="p">,</span>
+    <span class="s2">&quot;driver_age&quot;</span><span class="p">:</span> <span class="n">driver_age</span><span class="p">,</span>
+    <span class="s2">&quot;vehicle_age&quot;</span><span class="p">:</span> <span class="n">vehicle_age</span><span class="p">,</span>
+    <span class="s2">&quot;prior_claims&quot;</span><span class="p">:</span> <span class="n">prior_claims</span><span class="p">,</span>
+    <span class="s2">&quot;policy_tenure&quot;</span><span class="p">:</span> <span class="n">policy_tenure</span><span class="p">,</span>
 <span class="p">})[</span><span class="n">feature_cols</span><span class="p">]</span>
 
 <span class="c1"># Normalised drivers of claim complexity (0..1), all observable at triage</span>
@@ -772,15 +735,15 @@ if not hasattr(matplotlib.RcParams, "_get"):
 <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">T</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Y1</span><span class="p">,</span> <span class="n">Y0</span><span class="p">)</span>
 
 <span class="n">claims</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">claims</span><span class="p">[</span><span class="s2">"specialist"</span><span class="p">]</span> <span class="o">=</span> <span class="n">T</span>
-<span class="n">claims</span><span class="p">[</span><span class="s2">"final_cost"</span><span class="p">]</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">claims</span><span class="p">[</span><span class="s2">"propensity_true"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pi</span>          <span class="c1"># hidden ground truth</span>
-<span class="n">claims</span><span class="p">[</span><span class="s2">"tau_true"</span><span class="p">]</span> <span class="o">=</span> <span class="n">tau_true</span>           <span class="c1"># hidden ground truth</span>
+<span class="n">claims</span><span class="p">[</span><span class="s2">&quot;specialist&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">T</span>
+<span class="n">claims</span><span class="p">[</span><span class="s2">&quot;final_cost&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">claims</span><span class="p">[</span><span class="s2">&quot;propensity_true&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pi</span>          <span class="c1"># hidden ground truth</span>
+<span class="n">claims</span><span class="p">[</span><span class="s2">&quot;tau_true&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tau_true</span>           <span class="c1"># hidden ground truth</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Claims simulated:            </span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Specialist-handled:          </span><span class="si">{</span><span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Mean final cost:             CHF </span><span class="si">{</span><span class="n">claims</span><span class="o">.</span><span class="n">final_cost</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"True ATE of specialist:      CHF </span><span class="si">{</span><span class="n">tau_true</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">  (negative = average saving)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Claims simulated:            </span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Specialist-handled:          </span><span class="si">{</span><span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean final cost:             CHF </span><span class="si">{</span><span class="n">claims</span><span class="o">.</span><span class="n">final_cost</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True ATE of specialist:      CHF </span><span class="si">{</span><span class="n">tau_true</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">  (negative = average saving)&quot;</span><span class="p">)</span>
 <span class="n">claims</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -904,24 +867,24 @@ True ATE of specialist:      CHF -867  (negative = average saving)
 <p>The tempting thing to do is compare the average cost of specialist-handled claims with standard claims. Because specialists inherited the hardest claims, this comparison is confounded: the extra cost of those hard claims masks the saving, so the naive number badly <strong>understates</strong> the true benefit (and can even flip its sign).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">naive</span> <span class="o">=</span> <span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">claims</span><span class="o">.</span><span class="n">specialist</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"final_cost"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-         <span class="o">-</span> <span class="n">claims</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">claims</span><span class="o">.</span><span class="n">specialist</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"final_cost"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">naive</span> <span class="o">=</span> <span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">claims</span><span class="o">.</span><span class="n">specialist</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;final_cost&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+         <span class="o">-</span> <span class="n">claims</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">claims</span><span class="o">.</span><span class="n">specialist</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;final_cost&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Naive difference (specialist - standard): CHF </span><span class="si">{</span><span class="n">naive</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">  &lt;-- confounded: saving is hidden"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"True ATE:                                 CHF </span><span class="si">{</span><span class="n">tau_true</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">  &lt;-- specialists actually SAVE this much"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Naive difference (specialist - standard): CHF </span><span class="si">{</span><span class="n">naive</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">  &lt;-- confounded: saving is hidden&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True ATE:                                 CHF </span><span class="si">{</span><span class="n">tau_true</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">  &lt;-- specialists actually SAVE this much&quot;</span><span class="p">)</span>
 
 <span class="c1"># Why? Specialists were assigned the complex (expensive) claims.</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">claims</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">"severity"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">"final_cost"</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">"specialist"</span><span class="p">,</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">claims</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;severity&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;final_cost&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;specialist&quot;</span><span class="p">,</span>
             <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="n">SAV_GREY_LIGHT</span><span class="p">,</span> <span class="n">SAV_GREEN</span><span class="p">],</span> <span class="n">errorbar</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Cost rises with severity AND specialists get the severe claims"</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Mean final cost (CHF)"</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"specialist"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Cost rises with severity AND specialists get the severe claims&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Mean final cost (CHF)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;specialist&quot;</span><span class="p">)</span>
 
-<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">claims</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">"propensity_true"</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">"specialist"</span><span class="p">,</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">claims</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;propensity_true&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;specialist&quot;</span><span class="p">,</span>
             <span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="n">SAV_GREY_LIGHT</span><span class="p">,</span> <span class="n">SAV_GREEN</span><span class="p">])</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"True propensity overlap (assignment is confounded but supported)"</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"P(specialist | X)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;True propensity overlap (assignment is confounded but supported)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;P(specialist | X)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -948,8 +911,8 @@ True ATE:                                 CHF -867  &lt;-- specialists actually 
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Xmat</span> <span class="o">=</span> <span class="n">claims</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-<span class="n">Tarr</span> <span class="o">=</span> <span class="n">claims</span><span class="p">[</span><span class="s2">"specialist"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="n">Yarr</span> <span class="o">=</span> <span class="n">claims</span><span class="p">[</span><span class="s2">"final_cost"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">Tarr</span> <span class="o">=</span> <span class="n">claims</span><span class="p">[</span><span class="s2">&quot;specialist&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">Yarr</span> <span class="o">=</span> <span class="n">claims</span><span class="p">[</span><span class="s2">&quot;final_cost&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 
 <span class="n">dml</span> <span class="o">=</span> <span class="n">LinearDML</span><span class="p">(</span>
     <span class="n">model_y</span><span class="o">=</span><span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
@@ -959,14 +922,14 @@ True ATE:                                 CHF -867  &lt;-- specialists actually 
     <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="c1"># X=None, W=features  -&gt;  partial out the confounders and estimate one debiased ATE</span>
-<span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>       <span class="c1"># silence harmless matmul overflow in econml's inference</span>
+<span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>       <span class="c1"># silence harmless matmul overflow in econml&#39;s inference</span>
     <span class="n">dml</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Yarr</span><span class="p">,</span> <span class="n">Tarr</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="n">Xmat</span><span class="p">)</span>
     <span class="n">ate</span> <span class="o">=</span> <span class="n">dml</span><span class="o">.</span><span class="n">ate</span><span class="p">()</span>
     <span class="n">lb</span><span class="p">,</span> <span class="n">ub</span> <span class="o">=</span> <span class="n">dml</span><span class="o">.</span><span class="n">ate_interval</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Average treatment effect of specialist handling on final cost"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Naive (confounded):  CHF </span><span class="si">{</span><span class="n">naive</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  DML estimate:        CHF </span><span class="si">{</span><span class="n">ate</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">   (95% CI </span><span class="si">{</span><span class="n">lb</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2"> .. </span><span class="si">{</span><span class="n">ub</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  True ATE:            CHF </span><span class="si">{</span><span class="n">tau_true</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Average treatment effect of specialist handling on final cost&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Naive (confounded):  CHF </span><span class="si">{</span><span class="n">naive</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  DML estimate:        CHF </span><span class="si">{</span><span class="n">ate</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">   (95% CI </span><span class="si">{</span><span class="n">lb</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2"> .. </span><span class="si">{</span><span class="n">ub</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  True ATE:            CHF </span><span class="si">{</span><span class="n">tau_true</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -996,8 +959,8 @@ True ATE:                                 CHF -867  &lt;-- specialists actually 
 <span class="p">)</span>
 <span class="n">cf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Yarr</span><span class="p">,</span> <span class="n">Tarr</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">Xmat</span><span class="p">)</span>
 
-<span class="n">claims</span><span class="p">[</span><span class="s2">"tau_hat"</span><span class="p">]</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">effect</span><span class="p">(</span><span class="n">Xmat</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Causal-forest average CATE: CHF </span><span class="si">{</span><span class="n">claims</span><span class="o">.</span><span class="n">tau_hat</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">   (true ATE CHF </span><span class="si">{</span><span class="n">tau_true</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+<span class="n">claims</span><span class="p">[</span><span class="s2">&quot;tau_hat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">effect</span><span class="p">(</span><span class="n">Xmat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Causal-forest average CATE: CHF </span><span class="si">{</span><span class="n">claims</span><span class="o">.</span><span class="n">tau_hat</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">   (true ATE CHF </span><span class="si">{</span><span class="n">tau_true</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
 
 <span class="c1"># How well does the forest recover the hidden individual effects?</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -1005,16 +968,16 @@ True ATE:                                 CHF -867  &lt;-- specialists actually 
 <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">tau_true</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">])</span>
 <span class="n">pad</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="p">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">tau_true</span><span class="p">,</span> <span class="n">claims</span><span class="o">.</span><span class="n">tau_hat</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_CHARCOAL</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">],</span> <span class="p">[</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">],</span> <span class="s2">"--"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREEN_DARK</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"perfect"</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"True CATE (CHF)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Estimated CATE (CHF)"</span><span class="p">,</span>
-          <span class="n">title</span><span class="o">=</span><span class="s2">"Recovered individual effects (1st-99th pct)"</span><span class="p">,</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">],</span> <span class="p">[</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">],</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREEN_DARK</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;perfect&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;True CATE (CHF)&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Estimated CATE (CHF)&quot;</span><span class="p">,</span>
+          <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Recovered individual effects (1st-99th pct)&quot;</span><span class="p">,</span>
           <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="n">lo</span> <span class="o">-</span> <span class="n">pad</span><span class="p">,</span> <span class="n">hi</span> <span class="o">+</span> <span class="n">pad</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="n">lo</span> <span class="o">-</span> <span class="n">pad</span><span class="p">,</span> <span class="n">hi</span> <span class="o">+</span> <span class="n">pad</span><span class="p">))</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">tau_hat</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREEN</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Distribution of estimated CATEs</span><span class="se">\n</span><span class="s2">(left of 0 = specialist saves money)"</span><span class="p">,</span>
-          <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Estimated CATE (CHF)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Distribution of estimated CATEs</span><span class="se">\n</span><span class="s2">(left of 0 = specialist saves money)&quot;</span><span class="p">,</span>
+          <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;Estimated CATE (CHF)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -1054,7 +1017,7 @@ True ATE:                                 CHF -867  &lt;-- specialists actually 
 <span class="n">expl</span> <span class="o">=</span> <span class="n">shap_dict</span><span class="p">[</span><span class="n">out_key</span><span class="p">][</span><span class="n">trt_key</span><span class="p">]</span>
 
 <span class="n">shap</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">beeswarm</span><span class="p">(</span><span class="n">expl</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"What drives the predicted effect of specialist handling"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;What drives the predicted effect of specialist handling&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -1093,17 +1056,17 @@ True ATE:                                 CHF -867  &lt;-- specialists actually 
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Claim with the biggest predicted saving (most negative effect) in the explained sample</span>
 <span class="n">idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">expl</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Selected claim features:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Selected claim features:&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="n">feature_cols</span><span class="p">]</span><span class="o">.</span><span class="n">to_string</span><span class="p">())</span>
 <span class="c1"># The waterfall decomposes the SHAP-additive prediction (base value + feature</span>
-<span class="c1"># contributions), which approximates the forest's CATE. Report that same number</span>
-<span class="c1"># here so the printout matches the plot's f(x).</span>
+<span class="c1"># contributions), which approximates the forest&#39;s CATE. Report that same number</span>
+<span class="c1"># here so the printout matches the plot&#39;s f(x).</span>
 <span class="n">shap_pred</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">expl</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">base_values</span> <span class="o">+</span> <span class="n">expl</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Predicted effect (CATE): CHF </span><span class="si">{</span><span class="n">shap_pred</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">   (negative = saving)"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"True effect:             CHF </span><span class="si">{</span><span class="n">sample</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="s1">'tau_true'</span><span class="p">]</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Predicted effect (CATE): CHF </span><span class="si">{</span><span class="n">shap_pred</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">   (negative = saving)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;True effect:             CHF </span><span class="si">{</span><span class="n">sample</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;tau_true&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="n">shap</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">waterfall</span><span class="p">(</span><span class="n">expl</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Why claim #</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2"> should go to a specialist"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Why claim #</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2"> should go to a specialist&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -1153,7 +1116,7 @@ True effect:             CHF -2,661
 <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">capacity</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">claims</span><span class="p">))</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">top_k_mask</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">largest</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Boolean mask selecting the k claims with the highest (or lowest) score."""</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Boolean mask selecting the k claims with the highest (or lowest) score.&quot;&quot;&quot;</span>
     <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
     <span class="n">chosen</span> <span class="o">=</span> <span class="n">order</span><span class="p">[</span><span class="o">-</span><span class="n">k</span><span class="p">:]</span> <span class="k">if</span> <span class="n">largest</span> <span class="k">else</span> <span class="n">order</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
@@ -1162,35 +1125,35 @@ True effect:             CHF -2,661
 
 <span class="k">def</span><span class="w"> </span><span class="nf">net_saving</span><span class="p">(</span><span class="n">mask</span><span class="p">):</span>
     <span class="c1"># realised saving = -sum(true effect) on routed claims, minus overhead paid</span>
-    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="o">-</span><span class="n">claims</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s2">"tau_true"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">overhead</span> <span class="o">*</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="o">-</span><span class="n">claims</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s2">&quot;tau_true&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="n">overhead</span> <span class="o">*</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 
 <span class="n">rng_pol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">random_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">claims</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 <span class="n">random_mask</span><span class="p">[</span><span class="n">rng_pol</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">claims</span><span class="p">),</span> <span class="n">k</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
 
-<span class="n">claims</span><span class="p">[</span><span class="s2">"route_specialist"</span><span class="p">]</span> <span class="o">=</span> <span class="n">top_k_mask</span><span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">tau_hat</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">largest</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># most negative CATE</span>
+<span class="n">claims</span><span class="p">[</span><span class="s2">&quot;route_specialist&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">top_k_mask</span><span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">tau_hat</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">largest</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># most negative CATE</span>
 
 <span class="n">policies</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">"Random 30%"</span><span class="p">:</span>            <span class="n">random_mask</span><span class="p">,</span>
-    <span class="s2">"Highest severity 30%"</span><span class="p">:</span>  <span class="n">top_k_mask</span><span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">severity</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">largest</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-    <span class="s2">"Targeted CATE 30%"</span><span class="p">:</span>     <span class="n">claims</span><span class="o">.</span><span class="n">route_specialist</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="s2">&quot;Random 30%&quot;</span><span class="p">:</span>            <span class="n">random_mask</span><span class="p">,</span>
+    <span class="s2">&quot;Highest severity 30%&quot;</span><span class="p">:</span>  <span class="n">top_k_mask</span><span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">severity</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">largest</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="s2">&quot;Targeted CATE 30%&quot;</span><span class="p">:</span>     <span class="n">claims</span><span class="o">.</span><span class="n">route_specialist</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">"claims_to_specialist"</span><span class="p">:</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">policies</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
-    <span class="s2">"net_saving_chf"</span><span class="p">:</span>       <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">net_saving</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">policies</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
+    <span class="s2">&quot;claims_to_specialist&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">policies</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
+    <span class="s2">&quot;net_saving_chf&quot;</span><span class="p">:</span>       <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">net_saving</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">policies</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
 <span class="p">})</span>
-<span class="n">results</span><span class="p">[</span><span class="s2">"share_routed"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">claims_to_specialist</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">claims</span><span class="p">))</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s2">"</span><span class="si">{:.0%}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Specialist capacity: </span><span class="si">{</span><span class="n">capacity</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2"> of the queue (</span><span class="si">{</span><span class="n">k</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> claims)</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">[[</span><span class="s2">"share_routed"</span><span class="p">,</span> <span class="s2">"claims_to_specialist"</span><span class="p">,</span> <span class="s2">"net_saving_chf"</span><span class="p">]])</span>
+<span class="n">results</span><span class="p">[</span><span class="s2">&quot;share_routed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">claims_to_specialist</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">claims</span><span class="p">))</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.0%}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Specialist capacity: </span><span class="si">{</span><span class="n">capacity</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2"> of the queue (</span><span class="si">{</span><span class="n">k</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> claims)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">[[</span><span class="s2">&quot;share_routed&quot;</span><span class="p">,</span> <span class="s2">&quot;claims_to_specialist&quot;</span><span class="p">,</span> <span class="s2">&quot;net_saving_chf&quot;</span><span class="p">]])</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
 <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">SAV_GREY_LIGHT</span><span class="p">,</span> <span class="n">SAV_GREEN_LIGHT</span><span class="p">,</span> <span class="n">SAV_GREEN</span><span class="p">]</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">net_saving_chf</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Net portfolio saving (CHF)"</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"At fixed specialist capacity, CATE targeting beats naive rules"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Net portfolio saving (CHF)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;At fixed specialist capacity, CATE targeting beats naive rules&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">net_saving_chf</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -1211,23 +1174,23 @@ Targeted CATE 30%             30%                  1200         2030285
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cumulative-gains curve: rank claims by predicted saving, add real savings in that order</span>
-<span class="n">order</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"tau_hat"</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>           <span class="c1"># biggest predicted saving first</span>
-<span class="n">cum_true</span> <span class="o">=</span> <span class="o">-</span><span class="n">claims</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">order</span><span class="p">,</span> <span class="s2">"tau_true"</span><span class="p">]</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+<span class="n">order</span> <span class="o">=</span> <span class="n">claims</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;tau_hat&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>           <span class="c1"># biggest predicted saving first</span>
+<span class="n">cum_true</span> <span class="o">=</span> <span class="o">-</span><span class="n">claims</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">order</span><span class="p">,</span> <span class="s2">&quot;tau_true&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
 <span class="n">frac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">claims</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">claims</span><span class="p">)</span>
 
 <span class="c1"># Best-possible (oracle) ordering by the true effect, and random targeting</span>
-<span class="n">oracle</span> <span class="o">=</span> <span class="o">-</span><span class="n">claims</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"tau_true"</span><span class="p">)[</span><span class="s2">"tau_true"</span><span class="p">]</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+<span class="n">oracle</span> <span class="o">=</span> <span class="o">-</span><span class="n">claims</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;tau_true&quot;</span><span class="p">)[</span><span class="s2">&quot;tau_true&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
 <span class="n">random_line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">claims</span><span class="o">.</span><span class="n">tau_true</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="nb">len</span><span class="p">(</span><span class="n">claims</span><span class="p">))</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">frac</span><span class="p">,</span> <span class="n">cum_true</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Targeted by causal forest"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREEN</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">frac</span><span class="p">,</span> <span class="n">oracle</span><span class="p">,</span> <span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Oracle (true effect)"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_CHARCOAL</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">frac</span><span class="p">,</span> <span class="n">random_line</span><span class="p">,</span> <span class="s2">":"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Random targeting"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREY</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">frac</span><span class="p">,</span> <span class="n">cum_true</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Targeted by causal forest&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREEN</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">frac</span><span class="p">,</span> <span class="n">oracle</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Oracle (true effect)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_CHARCOAL</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">frac</span><span class="p">,</span> <span class="n">random_line</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Random targeting&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREY</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">capacity</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREEN_DARK</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-            <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"specialist capacity (</span><span class="si">{</span><span class="n">capacity</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Fraction of claims sent to a specialist (highest predicted saving first)"</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Cumulative leakage saving (CHF)"</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Triage gains curve"</span><span class="p">)</span>
+            <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;specialist capacity (</span><span class="si">{</span><span class="n">capacity</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Fraction of claims sent to a specialist (highest predicted saving first)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cumulative leakage saving (CHF)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Triage gains curve&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1250,21 +1213,21 @@ Targeted CATE 30%             30%                  1200         2030285
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Robustness value: the partial R^2 a confounder needs with BOTH T and Y to push</span>
 <span class="c1"># the estimate (or its 95% CI) to zero. Larger = more robust.</span>
-<span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
+<span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>
     <span class="n">rv_point</span> <span class="o">=</span> <span class="n">dml</span><span class="o">.</span><span class="n">robustness_value</span><span class="p">(</span><span class="n">null_hypothesis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>    <span class="c1"># to move the point estimate</span>
     <span class="n">rv_ci</span>    <span class="o">=</span> <span class="n">dml</span><span class="o">.</span><span class="n">robustness_value</span><span class="p">(</span><span class="n">null_hypothesis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>   <span class="c1"># to move the 95% CI bound</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"DML estimate of the saving:      CHF </span><span class="si">{</span><span class="n">ate</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">  (95% CI </span><span class="si">{</span><span class="n">lb</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2"> .. </span><span class="si">{</span><span class="n">ub</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Robustness value (point est.):   RV   = </span><span class="si">{</span><span class="n">rv_point</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Robustness value (95% CI):       RV_a = </span><span class="si">{</span><span class="n">rv_ci</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DML estimate of the saving:      CHF </span><span class="si">{</span><span class="n">ate</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">  (95% CI </span><span class="si">{</span><span class="n">lb</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2"> .. </span><span class="si">{</span><span class="n">ub</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Robustness value (point est.):   RV   = </span><span class="si">{</span><span class="n">rv_point</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Robustness value (95% CI):       RV_a = </span><span class="si">{</span><span class="n">rv_ci</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"-&gt; A hidden confounder would have to explain at least </span><span class="si">{</span><span class="n">rv_point</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2"> of the residual"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   variation in BOTH routing and cost to wipe out the estimated saving entirely,"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   and </span><span class="si">{</span><span class="n">rv_ci</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2"> to render it statistically insignificant."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;-&gt; A hidden confounder would have to explain at least </span><span class="si">{</span><span class="n">rv_point</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2"> of the residual&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   variation in BOTH routing and cost to wipe out the estimated saving entirely,&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   and </span><span class="si">{</span><span class="n">rv_ci</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2"> to render it statistically insignificant.&quot;</span><span class="p">)</span>
 
-<span class="c1"># econml's own one-line summary for reference (modest benchmark confounder, c_t = c_y = 0.05)</span>
-<span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- econml sensitivity_summary (benchmark confounder c_t = c_y = 0.05) ---"</span><span class="p">)</span>
+<span class="c1"># econml&#39;s own one-line summary for reference (modest benchmark confounder, c_t = c_y = 0.05)</span>
+<span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- econml sensitivity_summary (benchmark confounder c_t = c_y = 0.05) ---&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">dml</span><span class="o">.</span><span class="n">sensitivity_summary</span><span class="p">(</span><span class="n">c_y</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">c_t</span><span class="o">=</span><span class="mf">0.05</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1302,32 +1265,32 @@ Robustness Value (Theta) Robustness Value (CI)
 <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
 <span class="n">CT</span><span class="p">,</span> <span class="n">CY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
 <span class="n">bound</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">CT</span><span class="p">)</span>
-<span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
+<span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">CT</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">CT</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
             <span class="n">_</span><span class="p">,</span> <span class="n">ub_ab</span> <span class="o">=</span> <span class="n">dml</span><span class="o">.</span><span class="n">sensitivity_interval</span><span class="p">(</span><span class="n">c_t</span><span class="o">=</span><span class="n">CT</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">c_y</span><span class="o">=</span><span class="n">CY</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span>
-                                                 <span class="n">interval_type</span><span class="o">=</span><span class="s2">"ci"</span><span class="p">)</span>
+                                                 <span class="n">interval_type</span><span class="o">=</span><span class="s2">&quot;ci&quot;</span><span class="p">)</span>
             <span class="n">bound</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="n">ub_ab</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">cf_plot</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">CT</span><span class="p">,</span> <span class="n">CY</span><span class="p">,</span> <span class="n">bound</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"sav_div_r"</span><span class="p">)</span>
+<span class="n">cf_plot</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">CT</span><span class="p">,</span> <span class="n">CY</span><span class="p">,</span> <span class="n">bound</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;sav_div_r&quot;</span><span class="p">)</span>
 <span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cf_plot</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">"Worst-case 95% CI upper bound on the effect (CHF)"</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;Worst-case 95% CI upper bound on the effect (CHF)&quot;</span><span class="p">)</span>
 
 <span class="c1"># The critical contour: where the bound first touches zero (saving no longer certain)</span>
-<span class="n">zero</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">CT</span><span class="p">,</span> <span class="n">CY</span><span class="p">,</span> <span class="n">bound</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">zero</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">"effect = 0"</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">zero</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">CT</span><span class="p">,</span> <span class="n">CY</span><span class="p">,</span> <span class="n">bound</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">zero</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;effect = 0&quot;</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
 <span class="c1"># Robustness value: the point on the diagonal c_t = c_y where the CI bound hits zero</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rv_ci</span><span class="p">,</span> <span class="n">rv_ci</span><span class="p">,</span> <span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  robustness value</span><span class="se">\n</span><span class="s2">  (c_t = c_y = </span><span class="si">{</span><span class="n">rv_ci</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)"</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">rv_ci</span><span class="p">,</span> <span class="n">rv_ci</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"center"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">],</span> <span class="s2">"--"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"grey"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"equal strength (c_t = c_y)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rv_ci</span><span class="p">,</span> <span class="n">rv_ci</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  robustness value</span><span class="se">\n</span><span class="s2">  (c_t = c_y = </span><span class="si">{</span><span class="n">rv_ci</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">rv_ci</span><span class="p">,</span> <span class="n">rv_ci</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">],</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;equal strength (c_t = c_y)&quot;</span><span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Confounder $\to$ treatment strength  $c_t$ (partial $R^2$)"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Confounder $\to$ outcome strength  $c_y$ (partial $R^2$)"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Sensitivity contour: green = saving survives, grey = could be overturned"</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Confounder $\to$ treatment strength  $c_t$ (partial $R^2$)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Confounder $\to$ outcome strength  $c_y$ (partial $R^2$)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Sensitivity contour: green = saving survives, grey = could be overturned&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -1351,9 +1314,9 @@ Robustness Value (Theta) Robustness Value (CI)
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Re-run the DML omitted-variable analysis WITHIN severity strata to get a</span>
 <span class="c1"># robustness value for each part of the heterogeneity.</span>
 <span class="n">strata</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">"Minor (sev 1-2)"</span><span class="p">:</span>  <span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">severity</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-    <span class="s2">"Moderate (sev 3)"</span><span class="p">:</span> <span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-    <span class="s2">"Severe (sev 4-5)"</span><span class="p">:</span> <span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">severity</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="s2">&quot;Minor (sev 1-2)&quot;</span><span class="p">:</span>  <span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">severity</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="s2">&quot;Moderate (sev 3)&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">severity</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="s2">&quot;Severe (sev 4-5)&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">claims</span><span class="o">.</span><span class="n">severity</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1363,13 +1326,13 @@ Robustness Value (Theta) Robustness Value (CI)
         <span class="n">model_t</span><span class="o">=</span><span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
         <span class="n">discrete_treatment</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>
         <span class="n">d</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Yarr</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="n">Tarr</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="n">Xmat</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
         <span class="n">a</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">ate</span><span class="p">()</span>
         <span class="n">l</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">ate_interval</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
         <span class="n">rv</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">robustness_value</span><span class="p">(</span><span class="n">null_hypothesis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>   <span class="c1"># to move the 95% CI bound</span>
-    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"subgroup"</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">"n"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span> <span class="s2">"cate_chf"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>
-                 <span class="s2">"ci_low"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="s2">"ci_high"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="s2">"robustness_value"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">rv</span><span class="p">,</span> <span class="mi">3</span><span class="p">)})</span>
+    <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;subgroup&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span> <span class="s2">&quot;cate_chf&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>
+                 <span class="s2">&quot;ci_low&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="s2">&quot;ci_high&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="s2">&quot;robustness_value&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">rv</span><span class="p">,</span> <span class="mi">3</span><span class="p">)})</span>
 
 <span class="n">sub</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
@@ -1380,23 +1343,23 @@ Robustness Value (Theta) Robustness Value (CI)
 <span class="c1"># Left: effect with 95% CI per stratum (a forest plot)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">cate_chf</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
                <span class="n">xerr</span><span class="o">=</span><span class="p">[</span><span class="n">sub</span><span class="o">.</span><span class="n">cate_chf</span> <span class="o">-</span> <span class="n">sub</span><span class="o">.</span><span class="n">ci_low</span><span class="p">,</span> <span class="n">sub</span><span class="o">.</span><span class="n">ci_high</span> <span class="o">-</span> <span class="n">sub</span><span class="o">.</span><span class="n">cate_chf</span><span class="p">],</span>
-               <span class="n">fmt</span><span class="o">=</span><span class="s2">"o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_CHARCOAL</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+               <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_CHARCOAL</span><span class="p">,</span> <span class="n">capsize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">subgroup</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Estimated saving per claim (CHF)"</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Bigger saving where the claim is complex"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Estimated saving per claim (CHF)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Bigger saving where the claim is complex&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
 
 <span class="c1"># Right: robustness value per stratum, with the portfolio RV as reference</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sub</span><span class="o">.</span><span class="n">robustness_value</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREEN</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">rv_ci</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREEN_DARK</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span>
-              <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"portfolio RV = </span><span class="si">{</span><span class="n">rv_ci</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">rv_ci</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SAV_GREEN_DARK</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span>
+              <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;portfolio RV = </span><span class="si">{</span><span class="n">rv_ci</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">y</span><span class="p">);</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">subgroup</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Robustness value (partial $R^2$ to overturn)"</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"...and that saving is far harder to confound away"</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Robustness value (partial $R^2$ to overturn)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;...and that saving is far harder to confound away&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">();</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">yi</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sub</span><span class="o">.</span><span class="n">robustness_value</span><span class="p">):</span>
-    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="sa">f</span><span class="s2">" </span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"center"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -1492,17 +1455,15 @@ Severe (sev 4-5) 1594     -1478   -1814    -1143             0.154
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item"><div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
-  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="pst-show_toc_level nav section-nav flex-column">
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#actuarial-relevance">Actuarial Relevance</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-causal-setup">The causal setup</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-causal-graph">The causal graph</a></li>
@@ -1573,8 +1534,8 @@ By Theresa Blümlein, Patrick Cheridito, and Daniel Meier
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
